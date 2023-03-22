@@ -19,7 +19,13 @@ class Panierproduit
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+   // private $id;
+
+    #[ORM\Id]
+    #[ORM\GeneratedValue]// auto increment
+    #[ORM\Column]
+    private ?int $id=null;
+
 
     /**
      * @var int
