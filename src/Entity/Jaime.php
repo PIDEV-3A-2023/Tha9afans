@@ -4,12 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Jaime
- *
- * @ORM\Table(name="jaime", indexes={@ORM\Index(name="fk_event", columns={"id_event"}), @ORM\Index(name="fk_user", columns={"id_user"})})
- * @ORM\Entity
- */
+#[ORM\Entity(repositoryClass: JaimeRepository::class)]
 class Jaime
 {
     /**
