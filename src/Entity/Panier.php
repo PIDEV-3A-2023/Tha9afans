@@ -19,14 +19,22 @@ class Panier
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    // private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]// auto increment
+    #[ORM\Column]
+    private ?int $id=null;
+
 
     /**
      * @var float
      *
      * @ORM\Column(name="total", type="float", precision=10, scale=0, nullable=false)
      */
-    private $total;
+    // private $total;
+    #[ORM\Column]
+    private ?float $total=null;
+
 
     /**
      * @var \Personnes
@@ -36,7 +44,9 @@ class Panier
      *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
      * })
      */
-    private $idUser;
+    // private $idUser;
+    #[ORM\ManyToOne(targetEntity: Personnes::class)]
+    private ?Personnes $idUser=null;
 
 
 }
