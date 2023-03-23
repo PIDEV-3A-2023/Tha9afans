@@ -32,7 +32,10 @@ class Panierproduit
      *
      * @ORM\Column(name="quantity", type="integer", nullable=false)
      */
-    private $quantity;
+   // private $quantity;
+    #[ORM\Column]
+    private ?int $quantity=null;
+
 
     /**
      * @var \Panier
@@ -42,7 +45,11 @@ class Panierproduit
      *   @ORM\JoinColumn(name="id_panier", referencedColumnName="id")
      * })
      */
-    private $idPanier;
+    // private $idPanier;
+    #[ORM\ManyToOne(targetEntity: Panier::class)]
+    private ?Panier $idPanier=null;
+
+
 
     /**
      * @var \Produit
@@ -52,7 +59,12 @@ class Panierproduit
      *   @ORM\JoinColumn(name="id_produit", referencedColumnName="id")
      * })
      */
-    private $idProduit;
+    // private $idProduit;
+    #[ORM\ManyToOne(targetEntity: Produit::class)]
+    private ?Produit $idProduit=null;
+
+
+
 
 
 }
