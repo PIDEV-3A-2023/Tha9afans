@@ -3,38 +3,51 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\JaimeRepository;
 
 #[ORM\Entity(repositoryClass: JaimeRepository::class)]
 class Jaime
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]// auto increment
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @var \Evenement
-     *
-     * @ORM\ManyToOne(targetEntity="Evenement")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_event", referencedColumnName="id")
-     * })
-     */
-    private $idEvent;
+    #[ORM\ManyToOne(inversedBy: 'jaimes')]
+    private ?Evenement $idEvent=null;
 
-    /**
-     * @var \Personnes
-     *
-     * @ORM\ManyToOne(targetEntity="Personnes")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
-     * })
-     */
-    private $idUser;
+
+
+    #[ORM\ManyToOne(inversedBy: 'jaimes')]
+    private ?Personnes $idUser=null;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+
+    public function getIdEvent(): ?Evenement
+    {
+        return $this->idEvent;
+    }
+
+    public function setIdEvent(?Evenement $idEvent): void
+    {
+        $this->idEvent = $idEvent;
+    }
+
+    public function getIdUser(): ?Personnes
+    {
+        return $this->idUser;
+    }
+
+
+    public function setIdUser(?Personnes $idUser): void
+    {
+        $this->idUser = $idUser;
+    }
+
 
 
 }

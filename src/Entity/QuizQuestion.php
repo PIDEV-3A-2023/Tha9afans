@@ -41,5 +41,34 @@ class QuizQuestion
      */
     private $question;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getQuiz(): ?Quiz
+    {
+        return $this->quiz;
+    }
+
+    public function setQuiz(?Quiz $quiz): self
+    {
+        $this->quiz = $quiz;
+
+        return $this;
+    }
+
+    public function getQuestion(): ?Question
+    {
+        return $this->question;
+    }
+
+    public function setQuestion(?Question $question): self
+    {
+        $this->question = $question;
+
+        return $this;
+    }
+
 
 }
