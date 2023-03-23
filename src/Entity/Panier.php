@@ -38,5 +38,34 @@ class Panier
      */
     private $idUser;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getTotal(): ?float
+    {
+        return $this->total;
+    }
+
+    public function setTotal(float $total): self
+    {
+        $this->total = $total;
+
+        return $this;
+    }
+
+    public function getIdUser(): ?Personnes
+    {
+        return $this->idUser;
+    }
+
+    public function setIdUser(?Personnes $idUser): self
+    {
+        $this->idUser = $idUser;
+
+        return $this;
+    }
+
 
 }
