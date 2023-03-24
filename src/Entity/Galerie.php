@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 
 use Doctrine\DBAL\Types\Types;
 
