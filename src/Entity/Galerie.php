@@ -3,7 +3,12 @@
 namespace App\Entity;
 use App\Repository\GalerieRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+/**
+ * Galerie
+ *
+ * @ORM\Table(name="Galerie")
+ * @ORM\Entity(repositoryClass="App\Repository\GalerieRepository")
+ */
 #[ORM\Entity(repositoryClass: GalerieRepository::class)]
 class Galerie
 {

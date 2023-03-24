@@ -4,6 +4,12 @@ namespace App\Entity;
 use App\Repository\CategorieEvenementRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * CategorieEvenement
+ *
+ * @ORM\Table(name="CategorieEvenement")
+ * @ORM\Entity(repositoryClass="App\Repository\CategorieEvenementRepository")
+ */
 #[ORM\Entity(repositoryClass: CategorieEvenementRepository::class)]
 class CategorieEvenement
 {

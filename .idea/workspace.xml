@@ -6,7 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="8085dd70-b785-4d44-a751-e9607591b51c" name="Changes" comment="first change">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Billet.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Billet.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/CategorieEvenement.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/CategorieEvenement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Commentaire.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Commentaire.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Evenement.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Evenement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Galerie.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Galerie.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Jaime.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Jaime.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Session.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Session.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,7 +210,7 @@
       <workItem from="1679520048418" duration="3240000" />
       <workItem from="1679575885230" duration="4235000" />
       <workItem from="1679580943641" duration="663000" />
-      <workItem from="1679660226262" duration="1628000" />
+      <workItem from="1679660226262" duration="3973000" />
     </task>
     <task id="LOCAL-00001" summary="first change">
       <created>1679519693050</created>
