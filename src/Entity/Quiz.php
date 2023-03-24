@@ -86,4 +86,5 @@ class Quiz
 
         return $this;
     }
+
 }

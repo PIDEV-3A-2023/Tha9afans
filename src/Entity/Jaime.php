@@ -3,43 +3,31 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\JaimeRepository;
 
 /**
  * Jaime
  *
- * @ORM\Table(name="jaime", indexes={@ORM\Index(name="fk_event", columns={"id_event"}), @ORM\Index(name="fk_user", columns={"id_user"})})
- * @ORM\Entity
+ * @ORM\Table(name="Jaime")
+ * @ORM\Entity(repositoryClass="App\Repository\JaimeRepository")
  */
+#[ORM\Entity(repositoryClass: JaimeRepository::class)]
 class Jaime
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]// auto increment
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @var \Evenement
-     *
-     * @ORM\ManyToOne(targetEntity="Evenement")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_event", referencedColumnName="id")
-     * })
-     */
-    private $idEvent;
+    #[ORM\ManyToOne(inversedBy: 'jaimes')]
+    private ?Evenement $idEvent=null;
 
-    /**
-     * @var \Personnes
-     *
-     * @ORM\ManyToOne(targetEntity="Personnes")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
-     * })
-     */
-    private $idUser;
+
+
+    #[ORM\ManyToOne(inversedBy: 'jaimes')]
+    private ?Personnes $idUser=null;
+
+
 
     public function getId(): ?int
     {
