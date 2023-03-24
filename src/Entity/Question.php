@@ -44,6 +44,9 @@ class Question
     #[ORM\Column(type: 'blob', nullable: true)]
     private $image;
 
+
+
+
     public function getQuestionId(): ?int
     {
         return $this->questionId;
@@ -135,3 +138,4 @@ class Question
 
 
 }
+

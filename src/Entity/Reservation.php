@@ -41,6 +41,7 @@ class Reservation
         return $this->id;
     }
 
+
     public function getDateReservation(): ?\DateTimeInterface
     {
         return $this->dateReservation;
@@ -100,6 +101,5 @@ class Reservation
 
         return $this;
     }
-
 
 }

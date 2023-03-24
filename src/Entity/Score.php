@@ -14,6 +14,8 @@ use App\Repository\ScoreRepository;
 #[ORM\Entity(repositoryClass: ScoreRepository::class)]
 class Score
 
+{
+
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[ORM\Column(type: 'integer')]
@@ -77,6 +79,7 @@ class Score
     private $idUser;
 
 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -129,8 +132,6 @@ class Score
 
         return $this;
     }
-
-}
 
 
 

@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
+
+use Doctrine\DBAL\Types\Types;
+
 use App\Repository\GalerieRepository;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -27,32 +30,6 @@ class Galerie
     private ?Evenement $idEvent=null;
 
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-
-    public function getPhoto(): ?string
-    {
-        return $this->photo;
-    }
-
-    public function setPhoto(?string $photo): void
-    {
-        $this->photo = $photo;
-    }
-
-
-    public function getIdEvent(): ?Evenement
-    {
-        return $this->idEvent;
-    }
-
-    public function setIdEvent(?Evenement $idEvent): void
-    {
-        $this->idEvent = $idEvent;
-    }
 
 
     public function getId(): ?int

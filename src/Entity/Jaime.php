@@ -27,32 +27,6 @@ class Jaime
     #[ORM\ManyToOne(inversedBy: 'jaimes')]
     private ?Personnes $idUser=null;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-
-    public function getIdEvent(): ?Evenement
-    {
-        return $this->idEvent;
-    }
-
-    public function setIdEvent(?Evenement $idEvent): void
-    {
-        $this->idEvent = $idEvent;
-    }
-
-    public function getIdUser(): ?Personnes
-    {
-        return $this->idUser;
-    }
-
-
-    public function setIdUser(?Personnes $idUser): void
-    {
-        $this->idUser = $idUser;
-    }
 
 
     public function getId(): ?int

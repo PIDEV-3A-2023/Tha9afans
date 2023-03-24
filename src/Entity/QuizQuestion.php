@@ -26,7 +26,6 @@ class QuizQuestion
     #[ORM\JoinColumn(name: "question_id", referencedColumnName: "question_id")]
     private $question;
 
-
     public function getId(): ?int
     {
         return $this->id;
