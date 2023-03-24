@@ -4,9 +4,14 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-
-#[ORM\Table(name: 'billet')]
-#[ORM\Entity]
+use App\Repository\BilletRepository;
+/**
+ * Billet
+ *
+ * @ORM\Table(name="Billet")
+ * @ORM\Entity(repositoryClass="App\Repository\BilletRepository")
+ */
+#[ORM\Entity(repositoryClass: BilletRepository::class)]
 class Billet
 {
     #[ORM\Id]
