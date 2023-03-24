@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -61,6 +62,71 @@ class Reservation
      * })
      */
     private $idUser;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getDateReservation(): ?\DateTimeInterface
+    {
+        return $this->dateReservation;
+    }
+
+    public function setDateReservation(\DateTimeInterface $dateReservation): self
+    {
+        $this->dateReservation = $dateReservation;
+
+        return $this;
+    }
+
+    public function isIspaid(): ?bool
+    {
+        return $this->ispaid;
+    }
+
+    public function setIspaid(bool $ispaid): self
+    {
+        $this->ispaid = $ispaid;
+
+        return $this;
+    }
+
+    public function getPaymentInfo(): ?string
+    {
+        return $this->paymentInfo;
+    }
+
+    public function setPaymentInfo(string $paymentInfo): self
+    {
+        $this->paymentInfo = $paymentInfo;
+
+        return $this;
+    }
+
+    public function getIdBillet(): ?Billet
+    {
+        return $this->idBillet;
+    }
+
+    public function setIdBillet(?Billet $idBillet): self
+    {
+        $this->idBillet = $idBillet;
+
+        return $this;
+    }
+
+    public function getIdUser(): ?Personnes
+    {
+        return $this->idUser;
+    }
+
+    public function setIdUser(?Personnes $idUser): self
+    {
+        $this->idUser = $idUser;
+
+        return $this;
+    }
 
 
 }

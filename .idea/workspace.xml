@@ -5,12 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8085dd70-b785-4d44-a751-e9607591b51c" name="Changes" comment="first change">
-      <change afterPath="$PROJECT_DIR$/.idea/symfony2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Tha9afans.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Tha9afans.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/PersonnesController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/PersonnesRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/personnes/affiche.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/personnes/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/PidevProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PidevProject.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Billet.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Billet.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Categorie.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Categorie.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/CategorieEvenement.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/CategorieEvenement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Commande.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Commande.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Commandeproduit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Commandeproduit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Commentaire.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Commentaire.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Evenement.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Evenement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Facture.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Facture.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Galerie.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Galerie.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Panier.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Panier.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Panierproduit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Panierproduit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Personnes.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Personnes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Produit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Produit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Question.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Question.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Quiz.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Quiz.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/QuizQuestion.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/QuizQuestion.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Reservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Reservation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Score.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Score.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Session.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Session.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,6 +223,9 @@
       <workItem from="1679519916164" duration="41000" />
       <workItem from="1679519959100" duration="77000" />
       <workItem from="1679520048418" duration="247000" />
+      <workItem from="1679522498494" duration="244000" />
+      <workItem from="1679523025160" duration="2702000" />
+      <workItem from="1679627450506" duration="4817000" />
     </task>
     <task id="LOCAL-00001" summary="first change">
       <created>1679519693050</created>
