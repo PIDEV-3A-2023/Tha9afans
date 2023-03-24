@@ -4,8 +4,6 @@ namespace App\Entity;
 
 use Doctrine\DBAL\Types\Types;
 
-use Doctrine\DBAL\Types\Types;
-
 use App\Repository\GalerieRepository;
 
 use Doctrine\ORM\Mapping as ORM;
