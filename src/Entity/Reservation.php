@@ -2,8 +2,15 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Reservation
+ *
+ * @ORM\Table(name="Reservation")
+ * @ORM\Entity(repositoryClass="App\Repository\ReservationRepository")
+ */
 #[ORM\Entity]
 class Reservation
 {
