@@ -123,58 +123,6 @@ class Facture
         return $this;
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getDatefacture(): ?\DateTimeInterface
-    {
-        return $this->datefacture;
-    }
-
-    public function setDatefacture(\DateTimeInterface $datefacture): self
-    {
-        $this->datefacture = $datefacture;
-
-        return $this;
-    }
-
-    public function getTva(): ?float
-    {
-        return $this->tva;
-    }
-
-    public function setTva(float $tva): self
-    {
-        $this->tva = $tva;
-
-        return $this;
-    }
-
-    public function getRefrancefacture(): ?string
-    {
-        return $this->refrancefacture;
-    }
-
-    public function setRefrancefacture(string $refrancefacture): self
-    {
-        $this->refrancefacture = $refrancefacture;
-
-        return $this;
-    }
-
-    public function getIdCommende(): ?Commande
-    {
-        return $this->idCommende;
-    }
-
-    public function setIdCommende(?Commande $idCommende): self
-    {
-        $this->idCommende = $idCommende;
-
-        return $this;
-    }
 
 
 }

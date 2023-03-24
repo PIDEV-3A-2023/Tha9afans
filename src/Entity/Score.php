@@ -42,41 +42,6 @@ class Score
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="score", type="integer", nullable=false)
-     */
-    private $score;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="times_played", type="integer", nullable=false)
-     */
-    private $timesPlayed;
-
-    /**
-     * @var \Quiz
-     *
-     * @ORM\ManyToOne(targetEntity="Quiz")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="quiz_id", referencedColumnName="quiz_id")
-     * })
-     */
-    private $quiz;
-
-    /**
-     * @var \Personnes
-     *
-     * @ORM\ManyToOne(targetEntity="Personnes")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
-     * })
-     */
-    private $idUser;
 
 
 
