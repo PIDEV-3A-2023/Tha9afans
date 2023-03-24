@@ -5,6 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\JaimeRepository;
 
+/**
+ * Jaime
+ *
+ * @ORM\Table(name="Jaime")
+ * @ORM\Entity(repositoryClass="App\Repository\JaimeRepository")
+ */
 #[ORM\Entity(repositoryClass: JaimeRepository::class)]
 class Jaime
 {

@@ -5,7 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\DateTime;
 use App\Repository\CommentaireRepository;
-
+/**
+ * Commentaire
+ *
+ * @ORM\Table(name="Commentaire")
+ * @ORM\Entity(repositoryClass="App\Repository\CommentaireRepository")
+ */
 #[ORM\Entity(repositoryClass: CommentaireRepository::class)]
 class Commentaire
 {
