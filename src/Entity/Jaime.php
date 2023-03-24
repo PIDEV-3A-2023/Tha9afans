@@ -55,5 +55,34 @@ class Jaime
     }
 
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getIdEvent(): ?Evenement
+    {
+        return $this->idEvent;
+    }
+
+    public function setIdEvent(?Evenement $idEvent): self
+    {
+        $this->idEvent = $idEvent;
+
+        return $this;
+    }
+
+    public function getIdUser(): ?Personnes
+    {
+        return $this->idUser;
+    }
+
+    public function setIdUser(?Personnes $idUser): self
+    {
+        $this->idUser = $idUser;
+
+        return $this;
+    }
+
 
 }

@@ -1,7 +1,12 @@
 <?php
 
 namespace App\Entity;
+
+
+use Doctrine\DBAL\Types\Types;
+
 use App\Repository\SessionRepository;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\DateTime;
 /**
@@ -113,6 +118,83 @@ class Session
         $this->idEvenement = $idEvenement;
     }
 
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getTitre(): ?string
+    {
+        return $this->titre;
+    }
+
+    public function setTitre(string $titre): self
+    {
+        $this->titre = $titre;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getParlant(): ?string
+    {
+        return $this->parlant;
+    }
+
+    public function setParlant(string $parlant): self
+    {
+        $this->parlant = $parlant;
+
+        return $this;
+    }
+
+    public function getDebit(): ?\DateTimeInterface
+    {
+        return $this->debit;
+    }
+
+    public function setDebit(\DateTimeInterface $debit): self
+    {
+        $this->debit = $debit;
+
+        return $this;
+    }
+
+    public function getFin(): ?\DateTimeInterface
+    {
+        return $this->fin;
+    }
+
+    public function setFin(\DateTimeInterface $fin): self
+    {
+        $this->fin = $fin;
+
+        return $this;
+    }
+
+    public function getIdEvenement(): ?Evenement
+    {
+        return $this->idEvenement;
+    }
+
+    public function setIdEvenement(?Evenement $idEvenement): self
+    {
+        $this->idEvenement = $idEvenement;
+
+        return $this;
+    }
 
 
 }
