@@ -1,70 +1,118 @@
 <?php
 
 namespace App\Entity;
-
+use App\Repository\SessionRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints\DateTime;
 /**
  * Session
  *
- * @ORM\Table(name="session", indexes={@ORM\Index(name="event", columns={"id_evenement"})})
- * @ORM\Entity
+ * @ORM\Table(name="Session")
+ * @ORM\Entity(repositoryClass="App\Repository\SessionRepository")
  */
+#[ORM\Entity(repositoryClass: SessionRepository::class)]
 class Session
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]// auto increment
+    #[ORM\Column]
+    private ?int $id = null;
+    #[ORM\Column(length: 255)]
+    private ?string $titre = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="titre", type="string", length=255, nullable=false)
-     */
-    private $titre;
+    #[ORM\Column(length: 255)]
+    private ?string $description = null;
+    #[ORM\Column(length: 255)]
+    private ?string $parlant = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="string", length=255, nullable=false)
-     */
-    private $description;
+    #[ORM\Column(type: 'time')]
+    private ?DateTime $debit = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="parlant", type="string", length=255, nullable=false)
-     */
-    private $parlant;
+    #[ORM\Column(type: 'time')]
+    private ?DateTime $fin = null;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="debit", type="time", nullable=false)
-     */
-    private $debit;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="fin", type="time", nullable=false)
-     */
-    private $fin;
+    #[ORM\ManyToOne(inversedBy: 'sessions')]
+    private ?Evenement $idEvenement=null;
 
-    /**
-     * @var \Evenement
-     *
-     * @ORM\ManyToOne(targetEntity="Evenement")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_evenement", referencedColumnName="id")
-     * })
-     */
-    private $idEvenement;
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+
+
+    public function getTitre(): ?string
+    {
+        return $this->titre;
+    }
+
+
+    public function setTitre(?string $titre): void
+    {
+        $this->titre = $titre;
+    }
+
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
+
+    public function getParlant(): ?string
+    {
+        return $this->parlant;
+    }
+
+
+    public function setParlant(?string $parlant): void
+    {
+        $this->parlant = $parlant;
+    }
+
+
+    public function getDebit(): ?DateTime
+    {
+        return $this->debit;
+    }
+
+
+    public function setDebit(?DateTime $debit): void
+    {
+        $this->debit = $debit;
+    }
+
+
+    public function getFin(): ?DateTime
+    {
+        return $this->fin;
+    }
+
+
+    public function setFin(?DateTime $fin): void
+    {
+        $this->fin = $fin;
+    }
+
+
+    public function getIdEvenement(): ?Evenement
+    {
+        return $this->idEvenement;
+    }
+
+
+    public function setIdEvenement(?Evenement $idEvenement): void
+    {
+        $this->idEvenement = $idEvenement;
+    }
+
 
 
 }

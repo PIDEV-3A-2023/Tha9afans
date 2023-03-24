@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -48,6 +49,59 @@ class Quiz
      * @ORM\Column(name="quiz_description", type="string", length=200, nullable=false)
      */
     private $quizDescription;
+
+    public function getQuizId(): ?int
+    {
+        return $this->quizId;
+    }
+
+    public function getQuizName(): ?string
+    {
+        return $this->quizName;
+    }
+
+    public function setQuizName(string $quizName): self
+    {
+        $this->quizName = $quizName;
+
+        return $this;
+    }
+
+    public function getNbrQuestions(): ?int
+    {
+        return $this->nbrQuestions;
+    }
+
+    public function setNbrQuestions(int $nbrQuestions): self
+    {
+        $this->nbrQuestions = $nbrQuestions;
+
+        return $this;
+    }
+
+    public function getQuizCover()
+    {
+        return $this->quizCover;
+    }
+
+    public function setQuizCover($quizCover): self
+    {
+        $this->quizCover = $quizCover;
+
+        return $this;
+    }
+
+    public function getQuizDescription(): ?string
+    {
+        return $this->quizDescription;
+    }
+
+    public function setQuizDescription(string $quizDescription): self
+    {
+        $this->quizDescription = $quizDescription;
+
+        return $this;
+    }
 
 
 }

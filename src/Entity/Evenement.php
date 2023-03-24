@@ -1,91 +1,160 @@
 <?php
 
 namespace App\Entity;
+use App\Repository\EvenementRepository;
 
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Evenement
  *
- * @ORM\Table(name="evenement", indexes={@ORM\Index(name="fk_categorie", columns={"id_categorie"})})
- * @ORM\Entity
+ * @ORM\Table(name="Evenement")
+ * @ORM\Entity(repositoryClass="App\Repository\EvenementRepository")
  */
+#[ORM\Entity(repositoryClass: EvenementRepository::class)]
 class Evenement
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]// auto increment
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nom", type="string", length=255, nullable=false)
-     */
-    private $nom;
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="string", length=10000, nullable=false)
-     */
-    private $description;
+    #[ORM\Column(length: 10000)]
+    private ?string $description = null;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date", type="date", nullable=false)
-     */
-    private $date;
+    #[ORM\Column(type: 'date')]
+    private ?DateTime $date = null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_createur", type="integer", nullable=false)
-     */
-    private $idCreateur;
+    #[ORM\ManyToOne(inversedBy: 'evenements')]
+    private ?Personnes $idCreateur=null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="localisation", type="string", length=255, nullable=false)
-     */
-    private $localisation;
+    #[ORM\Column(length: 255)]
+    private ?string $localisation = null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="nb_participants", type="integer", nullable=false)
-     */
-    private $nbParticipants;
+    #[ORM\Column()]
+    private ?int $nbParticipants = null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="nb_aime", type="integer", nullable=false)
-     */
-    private $nbAime;
+    #[ORM\Column()]
+    private ?int $nbAime = null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="prix", type="integer", nullable=false)
-     */
-    private $prix;
+    #[ORM\Column()]
+    private ?int $prix = null;
 
-    /**
-     * @var \CategorieEvenement
-     *
-     * @ORM\ManyToOne(targetEntity="CategorieEvenement")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_categorie", referencedColumnName="id")
-     * })
-     */
-    private $idCategorie;
+    #[ORM\ManyToOne(inversedBy: 'evenements')]
+    private ?CategorieEvenement $idCategorie=null;
+
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+
+    public function setNom(?string $nom): void
+    {
+        $this->nom = $nom;
+    }
+
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
+
+    public function getDate(): ?DateTime
+    {
+        return $this->date;
+    }
+
+
+    public function setDate(?DateTime $date): void
+    {
+        $this->date = $date;
+    }
+
+
+    public function getIdCreateur(): ?Personnes
+    {
+        return $this->idCreateur;
+    }
+
+
+    public function setIdCreateur(?Personnes $idCreateur): void
+    {
+        $this->idCreateur = $idCreateur;
+    }
+
+
+    public function getLocalisation(): ?string
+    {
+        return $this->localisation;
+    }
+
+    public function setLocalisation(?string $localisation): void
+    {
+        $this->localisation = $localisation;
+    }
+
+    public function getNbParticipants(): ?int
+    {
+        return $this->nbParticipants;
+    }
+
+
+    public function setNbParticipants(?int $nbParticipants): void
+    {
+        $this->nbParticipants = $nbParticipants;
+    }
+
+
+    public function getNbAime(): ?int
+    {
+        return $this->nbAime;
+    }
+
+    public function setNbAime(?int $nbAime): void
+    {
+        $this->nbAime = $nbAime;
+    }
+
+    public function getPrix(): ?int
+    {
+        return $this->prix;
+    }
+
+
+    public function setPrix(?int $prix): void
+    {
+        $this->prix = $prix;
+    }
+
+
+    public function getIdCategorie(): ?CategorieEvenement
+    {
+        return $this->idCategorie;
+    }
+
+
+    public function setIdCategorie(?CategorieEvenement $idCategorie): void
+    {
+        $this->idCategorie = $idCategorie;
+    }
+
 
 
 }

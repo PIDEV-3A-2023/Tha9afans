@@ -36,7 +36,6 @@ class Reservation
     #[ORM\JoinColumn(name: 'id_user', referencedColumnName: 'id')]
     private $idUser;
 
-
     public function getId(): ?int
     {
         return $this->id;
@@ -101,6 +100,5 @@ class Reservation
 
         return $this;
     }
-
 
 }

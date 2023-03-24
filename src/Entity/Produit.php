@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -96,6 +97,131 @@ class Produit
      * })
      */
     private $idCategorie;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getLibelle(): ?int
+    {
+        return $this->libelle;
+    }
+
+    public function setLibelle(int $libelle): self
+    {
+        $this->libelle = $libelle;
+
+        return $this;
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(float $prix): self
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getRemise(): ?float
+    {
+        return $this->remise;
+    }
+
+    public function setRemise(float $remise): self
+    {
+        $this->remise = $remise;
+
+        return $this;
+    }
+
+    public function getRating(): ?float
+    {
+        return $this->rating;
+    }
+
+    public function setRating(float $rating): self
+    {
+        $this->rating = $rating;
+
+        return $this;
+    }
+
+    public function getPrixapresremise(): ?float
+    {
+        return $this->prixapresremise;
+    }
+
+    public function setPrixapresremise(float $prixapresremise): self
+    {
+        $this->prixapresremise = $prixapresremise;
+
+        return $this;
+    }
+
+    public function getIdVendeur(): ?Personnes
+    {
+        return $this->idVendeur;
+    }
+
+    public function setIdVendeur(?Personnes $idVendeur): self
+    {
+        $this->idVendeur = $idVendeur;
+
+        return $this;
+    }
+
+    public function getIdCategorie(): ?Categorie
+    {
+        return $this->idCategorie;
+    }
+
+    public function setIdCategorie(?Categorie $idCategorie): self
+    {
+        $this->idCategorie = $idCategorie;
+
+        return $this;
+    }
 
 
 }
