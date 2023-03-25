@@ -85,7 +85,4 @@ class Commentaire
         $this->idEvent = $idEvent;
     }
 
-
-
-
 }

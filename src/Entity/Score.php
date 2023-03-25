@@ -13,6 +13,7 @@ use App\Repository\ScoreRepository;
  */
 #[ORM\Entity(repositoryClass: ScoreRepository::class)]
 class Score
+
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -32,6 +33,15 @@ class Score
     #[ORM\ManyToOne(targetEntity: 'Personnes')]
     #[ORM\JoinColumn(name: 'id_user', referencedColumnName: 'id')]
     private Personnes $idUser;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+
 
     public function getId(): ?int
     {
@@ -87,3 +97,4 @@ class Score
     }
 
 }
+

@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
+
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\QuestionRepository;
+
 
 /**
  * Question
@@ -39,6 +41,9 @@ class Question
 
     #[ORM\Column(type: 'blob', nullable: true)]
     private $image;
+
+
+
 
     public function getQuestionId(): ?int
     {
@@ -130,3 +135,4 @@ class Question
     }
 
 }
+
