@@ -2,58 +2,87 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints\DateTime;
+use App\Repository\CommentaireRepository;
 /**
  * Commentaire
  *
- * @ORM\Table(name="commentaire", indexes={@ORM\Index(name="comment-user", columns={"id_user"}), @ORM\Index(name="comment-ev", columns={"id_evenement"})})
- * @ORM\Entity
+ * @ORM\Table(name="Commentaire")
+ * @ORM\Entity(repositoryClass="App\Repository\CommentaireRepository")
  */
+#[ORM\Entity(repositoryClass: CommentaireRepository::class)]
 class Commentaire
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]// auto increment
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="commentaire", type="string", length=255, nullable=false)
-     */
-    private $commentaire;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date", type="date", nullable=false)
-     */
-    private $date;
+    #[ORM\Column(length: 255)]
+    private ?string $commentaire = null;
 
-    /**
-     * @var \Personnes
-     *
-     * @ORM\ManyToOne(targetEntity="Personnes")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_user", referencedColumnName="id")
-     * })
-     */
-    private $idUser;
 
-    /**
-     * @var \Evenement
-     *
-     * @ORM\ManyToOne(targetEntity="Evenement")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_evenement", referencedColumnName="id")
-     * })
-     */
-    private $idEvenement;
+    #[ORM\Column(type: 'date')]
+    private ?DateTime $date = null;
 
+    #[ORM\ManyToOne(inversedBy: 'commentaires')]
+    private ?Personnes $idUser=null;
+
+    #[ORM\ManyToOne(inversedBy: 'commentaires')]
+    private ?Evenement $idEvent=null;
+
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+
+    public function getCommentaire(): ?string
+    {
+        return $this->commentaire;
+    }
+
+
+    public function setCommentaire(?string $commentaire): void
+    {
+        $this->commentaire = $commentaire;
+    }
+
+
+    public function getDate(): ?DateTime
+    {
+        return $this->date;
+    }
+
+
+    public function setDate(?DateTime $date): void
+    {
+        $this->date = $date;
+    }
+
+
+    public function getIdUser(): ?Personnes
+    {
+        return $this->idUser;
+    }
+
+    public function setIdUser(?Personnes $idUser): void
+    {
+        $this->idUser = $idUser;
+    }
+
+    public function getIdEvent(): ?Evenement
+    {
+        return $this->idEvent;
+    }
+
+    public function setIdEvent(?Evenement $idEvent): void
+    {
+        $this->idEvent = $idEvent;
+    }
 
 }
