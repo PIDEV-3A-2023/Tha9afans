@@ -7,12 +7,12 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CommandeRepository;
 
 /**
- * Paniergit
+ * Commande
  *
  * @ORM\Table(name="Commande")
  * @ORM\Entity(repositoryClass="App\Repository\CommandeRepository")
  */
-#[ORM\Entity(repositoryClass: Commande::class)]
+#[ORM\Entity(repositoryClass: CommandeRepository::class)]
 
 class Commande
 {

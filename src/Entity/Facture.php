@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\FactureRepository;
 
 /**
- * Panier
+ * Facture
  *
  * @ORM\Table(name="Facture")
  * @ORM\Entity(repositoryClass="App\Repository\FactureRepository")
  */
-#[ORM\Entity(repositoryClass: Facture::class)]
+#[ORM\Entity(repositoryClass: FactureRepository::class)]
 
 class Facture
 {
