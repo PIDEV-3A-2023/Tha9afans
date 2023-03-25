@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PanierproduitRepository;
 
 /**
- * Panier
+ * Panierproduit
  *
  * @ORM\Table(name="Panierproduit")
  * @ORM\Entity(repositoryClass="App\Repository\PanierproduitRepository")
  */
-#[ORM\Entity(repositoryClass: Panierproduit::class)]
+#[ORM\Entity(repositoryClass: PanierproduitRepository::class)]
 
 class Panierproduit
 {
