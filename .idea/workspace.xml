@@ -5,10 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="01ab9ed2-c71e-4b77-a701-4ed228af486e" name="Changes" comment="crud">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/commandlinetools/Symfony_25_03_2023_22_36.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/commandlinetools/schemas/frameworkDescriptionVersion1.1.4.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/PidevProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PidevProject.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Billet.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Billet.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Commande.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Commande.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Commandeproduit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Commandeproduit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Facture.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Facture.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Panierproduit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Panierproduit.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,7 +195,8 @@
     &quot;mysql&quot;
     ]
   }
-  }</component>
+
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -207,6 +212,15 @@
       <workItem from="1679522498494" duration="244000" />
       <workItem from="1679523025160" duration="2702000" />
       <workItem from="1679627450506" duration="5486000" />
+      <workItem from="1679520048418" duration="3240000" />
+      <workItem from="1679575885230" duration="4235000" />
+      <workItem from="1679580943641" duration="162000" />
+      <workItem from="1679580943641" duration="663000" />
+      <workItem from="1679660226262" duration="3973000" />
+      <workItem from="1679780154770" duration="347000" />
+      <workItem from="1679780563937" duration="438000" />
+      <workItem from="1679951470989" duration="3008000" />
+      <workItem from="1679780563937" duration="56000" />
       <workItem from="1679520048418" duration="3240000" />
       <workItem from="1679575885230" duration="4235000" />
       <workItem from="1679580943641" duration="162000" />

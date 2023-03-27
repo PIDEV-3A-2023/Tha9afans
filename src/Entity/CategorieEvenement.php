@@ -38,8 +38,4 @@ class CategorieEvenement
         $this->nom = $nom;
     }
 
-
-
-
-
 }

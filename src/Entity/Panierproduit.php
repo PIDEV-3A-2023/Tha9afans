@@ -3,23 +3,18 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PanierproduitRepository;
 
 /**
  * Panierproduit
  *
- * @ORM\Table(name="panierproduit", indexes={@ORM\Index(name="idproduit", columns={"id_produit"}), @ORM\Index(name="fkidpanier", columns={"id_panier"})})
- * @ORM\Entity
+ * @ORM\Table(name="Panierproduit")
+ * @ORM\Entity(repositoryClass="App\Repository\PanierproduitRepository")
  */
+#[ORM\Entity(repositoryClass: PanierproduitRepository::class)]
+
 class Panierproduit
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-   // private $id;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]// auto increment
@@ -27,39 +22,17 @@ class Panierproduit
     private ?int $id=null;
 
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="quantity", type="integer", nullable=false)
-     */
-   // private $quantity;
+
     #[ORM\Column]
     private ?int $quantity=null;
 
 
-    /**
-     * @var \Panier
-     *
-     * @ORM\ManyToOne(targetEntity="Panier")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_panier", referencedColumnName="id")
-     * })
-     */
-    // private $idPanier;
+
     #[ORM\ManyToOne(targetEntity: Panier::class)]
     private ?Panier $idPanier=null;
 
 
 
-    /**
-     * @var \Produit
-     *
-     * @ORM\ManyToOne(targetEntity="Produit")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_produit", referencedColumnName="id")
-     * })
-     */
-    // private $idProduit;
     #[ORM\ManyToOne(targetEntity: Produit::class)]
     private ?Produit $idProduit=null;
 
@@ -106,6 +79,7 @@ class Panierproduit
 
         return $this;
     }
+
 
 
 }

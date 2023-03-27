@@ -1,4 +1,4 @@
-<?php
+cdcd<?php
 
 use App\Kernel;
 

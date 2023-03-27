@@ -2,59 +2,35 @@
 
 namespace App\Entity;
 
+
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-
+use App\Repository\BilletRepository;
 /**
  * Billet
  *
- * @ORM\Table(name="billet", indexes={@ORM\Index(name="bille-ev", columns={"id_evenement"})})
- * @ORM\Entity
+ * @ORM\Table(name="Billet")
+ * @ORM\Entity(repositoryClass="App\Repository\BilletRepository")
  */
+#[ORM\Entity(repositoryClass: BilletRepository::class)]
 class Billet
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
     #[ORM\Id]
-    #[ORM\GeneratedValue]// auto increment
-    #[ORM\Column]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="code", type="string", length=255, nullable=false)
-     */
-    #[ORM\Column(length:150)]
-    private ?string $code=null;
+    #[ORM\Column(type: 'string', length: 150)]
+    private ?string $code = null;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date_validite", type="date", nullable=false)
-     */
+    #[ORM\Column(type: 'date')]
     private $dateValidite;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="prix", type="float", precision=10, scale=0, nullable=false)
-     */
+    #[ORM\Column(type: 'float')]
     private $prix;
 
-    /**
-     * @var \Evenement
-     *
-     * @ORM\ManyToOne(targetEntity="Evenement")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_evenement", referencedColumnName="id")
-     * })
-     */
+    #[ORM\ManyToOne(targetEntity: 'Evenement')]
+    #[ORM\JoinColumn(name: 'id_evenement', referencedColumnName: 'id')]
     private $idEvenement;
 
     public function getId(): ?int
