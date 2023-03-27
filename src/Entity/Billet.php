@@ -57,7 +57,6 @@ class Billet
      */
     private $idEvenement;
 
-<<<<<<< HEAD
     public function getId(): ?int
     {
         return $this->id;
@@ -110,9 +109,4 @@ class Billet
 
         return $this;
     }
-
-
-=======
-#aaaaaaaaaaaaaaaaaaaaa
->>>>>>> origin/main
 }

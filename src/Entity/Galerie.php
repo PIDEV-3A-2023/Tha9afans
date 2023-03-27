@@ -1,12 +1,8 @@
 <?php
 
 namespace App\Entity;
-<<<<<<< HEAD
 
-use Doctrine\DBAL\Types\Types;
-=======
 use App\Repository\GalerieRepository;
->>>>>>> origin/main
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GalerieRepository::class)]
@@ -49,36 +45,6 @@ class Galerie
     public function setIdEvent(?Evenement $idEvent): void
     {
         $this->idEvent = $idEvent;
-    }
-
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getPhoto()
-    {
-        return $this->photo;
-    }
-
-    public function setPhoto($photo): self
-    {
-        $this->photo = $photo;
-
-        return $this;
-    }
-
-    public function getIdEvent(): ?Evenement
-    {
-        return $this->idEvent;
-    }
-
-    public function setIdEvent(?Evenement $idEvent): self
-    {
-        $this->idEvent = $idEvent;
-
-        return $this;
     }
 
 

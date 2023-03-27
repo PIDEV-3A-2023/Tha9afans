@@ -10,8 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
  * Personnes
  *
  * @ORM\Table(name="personnes", uniqueConstraints={@ORM\UniqueConstraint(name="unique_email", columns={"email"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\PersonnesRepository")
  */
+
+
+#[ORM\Entity(repositoryClass: PersonnesRepository::class)]
 class Personnes
 {
     /**

@@ -79,50 +79,6 @@ class Commentaire
     {
         $this->idEvent = $idEvent;
     }
-
-
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getCommentaire(): ?string
-    {
-        return $this->commentaire;
-    }
-
-    public function setCommentaire(string $commentaire): self
-    {
-        $this->commentaire = $commentaire;
-
-        return $this;
-    }
-
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    public function getIdUser(): ?Personnes
-    {
-        return $this->idUser;
-    }
-
-    public function setIdUser(?Personnes $idUser): self
-    {
-        $this->idUser = $idUser;
-
-        return $this;
-    }
-
     public function getIdEvenement(): ?Evenement
     {
         return $this->idEvenement;
