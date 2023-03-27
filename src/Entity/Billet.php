@@ -86,5 +86,4 @@ class Billet
         return $this;
     }
 
-
 }

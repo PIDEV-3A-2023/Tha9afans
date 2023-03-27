@@ -8,8 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
  * Produit
  *
  * @ORM\Table(name="produit", indexes={@ORM\Index(name="fkcategorie", columns={"id_categorie"}), @ORM\Index(name="fk_vendeur", columns={"id_vendeur"})})
- * @ORM\Entity
+ * #[ORM\Entity(repositoryClass: ProduitRepository::class)]
  */
+
 class Produit
 {
     /**
@@ -19,6 +20,7 @@ class Produit
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+
     private $id;
 
     /**

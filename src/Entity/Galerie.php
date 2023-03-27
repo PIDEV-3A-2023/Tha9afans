@@ -25,9 +25,7 @@ class Galerie
     private ?string $photo = null;
 
     #[ORM\ManyToOne(inversedBy: 'galeries')]
-    private ?Evenement $idEvent=null;
-
-
+    private ?Evenement $idEvent = null;
 
 
     public function getId(): ?int
@@ -58,6 +56,5 @@ class Galerie
 
         return $this;
     }
-
 
 }
