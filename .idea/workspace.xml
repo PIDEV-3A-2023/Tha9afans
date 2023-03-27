@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="01ab9ed2-c71e-4b77-a701-4ed228af486e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/PidevProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PidevProject.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -207,7 +206,7 @@
       <workItem from="1679580943641" duration="663000" />
       <workItem from="1679660226262" duration="3973000" />
       <workItem from="1679748993267" duration="2596000" />
-      <workItem from="1679951840983" duration="2424000" />
+      <workItem from="1679951840983" duration="3415000" />
     </task>
     <task id="LOCAL-00001" summary="first change">
       <created>1679519693050</created>
