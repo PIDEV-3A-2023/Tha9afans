@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 use App\Repository\PersonnesRepository;
+use Doctrine\DBAL\Types\Types;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -257,7 +258,11 @@ class Personnes
      */
     public function getPhoto(): ?string
     {
-        return $this->photo;
+        $photoData = stream_get_contents($this->photo);
+        if ($photoData === false) {
+            return null;
+        }
+        return base64_encode($photoData);
     }
 
     /**
@@ -265,7 +270,15 @@ class Personnes
      */
     public function setPhoto(?string $photo): void
     {
-        $this->photo = $photo;
+        $photoData = stream_get_contents($this->photo);
+        if ($photoData === null) {
+            $this->photo = null;
+            return;
+        }
+        $photoBlob = fopen('php://memory', 'r+');
+        fwrite($photoBlob, base64_decode($photoData));
+        rewind($photoBlob);
+        $this->photo = $photoBlob;
     }
 
     /**
