@@ -18,6 +18,10 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/main
 # Default ignored files
 .idea/shelf/
 .idea/workspace.xml
