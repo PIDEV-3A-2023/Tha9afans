@@ -24,6 +24,7 @@ class FactureController extends AbstractController
     #[Route('/new', name: 'app_facture_new', methods: ['GET', 'POST'])]
     public function new(Request $request, FactureRepository $factureRepository): Response
     {
+
         $facture = new Facture();
         $form = $this->createForm(FactureType::class, $facture);
         $form->handleRequest($request);

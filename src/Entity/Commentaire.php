@@ -84,5 +84,9 @@ class Commentaire
     {
         $this->idEvent = $idEvent;
     }
+    public function getIdEvenement(): ?Evenement
+    {
+        return $this->idEvenement;
+    }
 
 }

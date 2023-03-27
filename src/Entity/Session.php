@@ -2,10 +2,8 @@
 
 namespace App\Entity;
 
-
-use Doctrine\DBAL\Types\Types;
-
 use App\Repository\SessionRepository;
+use Doctrine\DBAL\Types\Types;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\DateTime;
