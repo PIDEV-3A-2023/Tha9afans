@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 use App\Repository\PersonnesRepository;
-
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\DBAL\Types\Types;
 
 /**
  * Personnes
