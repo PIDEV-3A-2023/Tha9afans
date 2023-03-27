@@ -2,9 +2,17 @@
 
 namespace App\Entity;
 
-use App\Repository\GalerieRepository;
-use Doctrine\ORM\Mapping as ORM;
 
+use App\Repository\GalerieRepository;
+use Doctrine\DBAL\Types\Types;
+
+use Doctrine\ORM\Mapping as ORM;
+/**
+ * Galerie
+ *
+ * @ORM\Table(name="Galerie")
+ * @ORM\Entity(repositoryClass="App\Repository\GalerieRepository")
+ */
 #[ORM\Entity(repositoryClass: GalerieRepository::class)]
 class Galerie
 {
@@ -17,7 +25,7 @@ class Galerie
     private ?string $photo = null;
 
     #[ORM\ManyToOne(inversedBy: 'galeries')]
-    private ?Evenement $idEvent=null;
+    private ?Evenement $idEvent = null;
 
 
     public function getId(): ?int
@@ -25,27 +33,28 @@ class Galerie
         return $this->id;
     }
 
-
-    public function getPhoto(): ?string
+    public function getPhoto()
     {
         return $this->photo;
     }
 
-    public function setPhoto(?string $photo): void
+    public function setPhoto($photo): self
     {
         $this->photo = $photo;
-    }
 
+        return $this;
+    }
 
     public function getIdEvent(): ?Evenement
     {
         return $this->idEvent;
     }
 
-    public function setIdEvent(?Evenement $idEvent): void
+    public function setIdEvent(?Evenement $idEvent): self
     {
         $this->idEvent = $idEvent;
-    }
 
+        return $this;
+    }
 
 }

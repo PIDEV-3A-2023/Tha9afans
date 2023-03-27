@@ -1,11 +1,16 @@
 <?php
 
 namespace App\Entity;
-use App\Repository\EvenementRepository;
 
+use App\Repository\EvenementRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-
+/**
+ * Evenement
+ *
+ * @ORM\Table(name="Evenement")
+ * @ORM\Entity(repositoryClass="App\Repository\EvenementRepository")
+ */
 #[ORM\Entity(repositoryClass: EvenementRepository::class)]
 class Evenement
 {

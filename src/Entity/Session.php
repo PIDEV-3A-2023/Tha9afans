@@ -3,9 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\SessionRepository;
+use Doctrine\DBAL\Types\Types;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\DateTime;
-
+/**
+ * Session
+ *
+ * @ORM\Table(name="Session")
+ * @ORM\Entity(repositoryClass="App\Repository\SessionRepository")
+ */
 #[ORM\Entity(repositoryClass: SessionRepository::class)]
 class Session
 {

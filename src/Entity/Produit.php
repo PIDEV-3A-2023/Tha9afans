@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -57,7 +56,10 @@ class Produit
      *
      * @ORM\Column(name="image", type="blob", length=65535, nullable=true)
      */
-    private $image;
+    // private $image;
+    #[ORM\Column(type: 'blob', nullable: true)]
+    private ?string $image=null;
+
 
     /**
      * @var float

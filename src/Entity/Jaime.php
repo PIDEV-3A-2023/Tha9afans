@@ -5,6 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\JaimeRepository;
 
+/**
+ * Jaime
+ *
+ * @ORM\Table(name="Jaime")
+ * @ORM\Entity(repositoryClass="App\Repository\JaimeRepository")
+ */
 #[ORM\Entity(repositoryClass: JaimeRepository::class)]
 class Jaime
 {
@@ -21,20 +27,23 @@ class Jaime
     #[ORM\ManyToOne(inversedBy: 'jaimes')]
     private ?Personnes $idUser=null;
 
+
+
     public function getId(): ?int
     {
         return $this->id;
     }
-
 
     public function getIdEvent(): ?Evenement
     {
         return $this->idEvent;
     }
 
-    public function setIdEvent(?Evenement $idEvent): void
+    public function setIdEvent(?Evenement $idEvent): self
     {
         $this->idEvent = $idEvent;
+
+        return $this;
     }
 
     public function getIdUser(): ?Personnes
@@ -42,12 +51,12 @@ class Jaime
         return $this->idUser;
     }
 
-
-    public function setIdUser(?Personnes $idUser): void
+    public function setIdUser(?Personnes $idUser): self
     {
         $this->idUser = $idUser;
-    }
 
+        return $this;
+    }
 
 
 }

@@ -4,6 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="8085dd70-b785-4d44-a751-e9607591b51c" name="Changes" comment="first change">
 <<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -11,6 +12,17 @@
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Billet.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Billet.php" afterDir="false" />
+>>>>>>> origin/main
+=======
+    <list default="true" id="01ab9ed2-c71e-4b77-a701-4ed228af486e" name="Changes" comment="first change">
+      <change afterPath="$PROJECT_DIR$/.idea/commandlinetools/Symfony_25_03_2023_22_36.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/commandlinetools/schemas/frameworkDescriptionVersion1.1.4.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/PidevProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PidevProject.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Commande.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Commande.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Commandeproduit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Commandeproduit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Facture.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Facture.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Panierproduit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Panierproduit.php" afterDir="false" />
 >>>>>>> origin/main
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,6 +37,11 @@
     </execution>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -175,7 +192,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ghazo/OneDrive/Desktop/projet/symfony/Tha9afans&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/pidev/web/Tha9afans&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -190,16 +207,10 @@
     ]
   }
 }</component>
-  <component name="RunManager">
-    <configuration name="phpunit.xml.dist" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
-      <TestRunner scope="XML" />
-      <method v="2" />
-    </configuration>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="8085dd70-b785-4d44-a751-e9607591b51c" name="Changes" comment="" />
+      <changelist id="01ab9ed2-c71e-4b77-a701-4ed228af486e" name="Changes" comment="" />
       <created>1679519208860</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -215,7 +226,14 @@
 =======
       <workItem from="1679520048418" duration="3240000" />
       <workItem from="1679575885230" duration="4235000" />
+<<<<<<< HEAD
       <workItem from="1679580943641" duration="162000" />
+>>>>>>> origin/main
+=======
+      <workItem from="1679580943641" duration="663000" />
+      <workItem from="1679660226262" duration="3973000" />
+      <workItem from="1679780154770" duration="347000" />
+      <workItem from="1679780563937" duration="56000" />
 >>>>>>> origin/main
     </task>
     <task id="LOCAL-00001" summary="first change">

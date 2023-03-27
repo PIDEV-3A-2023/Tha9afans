@@ -6,7 +6,12 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\DateTime;
 use App\Repository\CommentaireRepository;
-
+/**
+ * Commentaire
+ *
+ * @ORM\Table(name="Commentaire")
+ * @ORM\Entity(repositoryClass="App\Repository\CommentaireRepository")
+ */
 #[ORM\Entity(repositoryClass: CommentaireRepository::class)]
 class Commentaire
 {
@@ -83,13 +88,5 @@ class Commentaire
     {
         return $this->idEvenement;
     }
-
-    public function setIdEvenement(?Evenement $idEvenement): self
-    {
-        $this->idEvenement = $idEvenement;
-
-        return $this;
-    }
-
 
 }
