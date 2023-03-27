@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="01ab9ed2-c71e-4b77-a701-4ed228af486e" name="Changes" comment="first change">
-      <change afterPath="$PROJECT_DIR$/.idea/commandlinetools/Symfony_25_03_2023_22_36.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/commandlinetools/schemas/frameworkDescriptionVersion1.1.4.xsd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/PidevProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PidevProject.iml" afterDir="false" />
+    <list default="true" id="01ab9ed2-c71e-4b77-a701-4ed228af486e" name="Changes" comment="reposoitory">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Commande.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Commande.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Commandeproduit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Commandeproduit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Facture.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Facture.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Panierproduit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Panierproduit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/PanierController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/panier/index.html.twig" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -212,7 +207,8 @@
       <workItem from="1679580943641" duration="663000" />
       <workItem from="1679660226262" duration="3973000" />
       <workItem from="1679780154770" duration="347000" />
-      <workItem from="1679780563937" duration="56000" />
+      <workItem from="1679780563937" duration="438000" />
+      <workItem from="1679951470989" duration="2684000" />
     </task>
     <task id="LOCAL-00001" summary="first change">
       <created>1679519693050</created>
@@ -221,7 +217,21 @@
       <option name="project" value="LOCAL" />
       <updated>1679519693050</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="entity">
+      <created>1679780824338</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1679780824338</updated>
+    </task>
+    <task id="LOCAL-00003" summary="reposoitory">
+      <created>1679780932214</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1679780932214</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -240,6 +250,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first change" />
-    <option name="LAST_COMMIT_MESSAGE" value="first change" />
+    <MESSAGE value="entity" />
+    <MESSAGE value="reposoitory" />
+    <option name="LAST_COMMIT_MESSAGE" value="reposoitory" />
   </component>
 </project>
