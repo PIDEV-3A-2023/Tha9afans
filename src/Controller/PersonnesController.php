@@ -75,4 +75,18 @@ class PersonnesController extends AbstractController
 
         return $this->redirectToRoute('app_personnes_index', [], Response::HTTP_SEE_OTHER);
     }
+    /**
+     * @Route("/photo/{id}", name="photo_display")
+     */
+    #[Route('/photo/{id}', name: 'photo_display')]
+    public function displayPhoto(Personnes $personne): Response
+    {
+        $photoData = stream_get_contents($personne->getPhoto());
+        if ($photoData === false) {
+            throw $this->createNotFoundException('Photo not found.');
+        }
+        $response = new Response($photoData);
+        $response->headers->set('Content-Type', 'image/png');
+        return $response;
+    }
 }

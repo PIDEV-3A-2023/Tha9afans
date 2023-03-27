@@ -17,6 +17,7 @@
                 <th>Role</th>
                 <th>Telephone</th>
                 <th>Adresse</th>
+                <th>Photo</th>
                 <th>Datenaissance</th>
                 <th>actions</th>
             </tr>
@@ -34,6 +35,9 @@
                 <td>{{ personne.telephone }}</td>
                 <td>{{ personne.adresse }}</td>
                 <td>
+                    {% if personne.getPhoto() is not null %}
+                        <img src="{{ url('photo_display', {'id': personne.id}) }}" alt="Photo">
+                    {% endif %}
                 </td>
                 <td>{{ personne.datenaissance ? personne.datenaissance|date('Y-m-d') : '' }}</td>
                 <td>
