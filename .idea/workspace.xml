@@ -5,6 +5,9 @@
   </component>
   <component name="ChangeListManager">
 <<<<<<< HEAD
+    <list default="true" id="01ab9ed2-c71e-4b77-a701-4ed228af486e" name="Changes" comment="crud" />
+=======
+<<<<<<< HEAD
     <list default="true" id="8085dd70-b785-4d44-a751-e9607591b51c" name="Changes" comment="first change">
 <<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -25,6 +28,7 @@
       <change beforePath="$PROJECT_DIR$/src/Entity/Panierproduit.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Panierproduit.php" afterDir="false" />
 >>>>>>> origin/main
     </list>
+>>>>>>> origin/main
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -233,7 +237,12 @@
       <workItem from="1679580943641" duration="663000" />
       <workItem from="1679660226262" duration="3973000" />
       <workItem from="1679780154770" duration="347000" />
+<<<<<<< HEAD
+      <workItem from="1679780563937" duration="438000" />
+      <workItem from="1679951470989" duration="3008000" />
+=======
       <workItem from="1679780563937" duration="56000" />
+>>>>>>> origin/main
 >>>>>>> origin/main
     </task>
     <task id="LOCAL-00001" summary="first change">
@@ -243,7 +252,28 @@
       <option name="project" value="LOCAL" />
       <updated>1679519693050</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="entity">
+      <created>1679780824338</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1679780824338</updated>
+    </task>
+    <task id="LOCAL-00003" summary="reposoitory">
+      <created>1679780932214</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1679780932214</updated>
+    </task>
+    <task id="LOCAL-00004" summary="crud">
+      <created>1679954879295</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1679954879295</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -262,6 +292,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first change" />
-    <option name="LAST_COMMIT_MESSAGE" value="first change" />
+    <MESSAGE value="entity" />
+    <MESSAGE value="reposoitory" />
+    <MESSAGE value="crud" />
+    <option name="LAST_COMMIT_MESSAGE" value="crud" />
   </component>
 </project>
