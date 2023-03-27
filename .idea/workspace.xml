@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="01ab9ed2-c71e-4b77-a701-4ed228af486e" name="Changes" comment="reposoitory">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/PanierController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/panier/index.html.twig" beforeDir="false" />
-    </list>
+    <list default="true" id="01ab9ed2-c71e-4b77-a701-4ed228af486e" name="Changes" comment="crud" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -208,7 +204,7 @@
       <workItem from="1679660226262" duration="3973000" />
       <workItem from="1679780154770" duration="347000" />
       <workItem from="1679780563937" duration="438000" />
-      <workItem from="1679951470989" duration="2684000" />
+      <workItem from="1679951470989" duration="3008000" />
     </task>
     <task id="LOCAL-00001" summary="first change">
       <created>1679519693050</created>
@@ -231,7 +227,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679780932214</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="crud">
+      <created>1679954879295</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1679954879295</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -252,6 +255,7 @@
     <MESSAGE value="first change" />
     <MESSAGE value="entity" />
     <MESSAGE value="reposoitory" />
-    <option name="LAST_COMMIT_MESSAGE" value="reposoitory" />
+    <MESSAGE value="crud" />
+    <option name="LAST_COMMIT_MESSAGE" value="crud" />
   </component>
 </project>
