@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
-use Doctrine\DBAL\Types\Types;
 
 use App\Repository\GalerieRepository;
+use Doctrine\DBAL\Types\Types;
 
 use Doctrine\ORM\Mapping as ORM;
 /**
@@ -25,9 +25,7 @@ class Galerie
     private ?string $photo = null;
 
     #[ORM\ManyToOne(inversedBy: 'galeries')]
-    private ?Evenement $idEvent=null;
-
-
+    private ?Evenement $idEvent = null;
 
 
     public function getId(): ?int
@@ -58,6 +56,5 @@ class Galerie
 
         return $this;
     }
-
 
 }

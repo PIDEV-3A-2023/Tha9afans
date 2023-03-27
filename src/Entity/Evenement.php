@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Entity;
-use App\Repository\EvenementRepository;
 
+use App\Repository\EvenementRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 /**
@@ -77,13 +77,13 @@ class Evenement
     }
 
 
-    public function getDate(): ?DateTime
+    public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
 
 
-    public function setDate(?DateTime $date): void
+    public function setDate(?\DateTimeInterface $date): void
     {
         $this->date = $date;
     }
