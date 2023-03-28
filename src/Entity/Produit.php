@@ -2,85 +2,63 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Produit
- *
- * @ORM\Table(name="produit", indexes={@ORM\Index(name="fkcategorie", columns={"id_categorie"}), @ORM\Index(name="fk_vendeur", columns={"id_vendeur"})})
- * #[ORM\Entity(repositoryClass: ProduitRepository::class)]
- */
-
+#[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id =null;
 
-    private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nom", type="string", length=255, nullable=false)
-     */
-    private $nom;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="string", length=255, nullable=false)
-     */
-    private $description;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="libelle", type="integer", nullable=false)
-     */
-    private $libelle;
+    #[ORM\Column(length: 255)]
+    private ?string $nom =null ;
+    #[ORM\Column(length: 255)]
+    private ?string $description =null ;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="prix", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $prix;
+
+
+    #[ORM\Libelle]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $libelle =null;
+
+
+    #[ORM\Column]
+    private ?float $prix= null;
+
+
+    #[ORM\Column(type: 'blob', nullable: true)]
+    private ?string $image=null;
+
+
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="image", type="blob", length=65535, nullable=true)
      */
-    // private $image;
-    #[ORM\Column(type: 'blob', nullable: true)]
-    private ?string $image=null;
+    //private $image;
+
+    #[ORM\Column]
+    private ?float $remise= null;
+    #[ORM\Column]
+    private ?float $rating= null;
+    #[ORM\Column]
+    private ?float $prixapresremise= null;
 
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="remise", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $remise;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="rating", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $rating;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="prixapresremise", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $prixapresremise;
+    #[ORM\ManyToOne(targetEntity: Personnes::class)]
+    private ?Personnes $idVendeur=null;
+    #[ORM\ManyToOne(targetEntity: Categorie::class)]
+    private ?Categorie $idCategorie=null;
 
     /**
      * @var \Personnes
@@ -90,7 +68,7 @@ class Produit
      *   @ORM\JoinColumn(name="id_vendeur", referencedColumnName="id")
      * })
      */
-    private $idVendeur;
+    //private $idVendeur;
 
     /**
      * @var \Categorie
@@ -100,7 +78,7 @@ class Produit
      *   @ORM\JoinColumn(name="id_categorie", referencedColumnName="id")
      * })
      */
-    private $idCategorie;
+    //private $idCategorie;
 
     public function getId(): ?int
     {
