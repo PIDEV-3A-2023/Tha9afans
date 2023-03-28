@@ -4,6 +4,7 @@ namespace App\Entity;
 use App\Repository\CategorieEvenementRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * CategorieEvenement
  *

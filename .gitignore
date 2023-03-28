@@ -19,9 +19,12 @@
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 
 =======
 >>>>>>> origin/main
+>>>>>>> 72edd1220de7b703e8ff3e193f574fdc08271bfe
 # Default ignored files
 .idea/shelf/
 .idea/workspace.xml
