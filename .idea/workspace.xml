@@ -4,24 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b94cefe-7889-484c-b59b-e63f85e91a61" name="Changes" comment="">
+    <list default="true" id="830f49d0-4580-43cc-8da2-ed7268610305" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/public/frontOffice/assets/img/logotha9afans.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/frontOffice/assets/img/wp2468726-culture-wallpapers.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/frontOffice/assets/img/wp2468755-culture-wallpapers.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CategorieEvenementControlleController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/GalerieControlleController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/JaimeController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SessionControlleController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Evenement.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Evenement.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Facture.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Facture.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Galerie.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Galerie.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Jaime.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Jaime.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Session.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Session.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/EvenementType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/EvenementType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/frontOffice/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/frontOffice/assets/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Panier.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Panier.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/evenement/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/evenement/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/evenement/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/evenement/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/galerie_controlle/index.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/jaime/index.html.twig" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,9 +20,7 @@
   </component>
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
-    <execution>
-      <executable path="composer" />
-    </execution>
+    <execution />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -175,7 +163,8 @@
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme" />
     </include_path>
   </component>
-  <component name="ProjectId" id="2Ndx4VGxc3ZkOnlA7bFdAJVqaQg" />
+
+  <component name="ProjectId" id="2Ne5OOFWuq04R0wEVKoWAfM6uN1" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -196,31 +185,20 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="2b94cefe-7889-484c-b59b-e63f85e91a61" name="Changes" comment="" />
-      <created>1680007573403</created>
+
+      <changelist id="830f49d0-4580-43cc-8da2-ed7268610305" name="Changes" comment="" />
+      <created>1680011695322</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1680007573403</updated>
-      <workItem from="1680007575621" duration="177000" />
-      <workItem from="1680007773987" duration="18000" />
-      <workItem from="1680007805127" duration="3838000" />
-      <workItem from="1680011749379" duration="3480000" />
-      <workItem from="1680093983208" duration="4921000" />
+      <updated>1680011695322</updated>
+      <workItem from="1680011697741" duration="1778000" />
+      <workItem from="1680018135584" duration="161000" />
+      <workItem from="1680018436993" duration="2470000" />
+
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/templates/base.html.twig</url>
-          <line>36</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

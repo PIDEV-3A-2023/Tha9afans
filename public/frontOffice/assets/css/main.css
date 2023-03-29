@@ -37,6 +37,38 @@ body {
   color: var(--color-default);
 }
 
+.tha9afanlogo{
+  position: relative;
+  font-size: 50px;
+  color: #0e3742;
+  text-transform: uppercase;
+  width: 100%;
+  text-align: center;
+}
+h1 span {
+  animation: animate 5s linear infinite;
+}
+ @keyframes animate {
+   0% {
+    color: #0e3742;
+    text-shadow: none;
+  }
+  100% {
+    color: #fff;
+    text-shadow: 0 0 5px #03bcf4,
+    0 0 20px #03bcf4,
+    0 0 400px #03bcf4,
+    0 0 1000px #03bcf4;
+
+  }
+
+
+
+ }
+
+
+
+
 a {
   color: var(--color-primary);
   text-decoration: none;
