@@ -4,9 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b94cefe-7889-484c-b59b-e63f85e91a61" name="Changes" comment="crud">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="2b94cefe-7889-484c-b59b-e63f85e91a61" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/CategorieEvenementControlleController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/GalerieControlleController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/JaimeController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SessionControlleController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Evenement.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Evenement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Facture.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Facture.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Galerie.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Galerie.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Jaime.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Jaime.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Session.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Session.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/EvenementType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/EvenementType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/evenement/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/evenement/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/evenement/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/evenement/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/galerie_controlle/index.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/jaime/index.html.twig" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,109 +175,42 @@
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-grapheme" />
     </include_path>
   </component>
-  <component name="ProjectId" id="2NNzDbBJOEVQW68morGI7eVBv4G" />
+  <component name="ProjectId" id="2Ndx4VGxc3ZkOnlA7bFdAJVqaQg" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "node.js.selected.package.tslint": "(autodetect)"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\ghazo\OneDrive\Desktop\projet\symfony\Tha9afans\public\frontOffice\assets\img" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\ghazo\OneDrive\Desktop\projet\symfony\Tha9afans\public\frontOffice" />
-    </key>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="01ab9ed2-c71e-4b77-a701-4ed228af486e" name="Changes" comment="" />
-      <created>1679519208860</created>
+      <changelist id="2b94cefe-7889-484c-b59b-e63f85e91a61" name="Changes" comment="" />
+      <created>1680007573403</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1679519208860</updated>
-      <workItem from="1679519210174" duration="667000" />
-      <workItem from="1679519916164" duration="41000" />
-      <workItem from="1679519959100" duration="77000" />
-      <workItem from="1679520048418" duration="247000" />
-      <workItem from="1679522498494" duration="244000" />
-      <workItem from="1679523025160" duration="2702000" />
-      <workItem from="1679627450506" duration="5486000" />
-      <workItem from="1679520048418" duration="3240000" />
-      <workItem from="1679575885230" duration="4235000" />
-      <workItem from="1679580943641" duration="162000" />
-      <workItem from="1679580943641" duration="663000" />
-      <workItem from="1679660226262" duration="3973000" />
-      <workItem from="1679780154770" duration="347000" />
-      <workItem from="1679780563937" duration="438000" />
-      <workItem from="1679951470989" duration="3008000" />
-      <workItem from="1679780563937" duration="56000" />
-      <workItem from="1679520048418" duration="3240000" />
-      <workItem from="1679575885230" duration="4235000" />
-      <workItem from="1679580943641" duration="162000" />
-      <workItem from="1679580943641" duration="663000" />
-      <workItem from="1679660226262" duration="3973000" />
-      <workItem from="1679780154770" duration="347000" />
-      <workItem from="1679780563937" duration="438000" />
-      <workItem from="1679951470989" duration="3008000" />
-      <workItem from="1679780563937" duration="56000" />
+      <updated>1680007573403</updated>
+      <workItem from="1680007575621" duration="177000" />
+      <workItem from="1680007773987" duration="18000" />
+      <workItem from="1680007805127" duration="3838000" />
+      <workItem from="1680011749379" duration="3480000" />
+      <workItem from="1680093983208" duration="4921000" />
     </task>
-    <task id="LOCAL-00001" summary="first change">
-      <created>1679519693050</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1679519693050</updated>
-    </task>
-    <task id="LOCAL-00002" summary="entity">
-      <created>1679780824338</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1679780824338</updated>
-    </task>
-    <task id="LOCAL-00003" summary="reposoitory">
-      <created>1679780932214</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1679780932214</updated>
-    </task>
-    <task id="LOCAL-00004" summary="crud">
-      <created>1679954879295</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1679954879295</updated>
-    </task>
-    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="first change" />
-    <MESSAGE value="entity" />
-    <MESSAGE value="reposoitory" />
-    <MESSAGE value="crud" />
-    <option name="LAST_COMMIT_MESSAGE" value="crud" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -270,7 +218,7 @@
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/templates/base.html.twig</url>
           <line>36</line>
-          <option name="timeStamp" value="1" />
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
