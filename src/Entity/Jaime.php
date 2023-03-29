@@ -20,12 +20,12 @@ class Jaime
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'jaimes')]
-    private ?Evenement $idEvent=null;
+    private ?Evenement $Event=null;
 
 
 
     #[ORM\ManyToOne(inversedBy: 'jaimes')]
-    private ?Personnes $idUser=null;
+    private ?Personnes $User=null;
 
 
 
@@ -34,26 +34,26 @@ class Jaime
         return $this->id;
     }
 
-    public function getIdEvent(): ?Evenement
+    public function getEvent(): ?Evenement
     {
-        return $this->idEvent;
+        return $this->Event;
     }
 
-    public function setIdEvent(?Evenement $idEvent): self
+    public function setEvent(?Evenement $Event): self
     {
-        $this->idEvent = $idEvent;
+        $this->Event = $Event;
 
         return $this;
     }
 
-    public function getIdUser(): ?Personnes
+    public function getUser(): ?Personnes
     {
-        return $this->idUser;
+        return $this->User;
     }
 
-    public function setIdUser(?Personnes $idUser): self
+    public function setUser(?Personnes $User): self
     {
-        $this->idUser = $idUser;
+        $this->User = $User;
 
         return $this;
     }

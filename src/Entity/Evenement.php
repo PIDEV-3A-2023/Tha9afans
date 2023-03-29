@@ -26,10 +26,12 @@ class Evenement
     private ?string $description = null;
 
     #[ORM\Column(type: 'date')]
-    private ?DateTime $date = null;
+    private ?\DateTime $date = null;
+
+
 
     #[ORM\ManyToOne(inversedBy: 'evenements')]
-    private ?Personnes $idCreateur=null;
+    private ?Personnes $createur=null;
 
     #[ORM\Column(length: 255)]
     private ?string $localisation = null;
@@ -44,7 +46,7 @@ class Evenement
     private ?int $prix = null;
 
     #[ORM\ManyToOne(inversedBy: 'evenements')]
-    private ?CategorieEvenement $idCategorie=null;
+    private ?CategorieEvenement $categorie=null;
 
 
     public function getId(): ?int
@@ -89,15 +91,15 @@ class Evenement
     }
 
 
-    public function getIdCreateur(): ?Personnes
+    public function getcreateur(): ?Personnes
     {
-        return $this->idCreateur;
+        return $this->createur;
     }
 
 
-    public function setIdCreateur(?Personnes $idCreateur): void
+    public function setCreateur(?Personnes $createur): void
     {
-        $this->idCreateur = $idCreateur;
+        $this->createur = $createur;
     }
 
 
@@ -145,19 +147,14 @@ class Evenement
     }
 
 
-    public function getIdCategorie(): ?CategorieEvenement
+    public function getCategorie(): ?CategorieEvenement
     {
-        return $this->idCategorie;
+        return $this->categorie;
     }
 
 
-    public function setIdCategorie(?CategorieEvenement $idCategorie): void
+    public function setCategorie(?CategorieEvenement $categorie): void
     {
-        $this->idCategorie = $idCategorie;
+        $this->categorie = $categorie;
     }
-
-
-
-
-
 }
