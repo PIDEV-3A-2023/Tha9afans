@@ -45,7 +45,13 @@
             </tr>
             <tr>
                 <th>Photo</th>
-                <td>{{ personne.photo }}</td>
+                <td>
+                    {% if personne.photo is not empty %}
+                        <img src="{{ path('personne_show', {'id': personne.id}) }}" alt="{{ personne.nom }}" width="100">
+                    {% else %}
+                        Aucune photo disponible
+                    {% endif %}
+                </td>
             </tr>
             <tr>
                 <th>Datenaissance</th>

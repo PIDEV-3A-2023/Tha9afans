@@ -35,8 +35,10 @@
                 <td>{{ personne.telephone }}</td>
                 <td>{{ personne.adresse }}</td>
                 <td>
-                    {% if personne.getPhoto() is not null %}
-                        <img src="{{ url('photo_display', {'id': personne.id}) }}" alt="Photo">
+                    {% if personne.photo is not empty %}
+                        <img src="{{ path('personne_show', {'id': personne.id}) }}" alt="{{ personne.nom }}" width="100">
+                    {% else %}
+                        Aucune photo disponible
                     {% endif %}
                 </td>
                 <td>{{ personne.datenaissance ? personne.datenaissance|date('Y-m-d') : '' }}</td>
