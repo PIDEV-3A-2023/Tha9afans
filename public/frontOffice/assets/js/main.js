@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   let navbarlinks = select('#sidenav .scrollto', true)
   const navbarlinksActive = () => {
-    let position = window.scrollY+ 200
+    let position = window.scrollY
     navbarlinks.forEach(navbarlink => {
       if (!navbarlink.hash) return
       let section = select(navbarlink.hash)
