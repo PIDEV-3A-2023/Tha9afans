@@ -29,14 +29,14 @@ class Session
     private ?string $parlant = null;
 
     #[ORM\Column(type: 'time')]
-    private ?DateTime $debit = null;
+    private ?\DateTime $debit = null;
 
     #[ORM\Column(type: 'time')]
-    private ?DateTime $fin = null;
+    private ?\DateTime $fin = null;
 
 
     #[ORM\ManyToOne(inversedBy: 'sessions')]
-    private ?Evenement $idEvenement=null;
+    private ?Evenement $evenement=null;
 
     public function getId(): ?int
     {
@@ -81,39 +81,39 @@ class Session
     }
 
 
-    public function getDebit(): ?DateTime
+    public function getDebit(): \DateTime
     {
         return $this->debit;
     }
 
 
-    public function setDebit(?DateTime $debit): void
+    public function setDebit(\DateTime $debit): void
     {
         $this->debit = $debit;
     }
 
 
-    public function getFin(): ?DateTime
+    public function getFin(): \DateTime
     {
         return $this->fin;
     }
 
 
-    public function setFin(?DateTime $fin): void
+    public function setFin(\DateTime $fin): void
     {
         $this->fin = $fin;
     }
 
 
-    public function getIdEvenement(): ?Evenement
+    public function getevenement(): ?Evenement
     {
-        return $this->idEvenement;
+        return $this->evenement;
     }
 
 
-    public function setIdEvenement(?Evenement $idEvenement): void
+    public function setevenement(?Evenement $evenement): void
     {
-        $this->idEvenement = $idEvenement;
+        $this->evenement = $evenement;
     }
 
 

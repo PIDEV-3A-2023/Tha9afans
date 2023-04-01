@@ -1,20 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello JaimeController!{% endblock %}
+{% block title %}Jaime index{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Jaime index</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for jaime in jaimes %}
+            <tr>
+                <td>{{ jaime.id }}</td>
+                <td>
+                    <a href="{{ path('app_jaime_show', {'id': jaime.id}) }}">show</a>
+                    <a href="{{ path('app_jaime_edit', {'id': jaime.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/ghazo/OneDrive/Desktop/projet/symfony/Tha9afans/src/Controller/JaimeController.php'|file_link(0) }}">src/Controller/JaimeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/ghazo/OneDrive/Desktop/projet/symfony/Tha9afans/templates/jaime/index.html.twig'|file_link(0) }}">templates/jaime/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <a href="{{ path('app_jaime_new') }}">Create new</a>
 {% endblock %}
