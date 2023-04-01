@@ -5,54 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f22ed062-8277-40ac-aebb-558e1dc24686" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Controller/EvenementController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/QuestionController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/QuizController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/QuizQuestionController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/ScoreController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Form/EvenementType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Form/QuestionType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Form/QuizQuestionType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Form/QuizType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Form/ScoreType.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/evenement/_delete_form.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/evenement/_form.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/evenement/edit.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/evenement/index.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/evenement/new.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/evenement/show.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/question/_delete_form.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/question/_form.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/question/edit.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/question/index.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/question/new.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/question/show.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/quiz/_delete_form.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/quiz/_form.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/quiz/edit.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/quiz/index.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/quiz/new.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/quiz/show.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/quiz_question/_delete_form.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/quiz_question/_form.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/quiz_question/edit.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/quiz_question/index.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/quiz_question/new.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/quiz_question/show.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/score/_delete_form.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/score/_form.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/score/edit.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/score/index.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/score/new.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/score/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/frontOffice/assets/img/logofonce.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/EvenementControlleController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/CategorieEvenement.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/CategorieEvenement.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Personnes.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Personnes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/evenement_controlle/index.html.twig" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
