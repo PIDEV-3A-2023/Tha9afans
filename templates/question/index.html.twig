@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Question index{% endblock %}
+
+{% block body %}
+    <h1>Question index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>QuestionId</th>
+                <th>Question</th>
+                <th>Answer</th>
+                <th>Timer</th>
+                <th>FirstPossibleAnswer</th>
+                <th>SecondPossibleAnswer</th>
+                <th>ThirdPossibleAnswer</th>
+                <th>Image</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for question in questions %}
+            <tr>
+                <td>{{ question.questionId }}</td>
+                <td>{{ question.question }}</td>
+                <td>{{ question.answer }}</td>
+                <td>{{ question.timer }}</td>
+                <td>{{ question.firstPossibleAnswer }}</td>
+                <td>{{ question.secondPossibleAnswer }}</td>
+                <td>{{ question.thirdPossibleAnswer }}</td>
+                <td>{{ question.image }}</td>
+                <td>
+                    <a href="{{ path('app_question_show', {'questionId': question.questionId}) }}">show</a>
+                    <a href="{{ path('app_question_edit', {'questionId': question.questionId}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_question_new') }}">Create new</a>
+{% endblock %}
