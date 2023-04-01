@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
 
+    <list default="true" id="830f49d0-4580-43cc-8da2-ed7268610305" name="Changes" comment="index">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+
     <list default="true" id="2b94cefe-7889-484c-b59b-e63f85e91a61" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+
       <change beforePath="$PROJECT_DIR$/public/frontOffice/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/frontOffice/assets/css/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/frontOffice/assets/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/frontOffice/assets/js/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/EvenementController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/EvenementController.php" afterDir="false" />
@@ -16,6 +21,7 @@
       <change beforePath="$PROJECT_DIR$/templates/evenement/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/evenement/show.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/session/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/session/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/session/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/session/show.html.twig" afterDir="false" />
+
 
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -198,14 +204,32 @@
       <updated>1680011695322</updated>
       <workItem from="1680011697741" duration="1778000" />
       <workItem from="1680018135584" duration="161000" />
+
+      <workItem from="1680018436993" duration="2570000" />
+      <workItem from="1680099296456" duration="185000" />
+
       <workItem from="1680018436993" duration="2470000" />
       <workItem from="1680182725285" duration="620000" />
-      <workItem from="1680183569278" duration="7645000" />
+      <workItem from="1680183569278" duration="8331000" />
+
     </task>
+    <task id="LOCAL-00001" summary="index">
+      <created>1680020969644</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1680020969644</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="index" />
+    <option name="LAST_COMMIT_MESSAGE" value="index" />
   </component>
 
 </project>
