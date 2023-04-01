@@ -29,8 +29,6 @@ class Panier
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private ?Personnes $idUser=null;
 
-
-
     public function getId(): ?int
     {
         return $this->id;
