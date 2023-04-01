@@ -36,7 +36,7 @@ class Session
 
 
     #[ORM\ManyToOne(inversedBy: 'sessions')]
-    private ?Evenement $Evenement=null;
+    private ?Evenement $evenement=null;
 
     public function getId(): ?int
     {
@@ -81,39 +81,39 @@ class Session
     }
 
 
-    public function getDebit(): ?DateTime
+    public function getDebit(): \DateTime
     {
         return $this->debit;
     }
 
 
-    public function setDebit(?DateTime $debit): void
+    public function setDebit(\DateTime $debit): void
     {
         $this->debit = $debit;
     }
 
 
-    public function getFin(): ?DateTime
+    public function getFin(): \DateTime
     {
         return $this->fin;
     }
 
 
-    public function setFin(?DateTime $fin): void
+    public function setFin(\DateTime $fin): void
     {
         $this->fin = $fin;
     }
 
 
-    public function getEvenement(): ?Evenement
+    public function getevenement(): ?Evenement
     {
-        return $this->Evenement;
+        return $this->evenement;
     }
 
 
-    public function setEvenement(?Evenement $Evenement): void
+    public function setevenement(?Evenement $evenement): void
     {
-        $this->Evenement = $Evenement;
+        $this->evenement = $evenement;
     }
 
 
