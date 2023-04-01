@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4e2db21f-64e6-414c-8ec2-8b3090443772" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/PersonnesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PersonnesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Personnes.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Personnes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/personnes/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/personnes/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/personnes/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/personnes/show.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,7 +205,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="01ab9ed2-c71e-4b77-a701-4ed228af486e" name="Changes" comment="" />
+      <changelist id="4e2db21f-64e6-414c-8ec2-8b3090443772" name="Changes" comment="" />
       <created>1679519208860</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -230,6 +235,10 @@
       <workItem from="1679780563937" duration="438000" />
       <workItem from="1679951470989" duration="3008000" />
       <workItem from="1679780563937" duration="56000" />
+      <workItem from="1679961561844" duration="794000" />
+      <workItem from="1680017676875" duration="1009000" />
+      <workItem from="1680314929508" duration="1352000" />
+      <workItem from="1680350784286" duration="858000" />
     </task>
     <task id="LOCAL-00001" summary="first change">
       <created>1679519693050</created>

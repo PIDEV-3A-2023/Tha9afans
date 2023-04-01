@@ -256,30 +256,30 @@ class Personnes
     /**
      * @return string|null
      */
-    public function getPhoto(): ?string
+    /**
+     * Set the value of photo
+     *
+     * @param  resource|null  $photo
+     *
+     * @return  self
+     */
+    public function setPhoto($photo): self
     {
-        $photoData = stream_get_contents($this->photo);
-        if ($photoData === false) {
-            return null;
-        }
-        return base64_encode($photoData);
+        $this->photo = $photo;
+
+        return $this;
     }
 
     /**
-     * @param string|null $photo
+     * Get the value of photo
+     *
+     * @return  resource|null
      */
-    public function setPhoto(?string $photo): void
+    public function getPhoto()
     {
-        $photoData = stream_get_contents($this->photo);
-        if ($photoData === null) {
-            $this->photo = null;
-            return;
-        }
-        $photoBlob = fopen('php://memory', 'r+');
-        fwrite($photoBlob, base64_decode($photoData));
-        rewind($photoBlob);
-        $this->photo = $photoBlob;
+        return $this->photo;
     }
+
 
     /**
      * @return \DateTimeInterface|null
