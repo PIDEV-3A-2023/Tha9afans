@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
 
-    <list default="true" id="830f49d0-4580-43cc-8da2-ed7268610305" name="Changes" comment="index">
-
-    <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-    <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
 
 
     <list default="true" id="2b94cefe-7889-484c-b59b-e63f85e91a61" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+
 
       <change beforePath="$PROJECT_DIR$/public/frontOffice/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/frontOffice/assets/css/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/frontOffice/assets/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/frontOffice/assets/js/main.js" afterDir="false" />
@@ -233,4 +230,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="index" />
   </component>
 
+
 </project>
+
+
+
+
+
