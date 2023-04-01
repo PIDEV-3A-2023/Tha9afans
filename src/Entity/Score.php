@@ -34,13 +34,13 @@ class Score
     #[ORM\JoinColumn(name: 'id_user', referencedColumnName: 'id')]
     private Personnes $idUser;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
+//    /**
+//     * @var int
+//     *
+//     * @ORM\Column(name="id", type="integer", nullable=false)
+//     * @ORM\Id
+//     * @ORM\GeneratedValue(strategy="IDENTITY")
+//     */
 
 
     public function getId(): ?int
