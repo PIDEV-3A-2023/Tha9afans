@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2b94cefe-7889-484c-b59b-e63f85e91a61" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+
       <change beforePath="$PROJECT_DIR$/public/frontOffice/assets/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/frontOffice/assets/css/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/frontOffice/assets/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/frontOffice/assets/js/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/EvenementController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/EvenementController.php" afterDir="false" />
@@ -15,6 +16,7 @@
       <change beforePath="$PROJECT_DIR$/templates/evenement/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/evenement/show.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/session/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/session/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/session/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/session/show.html.twig" afterDir="false" />
+
 
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -199,7 +201,7 @@
       <workItem from="1680018135584" duration="161000" />
       <workItem from="1680018436993" duration="2470000" />
       <workItem from="1680182725285" duration="620000" />
-      <workItem from="1680183569278" duration="7645000" />
+      <workItem from="1680183569278" duration="8331000" />
     </task>
     <servers />
   </component>
