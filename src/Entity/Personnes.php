@@ -4,18 +4,19 @@ namespace App\Entity;
 use App\Repository\PersonnesRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Personnes
  *
  * @ORM\Table(name="personnes", uniqueConstraints={@ORM\UniqueConstraint(name="unique_email", columns={"email"})})
  * @ORM\Entity(repositoryClass="App\Repository\PersonnesRepository")
+ * @method string getUserIdentifier()
  */
 
 
 #[ORM\Entity(repositoryClass: PersonnesRepository::class)]
-class Personnes
-{
+class Personnes implements UserInterface{
     /**
      * @var int
      *o
@@ -296,7 +297,23 @@ class Personnes
         $this->datenaissance = $datenaissance;
     }
 
+    public function getRoles()
+    {
+        // TODO: Implement getRoles() method.
+    }
 
+    public function getUsername()
+    {
+        // TODO: Implement getUsername() method.
+    }
 
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
 
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
 }
