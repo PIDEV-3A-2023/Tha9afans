@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Personnes index{% endblock %}
+{% block title %}Liste des personnes{% endblock %}
 
 {% block body %}
-    <h1>Personnes index</h1>
 
+    <h1 style="color: #1D3557;">liste des personnes</h1>
+    <br> <br>
     <table class="table">
         <thead>
             <tr>
@@ -19,7 +19,7 @@
                 <th>Adresse</th>
                 <th>Photo</th>
                 <th>Datenaissance</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -43,8 +43,8 @@
                 </td>
                 <td>{{ personne.datenaissance ? personne.datenaissance|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_personnes_show', {'id': personne.id}) }}">show</a>
-                    <a href="{{ path('app_personnes_edit', {'id': personne.id}) }}">edit</a>
+                    <a href="{{ path('app_personnes_show', {'id': personne.id}) }}" style="background-color: #1D3557;color:#F1FAEE " >Détail</a>
+                    <a href="{{ path('app_personnes_edit', {'id': personne.id}) }}" style="background-color: #1D3557;color:#F1FAEE">Modifier</a>
                 </td>
             </tr>
         {% else %}
