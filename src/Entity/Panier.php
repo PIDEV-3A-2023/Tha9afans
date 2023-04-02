@@ -26,9 +26,8 @@ class Panier
     private ?Personnes $idUser=null;*/
 
     #[ORM\ManyToOne(targetEntity: Personnes::class)]
-    #[ORM\JoinColumn(name: 'id_user', referencedColumnName: 'id')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private ?Personnes $idUser=null;
-
 
     public function getId(): ?int
     {
