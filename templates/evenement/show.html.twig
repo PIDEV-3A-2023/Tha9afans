@@ -12,8 +12,9 @@
             }
 
             .section-title h2 {
+
                 font-size: 14px;
-                padding: 0;
+                padding-top: 70px;
                 line-height: 1px;
                 margin: 0 0 5px 0;
                 letter-spacing: 2px;
@@ -93,9 +94,9 @@
             </nav>
         </div><!-- End Breadcrumbs -->
 
-        <!-- ======= Service Details Section ======= -->
-        <section id="service-details" class="service-details">
-            <div class="container" data-aos="fade-up">
+
+        <section id="service-details" class="service-details" data-aos="fade-up">
+            <div class="container" >
                 <div class="row gy-4">
 
                     <div class="col-lg-4">
@@ -108,37 +109,37 @@
                         </div>
                         </nav><!-- .nav-menu -->
                     </div>
-                    <div class="col-lg-8">
-                        <section id="Description" class="Description" data-aos="fade-up">
+                    <div class="col-lg-8" >
+                        <section id="Description" class="Description" >
+                            <img src="../frontOffice/assets/img/logotha9afans.png" alt="" class="img-fluid services-img"style="width:50%">
                             <div class="section-title">
-                                <img src="../frontOffice/assets/img/logotha9afans.png" alt="" class="img-fluid services-img"style="width:50%">
-                                <h2>Description</h2>
-                                <h3>{{ evenement.nom }}</h3>
-                                <p>
-                                    {{ evenement.description }}
-                                    {{ evenement.date ? evenement.date|date('Y-m-d') : '' }}
-                                    {{ evenement.nbAime }}
-                                </p>
+                               <h2>Description</h2>
                             </div>
+                            <h3>{{ evenement.nom }}</h3>
+                            <p>
+                                {{ evenement.description }}
+                                {{ evenement.date ? evenement.date|date('Y-m-d') : '' }}
+                                {{ evenement.nbAime }}
+                            </p>
                         </section>
 
 
-                        <section id="Session" class="Session" data-aos="fade-up">
+                        <section id="Session" class="Session" >
                             <div class="section-title">
                                 <h2>Sessions</h2>
-                                {{ include('session/index.html.twig') }}
                             </div>
+                            {{ include('session/index.html.twig') }}
                         </section>
 
-                        <section id="Location" class="Location" data-aos="fade-up">
+                        <section id="Location" class="Location" >
                             <div class="section-title">
                                 <h2>Location</h2>
-                                <div>
-                                    <iframe style="border:0; width: 100%; height: 370px;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" allowfullscreen></iframe>
-                                </div>
+                            </div>
+                            <div>
+                                <iframe style="border:0; width: 100%; height: 370px;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" allowfullscreen></iframe>
                             </div>
                         </section>
-                        <section id="contact" class="contact" data-aos="fade-up">
+                        <section id="contact" class="contact" >
                                 <div class="section-title">
                                     <h2>Contact</h2>
                                     <p>Contact Us</p>
@@ -169,6 +170,14 @@
                                     </div>
                                 </div>
                         </section>
+                        <section id="Commentaire" class="Commentaire" ></section>
+
+
+
+
+
+
+
                     </div>
 
                 </div>

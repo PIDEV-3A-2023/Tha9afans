@@ -17,6 +17,9 @@ class SessionType extends AbstractType
             ->add('parlant')
             ->add('debit')
             ->add('fin')
+            ->add('evenement', null, [
+                'choice_label' => 'nom',
+            ] )
         ;
     }
 
