@@ -35,6 +35,7 @@ class Commande
 
 
     #[ORM\ManyToOne(targetEntity: Personnes::class)]
+    #[ORM\JoinColumn(name: 'id_user', referencedColumnName: 'id')]
     private ?Personnes $idUser=null;
 
 

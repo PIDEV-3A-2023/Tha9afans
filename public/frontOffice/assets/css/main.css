@@ -20,8 +20,8 @@
 /* Colors */
 :root {
   --color-default: #0a0d13;
-  --color-primary: #0d42ff;
-  --color-secondary: #0e1d34;
+  --color-primary: #001A23;
+  --color-secondary: #1D3557;
 }
 
 /* Smooth scroll behavior */
@@ -35,6 +35,8 @@
 body {
   font-family: var(--font-default);
   color: var(--color-default);
+  margin-top: 100px;
+  background: #23242a;
 }
 
 .tha9afanlogo{
@@ -317,7 +319,7 @@ section {
 .header {
   transition: all 0.5s;
   z-index: 997;
-  padding: 30px 0;
+  padding: 50px 0;
 }
 
 .header.sticked {
@@ -327,7 +329,7 @@ section {
 }
 
 .header .logo img {
-  max-height: 40px;
+  max-height: 60px;
   margin-right: 6px;
 }
 
@@ -1735,8 +1737,7 @@ section {
 .hero {
   width: 100%;
   min-height: 50vh;
-  background-color: var(--color-secondary);
-  background-image: url("../img/hero-bg.png");
+  background-color: #fff;
   background-size: cover;
   background-position: center;
   position: relative;
@@ -1945,5 +1946,199 @@ section {
 .footer .credits a {
   color: #fff;
 }
+.box{
+  position: relative;
+  width: 420px;
+  height: 460px;
+  background: #001A23;
+  border-radius: 20px;
+  overflow: hidden;
+
+}
+.box::before
+{
+  content:'';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 420px;
+  height: 460px;
+  background: linear-gradient(0deg,transparent,
+  transparent,#45f3ff,#45f3ff,#45f3ff);
+  z-index:1 ;
+  transform-origin: bottom right;
+  animation: animate 6s linear infinite;
+}
+.box::after
+{
+  content:'';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 420px;
+  height: 460px;
+  background: linear-gradient(0deg,transparent,
+  transparent,#45f3ff,#45f3ff,#45f3ff);
+  z-index:1 ;
+  transform-origin: bottom right;
+  animation: animate 6s linear infinite;
+  animation-delay: -3s;
+
+}
+.borderline{
+  position: absolute;
+  top: 0;
+  inset: 0;
+}
+.borderline::before
+{
+  content:'';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 380px;
+  height: 420px;
+  background: linear-gradient(0deg,transparent,
+  transparent,#457B9D,#457B9D,#457B9D);
+  z-index:1 ;
+  transform-origin: bottom right;
+  animation: animate 6s linear infinite;
+  animation-delay: -1.5s;
+}
+.borderline::after
+{
+  content:'';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 380px;
+  height: 420px;
+  background: linear-gradient(0deg,transparent,
+  transparent,#457B9D,#457B9D,#457B9D);
+  z-index:1 ;
+  transform-origin: bottom right;
+  animation: animate 6s linear infinite;
+  animation-delay: -1.5s;
+}
+@keyframes animate {
+  0%
+  {
+    transform: rotate(0deg);
+  }
+  100%
+  {
+    transform: rotate(360deg);
+  }
+
+}
+.box form{
+  position: absolute;
+  inset: 4px;
+  background: #001A23;
+  padding: 50px 40px;
+  border-radius: 8px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+.box form h2{
+  color: #F1FAEE;
+  font-weight: 400;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+.box form .inputBox{
+  position: relative;
+  width: 300px;
+  margin-top: 35px;
+}
+.box form .inputBox input{
+  position: relative;
+  width: 100%;
+  padding: 20px 10px 10px;
+  background: transparent;
+  outline: none;
+  border:none;
+  box-shadow: none;
+  color: black;
+  font-size: 1.0em;
+  letter-spacing: 0.05em;
+  transition: 0.5s;
+  z-index: 10;
+}
+.box form .inputBox span{
+  position: absolute;
+  left: 0;
+  padding: 20px 10px 10px;
+  pointer-events: none;
+  color: #8f8f8f;
+  font-size: 1.2em;
+  letter-spacing: 0.05em;
+  transition: 0.5s;
+}
+.box form .inputBox input:valid ~ span,
+.box form .inputBox input:focus ~ span
+{
+  color: #F1FAEE;
+  font-size: 1.0em;
+  transform: translateX(-10px) translateY(-34px);
+}
+.box form .inputBox i
+{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height:2px;
+  background: #fff;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: 0.5s;
+  pointer-events: none;
+  z-index: 9;
+}
+.box form .inputBox input:valid ~ i,
+.box form .inputBox input:focus ~ i
+{
+  height: 44px;
+
+}
+.box form .links{
+  display: flex;
+  justify-content: space-between;
+}
+.box form .links a
+{
+  margin: 10px 0;
+  font-size: 1.0em;
+  color: #8f8f8f;
+  text-decoration: none;
+}
+.box form .links a:hover,
+.box form .links a:nth-child(2)
+{
+  color: #457B9D;
+}
+.loginbutton
+{
+  border: none;
+  outline: none;
+  padding:  9px 25px;
+  background: #F1FAEE;
+  cursor: pointer;
+  font-size: 1.2em;
+  border-radius: 50px;
+  font-weight: 600;
+  width: 100px;
+  margin-top: 10px;
+  margin-left: 120px;
+}
+
+.loginbutton:active
+{
+  opacity: 0.8;
+
+}
+
 
 
