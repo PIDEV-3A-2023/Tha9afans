@@ -3,37 +3,44 @@
 {% block title %}Facture index{% endblock %}
 
 {% block body %}
-    <h1>Facture index</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-40">
+                <h3>Facture</h3>
+                <input type="text" class="form-control" id="myInput" placeholder="Search">
+                <br>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Datefacture</th>
+                        <th>Tva</th>
+                        <th>Refrancefacture</th>
+                    </tr>
+                    </thead>
+                    <tbody id="myTable">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Datefacture</th>
-                <th>Tva</th>
-                <th>Refrancefacture</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for facture in factures %}
-            <tr>
-                <td>{{ facture.id }}</td>
-                <td>{{ facture.datefacture ? facture.datefacture|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ facture.tva }}</td>
-                <td>{{ facture.refrancefacture }}</td>
-                <td>
-                    <a href="{{ path('app_facture_show', {'id': facture.id}) }}">show</a>
-                    <a href="{{ path('app_facture_edit', {'id': facture.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    <tr>
+                        <td>01/01/2023</td>
+                        <td>20%</td>
+                        <td>ABC123</td>
+                    </tr>
 
-    <a href="{{ path('app_facture_new') }}">Create new</a>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
 {% endblock %}

@@ -8,6 +8,7 @@
 
 
 
+
     <list default="true" id="2b94cefe-7889-484c-b59b-e63f85e91a61" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
 
@@ -21,6 +22,7 @@
       <change beforePath="$PROJECT_DIR$/templates/evenement/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/evenement/show.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/session/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/session/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/session/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/session/show.html.twig" afterDir="false" />
+
     </list>
 
     <option name="SHOW_DIALOG" value="false" />
@@ -225,5 +227,7 @@
     <option name="LAST_COMMIT_MESSAGE" value="index" />
   </component>
 
+
 </project>
+
 
