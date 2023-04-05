@@ -45,11 +45,9 @@ class EvenementController extends AbstractController
     #[Route('/{id}', name: 'app_evenement_show', methods: ['GET'])]
     public function show(Evenement $evenement,SessionRepository $sessionRepository,GalerieRepository $galerieRepository): Response
     { $sessions = $sessionRepository->findBy(['evenement' => $evenement]);
-        $photo = $galerieRepository->findBy(['event' => $evenement]);
         return $this->render('evenement/show.html.twig', [
             'evenement' => $evenement,
             'sessions' => $sessions,
-            'photo' => $photo
         ]);
     }
 
