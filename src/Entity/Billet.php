@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 
-use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\BilletRepository;
 /**
@@ -21,6 +21,8 @@ class Billet
     private $id;
 
     #[ORM\Column(type: 'string', length: 150)]
+//    #[Assert\NotBlank(message:"fisrtName is required f billet ")]
+//    #[Assert\Length(min: 3)]
     private ?string $code = null;
 
     #[ORM\Column(type: 'date')]
