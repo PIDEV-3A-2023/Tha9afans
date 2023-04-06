@@ -42,9 +42,19 @@
         <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
         <nav id="navbar" class="navbar">
             <ul>
+
+                <li><a href="{{ path('app_personnes_index') }}" class="active">Users</a></li>
+                <li><a href="{{ path('app_evenement_index') }}">Events</a></li>
+                <li><a href="{{ path('app_panier_index') }}">Panier</a></li>
+                <li><a href="{{ path('app_facture_index') }}">Facture</a></li>
+                <li><a href="about.html">Calendar</a></li>
+                <li><a href="services.html">About us</a></li>
+            <!--
+
                 <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="services.html">Quiz</a></li>
+
                 <li><a href="{{ path('app_evenement_index') }}">Evenements</a></li>
                 <li><a href="{{ path('app_panier_index') }}">Panier</a></li>
                 <li class="dropdown"><a href="#"><span>Produit</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
