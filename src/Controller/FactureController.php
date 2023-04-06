@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
+
 use App\Entity\Facture;
 use App\Form\FactureType;
 use App\Repository\FactureRepository;
@@ -76,4 +80,51 @@ class FactureController extends AbstractController
 
         return $this->redirectToRoute('app_facture_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    public function showall(FactureRepository $factureRepository): Response
+    {
+        return $this->render('facture/showall.html.twig', [
+            'factures' => $factureRepository->findAll(),
+        ]);
+    }
+
+#[Route("/facture/pdf/{id}", name: 'facture_pdf')]
+
+    public function facturePdf(Facture $facture): Response
+    {
+        // Fetch the data you need to include in the PDF
+        $factureData = [
+            'refrancefacture' => $facture->getRefrancefacture(),
+            'datefacture' => $facture->getDateFacture(),
+            // ... add more data as needed
+        ];
+
+        // Configure the PDF rendering options
+        $options = new Options();
+        $options->set('defaultFont', 'Arial');
+
+        // Create the PDF content using Dompdf
+        $pdfContent = $this->renderView('facture/pdf.html.twig', [
+            'facture' => $factureData,
+        ]);
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($pdfContent);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        // Create the HTTP response with the PDF content
+        $response = new Response($dompdf->output(), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => sprintf('attachment; filename="%s.pdf"', $facture->refrancefacture()),
+        ]);
+
+        return $response;
+    }
+
+    // ...
+
+
+
+
+
 }
