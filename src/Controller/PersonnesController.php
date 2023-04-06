@@ -76,9 +76,16 @@ class PersonnesController extends AbstractController
         return $this->redirectToRoute('app_personnes_index', [], Response::HTTP_SEE_OTHER);
     }
     /**
-     * @Route("/photo/{id}", name="photo_display")
+     * @Route("/personnesshow/{id}", name="personne_show")
      */
-    #[Route('/photo/{id}', name: 'photo_display')]
+    #[Route('/personnesshow/{id}', name: 'personne_show')]
+    public function showphoto(Personnes $personne): Response
+    {
+        $photo = stream_get_contents($personne->getPhoto());
+
+        return new Response($photo, 200, ['Content-Type' => 'image/jpeg']);
+    }
+    /*#[Route('/photo/{id}', name: 'photo_display')]
     public function displayPhoto(Personnes $personne): Response
     {
         $photoData = stream_get_contents($personne->getPhoto());
@@ -88,5 +95,6 @@ class PersonnesController extends AbstractController
         $response = new Response($photoData);
         $response->headers->set('Content-Type', 'image/png');
         return $response;
-    }
+    }*/
+
 }
