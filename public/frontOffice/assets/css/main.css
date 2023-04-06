@@ -37,38 +37,6 @@ body {
   color: var(--color-default);
 }
 
-.tha9afanlogo{
-  position: relative;
-  font-size: 50px;
-  color: #0e3742;
-  text-transform: uppercase;
-  width: 100%;
-  text-align: center;
-}
-h1 span {
-  animation: animate 5s linear infinite;
-}
- @keyframes animate {
-   0% {
-    color: #0e3742;
-    text-shadow: none;
-  }
-  100% {
-    color: #fff;
-    text-shadow: 0 0 5px #03bcf4,
-    0 0 20px #03bcf4,
-    0 0 400px #03bcf4,
-    0 0 1000px #03bcf4;
-
-  }
-
-
-
- }
-
-
-
-
 a {
   color: var(--color-primary);
   text-decoration: none;
@@ -317,12 +285,10 @@ section {
 .header {
   transition: all 0.5s;
   z-index: 997;
-  padding: 30px 0;
 }
 
 .header.sticked {
   background: rgba(14, 29, 52, 0.9);
-  padding: 15px 0;
   box-shadow: 0px 2px 20px rgba(14, 29, 52, 0.1);
 }
 
@@ -1733,12 +1699,8 @@ section {
 # Hero Section
 --------------------------------------------------------------*/
 .hero {
+
   width: 100%;
-  min-height: 50vh;
-  background-color: var(--color-secondary);
-  background-image: url("../img/hero-bg.png");
-  background-size: cover;
-  background-position: center;
   position: relative;
   padding: 120px 0 60px 0;
   color: rgba(255, 255, 255, 0.8);
@@ -1749,7 +1711,6 @@ section {
   padding: 0;
   font-size: 48px;
   font-weight: 700;
-  color: #fff;
 }
 
 @media (max-width: 575px) {
