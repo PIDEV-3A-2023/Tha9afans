@@ -195,6 +195,7 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="2b94cefe-7889-484c-b59b-e63f85e91a61" name="Changes" comment="" />
+
       <created>1680011695322</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -204,6 +205,7 @@
       <workItem from="1680018436993" duration="2570000" />
       <workItem from="1680099296456" duration="185000" />
       <workItem from="1680018436993" duration="2470000" />
+
       <workItem from="1680182725285" duration="620000" />
       <workItem from="1680183569278" duration="8331000" />
 
@@ -225,6 +227,7 @@
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
       <updated>1680020969644</updated>
+
     </task>
     <task id="LOCAL-00002" summary="index">
       <created>1680527340370</created>
