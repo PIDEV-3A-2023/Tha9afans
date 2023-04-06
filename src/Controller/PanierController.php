@@ -77,6 +77,14 @@ class PanierController extends AbstractController
     }
 
 
+    public function card(PanierRepository $panierRepository): Response
+    {
+        $panier = $panierRepository->findAll();
+        return $this->render('panier/card.html.twig', [
+            'paniers' => $panier,
+        ]);
+    }
+
 
 
 }
