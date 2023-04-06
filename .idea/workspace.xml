@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
 
-    <list default="true" id="2b94cefe-7889-484c-b59b-e63f85e91a61" name="Changes" comment="index">
+    <list default="true" id="2b94cefe-7889-484c-b59b-e63f85e91a61" name="Changes" comment="index"/>
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/FactureController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/FactureController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/PanierController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PanierController.php" afterDir="false" />
@@ -214,7 +214,7 @@
 
       <workItem from="1680566687505" duration="13538000" />
 
-
+      <workItem from="1680774394199" duration="308000" />
 
 
 
