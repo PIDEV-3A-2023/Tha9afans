@@ -57,6 +57,9 @@ class Produit
 
     #[ORM\ManyToOne(targetEntity: Personnes::class)]
     private ?Personnes $idVendeur=null;
+
+
+
     #[ORM\ManyToOne(targetEntity: Categorie::class)]
     private ?Categorie $idCategorie=null;
 
