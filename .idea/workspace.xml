@@ -21,7 +21,6 @@
       <change beforePath="$PROJECT_DIR$/templates/evenement/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/evenement/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/security/login.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/login.html.twig" afterDir="false" />
 
-
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,9 +216,7 @@
       <workItem from="1680566687505" duration="13538000" />
 
       <workItem from="1680774394199" duration="308000" />
-
-
-
+      
     </task>
     <task id="LOCAL-00001" summary="index">
       <created>1680020969644</created>
