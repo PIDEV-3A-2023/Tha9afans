@@ -56,6 +56,9 @@ class Produit
     #[ORM\ManyToOne(targetEntity: Personnes::class)]
     #[ORM\JoinColumn(nullable: false,name: "vendeur_id",referencedColumnName: "id")]
     private ?Personnes $idVendeur=null;
+
+
+
     #[ORM\ManyToOne(targetEntity: Categorie::class)]
     #[ORM\JoinColumn(nullable: false,name: "categorie_id",referencedColumnName: "id")]
     private ?Categorie $idCategorie=null;
