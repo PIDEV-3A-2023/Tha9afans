@@ -24,7 +24,7 @@ class Reservation
     private $dateReservation;
 
     #[ORM\Column(type: 'boolean', name: 'isPaid')]
-    private $isPaid;
+    private $isPaid = null;
 
     #[ORM\Column(type: 'string', length: 255, name: 'payment_info')]
     private $paymentInfo;
@@ -55,14 +55,14 @@ class Reservation
         return $this;
     }
 
-    public function isIspaid(): ?bool
+    public function getIsPaid(): ?bool
     {
-        return $this->ispaid;
+        return $this->isPaid;
     }
 
-    public function setIspaid(bool $ispaid): self
+    public function setIsPaid(bool $isPaid): self
     {
-        $this->ispaid = $ispaid;
+        $this->ispaid = $isPaid;
 
         return $this;
     }
