@@ -184,6 +184,7 @@
             outline: none;
             padding:  9px 25px;
             background: #F1FAEE;
+            color: #001A23;
             cursor: pointer;
             font-size: 1.2em;
             border-radius: 50px;
@@ -198,8 +199,17 @@
             opacity: 0.8;
 
         }
-
-
+        .loginbutton:hover{
+            background: var(--clr);
+            color:#001A23 ;
+            box-shadow: 0 0 35px var(--clr);
+        }
+        .loginbutton:before{
+            content: '';
+            position: absolute;
+            inset: 2px;
+            background: #27282c;
+        }
 
 
     </style>
@@ -250,7 +260,7 @@
             </div>
             #}
 
-            <input type="submit" value="Login" class="loginbutton" >
+            <input type="submit" value="Login" class="loginbutton" style="--clr:#A8DADC">
 
         </form>
 
