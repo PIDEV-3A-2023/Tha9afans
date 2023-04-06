@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b94cefe-7889-484c-b59b-e63f85e91a61" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/PersonnesType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/PersonnesType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/personnes/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/personnes/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/personnes/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/personnes/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/security/login.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/security/login.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="2b94cefe-7889-484c-b59b-e63f85e91a61" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -196,7 +190,7 @@
       <workItem from="1680183569278" duration="8331000" />
       <workItem from="1680566687505" duration="13538000" />
       <workItem from="1680710184124" duration="11174000" />
-      <workItem from="1680736316619" duration="5217000" />
+      <workItem from="1680736316619" duration="5681000" />
     </task>
     <task id="LOCAL-00001" summary="index">
       <created>1680020969644</created>
