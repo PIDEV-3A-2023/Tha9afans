@@ -8,7 +8,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+
+                <th>nom</th>
                 <th>Quantity</th>
                 <th>actions</th>
             </tr>
@@ -16,8 +17,9 @@
         <tbody>
         {% for panierproduit in panierproduits %}
             <tr>
-                <td>{{ panierproduit.id }}</td>
-                <td>{{ panierproduit.quantity }}</td>
+
+               <td>{{ panierproduit.idProduit}}</td>
+                {# <td>{{ panierproduit.idProduit.description }}</td>#}
                 <td>
                     <a href="{{ path('app_panier_produit_show', {'id': panierproduit.id}) }}">show</a>
                     <a href="{{ path('app_panier_produit_edit', {'id': panierproduit.id}) }}">edit</a>

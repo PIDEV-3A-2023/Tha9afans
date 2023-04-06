@@ -33,10 +33,8 @@ class Produit
     private ?float $prix= null;
 
 
-    #[ORM\Column(type: 'blob', nullable: true)]
+    #[ORM\Column(type: 'string', nullable: true)]
     private ?string $image=null;
-
-
 
     /**
      * @var string|null
@@ -56,19 +54,11 @@ class Produit
 
 
     #[ORM\ManyToOne(targetEntity: Personnes::class)]
+    #[ORM\JoinColumn(nullable: false,name: "vendeur_id",referencedColumnName: "id")]
     private ?Personnes $idVendeur=null;
     #[ORM\ManyToOne(targetEntity: Categorie::class)]
+    #[ORM\JoinColumn(nullable: false,name: "categorie_id",referencedColumnName: "id")]
     private ?Categorie $idCategorie=null;
-
-    /**
-     * @var \Personnes
-     *
-     * @ORM\ManyToOne(targetEntity="Personnes")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_vendeur", referencedColumnName="id")
-     * })
-     */
-    //private $idVendeur;
 
     /**
      * @var \Categorie
@@ -203,6 +193,11 @@ class Produit
         $this->idCategorie = $idCategorie;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return(string) $this->getNom();
     }
 
 
