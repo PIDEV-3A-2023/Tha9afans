@@ -33,8 +33,8 @@ class Produit
     private ?float $prix= null;
 
 
-    #[ORM\Column(type: 'string', nullable: true)]
-    private ?string $image=null;
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private  $image;
 
     /**
      * @var string|null

@@ -8,18 +8,35 @@
     <table class="table">
         <thead>
             <tr>
-
+                <th>image</th>
                 <th>nom</th>
+                <th>description</th>
                 <th>Quantity</th>
+                <th>prix</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for panierproduit in panierproduits %}
             <tr>
+                <td>
 
-               <td>{{ panierproduit.idProduit}}</td>
-                {# <td>{{ panierproduit.idProduit.description }}</td>#}
+                {% if panierproduit.idProduit.image is not empty %}
+                    <img src="{{ path('produitimageshow', {'id': panierproduit.idProduit}) }}">
+                {% else %}
+                    Aucune photo disponible
+                {% endif %}
+                </td>
+
+
+
+                <td> {{ panierproduit.idProduit.nom }}</td>
+               <td>{{ panierproduit.idProduit.description}}</td>
+                <td>{{ panierproduit.quantity }}</td>
+                <td>{{ panierproduit.idProduit.prix }}</td>
+
+                {#<td>{{ panierproduit.idPanier.total }}</td>#}
+
                 <td>
                     <a href="{{ path('app_panier_produit_show', {'id': panierproduit.id}) }}">show</a>
                     <a href="{{ path('app_panier_produit_edit', {'id': panierproduit.id}) }}">edit</a>
@@ -33,5 +50,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_panier_produit_new') }}">Create new</a>
+  {#  <a href="{{ path('app_panier_produit_new') }}">Create new</a>#}
 {% endblock %}

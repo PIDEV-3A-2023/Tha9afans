@@ -76,5 +76,14 @@ class PanierProduitController extends AbstractController
         return $this->redirectToRoute('app_panier_produit_index', [], Response::HTTP_SEE_OTHER);
     }
 
+    //get produit image
+
+    #[Route('/produitimageshow/{id}', name: 'produitimageshow', methods: ['GET'])]
+    public function showphoto(Panierproduit $panierproduit): Response
+    {
+        $photo = stream_get_contents($panierproduit->getIdProduit()->getImage());
+
+        return new Response($photo, 200, ['Content-Type' => 'image/jpeg']);
+    }
 
 }
