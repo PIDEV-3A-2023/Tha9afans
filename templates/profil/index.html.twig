@@ -5,7 +5,142 @@
 {% block body %}
     <link rel="stylesheet" href="{{ asset('frontOffice/assets/css/profil.css') }}" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<style>
+    .app-nav {
+        color: #5d6778;
+        display: block;
+        padding: 0;
+        width: 100%
+    }
 
+    .app-nav .app-menu {
+        margin-bottom: 0
+    }
+
+    .app-nav .nav-item {
+        display: block;
+        color: #5d6778;
+        background: #fff
+    }
+
+    .app-nav .nav-link {
+        display: block;
+        padding: .875rem 1rem;
+        color: #252930;
+        position: relative;
+        display: block;
+        padding-left: 3rem;
+        border-left: 3px solid rgba(0,0,0,0)
+    }
+
+    .app-nav .nav-link.active {
+        color: #0d42ff;
+        background: #edfdf6;
+        border-left: 3px solid #0d42ff;
+        font-weight: 500
+    }
+
+    .app-nav .nav-link.submenu-toggle.active {
+        background: none;
+        border-color: rgba(0,0,0,0)
+    }
+
+    .app-nav .nav-link:hover {
+        color: #0d42ff
+    }
+
+    .app-nav .nav-icon {
+        position: absolute;
+        left: 1rem;
+        top: .7rem
+    }
+
+    .app-nav .nav-icon .bi {
+        width: 1.25rem;
+        height: 1.25rem
+    }
+
+    .app-nav .submenu-arrow {
+        position: absolute;
+        right: 1rem;
+        top: .7rem;
+        color: #828d9f
+    }
+
+    .app-nav .submenu-arrow svg {
+        width: 14px;
+        height: 14px
+    }
+
+    .app-nav .submenu-toggle {
+        transition: all .4s ease-in-out
+    }
+
+    .app-nav .submenu-arrow svg {
+        width: 14px;
+        height: 14px
+    }
+
+    .app-nav .submenu-toggle {
+        transition: all .4s ease-in-out
+    }
+
+    @media(prefers-reduced-motion: reduce) {
+        .app-nav .submenu-toggle {
+            transition: none
+        }
+    }
+
+    .app-nav .submenu-toggle[aria-expanded=true] .submenu-arrow {
+        color: #252930
+    }
+
+    .app-nav .submenu-toggle[aria-expanded=true] .submenu-arrow svg {
+        -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
+        transform: rotate(180deg);
+        -webkit-transform: rotate(180deg)
+    }
+
+    .app-nav .submenu-item {
+        margin-bottom: 0
+    }
+
+    .app-nav .submenu-link {
+        color: #5d6778;
+        font-size: .875rem;
+        margin-left: 2rem;
+        padding: .5rem 1rem;
+        padding-left: 1rem;
+        position: relative;
+        display: block;
+        margin-bottom: 0
+    }
+
+    .app-nav .submenu-link:before {
+        background-color: #e7e9ed;
+        content: " ";
+        display: inline-block;
+        height: inherit;
+        left: 0;
+        position: absolute;
+        width: 2px;
+        height: 100%;
+        margin-top: -0.5rem
+    }
+
+    .app-nav .submenu-link:hover {
+        color: #252930
+    }
+
+    .app-nav .submenu-link.active {
+        color: #0d42ff
+    }
+
+    .app-nav .submenu-link.active:before {
+        background-color: #0d42ff
+    }
+
+</style>
     <body>
     <div class="main-content">
 
@@ -69,8 +204,99 @@
 
                                 </div>
                             </div>
+                            <div class="sidepanel-inner d-flex flex-column">
+                                <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
+                                    <ul class="app-menu list-unstyled accordion" id="menu-accordion">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="index.html">
+									<span class="nav-icon">
+								<i class="fas fa-user   "></i>
+									</span>
+                                                <span class="nav-link-text">My account</span>
+                                            </a><!--//nav-link-->
+                                        </li><!--//nav-item-->
+                                        <li class="nav-item has-submenu">
+                                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                            <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
+									<span class="nav-icon">
+									<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+									<i class="fa-regular fa-calendar-check"></i>
+									</span>
+                                                <span class="nav-link-text">My Events</span>
+                                                <span class="submenu-arrow">
+										<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+		<path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+		</svg>
+									</span><!--//submenu-arrow-->
+                                            </a><!--//nav-link-->
+                                            <div id="submenu-1" class="collapse submenu submenu-1" data-bs-parent="#menu-accordion">
+                                                <ul class="submenu-list list-unstyled">
+                                                    <li class="submenu-item"><a class="submenu-link" href="notifications.html">Create event</a></li>
+                                                    <li class="submenu-item"><a class="submenu-link" href="account.html">event list</a></li>
+                                                    <li class="submenu-item"><a class="submenu-link" href="settings.html">Stats</a></li>
+                                                </ul>
+                                            </div>
+                                        </li><!--//nav-item-->
+                                        <li class="nav-item has-submenu">
+                                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                            <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-2" aria-expanded="false" aria-controls="submenu-2">
+									    <span class="nav-icon"><i class="fas fa-product-hunt   "></i></span>
+                                                <span class="nav-link-text">MY Products</span>
+                                                <span class="submenu-arrow">
+										<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+		<path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+		</svg>
+									</span><!--//submenu-arrow-->
+                                            </a><!--//nav-link-->
+                                            <div id="submenu-2" class="collapse submenu submenu-2" data-bs-parent="#menu-accordion">
+                                                <ul class="submenu-list list-unstyled">
+                                                    <li class="submenu-item"><a class="submenu-link" href="login.html">Add product</a></li>
+                                                    <li class="submenu-item"><a class="submenu-link" href="signup.html">Produt list</a></li>
+                                                    <li class="submenu-item"><a class="submenu-link" href="reset-password.html">Stats</a></li>
+                                                </ul>
+                                            </div>
+                                        </li><!--//nav-item-->
+                                        <li class="nav-item">
+                                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                            <a class="nav-link" href="charts.html">
+									<span class="nav-icon">
+									<i class="fa fa-star"></i>
+									</span>
+                                                <span class="nav-link-text">Quiz scores </span>
+                                            </a><!--//nav-link-->
+                                        </li><!--//nav-item-->
+                                        <li class="nav-item">
+                                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                            <a class="nav-link" href="help.html">
+									<span class="nav-icon">
+								<i class="fa fa-file"></i>
+									</span>
+                                                <span class="nav-link-text">Facture</span>
+                                            </a><!--//nav-link-->
+                                        </li><!--//nav-item-->
+                                        <li class="nav-item">
+                                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                            <a class="nav-link" href="help.html">
+									<span class="nav-icon">
+								<i class="fa fa-credit-card"></i>
+									</span>
+                                                <span class="nav-link-text">Payement</span>
+                                            </a><!--//nav-link-->
+                                        </li><!--//nav-item-->
+                                        <li class="nav-item">
+                                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                            <a class="nav-link" href="help.html">
+									<span class="nav-icon">
+									<i class="fa fa-sign-out"></i>
+									</span>
+                                                <span class="nav-link-text">log out</span>
+                                            </a><!--//nav-link-->
+                                        </li><!--//nav-item-->
+
+                                    </ul><!--//app-menu-->
+                                </nav><!--//app-nav-->
+                            </div><!--//sidepanel-inner-->
                         </div>
-----------------------------------
                     </div>
 
         </div>
