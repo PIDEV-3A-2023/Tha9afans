@@ -15,4 +15,14 @@ class ProfilController extends AbstractController
             'controller_name' => 'ProfilController',
         ]);
     }
+    #[Route('/profil/evenement/', name: 'app_profil-evenement')]
+    public function evenement(): Response
+    {
+        return $this->render('profil/evenement.html.twig');
+    }
+    #[Route('/profil/Myaccount/', name: 'app_profil-Myaccount')]
+    public function Myaccount(): Response
+    {
+        return $this->render('profil/myAccount.html.twig');
+    }
 }
