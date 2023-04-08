@@ -86,4 +86,26 @@ class PanierProduitController extends AbstractController
         return new Response($photo, 200, ['Content-Type' => 'image/jpeg']);
     }
 
+
+    //remove produit
+    #[Route('/remove/{id}', name: 'app_panier_produit_remove', methods: ['GET'])]
+    public function remove(Panierproduit $panierproduit, PanierproduitRepository $panierproduitRepository): Response
+    {
+        $panierproduitRepository->remove($panierproduit, true);
+        return $this->redirectToRoute('app_panier_produit_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    //update quantity
+    #[Route('/update/{id}', name: 'app_panier_produit_update', methods: ['POST'])]
+    public function updateQuantity(Request $request, EntityManagerInterface $entityManager, Panierproduit $panierproduit): Response
+    {
+        $newQuantity = $request->request->get('quantite');
+
+        $panierproduit->setQuantite($newQuantity);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_panier_produit_index');
+    }
+
+
+
 }
