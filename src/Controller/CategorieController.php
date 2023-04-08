@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Categorie;
-use App\Entity\CategorieRepository;
 use App\Form\CategorieType;
+use App\Repository\CategorieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
