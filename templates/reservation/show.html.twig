@@ -16,12 +16,32 @@
                 <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>IsPaid</th>
-                <td>{{ reservation.isPaid ? 'Yes' : 'No' }}</td>
+                <th>Status</th>
+                <td>{{ reservation.status }}</td>
             </tr>
             <tr>
                 <th>PaymentInfo</th>
                 <td>{{ reservation.paymentInfo }}</td>
+            </tr>
+            <tr>
+                <th>TotalPrice</th>
+                <td>{{ reservation.totalPrice }}</td>
+            </tr>
+            <tr>
+                <th>PaymentStatus</th>
+                <td>{{ reservation.paymentStatus }}</td>
+            </tr>
+            <tr>
+                <th>NbrBillets</th>
+                <td>{{ reservation.nbrBillets }}</td>
+            </tr>
+            <tr>
+                <th>NbrTicketType1Reserved</th>
+                <td>{{ reservation.nbrTicketType1Reserved }}</td>
+            </tr>
+            <tr>
+                <th>NbrTicketType2Reserved</th>
+                <td>{{ reservation.nbrTicketType2Reserved }}</td>
             </tr>
         </tbody>
     </table>

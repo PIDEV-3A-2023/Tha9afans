@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 
+use Doctrine\DBAL\Types\Types;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\BilletRepository;
@@ -21,19 +22,26 @@ class Billet
     private $id;
 
     #[ORM\Column(type: 'string', length: 150)]
-//    #[Assert\NotBlank(message:"fisrtName is required f billet ")]
-//    #[Assert\Length(min: 3)]
     private ?string $code = null;
-
     #[ORM\Column(type: 'date')]
     private $dateValidite;
 
     #[ORM\Column(type: 'float')]
     private $prix;
 
-    #[ORM\ManyToOne(targetEntity: 'Evenement')]
+    #[ORM\Column(type: 'string', length: 50)]
+    private $type; // new property for billet type
+    #[ORM\Column(type: 'integer')]
+    private $nbrBilletAvailable; // new property for available billets
+
+    #[ORM\ManyToOne(targetEntity: 'Evenement', inversedBy: 'billets')]
     #[ORM\JoinColumn(name: 'id_evenement', referencedColumnName: 'id')]
-    private $idEvenement;
+    private $evenement;
+
+    #[ORM\ManyToOne(targetEntity: 'Reservation', inversedBy: 'billets')]
+    #[ORM\JoinColumn(name: 'id_reservation', referencedColumnName: 'id')]
+    private $reservation;
+
 
     public function getId(): ?int
     {
@@ -75,15 +83,57 @@ class Billet
 
         return $this;
     }
-
-    public function getIdEvenement(): ?Evenement
+    public function getType(): ?string
     {
-        return $this->idEvenement;
+        return $this->type;
     }
 
-    public function setIdEvenement(?Evenement $idEvenement): self
+    public function setType(string $type): self
     {
-        $this->idEvenement = $idEvenement;
+        $this->type = $type;
+
+        return $this;
+    }
+    public function getNbrBilletAvailable(): ?int
+    {
+        return $this->nbrBilletAvailable;
+    }
+
+    public function setNbrBilletAvailble(int $nbrBilletAvailable): self
+    {
+        $this->nbrBilletAvailable = $nbrBilletAvailable;
+
+        return $this;
+    }
+
+
+    public function getEvenement(): ?Evenement
+    {
+        return $this->evenement;
+    }
+
+    public function setEvenement(?Evenement $evenement): self
+    {
+        $this->evenement = $evenement;
+
+        return $this;
+    }
+
+    public function getReservation(): ?Reservation
+    {
+        return $this->reservation;
+    }
+
+    public function setReservation(?Reservation $reservation): self
+    {
+        $this->reservation = $reservation;
+
+        return $this;
+    }
+
+    public function setNbrBilletAvailable(int $nbrBilletAvailable): self
+    {
+        $this->nbrBilletAvailable = $nbrBilletAvailable;
 
         return $this;
     }
