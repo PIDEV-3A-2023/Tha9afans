@@ -309,33 +309,33 @@
         <section class="table__body">
             <table>
                 <thead>
-                    <tr>
-                        <th>Cin</th>
-                        <th>Nom</th>
-                        <th>Prenom</th>
-                        <th>Email</th>
-                        <th>Photo</th>
-                        <th>Actions</th>
-                    </tr>
+                <tr>
+                    <th>Cin</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Email</th>
+                    <th>Photo</th>
+                    <th>Actions</th>
+                </tr>
                 </thead>
                 <tbody>
-                {% for personne in personnes %}
+                {% for user in users %}
                     <tr>
-                        <td>{{ personne.cin }}</td>
-                        <td>{{ personne.nom }}</td>
-                        <td>{{ personne.prenom }}</td>
-                        <td>{{ personne.email }}</td>
+                        <td>{{ user.cin }}</td>
+                        <td>{{ user.nom }}</td>
+                        <td>{{ user.prenom }}</td>
+                        <td>{{ user.email }}</td>
                         <td>
-                            {% if personne.photo is not empty %}
-                                <img src="{{ path('personne_show', {'id': personne.id}) }}" alt="{{ personne.nom }}">
+                            {% if user.photo is not empty %}
+                                <img src="{{ path('user_show', {'id': user.id}) }}" alt="{{ user.nom }}">
                             {% else %}
                                 Aucune photo disponible
                             {% endif %}
                         </td>
                         <td>
-                            <a href="{{ path('app_personnes_show', {'id': personne.id}) }}" style="background-color: #001A23; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Détail</a>
+                            <a href="{{ path('app_user_show', {'id': user.id}) }}" style="background-color: #001A23; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Détail</a>
 
-                            <a href="{{ path('app_personnes_edit', {'id': personne.id}) }}" style="background-color: #1D3557; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Modifier</a>
+                            <a href="{{ path('app_user_edit', {'id': user.id}) }}" style="background-color: #1D3557; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Modifier</a>
                         </td>
                     </tr>
                 {% else %}
@@ -343,10 +343,10 @@
                         <td colspan="12">no records found</td>
                     </tr>
                 {% endfor %}
-            </tbody>
-        </table>
+                </tbody>
+            </table>
         </section>
     </main>
-    <a href="{{ path('app_personnes_new') }}" style="background-color: #1D3557; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;width:170px">Ajouter Nouveau</a>
+    <a href="{{ path('app_user_new') }}" style="background-color: #1D3557; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;width:170px">Ajouter Nouveau</a>
 
 {% endblock %}

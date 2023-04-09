@@ -11,12 +11,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @ORM\Table(name="personnes", uniqueConstraints={@ORM\UniqueConstraint(name="unique_email", columns={"email"})})
  * @ORM\Entity(repositoryClass="App\Repository\PersonnesRepository")
- * @method string getUserIdentifier()
+
  */
 
 
 #[ORM\Entity(repositoryClass: PersonnesRepository::class)]
-class Personnes implements UserInterface{
+class Personnes {
     /**
      * @var int
      *o
@@ -108,6 +108,7 @@ class Personnes implements UserInterface{
      */
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $datenaissance;
+
 
     /**
      * @return int|null
@@ -297,23 +298,4 @@ class Personnes implements UserInterface{
         $this->datenaissance = $datenaissance;
     }
 
-    public function getRoles()
-    {
-        // TODO: Implement getRoles() method.
-    }
-
-    public function getUsername()
-    {
-        // TODO: Implement getUsername() method.
-    }
-
-    public function getSalt()
-    {
-        // TODO: Implement getSalt() method.
-    }
-
-    public function eraseCredentials()
-    {
-        // TODO: Implement eraseCredentials() method.
-    }
 }

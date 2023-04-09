@@ -51,10 +51,18 @@ class PersonnesController extends AbstractController
     #[Route('/{id}/edit', name: 'app_personnes_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Personnes $personne, PersonnesRepository $personnesRepository): Response
     {
+        $new=false;
         $form = $this->createForm(PersonnesType::class, $personne);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($new){
+                $personne->setCreatedBy($this->getUser());
+
+            }
+            else{
+                new Response("a été mise à jour avec succes");
+            }
             $personnesRepository->save($personne, true);
 
             return $this->redirectToRoute('app_personnes_index', [], Response::HTTP_SEE_OTHER);

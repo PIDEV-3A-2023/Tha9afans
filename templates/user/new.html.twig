@@ -1,16 +1,17 @@
-d{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}Edit Personnes{% endblock %}
+{% block title %}New User{% endblock %}
 
 {% block body %}
     <style>
+
         .box{
             box-sizing: border-box;
-            width: 520px;
-            height: 720px;
+            width: 510px;
+            height: 710px;
             border: 2px solid #A8DADC;
             box-shadow: -3px -3px 7px #ffffff73,
-                        3px 3px 5px rgba(94,104,121,0.288);
+            3px 3px 5px rgba(94,104,121,0.288);
             border-radius: 5px;
             background-color: #001A23;
             margin-top: 15px;
@@ -23,13 +24,17 @@ d{% extends 'base.html.twig' %}
             margin-left: 70px;
             margin-right: auto;
         }
+        .my-custom-class {
+            display: inline-block;
+            margin-right: 10px;
+        }
         .imgprofile{
             box-sizing: border-box;
-            width: 120px;
-            height: 120px;
+            width: 135px;
+            height: 135px;
             border-radius: 50%;
             margin: 0;
-            margin-left: 150px;
+            margin-left: 170px;
             border: 5px solid #A8DADC;
             padding: 3px;
             background-color: white;
@@ -93,24 +98,41 @@ d{% extends 'base.html.twig' %}
             background-color: #A8DADC;
             color: black;
         }
+        .form-control{}
         .box:hover{
             width: 530px;
-            height: 720px;
+            height: 710px;
             border-radius: 5px;
         }
-        .box:hover
-
-
-
+        input{
+            background: none;
+            background-color: white !important;
+            color:#001A23;
+            margin-bottom: 20px;
+            padding: 4px;
+            width: 220px;
+            height: 30px;
+            border: none;
+            border-bottom: 1px solid #A8DADC;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 250;
+            font-size: 15px;
+            transition: 0.2s ease;
+        }
+        input:focus{
+            border-bottom: 2px solid #A8DADC;
+            border-bottom-right-radius: 20px;
+            color: #A8DADC;
+            transition: 0.2s ease;
+        }
 
     </style>
-    <h1>Edit Personnes</h1>
     <div class="box">
-        <img class="imgprofile" src="{{ path('personne_show', {'id': personne.id}) }}" alt="{{ personne.nom }}">
-        {{ include('personnes/_form.html.twig', {'button_label': 'Modifier'}) }}
+        <h3 style="margin-left: 120px">Create new User</h3>
+
+        {{ include('user/_form.html.twig') }}
     </div>
 
-    <a href="{{ path('app_personnes_index') }}">back to list</a>
 
-    {{ include('personnes/_delete_form.html.twig') }}
+    <a href="{{ path('app_user_index') }}">back to list</a>
 {% endblock %}
