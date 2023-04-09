@@ -50,6 +50,8 @@ class Produit
     private ?float $rating= null;
     #[ORM\Column]
     private ?float $prixapresremise= null;
+    #[ORM\Column]
+    private ?int $qt= null;
 
 
 
@@ -204,5 +206,16 @@ class Produit
         return(string) $this->getNom();
     }
 
+    public function getQt(): ?int
+    {
+        return $this->qt;
+    }
+
+    public function setQt(int $qt): self
+    {
+        $this->qt = $qt;
+
+        return $this;
+    }
 
 }
