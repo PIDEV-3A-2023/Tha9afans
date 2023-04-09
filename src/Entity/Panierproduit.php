@@ -25,7 +25,7 @@ class Panierproduit
 
 
     #[ORM\Column]
-    private ?int $quantity=null;
+    private ?int $quantity;
 
 
 

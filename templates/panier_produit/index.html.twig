@@ -5,53 +5,6 @@
 {% block body %}
     <h1>Panierproduit index</h1>
 
-   {# <table class="table">
-        <thead>
-            <tr>
-                <th>image</th>
-                <th>nom</th>
-                <th>description</th>
-                <th>Quantity</th>
-                <th>prix</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for panierproduit in panierproduits %}
-            <tr>
-                <td>
-
-                {% if panierproduit.idProduit.image is not empty %}
-                    <img src="{{ path('produitimageshow', {'id': panierproduit.idProduit}) }}">
-                {% else %}
-                    Aucune photo disponible
-                {% endif %}
-                </td>
-
-
-
-                <td> {{ panierproduit.idProduit.nom }}</td>
-               <td>{{ panierproduit.idProduit.description}}</td>
-                <td>{{ panierproduit.quantity }}</td>
-                <td>{{ panierproduit.idProduit.prix }}</td>
-
-                #}{#<td>{{ panierproduit.idPanier.total }}</td>#}{#
-
-                <td>
-                    <a href="{{ path('app_panier_produit_show', {'id': panierproduit.id}) }}">show</a>
-                    <a href="{{ path('app_panier_produit_edit', {'id': panierproduit.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">No records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>#}
-
-  {#  <a href="{{ path('app_panier_produit_new') }}">Create new</a>#}
-
     <section class="h-100" style="background-color: #eee;">
         <div class="container h-100 py-5">
             <div class="row d-flex justify-content-center align-items-center h-100">
@@ -80,15 +33,14 @@
                                 <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                                     <button class="btn btn-link px-2"
                                             onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                        <i class="fas fa-minus"></i>
+                                    <a href="{{ path('app_panierproduit_updateminus',{'id':panierproduit.id}) }}"><i class="fas fa-minus"></i></a>
                                     </button>
 
-                                    <input id="form1" min="0" name="quantity{{ panierproduit.idProduit }}" value="{{ panierproduit.quantity }}" type="number" class="form-control form-control-sm" onchange="updateQuantity({{ panierproduit.idProduit }}, this.value)">
 
-
+                                    <input id="form1" type="number"  min="0" name="quantity{{ panierproduit.idProduit }}" value="{{ panierproduit.quantity }}"  class="form-control form-control-sm">
                                     <button class="btn btn-link px-2"
                                             onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                        <i class="fas fa-plus"></i>
+                                        <a href="{{ path('app_panier_produit_updateplus',{'id':panierproduit.id}) }}"><i class="fas fa-plus"></i></a>
                                     </button>
                                 </div>
                                 <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
@@ -101,8 +53,7 @@
                             </div>
                         </div>
                     </div>
-                        {% set subtotal = subtotal + panierproduit.idProduit.prix %}
-
+                        {% set subtotal =subtotal + (panierproduit.quantity * panierproduit.idProduit.prix) %}
                     {% endfor %}
                     <div class="float-right text-right">
                         <h4>Subtotal:</h4>
@@ -127,7 +78,7 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <button type="button" class="btn btn-warning btn-block btn-lg">Proceed to Pay</button>
+                            <a href="{{ path('payment') }}" class="btn btn-warning btn-block btn-lg">Proceed to Pay</a>
                         </div>
                     </div>
 
