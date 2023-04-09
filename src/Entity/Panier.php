@@ -25,9 +25,9 @@ class Panier
    /* #[ORM\ManyToOne(targetEntity: Personnes::class)]
     private ?Personnes $idUser=null;*/
 
-    #[ORM\ManyToOne(targetEntity: Personnes::class)]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
-    private ?Personnes $idUser=null;
+    private ?User $idUser=null;
 
     public function getId(): ?int
     {
@@ -46,12 +46,12 @@ class Panier
         return $this;
     }
 
-    public function getIdUser(): ?Personnes
+    public function getIdUser(): ?User
     {
         return $this->idUser;
     }
 
-    public function setIdUser(?Personnes $idUser): self
+    public function setIdUser(?User $idUser): self
     {
         $this->idUser = $idUser;
 

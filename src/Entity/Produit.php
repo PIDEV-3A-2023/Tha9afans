@@ -54,9 +54,9 @@ class Produit
 
 
 
-    #[ORM\ManyToOne(targetEntity: Personnes::class)]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false,name: "vendeur_id",referencedColumnName: "id")]
-    private ?Personnes $idVendeur=null;
+    private ?User $idVendeur=null;
 
 
 
@@ -175,12 +175,12 @@ class Produit
         return $this;
     }
 
-    public function getIdVendeur(): ?Personnes
+    public function getIdVendeur(): ?User
     {
         return $this->idVendeur;
     }
 
-    public function setIdVendeur(?Personnes $idVendeur): self
+    public function setIdVendeur(?User $idVendeur): self
     {
         $this->idVendeur = $idVendeur;
 
