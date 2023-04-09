@@ -106,6 +106,12 @@ class PanierProduitController extends AbstractController
         return $this->redirectToRoute('app_panier_produit_index');
     }
 
-
+    #[Route('/panier/update-quantity/{id}/{quantity}', name: 'app_panier_update_quantity', methods: ['POST'])]
+    public function updateQuantity1(PanierProduit $panierproduit, int $quantity): Response
+    {
+        $panierproduit->setQuantite($quantity);
+        $this->getDoctrine()->getManager()->flush();
+        return $this->redirectToRoute('app_panier_index');
+    }
 
 }
