@@ -1,0 +1,9 @@
+{% extends '/profil/index.html.twig' %}
+{% block cardtitle %}Ajouter Evenement{% endblock %}
+{% block content %}
+
+
+    {{ include('evenement/_form.html.twig') }}
+
+    <a href="{{ path('app_profil-evenement') }}">back to list</a>
+{% endblock %}
