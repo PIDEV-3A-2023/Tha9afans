@@ -1,4 +1,43 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<section id="hero" class="hero d-flex flex-column ">
+</section>
+<div class="form">
+    {{ form_start(form) }}
+
+
+
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.question, {'attr': {'class': 'form-control custom-class'}}) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.answer, {'attr': {'class': 'form-control custom-class'}}) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.firstPossibleAnswer, {'attr': {'class': 'form-control custom-class'}}) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.secondPossibleAnswer, {'attr': {'class': 'form-control custom-class'}}) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.thirdPossibleAnswer, {'attr': {'class': 'form-control custom-class'}}) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.timer, {'attr': {'class': 'form-control custom-class'}}) }}
+        </div>
+        <div class="col">
+            {{ form_row(form.image, {'attr': {'class': 'form-control custom-class'}}) }}
+        </div>
+    </div>
+
+        <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+
+
+
+</div>
