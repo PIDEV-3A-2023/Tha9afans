@@ -25,4 +25,11 @@ class ProfilController extends AbstractController
     {
         return $this->render('profil/myAccount.html.twig');
     }
+    #[Route('/profil/facture/', name: 'app_profil-Myaccount')]
+    public function facture(): Response
+    {
+        return $this->render('profil/facture.html.twig');
+    }
+
+
 }
