@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Produit;
-use App\Entity\ProduitRepository;
 use App\Form\ProduitType;
+use App\Repository\ProduitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

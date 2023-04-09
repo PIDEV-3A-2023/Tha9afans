@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\ProduitRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -33,10 +34,8 @@ class Produit
     private ?float $prix= null;
 
 
-    #[ORM\Column(type: 'blob', nullable: true)]
-    private ?string $image=null;
-
-
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private  $image;
 
     /**
      * @var string|null
@@ -56,19 +55,14 @@ class Produit
 
 
     #[ORM\ManyToOne(targetEntity: Personnes::class)]
+    #[ORM\JoinColumn(nullable: false,name: "vendeur_id",referencedColumnName: "id")]
     private ?Personnes $idVendeur=null;
-    #[ORM\ManyToOne(targetEntity: Categorie::class)]
-    private ?Categorie $idCategorie=null;
 
-    /**
-     * @var \Personnes
-     *
-     * @ORM\ManyToOne(targetEntity="Personnes")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_vendeur", referencedColumnName="id")
-     * })
-     */
-    //private $idVendeur;
+
+
+    #[ORM\ManyToOne(targetEntity: Categorie::class)]
+    #[ORM\JoinColumn(nullable: false,name: "categorie_id",referencedColumnName: "id")]
+    private ?Categorie $idCategorie=null;
 
     /**
      * @var \Categorie
@@ -203,6 +197,11 @@ class Produit
         $this->idCategorie = $idCategorie;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return(string) $this->getNom();
     }
 
 

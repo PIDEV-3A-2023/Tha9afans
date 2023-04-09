@@ -22,6 +22,7 @@
         <link href="{{ asset('frontOffice/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{asset('frontOffice/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
         <link href="{{asset('frontOffice/assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+        <link href="{{asset('frontOffice/assets/vendor/fontawesome-free-6.4.0-web/css/all.min.css') }}" rel="stylesheet">
         <link href="{{asset('frontOffice/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
         <link href="{{asset('frontOffice/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
         <link href="{{asset('frontOffice/assets/vendor/aos/aos.css') }}" rel="stylesheet">
@@ -99,21 +100,20 @@
                 </li>
                 <li><a href="contact.html">Contact</a></li>
                 <li><a class="get-a-quote" href="get-a-quote.html">Get a Quote</a></li>
+             <-- .navbar -->
             </ul>
         </nav>
 
-    </div> -->
-</header> <!--
-End Header -->
+    </div>
+</header><!-- End Header -->
 <!-- End Header -->
 
-<section id="hero" class="hero d-flex flex-column ">
-    {% block body %}
 
-    {% endblock %}
+{% block body %}
+    <section id="hero" class="hero d-flex flex-column ">
+    </section>
 
-</section><!-- End Hero Section -->
-
+{% endblock %}
 
 
 <!-- ======= Footer ======= -->
