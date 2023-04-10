@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230408204620 extends AbstractMigration
+final class Version20230410110013 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -27,15 +27,17 @@ final class Version20230408204620 extends AbstractMigration
         $this->addSql('DROP INDEX bille-ev ON billet');
         $this->addSql('CREATE INDEX IDX_1F034AF68B13D439 ON billet (id_evenement)');
         $this->addSql('ALTER TABLE billet ADD CONSTRAINT bille-ev FOREIGN KEY (id_evenement) REFERENCES evenement (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE commande DROP FOREIGN KEY fkproduiit');
         $this->addSql('ALTER TABLE commande DROP FOREIGN KEY fruserid1');
+        $this->addSql('ALTER TABLE commande DROP FOREIGN KEY fkproduiit');
         $this->addSql('ALTER TABLE commande CHANGE id_produit id_produit INT DEFAULT NULL, CHANGE id_user id_user INT DEFAULT NULL, CHANGE dateCommande datecommande DATETIME NOT NULL');
         $this->addSql('DROP INDEX fruserid1 ON commande');
         $this->addSql('CREATE INDEX IDX_6EEAA67D6B3CA4B ON commande (id_user)');
         $this->addSql('DROP INDEX fkproduiit ON commande');
         $this->addSql('CREATE INDEX IDX_6EEAA67DF7384557 ON commande (id_produit)');
+        $this->addSql('ALTER TABLE commande ADD CONSTRAINT fruserid1 FOREIGN KEY (id_user) REFERENCES user (id)');
         $this->addSql('ALTER TABLE commande ADD CONSTRAINT fkproduiit FOREIGN KEY (id_produit) REFERENCES produit (id)');
-        $this->addSql('ALTER TABLE commande ADD CONSTRAINT fruserid1 FOREIGN KEY (id_user) REFERENCES personnes (id)');
+        $this->addSql('ALTER TABLE commandeproduit DROP FOREIGN KEY fkcatproduit');
+        $this->addSql('DROP INDEX fkcatproduit ON commandeproduit');
         $this->addSql('ALTER TABLE commandeproduit DROP FOREIGN KEY fkcommande');
         $this->addSql('ALTER TABLE commandeproduit CHANGE id_commende id_commende INT DEFAULT NULL');
         $this->addSql('DROP INDEX fkcommande ON commandeproduit');
@@ -90,7 +92,7 @@ final class Version20230408204620 extends AbstractMigration
         $this->addSql('ALTER TABLE panier CHANGE user_id user_id INT DEFAULT NULL');
         $this->addSql('DROP INDEX fkuserr ON panier');
         $this->addSql('CREATE INDEX IDX_24CC0DF2A76ED395 ON panier (user_id)');
-        $this->addSql('ALTER TABLE panier ADD CONSTRAINT fkuserr FOREIGN KEY (user_id) REFERENCES personnes (id)');
+        $this->addSql('ALTER TABLE panier ADD CONSTRAINT fkuserr FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE panierproduit DROP FOREIGN KEY fkidpanier');
         $this->addSql('ALTER TABLE panierproduit DROP FOREIGN KEY fkidpanier');
         $this->addSql('ALTER TABLE panierproduit DROP FOREIGN KEY idproduit');
@@ -104,15 +106,15 @@ final class Version20230408204620 extends AbstractMigration
         $this->addSql('ALTER TABLE panierproduit ADD CONSTRAINT idproduit FOREIGN KEY (id_produit) REFERENCES produit (id)');
         $this->addSql('DROP INDEX unique_email ON personnes');
         $this->addSql('ALTER TABLE personnes CHANGE prenom prenom VARCHAR(30) NOT NULL, CHANGE role role VARCHAR(30) DEFAULT NULL');
-        $this->addSql('ALTER TABLE produit DROP FOREIGN KEY fk_vendeur');
         $this->addSql('ALTER TABLE produit DROP FOREIGN KEY fkcategorie');
+        $this->addSql('ALTER TABLE produit DROP FOREIGN KEY fk_vendeur');
         $this->addSql('ALTER TABLE produit CHANGE image image LONGBLOB DEFAULT NULL');
         $this->addSql('DROP INDEX fk_vendeur ON produit');
         $this->addSql('CREATE INDEX IDX_29A5EC27858C065E ON produit (vendeur_id)');
         $this->addSql('DROP INDEX fkcategorie ON produit');
         $this->addSql('CREATE INDEX IDX_29A5EC27BCF5E72D ON produit (categorie_id)');
-        $this->addSql('ALTER TABLE produit ADD CONSTRAINT fk_vendeur FOREIGN KEY (vendeur_id) REFERENCES personnes (id)');
         $this->addSql('ALTER TABLE produit ADD CONSTRAINT fkcategorie FOREIGN KEY (categorie_id) REFERENCES categorie (id)');
+        $this->addSql('ALTER TABLE produit ADD CONSTRAINT fk_vendeur FOREIGN KEY (vendeur_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE quiz_question DROP FOREIGN KEY quiz');
         $this->addSql('ALTER TABLE quiz_question DROP FOREIGN KEY question');
         $this->addSql('ALTER TABLE quiz_question DROP FOREIGN KEY quiz');
@@ -146,6 +148,7 @@ final class Version20230408204620 extends AbstractMigration
         $this->addSql('DROP INDEX event ON session');
         $this->addSql('CREATE INDEX IDX_D044D5D4FD02F13 ON session (evenement_id)');
         $this->addSql('ALTER TABLE session ADD CONSTRAINT event FOREIGN KEY (evenement_id) REFERENCES evenement (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE user CHANGE is_verified\' is_verified TINYINT(1) NOT NULL');
     }
 
     public function down(Schema $schema): void
@@ -161,14 +164,16 @@ final class Version20230408204620 extends AbstractMigration
         $this->addSql('ALTER TABLE commande DROP FOREIGN KEY FK_6EEAA67D6B3CA4B');
         $this->addSql('ALTER TABLE commande DROP FOREIGN KEY FK_6EEAA67DF7384557');
         $this->addSql('ALTER TABLE commande CHANGE id_user id_user INT NOT NULL, CHANGE id_produit id_produit INT NOT NULL, CHANGE datecommande dateCommande DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL');
-        $this->addSql('DROP INDEX idx_6eeaa67d6b3ca4b ON commande');
-        $this->addSql('CREATE INDEX fruserid1 ON commande (id_user)');
         $this->addSql('DROP INDEX idx_6eeaa67df7384557 ON commande');
         $this->addSql('CREATE INDEX fkproduiit ON commande (id_produit)');
-        $this->addSql('ALTER TABLE commande ADD CONSTRAINT FK_6EEAA67D6B3CA4B FOREIGN KEY (id_user) REFERENCES personnes (id)');
+        $this->addSql('DROP INDEX idx_6eeaa67d6b3ca4b ON commande');
+        $this->addSql('CREATE INDEX fruserid1 ON commande (id_user)');
+        $this->addSql('ALTER TABLE commande ADD CONSTRAINT FK_6EEAA67D6B3CA4B FOREIGN KEY (id_user) REFERENCES user (id)');
         $this->addSql('ALTER TABLE commande ADD CONSTRAINT FK_6EEAA67DF7384557 FOREIGN KEY (id_produit) REFERENCES produit (id)');
         $this->addSql('ALTER TABLE commandeproduit DROP FOREIGN KEY FK_D2C2F071B153DDBF');
         $this->addSql('ALTER TABLE commandeproduit CHANGE id_commende id_commende INT NOT NULL');
+        $this->addSql('ALTER TABLE commandeproduit ADD CONSTRAINT fkcatproduit FOREIGN KEY (id_produit) REFERENCES produit (id)');
+        $this->addSql('CREATE INDEX fkcatproduit ON commandeproduit (id_produit)');
         $this->addSql('DROP INDEX idx_d2c2f071b153ddbf ON commandeproduit');
         $this->addSql('CREATE INDEX fkcommande ON commandeproduit (id_commende)');
         $this->addSql('ALTER TABLE commandeproduit ADD CONSTRAINT FK_D2C2F071B153DDBF FOREIGN KEY (id_commende) REFERENCES commande (id)');
@@ -221,7 +226,7 @@ final class Version20230408204620 extends AbstractMigration
         $this->addSql('ALTER TABLE panier CHANGE user_id user_id INT NOT NULL');
         $this->addSql('DROP INDEX idx_24cc0df2a76ed395 ON panier');
         $this->addSql('CREATE INDEX fkuserr ON panier (user_id)');
-        $this->addSql('ALTER TABLE panier ADD CONSTRAINT FK_24CC0DF2A76ED395 FOREIGN KEY (user_id) REFERENCES personnes (id)');
+        $this->addSql('ALTER TABLE panier ADD CONSTRAINT FK_24CC0DF2A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE panierproduit DROP FOREIGN KEY FK_656FE9BA2FBB81F');
         $this->addSql('ALTER TABLE panierproduit DROP FOREIGN KEY FK_656FE9BA2FBB81F');
         $this->addSql('ALTER TABLE panierproduit DROP FOREIGN KEY FK_656FE9BAF7384557');
@@ -238,11 +243,11 @@ final class Version20230408204620 extends AbstractMigration
         $this->addSql('ALTER TABLE produit DROP FOREIGN KEY FK_29A5EC27858C065E');
         $this->addSql('ALTER TABLE produit DROP FOREIGN KEY FK_29A5EC27BCF5E72D');
         $this->addSql('ALTER TABLE produit CHANGE image image BLOB DEFAULT NULL');
-        $this->addSql('DROP INDEX idx_29a5ec27858c065e ON produit');
-        $this->addSql('CREATE INDEX fk_vendeur ON produit (vendeur_id)');
         $this->addSql('DROP INDEX idx_29a5ec27bcf5e72d ON produit');
         $this->addSql('CREATE INDEX fkcategorie ON produit (categorie_id)');
-        $this->addSql('ALTER TABLE produit ADD CONSTRAINT FK_29A5EC27858C065E FOREIGN KEY (vendeur_id) REFERENCES personnes (id)');
+        $this->addSql('DROP INDEX idx_29a5ec27858c065e ON produit');
+        $this->addSql('CREATE INDEX fk_vendeur ON produit (vendeur_id)');
+        $this->addSql('ALTER TABLE produit ADD CONSTRAINT FK_29A5EC27858C065E FOREIGN KEY (vendeur_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE produit ADD CONSTRAINT FK_29A5EC27BCF5E72D FOREIGN KEY (categorie_id) REFERENCES categorie (id)');
         $this->addSql('ALTER TABLE quiz_question DROP FOREIGN KEY FK_6033B00B853CD175');
         $this->addSql('ALTER TABLE quiz_question DROP FOREIGN KEY FK_6033B00B1E27F6BF');
@@ -277,5 +282,6 @@ final class Version20230408204620 extends AbstractMigration
         $this->addSql('DROP INDEX idx_d044d5d4fd02f13 ON session');
         $this->addSql('CREATE INDEX event ON session (evenement_id)');
         $this->addSql('ALTER TABLE session ADD CONSTRAINT FK_D044D5D4FD02F13 FOREIGN KEY (evenement_id) REFERENCES evenement (id)');
+        $this->addSql('ALTER TABLE user CHANGE is_verified is_verified\' TINYINT(1) NOT NULL');
     }
 }

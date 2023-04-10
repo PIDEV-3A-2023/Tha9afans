@@ -27,7 +27,6 @@ class ProfilController extends AbstractController
     {
         return $this->render('profil/myAccount.html.twig');
     }
-
     #[Route('/profil/facture/', name: 'app_profil-facture')]
     public function facture(): Response
     {
@@ -60,7 +59,7 @@ class ProfilController extends AbstractController
             'form' => $form,
         ]);
     }
-    #[Route('/new', name: 'app_profil-addevenement', methods: ['GET', 'POST'])]
+#[Route('/new', name: 'app_profil-addevenement', methods: ['GET', 'POST'])]
     public function new(Request $request, EvenementRepository $evenementRepository): Response
     {
         $evenement = new Evenement();
@@ -79,7 +78,7 @@ class ProfilController extends AbstractController
         ]);
 
     }
-    #[Route('/{id}', name: 'app_profil-evenement-delete', methods: ['POST'])]
+/*    #[Route('/{id}', name: 'app_profil-evenement-delete', methods: ['POST'])]
     public function delete(Request $request, Evenement $evenement, EvenementRepository $evenementRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$evenement->getId(), $request->request->get('_token'))) {
@@ -87,7 +86,7 @@ class ProfilController extends AbstractController
         }
 
         return $this->redirectToRoute('app_profil-evenement', [], Response::HTTP_SEE_OTHER);
-    }
+    }*/
 
 
     #[Route('/{id}/new', name: 'app_profil-evenement-session-add', methods: ['GET', 'POST'])]
