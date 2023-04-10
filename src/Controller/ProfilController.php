@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Evenement;
+use App\Entity\Session;
 use App\Form\EvenementType;
+use App\Form\SessionType;
 use App\Repository\EvenementRepository;
+use App\Repository\SessionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,8 +60,8 @@ class ProfilController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $evenementRepository->save($evenement, true);
-
-            return $this->redirectToRoute('app_profil-evenement', [], Response::HTTP_SEE_OTHER);
+            $id = $evenement->getId();
+            return $this->redirectToRoute('app_profil-evenement-session-add', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('profil/addEvenement.html.twig', [
@@ -75,5 +78,25 @@ class ProfilController extends AbstractController
         }
 
         return $this->redirectToRoute('app_profil-evenement', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{id}/new', name: 'app_profil-evenement-session-add', methods: ['GET', 'POST'])]
+    public function newSession(Request $request,Evenement $evenement, SessionRepository $sessionRepository): Response
+    {
+        $session = new Session();
+        $form = $this->createForm(SessionType::class, $session);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $form->getData()->setEvenement($evenement);
+            $sessionRepository->save($session, true);
+
+            return $this->redirectToRoute('app_profil-evenement', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('profil/addSession.html.twig', [
+            'session' => $session,
+            'form' => $form,
+        ]);
     }
 }
