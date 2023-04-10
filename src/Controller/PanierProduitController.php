@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Panierproduit;
+use App\Entity\Produit;
 use App\Form\PanierproduitType;
 use App\Repository\PanierproduitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -165,16 +166,9 @@ class PanierProduitController extends AbstractController
 
 //creat functio to navigate to payment.html.twig
 
-    #[Route('/payment', name: 'payment', methods: ['POST'])]
-    public function payment(): Response
-    {
-        return $this->render('panier_produit/payment.html.twig', [
-
-        ]);
-    }
 
 
-    #[Route('/paymentpanier', name: 'app_panier_produit_payment', methods: ['GET'])]
+/*    #[Route('/paymentpanier', name: 'app_panier_produit_payment', methods: ['GET'])]
     public function paymentPanier(PanierproduitRepository $panierproduitRepository): Response
     {
         $panierproduits = $panierproduitRepository->findAll();
@@ -187,11 +181,24 @@ class PanierProduitController extends AbstractController
             'panierproduits' => $panierproduits,
             'total' => $total,
         ]);
+    }*/
+   #[Route('/', name: 'app_payment',methods: ['GET'])]
+    public function payment(Panierproduit $panierproduit): Response
+    {
+        return $this->render('panier_produit/payment.html.twig.html.twig', [
+        ]);
     }
 
 
 
 
+    #[Route('/produitshow/{id}', name: 'produit_image_show')]
+    public function showproduitphoto(Produit $produt): Response
+    {
+        $photo = stream_get_contents($produt->getImage());
+
+        return new Response($photo, 200, ['Content-Type' => 'image/jpeg']);
+    }
 
 
 }
