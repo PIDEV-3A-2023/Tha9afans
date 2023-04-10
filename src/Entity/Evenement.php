@@ -41,6 +41,7 @@ class Evenement
     private ?int $nbaime = null;
 
     #[ORM\Column()]
+
     private ?int $prix = null;
 
 
