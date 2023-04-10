@@ -173,13 +173,22 @@ class PanierProduitController extends AbstractController
         ]);
     }
 
-    #[Route('/panierproduit/payment', name: 'app_panier_produit_show', methods: ['POST'])]
-    public function showpayment(Panierproduit $panierproduit): Response
+
+    #[Route('/paymentpanier', name: 'app_panier_produit_payment', methods: ['GET'])]
+    public function paymentPanier(PanierproduitRepository $panierproduitRepository): Response
     {
+        $panierproduits = $panierproduitRepository->findAll();
+        $total = 0;
+        foreach ($panierproduits as $panierproduit) {
+            $total += $panierproduit->getIdProduit()->getPrix() * $panierproduit->getQuantity();
+        }
+
         return $this->render('panier_produit/payment.html.twig', [
-            'panierproduit' => $panierproduit,
+            'panierproduits' => $panierproduits,
+            'total' => $total,
         ]);
     }
+
 
 
 
