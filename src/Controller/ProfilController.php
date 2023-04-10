@@ -59,6 +59,7 @@ class ProfilController extends AbstractController
             'form' => $form,
         ]);
     }
+
 #[Route('/new', name: 'app_profil-addevenement', methods: ['GET', 'POST'])]
     public function new(Request $request, EvenementRepository $evenementRepository): Response
     {
