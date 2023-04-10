@@ -38,7 +38,7 @@ class Evenement
     private ?int $nbParticipants = null;
 
     #[ORM\Column()]
-    private ?int $nbaime = null;
+    private ?int $nbAime = null;
 
     #[ORM\Column()]
 
@@ -125,12 +125,12 @@ class Evenement
 
     public function getNbaime(): ?int
     {
-        return $this->nbaime;
+        return $this->nbAime;
     }
 
-    public function setNbaime(?int $nbaime): void
+    public function setNbaime(?int $nbAime): void
     {
-        $this->$nbaime = $nbaime;
+        $this->$nbAime = $nbAime;
     }
 
     public function getPrix(): ?int
