@@ -57,33 +57,5 @@ class ProfilController extends AbstractController
             'form' => $form,
         ]);
     }
-    #[Route('/new', name: 'app_profil-addevenement', methods: ['GET', 'POST'])]
-    public function new(Request $request, EvenementRepository $evenementRepository): Response
-    {
-        $evenement = new Evenement();
-        $form = $this->createForm(EvenementType::class, $evenement);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $evenementRepository->save($evenement, true);
-
-            return $this->redirectToRoute('app_profil-evenement', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('profil/addEvenement.html.twig', [
-            'evenement' => $evenement,
-            'form' => $form,
-        ]);
-
-    }
-    #[Route('/{id}', name: 'app_profil-evenement-delete', methods: ['POST'])]
-    public function delete(Request $request, Evenement $evenement, EvenementRepository $evenementRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$evenement->getId(), $request->request->get('_token'))) {
-            $evenementRepository->remove($evenement, true);
-        }
-
-        return $this->redirectToRoute('app_profil-evenement', [], Response::HTTP_SEE_OTHER);
-    }
 
 }
