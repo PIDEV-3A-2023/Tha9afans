@@ -50,13 +50,15 @@ class Produit
     private ?float $rating= null;
     #[ORM\Column]
     private ?float $prixapresremise= null;
+    #[ORM\Column]
+    private ?int $qt= null;
 
 
 
 
-    #[ORM\ManyToOne(targetEntity: Personnes::class)]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false,name: "vendeur_id",referencedColumnName: "id")]
-    private ?Personnes $idVendeur=null;
+    private ?User $idVendeur=null;
 
 
 
@@ -175,12 +177,12 @@ class Produit
         return $this;
     }
 
-    public function getIdVendeur(): ?Personnes
+    public function getIdVendeur(): ?User
     {
         return $this->idVendeur;
     }
 
-    public function setIdVendeur(?Personnes $idVendeur): self
+    public function setIdVendeur(?User $idVendeur): self
     {
         $this->idVendeur = $idVendeur;
 
@@ -204,5 +206,16 @@ class Produit
         return(string) $this->getNom();
     }
 
+    public function getQt(): ?int
+    {
+        return $this->qt;
+    }
+
+    public function setQt(int $qt): self
+    {
+        $this->qt = $qt;
+
+        return $this;
+    }
 
 }

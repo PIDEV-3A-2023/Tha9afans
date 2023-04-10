@@ -27,6 +27,15 @@ class ProfilController extends AbstractController
     {
         return $this->render('profil/myAccount.html.twig');
     }
+
+    #[Route('/profil/facture/', name: 'app_profil-facture')]
+    public function facture(): Response
+    {
+        return $this->render('profil/facture.html.twig');
+    }
+
+
+
     #[Route('/profil/evenement/', name: 'app_profil-evenement')]
     public function evenement(EvenementRepository $evenementRepository): Response
     {
@@ -80,6 +89,7 @@ class ProfilController extends AbstractController
         return $this->redirectToRoute('app_profil-evenement', [], Response::HTTP_SEE_OTHER);
     }
 
+
     #[Route('/{id}/new', name: 'app_profil-evenement-session-add', methods: ['GET', 'POST'])]
     public function newSession(Request $request,Evenement $evenement, SessionRepository $sessionRepository): Response
     {
@@ -99,4 +109,5 @@ class ProfilController extends AbstractController
             'form' => $form,
         ]);
     }
+
 }

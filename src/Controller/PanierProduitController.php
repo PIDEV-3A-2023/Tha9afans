@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 
 #[Route('/panierproduit')]
 class PanierProduitController extends AbstractController
@@ -95,16 +97,91 @@ class PanierProduitController extends AbstractController
         return $this->redirectToRoute('app_panier_produit_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    //update quantity
-    #[Route('/update/{id}', name: 'app_panier_produit_update', methods: ['POST'])]
-    public function updateQuantity(Request $request, EntityManagerInterface $entityManager, Panierproduit $panierproduit): Response
+    //update quantity produit in panier produit
+    /*#[Route('/update/{id}', name: 'minus', methods: ['GET'])]
+    public function updateminus(Panierproduit $panierproduit, PanierproduitRepository $panierproduitRepository): Response
     {
-        $newQuantity = $request->request->get('quantite');
+        $quantity = $panierproduit->getQuantity();
+        $produit = $panierproduit->getIdProduit();
 
-        $panierproduit->setQuantite($newQuantity);
-        $entityManager->flush();
-        return $this->redirectToRoute('app_panier_produit_index');
+        if ($quantity < $produit->getQt()) {
+            $quantity--;
+            $panierproduit->setQuantity($quantity);
+            $panierproduitRepository->save($panierproduit, true);
+        }
+
+        return $this->redirectToRoute('app_panier_produit_index', [], Response::HTTP_SEE_OTHER);
     }
+  #[Route('/update/{id}', name: 'plus', methods: ['GET'])]
+
+    public function updateplus(Panierproduit $panierproduit, PanierproduitRepository $panierproduitRepository): Response
+    {
+        $quantity = $panierproduit->getQuantity();
+        $produit = $panierproduit->getIdProduit();
+
+        if ($quantity < $produit->getQt()) {
+            $quantity++;
+            $panierproduit->setQuantity($quantity);
+            $panierproduitRepository->save($panierproduit, true);
+        }
+
+        return $this->redirectToRoute('app_panier_produit_index', [], Response::HTTP_SEE_OTHER);
+    }*/
+
+
+    #[Route('/update/{id}', name: 'app_panierproduit_updateminus', methods: ['GET'])]
+    public function updateminus(Panierproduit $panierproduit, PanierproduitRepository $panierproduitRepository): Response
+    {
+        $quantity = $panierproduit->getQuantity();
+        if ($quantity >= 1) {
+            $quantity--;
+            $panierproduit->setQuantity($quantity);
+            $panierproduitRepository->save($panierproduit, true);
+            if ($quantity == 0) {
+                $panierproduitRepository->remove($panierproduit, true);
+            }
+        }
+        return $this->redirectToRoute('app_panier_produit_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+
+    #[Route('/updateplus/{id}', name: 'app_panier_produit_updateplus', methods: ['GET'])]
+    public function updateplus(Panierproduit $panierproduit, PanierproduitRepository $panierproduitRepository): Response
+    {
+        $quantity = $panierproduit->getQuantity();
+        $maxQuantity = $panierproduit->getIdProduit()->getQt();
+        if ($quantity < $maxQuantity) {
+            $quantity++;
+            $panierproduit->setQuantity($quantity);
+            $panierproduitRepository->save($panierproduit, true);
+        } else {
+           echo "la quantité maximale est atteinte";
+        }
+        return $this->redirectToRoute('app_panier_produit_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+
+//creat functio to navigate to payment.html.twig
+
+    #[Route('/payment', name: 'payment', methods: ['POST'])]
+    public function payment(): Response
+    {
+        return $this->render('panier_produit/payment.html.twig', [
+
+        ]);
+    }
+
+    #[Route('/panierproduit/payment', name: 'app_panier_produit_show', methods: ['POST'])]
+    public function showpayment(Panierproduit $panierproduit): Response
+    {
+        return $this->render('panier_produit/payment.html.twig', [
+            'panierproduit' => $panierproduit,
+        ]);
+    }
+
+
 
 
 
