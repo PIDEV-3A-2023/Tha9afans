@@ -4,7 +4,73 @@
 
 {% block body %}
     <h1>Panierproduit index</h1>
-
+{#<style>
+    :root{
+        --color1: #F9C64A;
+        --color2: #FFB508;
+    }
+    .serviceBox{
+        color:#fff;
+        background: #fff;
+        font-family: 'Poppins', sans-serif;
+        text-align: center;
+        padding: 90px 15px 40px;
+        border-radius: 30px 30px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2), 10px 10px 0 var(--color1);
+        position: relative;
+        z-index: 1;
+    }
+    .serviceBox:before{
+        content: '';
+        background:linear-gradient(to top left,transparent 49%,var(--color2) 50%);
+        width: 100px;
+        height: 100px;
+        border-radius: 30px 0 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+    .serviceBox .service-icon{
+        color: #fff;
+        font-size: 30px;
+        line-height: 60px;
+        width: 60px;
+        height: 60px;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+    }
+    .serviceBox .title{
+        color: var(--color2);
+        font-size: 18px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin: 0 0 10px;
+    }
+    .serviceBox .description{
+        color: #777;
+        font-size: 14px;
+        line-height: 25px;
+        margin: 0;
+    }
+    .serviceBox.blue{
+        --color1: #125AB7;
+        --color2: #105BB8 ;
+    }
+    .serviceBox.orange{
+        --color1: #FD6E00;
+        --color2: #FF6E01;
+    }
+    .serviceBox.darkred{
+        --color1: #B05F56;
+        --color2: #9A2015;
+    }
+    @media only screen and (max-width: 1199px){
+        .serviceBox{ margin: 0 0 30px; }
+    }
+</style>#}
     <section class="h-100" style="background-color: #eee;">
         <div class="container h-100 py-5">
             <div class="row d-flex justify-content-center align-items-center h-100">
@@ -23,8 +89,11 @@
                         <div class="card-body p-4">
                             <div class="row d-flex justify-content-between align-items-center">
                                 <div class="col-md-2 col-lg-2 col-xl-2">
-                                    <img src="{{ path('produitimageshow', {'id': panierproduit.idProduit}) }}">
-
+                                    {% if panierproduit.idProduit.image is not empty %}
+                                        <img  src="{{ path('produit_image_show', {'id': panierproduit.idProduit.id}) }}" alt="{{ panierproduit.idProduit.nom }} " width="100px",height="100px">
+                                    {% else %}
+                                        Aucune photo disponible
+                                    {% endif %}
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-xl-3">
                                     <p class="lead fw-normal mb-2">{{ panierproduit.idProduit.nom }}</p>
@@ -78,7 +147,7 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <a href="{{ path('app_panier_produit_payment') }}" class="btn btn-warning btn-block btn-lg">Proceed to Pay</a>
+                            <a href="{{ path('app_payment') }}" class="btn btn-warning btn-block btn-lg">Proceed to Pay</a>
                         </div>
                     </div>
 
@@ -88,4 +157,21 @@
     </section>
 
 
+
+
+  {#  <link href='//netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'/>
+
+    <div class="col-md-3 col-sm-6">
+        <div class="serviceBox blue">
+            <div class="service-icon">
+                <span><i class="fa fa-rocket"></i></span>
+            </div>
+
+
+
+        </div>
+    </div>
+    </div>
+    </div>
+#}
 {% endblock %}
