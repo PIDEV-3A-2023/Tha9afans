@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProfilController extends AbstractController
 {
-    #[Route('/profil', name: 'app_profil')]
+  /*  #[Route('/profil', name: 'app_profil')]
     public function index(): Response
     {
         return $this->render('profil/index.html.twig', [
@@ -41,8 +41,8 @@ class ProfilController extends AbstractController
         return $this->render('profil/evenement.html.twig',[
             'evenements' => $evenementRepository->findAll(),
         ]);
-    }
-    #[Route('/{id}/edit', name: 'app_profil-evenement-edit', methods: ['GET', 'POST'])]
+    }*/
+/*    #[Route('/{id}/edit', name: 'app_profil-evenement-edit', methods: ['GET', 'POST'])]
     public function editEvenement(Request $request, Evenement $evenement, EvenementRepository $evenementRepository): Response
     {
         $form = $this->createForm(EvenementType::class, $evenement);
@@ -58,9 +58,9 @@ class ProfilController extends AbstractController
             'evenement' => $evenement,
             'form' => $form,
         ]);
-    }
+    }*/
 
-#[Route('/new', name: 'app_profil-addevenement', methods: ['GET', 'POST'])]
+/*#[Route('/new', name: 'app_profil-addevenement', methods: ['GET', 'POST'])]
     public function new(Request $request, EvenementRepository $evenementRepository): Response
     {
         $evenement = new Evenement();
@@ -78,7 +78,7 @@ class ProfilController extends AbstractController
             'form' => $form,
         ]);
 
-    }
+    }*/
 /*    #[Route('/{id}', name: 'app_profil-evenement-delete', methods: ['POST'])]
     public function delete(Request $request, Evenement $evenement, EvenementRepository $evenementRepository): Response
     {
@@ -90,7 +90,7 @@ class ProfilController extends AbstractController
     }*/
 
 
-    #[Route('/{id}/new', name: 'app_profil-evenement-session-add', methods: ['GET', 'POST'])]
+   /* #[Route('/{id}/new', name: 'app_profil-evenement-session-add', methods: ['GET', 'POST'])]
     public function newSession(Request $request,Evenement $evenement, SessionRepository $sessionRepository): Response
     {
         $session = new Session();
@@ -108,6 +108,6 @@ class ProfilController extends AbstractController
             'session' => $session,
             'form' => $form,
         ]);
-    }
+    }*/
 
 }
