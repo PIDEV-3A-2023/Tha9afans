@@ -4,7 +4,7 @@ namespace App\Form;
 
 use App\Entity\CategorieEvenement;
 use App\Entity\Evenement;
-use App\Entity\Personnes;
+use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,7 +18,7 @@ class EvenementType extends AbstractType
             ->add('nom')
             ->add('description')
             ->add('date')
-            ->add('createur',EntityType::class,['class'=>Personnes::class,'choice_label'=>'nom'/*,'multiple'=>'true'*/,'expanded'=>'true'])
+            ->add('createur',EntityType::class,['class'=>User::class,'choice_label'=>'nom'/*,'multiple'=>'true'*/,'expanded'=>'true'])
             ->add('localisation')
             ->add('nbParticipants')
             ->add('nbAime')
