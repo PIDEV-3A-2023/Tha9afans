@@ -231,7 +231,7 @@
                 </div>
             {% endif %}
 
-            <h2>Login</h2>
+            <h2 style="font-weight: bold">Login</h2>
             <div class="inputBox">
                 <input type="email" value="{{ last_username }}" name="email" id="inputEmail" required autofocus>
                 <span>Email</span>
@@ -265,7 +265,7 @@
             <input type="submit" value="Login" class="loginbutton" style="--clr:#A8DADC">
             <div class="links">
                 <a href="">Mot de passe oublié?</a>
-                <a href="#">SignUp</a>
+                <a href="{{ path('app_register') }}">SignUp</a>
 
             </div>
 
