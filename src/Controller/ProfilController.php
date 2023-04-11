@@ -15,23 +15,23 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProfilController extends AbstractController
 {
-  /*  #[Route('/profil', name: 'app_profil')]
-    public function index(): Response
-    {
-        return $this->render('profil/index.html.twig', [
-            'controller_name' => 'ProfilController',
-        ]);
-    }
-    #[Route('/profil/Myaccount/', name: 'app_profil-Myaccount')]
-    public function Myaccount(): Response
-    {
-        return $this->render('profil/myAccount.html.twig');
-    }
-    #[Route('/profil/facture/', name: 'app_profil-facture')]
-    public function facture(): Response
-    {
-        return $this->render('profil/facture.html.twig');
-    }
+      #[Route('/profil', name: 'app_profil')]
+        public function index(): Response
+        {
+            return $this->render('profil/index.html.twig', [
+                'controller_name' => 'ProfilController',
+            ]);
+        }
+        #[Route('/profil/Myaccount/', name: 'app_profil-Myaccount')]
+        public function Myaccount(): Response
+        {
+            return $this->render('profil/myAccount.html.twig');
+        }
+        #[Route('/profil/facture/', name: 'app_profil-facture')]
+        public function facture(): Response
+        {
+            return $this->render('profil/facture.html.twig');
+        }
 
 
 
@@ -41,7 +41,7 @@ class ProfilController extends AbstractController
         return $this->render('profil/evenement.html.twig',[
             'evenements' => $evenementRepository->findAll(),
         ]);
-    }*/
+    }
 /*    #[Route('/{id}/edit', name: 'app_profil-evenement-edit', methods: ['GET', 'POST'])]
     public function editEvenement(Request $request, Evenement $evenement, EvenementRepository $evenementRepository): Response
     {
@@ -61,7 +61,9 @@ class ProfilController extends AbstractController
     }*/
 
 
+
 /*#[Route('/new', name: 'app_profil-addevenement', methods: ['GET', 'POST'])]
+>>>>>>> 9f6e89a46c1bbd41b5931e872114e55df4cb561c
     public function new(Request $request, EvenementRepository $evenementRepository): Response
     {
         $evenement = new Evenement();
@@ -78,6 +80,8 @@ class ProfilController extends AbstractController
             'evenement' => $evenement,
             'form' => $form,
         ]);
+
+    }
 
     }*/
 
