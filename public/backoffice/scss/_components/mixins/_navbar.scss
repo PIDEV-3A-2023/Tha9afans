@@ -64,7 +64,7 @@
 
     .navbar-toggler-icon {
       background-image: if(
-        map-get($colors, active-color) == #fff,
+        map-get($colors, active-color) == #ff0000,
         $navbar-dark-toggler-icon-bg,
         $navbar-light-toggler-icon-bg
       );
