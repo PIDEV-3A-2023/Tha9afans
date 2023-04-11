@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use Doctrine\DBAL\Types\Types;
+use App\Repository\ProduitRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
@@ -62,6 +62,8 @@ class Produit
 
     #[ORM\ManyToOne(targetEntity: Categorie::class)]
     private ?Categorie $idCategorie=null;
+
+
 
     /**
      * @var \Personnes
@@ -184,12 +186,12 @@ class Produit
         return $this;
     }
 
-    public function getIdVendeur(): ?Personnes
+    public function getIdVendeur(): ?User
     {
         return $this->idVendeur;
     }
 
-    public function setIdVendeur(?Personnes $idVendeur): self
+    public function setIdVendeur(?User $idVendeur): self
     {
         $this->idVendeur = $idVendeur;
 
