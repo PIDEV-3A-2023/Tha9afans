@@ -5,15 +5,31 @@
 {% block body %}
     <h1>Billet index</h1>
 
+
+    <div class="breadcrumbs">
+        <div class="page-header d-flex align-items-center"
+             style="background-image: url('../frontOffice/assets/img/page-header.jpg');">
+            <div class="container position-relative">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-6 text-center">
+                        <h2>Billet</h2>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Code</th>
-                <th>DateValidite</th>
-                <th>Prix</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Code</th>
+            <th>DateValidite</th>
+            <th>Prix</th>
+            <th>Type</th>
+            <th>NbrBilletAvailable</th>
+            <th>actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for billet in billets %}
@@ -22,6 +38,8 @@
                 <td>{{ billet.code }}</td>
                 <td>{{ billet.dateValidite ? billet.dateValidite|date('Y-m-d') : '' }}</td>
                 <td>{{ billet.prix }}</td>
+                <td>{{ billet.type }}</td>
+                <td>{{ billet.nbrBilletAvailable }}</td>
                 <td>
                     <a href="{{ path('app_billet_show', {'id': billet.id}) }}">show</a>
                     <a href="{{ path('app_billet_edit', {'id': billet.id}) }}">edit</a>
@@ -29,7 +47,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="7">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

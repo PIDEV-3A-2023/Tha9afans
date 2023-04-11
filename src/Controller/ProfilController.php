@@ -3,6 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Evenement;
+use App\Entity\Reservation;
+use App\Form\EvenementType;
+use App\Form\ReservationType;
+use App\Repository\EvenementRepository;
+use App\Repository\ReservationRepository;
 use App\Entity\Session;
 use App\Form\EvenementType;
 use App\Form\SessionType;
@@ -15,7 +20,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProfilController extends AbstractController
 {
-
       #[Route('/profil', name: 'app_profil')]
         public function index(): Response
         {
@@ -33,8 +37,14 @@ class ProfilController extends AbstractController
         {
             return $this->render('profil/facture.html.twig');
         }
-
-
+         #[Route('/profil/reservation/', name: 'app_profil-reservation')]
+    public function reservation(ReservationRepository $reservationRepository): Response
+    {
+        return $this->render('profil/reservation.html.twig',[
+            'reservations' => $reservationRepository->findAll()
+        ]);
+    }
+   
     #[Route('/profil/evenement/', name: 'app_profil-evenement')]
     public function evenement(EvenementRepository $evenementRepository): Response
     {

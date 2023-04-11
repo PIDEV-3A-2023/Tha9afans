@@ -13,10 +13,10 @@ class ReservationType extends AbstractType
     {
         $builder
             ->add('dateReservation')
-            ->add('isPaid')
+            ->add('status')
             ->add('paymentInfo')
-            ->add('idBillet')
-            ->add('idUser')
+            ->add('totalPrice')
+            ->add('paymentStatus')
         ;
     }
 
