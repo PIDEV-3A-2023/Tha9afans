@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'backBase.html.twig' %}
 
 {% block title %}New Question{% endblock %}
 
@@ -10,15 +10,20 @@
             border-radius: 20px;
         }
 
+
         .form label {
             font-weight: bold;
             font-size: medium;
             display: block;
             margin-bottom: 5px;
+            color: white;
         }
         .form {
-            width: 75%;
+            width: 80%;
             margin: 0 auto;
+            background-color: #001A23;
+            padding: 60px;
+            border-radius: 20px;
         }
 
         .upload {
@@ -27,6 +32,20 @@
             margin-bottom: auto;
             border-radius: 20px;
         }
+
+        .btn {
+            /*display: block;*/
+            margin-top: 10px;
+            margin-bottom: auto;
+            border-radius: 20px;
+            color: white;
+            border-color: white;
+        }
+        .btn:hover {
+            background-color: white;
+            color: #001A23;
+        }
+
 
 
 
