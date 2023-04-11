@@ -21,7 +21,7 @@ class SessionController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_session_new', methods: ['GET', 'POST'])]
+  /*  #[Route('/new', name: 'app_session_new', methods: ['GET', 'POST'])]
     public function new(Request $request, SessionRepository $sessionRepository): Response
     {
         $session = new Session();
@@ -35,6 +35,25 @@ class SessionController extends AbstractController
         }
 
         return $this->renderForm('session/new.html.twig', [
+            'session' => $session,
+            'form' => $form,
+        ]);
+    }*/
+    #[Route('/{id}/new', name: 'app_profil-evenement-session-add', methods: ['GET', 'POST'])]
+    public function newSession(Request $request,Evenement $evenement, SessionRepository $sessionRepository): Response
+    {
+        $session = new Session();
+        $form = $this->createForm(SessionType::class, $session);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $form->getData()->setEvenement($evenement);
+            $sessionRepository->save($session, true);
+
+            return $this->redirectToRoute('app_profil-evenement', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('profil/addSession.html.twig', [
             'session' => $session,
             'form' => $form,
         ]);
