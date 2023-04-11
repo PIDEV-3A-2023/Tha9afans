@@ -118,6 +118,14 @@ class UserController extends AbstractController
     }
 
 
+    #[Route('/{id}/block', name: 'block_user')]
+    public function blockUser(User $user)
+    {
+        $user->setIsBlocked(true);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirectToRoute('app_user_index');
+    }
 
 
     #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]

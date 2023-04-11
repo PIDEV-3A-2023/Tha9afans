@@ -49,6 +49,11 @@
         {{ form_row(form.photo,{'attr': {'class': 'form-control-file custom-class text-center'}}) }}
     </div>
 </div>
+<div class="row">
+    <div class="col">
+        {{ form_row(form.isBlocked,{label:'Bloquer personne:'}, {'label_attr': {'class': 'checkbox-label'}}) }}
+    </div>
+</div>
 
 <button class="btn" style="margin-bottom: 20px">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

@@ -27,13 +27,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private array $roles = [];
+    #[ORM\Column(type: 'boolean')]
+    private $isBlocked = false;
+
+
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
     private ?string $password = null;
-
 
     #[ORM\Column(length: 30, nullable: true)]
     private ?string $cin = null;
@@ -164,6 +167,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCin(?string $cin): self
     {
         $this->cin = $cin;
+
+        return $this;
+    }
+    public function getIsBlocked(): ?bool
+    {
+        return $this->isBlocked;
+    }
+
+    public function setIsBlocked(bool $isBlocked): self
+    {
+        $this->isBlocked = $isBlocked;
 
         return $this;
     }
