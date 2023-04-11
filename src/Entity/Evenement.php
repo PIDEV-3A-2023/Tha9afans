@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: EvenementRepository::class)]
 class Evenement
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]// auto increment
     #[ORM\Column]
@@ -29,7 +30,7 @@ class Evenement
 
 
     #[ORM\ManyToOne(inversedBy: 'evenements')]
-    private ?Personnes $createur=null;
+    private ?User $createur=null;
 
     #[ORM\Column(length: 255)]
     private ?string $localisation = null;
@@ -89,13 +90,13 @@ class Evenement
     }
 
 
-    public function getcreateur(): ?Personnes
+    public function getcreateur(): ?User
     {
         return $this->createur;
     }
 
 
-    public function setCreateur(?Personnes $createur): void
+    public function setCreateur(?User $createur): void
     {
         $this->createur = $createur;
     }
