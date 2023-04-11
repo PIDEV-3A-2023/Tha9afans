@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -32,19 +32,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    /**
-     * @Assert\NotBlank(message="Le mot de passe ne peut pas être vide")
-     * @Assert\Length(
-     *     min=6,
-     *     max=40,
-     *     minMessage="Le mot de passe doit avoir au moins {{ limit }} caractères",
-     *     maxMessage="Le mot de passe ne peut pas dépasser {{ limit }} caractères"
-     * )
-     * @Assert\Regex(
-     *     pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}$/",
-     *     message="Le mot de passe doit contenir au moins 6 caractères, des chiffres, des lettres minuscules et majuscules."
-     * )
-     */
     private ?string $password = null;
 
 
