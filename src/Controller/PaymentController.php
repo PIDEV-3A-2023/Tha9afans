@@ -26,8 +26,6 @@ class PaymentController extends AbstractController
         return $this->render('panier_produit/payment.html.twig', [
             'form' => $form->createView(),
         ]);
-
-
     }
 
 }
