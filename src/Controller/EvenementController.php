@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Evenement;
 use App\Form\EvenementType;
 use App\Repository\EvenementRepository;
+use App\Repository\GalerieRepository;
+use App\Repository\SessionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,10 +43,11 @@ class EvenementController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_evenement_show', methods: ['GET'])]
-    public function show(Evenement $evenement): Response
-    {
+    public function show(Evenement $evenement,SessionRepository $sessionRepository,GalerieRepository $galerieRepository): Response
+    { $sessions = $sessionRepository->findBy(['evenement' => $evenement]);
         return $this->render('evenement/show.html.twig', [
             'evenement' => $evenement,
+            'sessions' => $sessions,
         ]);
     }
 

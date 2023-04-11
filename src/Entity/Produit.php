@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\ProduitRepository;
+
+use Doctrine\DBAL\Types\Types;
+
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
@@ -33,10 +36,8 @@ class Produit
     private ?float $prix= null;
 
 
-    #[ORM\Column(type: 'blob', nullable: true)]
-    private ?string $image=null;
-
-
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private  $image;
 
     /**
      * @var string|null
@@ -51,29 +52,23 @@ class Produit
     private ?float $rating= null;
     #[ORM\Column]
     private ?float $prixapresremise= null;
+    #[ORM\Column]
+    private ?int $qt= null;
 
 
 
 
-    #[ORM\ManyToOne(targetEntity: Personnes::class)]
-    private ?Personnes $idVendeur=null;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false,name: "vendeur_id",referencedColumnName: "id")]
+    private ?User $idVendeur=null;
 
 
 
     #[ORM\ManyToOne(targetEntity: Categorie::class)]
+    #[ORM\JoinColumn(nullable: false,name: "categorie_id",referencedColumnName: "id")]
     private ?Categorie $idCategorie=null;
 
 
-
-    /**
-     * @var \Personnes
-     *
-     * @ORM\ManyToOne(targetEntity="Personnes")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_vendeur", referencedColumnName="id")
-     * })
-     */
-    //private $idVendeur;
 
     /**
      * @var \Categorie
@@ -210,5 +205,21 @@ class Produit
         return $this;
     }
 
+    public function __toString()
+    {
+        return(string) $this->getNom();
+    }
+
+    public function getQt(): ?int
+    {
+        return $this->qt;
+    }
+
+    public function setQt(int $qt): self
+    {
+        $this->qt = $qt;
+
+        return $this;
+    }
 
 }

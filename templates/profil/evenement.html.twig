@@ -1,0 +1,375 @@
+{% extends '/profil/index.html.twig' %}
+{% block cardtitle %}List Evenements{% endblock %}
+{% block content %}
+  <link rel="stylesheet" href="{{ asset('backoffice/assets/vendor/fonts/boxicons.css') }}" />
+  <style>
+
+    .table {
+      --bs-table-bg: transparent;
+      --bs-table-accent-bg: transparent;
+      --bs-table-striped-color: #697a8d;
+      --bs-table-striped-bg: #f9fafb;
+      --bs-table-active-color: #697a8d;
+      --bs-table-active-bg: rgba(67, 89, 113, 0.1);
+      width: 100%;
+      margin-bottom: 5rem;
+      color: #697a8d;
+      vertical-align: middle;
+      border-color: #d9dee3;
+    }
+    .table > :not(caption) > * > * {
+      padding: 0.625rem 1.25rem;
+      background-color: var(--bs-table-bg);
+      border-bottom-width: 1px;
+      box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
+    }
+    .table > tbody {
+      vertical-align: inherit;
+    }
+    .table > thead {
+      vertical-align: bottom;
+    }
+    .table > :not(:first-child) {
+      border-top: 2px solid #d9dee3;
+    }
+
+    .table-sm > :not(caption) > * > * {
+      padding: 0.3125rem 0.625rem;
+    }
+
+    .table-bordered > :not(caption) > * {
+      border-width: 1px 0;
+    }
+    .table-bordered > :not(caption) > * > * {
+      border-width: 0 1px;
+    }
+
+    .table-borderless > :not(caption) > * > * {
+      border-bottom-width: 0;
+    }
+    .table-borderless > :not(:first-child) {
+      border-top-width: 0;
+    }
+
+    .table-striped > tbody > tr:nth-of-type(odd) > * {
+      --bs-table-accent-bg: var(--bs-table-striped-bg);
+      color: var(--bs-table-striped-color);
+    }
+    .table-hover > tbody > tr:hover > * {
+      --bs-table-accent-bg: var(--bs-table-hover-bg);
+      color: var(--bs-table-hover-color);
+    }
+
+    .table-light {
+      --bs-table-bg: #fcfdfd;
+      --bs-table-striped-bg: #f6f8f9;
+      --bs-table-striped-color: #435971;
+      --bs-table-active-bg: #eaedef;
+      --bs-table-active-color: #435971;
+      --bs-table-hover-bg: #f1f3f5;
+      --bs-table-hover-color: #435971;
+      color: #435971;
+      border-color: #eaedef;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {
+      background-color: transparent;
+      border-color: transparent;
+    }
+
+
+
+    .bg-label-primary {
+      background-color: #e7e7ff !important;
+      color: #696cff !important;
+    }
+    .bg-label-success {
+      background-color: #e8fadf !important;
+      color: #71dd37 !important;
+    }
+    .bg-label-info {
+      background-color: #d7f5fc !important;
+      color: #03c3ec !important;
+    }
+    .bg-label-warning {
+      background-color: #fff2d6 !important;
+      color: #ffab00 !important;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.52em 0.593em;
+      font-size: 0.8125em;
+      font-weight: 500;
+      line-height: 1;
+      color: #fff;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: baseline;
+      border-radius: 0.25rem;
+    }
+    .badge:empty {
+      display: none;
+    }
+
+    .btn .badge {
+      position: relative;
+      top: -1px;
+    }
+
+
+    .dropdown {
+      position: relative;
+    }
+
+    button,
+    [type=button],
+    [type=reset],
+    [type=submit] {
+      -webkit-appearance: button;
+    }
+    button:not(:disabled),
+    [type=button]:not(:disabled),
+    [type=reset]:not(:disabled),
+    [type=submit]:not(:disabled) {
+      cursor: pointer;
+    }
+
+    .btn {
+      display: inline-block;
+      font-weight: 400;
+      line-height: 1.53;
+      color: #697a8d;
+      text-align: center;
+      vertical-align: middle;
+      cursor: pointer;
+      user-select: none;
+      background-color: transparent;
+      border: 1px solid transparent;
+      padding: 0.4375rem 1.25rem;
+      font-size: 0.9375rem;
+      border-radius: 0.375rem;
+      transition: all 0.2s ease-in-out;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .btn {
+        transition: none;
+      }
+    }
+    .btn-check:focus + .btn, .btn:focus {
+      outline: 0;
+      box-shadow: none;
+    }
+    .btn:disabled, .btn.disabled, fieldset:disabled .btn {
+      pointer-events: none;
+      opacity: 0.65;
+    }
+
+
+    .dropdown-toggle {
+      white-space: nowrap;
+    }
+    .dropdown-toggle::after {
+      display: inline-block;
+      margin-left: 0.5em;
+      vertical-align: middle;
+      content: "";
+      margin-top: -0.28em;
+      width: 0.42em;
+      height: 0.42em;
+      border: 1px solid;
+      border-top: 0;
+      border-left: 0;
+      transform: rotate(45deg);
+    }
+    .dropdown-toggle:empty::after {
+      margin-left: 0;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      z-index: 1000;
+      display: none;
+      min-width: 12rem;
+      padding: 0.3125rem 0;
+      margin: 0;
+      font-size: 0.9375rem;
+      color: #697a8d;
+      text-align: left;
+      list-style: none;
+      background-color: #fff;
+      background-clip: padding-box;
+      border: 1px solid transparent;
+      border-radius: 0.375rem;
+    }
+    .dropdown-menu[data-bs-popper] {
+      top: 100%;
+      left: 0;
+      margin-top: 0.125rem;
+    }
+    .btn {
+      display: inline-block;
+      font-weight: 400;
+      line-height: 1.53;
+      color: #697a8d;
+      text-align: center;
+      vertical-align: middle;
+      cursor: pointer;
+      user-select: none;
+      background-color: transparent;
+      border: 1px solid transparent;
+      padding: 0.4375rem 1.25rem;
+      font-size: 0.9375rem;
+      border-radius: 0.375rem;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .dropdown-item {
+      display: block;
+      width: 100%;
+      padding: 0.532rem 1.25rem;
+      clear: both;
+      font-weight: 400;
+      color: #697a8d;
+      text-align: inherit;
+      white-space: nowrap;
+      background-color: transparent;
+      border: 0;
+    }
+
+
+    .me-1 {
+      margin-right: 0.25rem !important;
+    }
+    .badge {
+      text-transform: uppercase;
+      line-height: 0.75;
+    }
+
+    .badge-center i {
+      font-size: 0.8rem;
+    }
+
+
+    .dropdown-menu {
+      margin: 0.125rem 0;
+      box-shadow: 0 0.25rem 1rem rgba(161, 172, 184, 0.45);
+      animation: dropdownAnimation 0.1s;
+    }
+    .mega-dropdown > .dropdown-menu {
+      left: 0 !important;
+      right: 0 !important;
+    }
+    .dropdown-menu .badge[class^=float-],
+    .dropdown-menu .badge[class*=" float-"] {
+      position: relative;
+      top: 0.071em;
+    }
+
+    .dropdown-item {
+      line-height: 1.54;
+    }
+
+    .dropdown-toggle.hide-arrow::before, .dropdown-toggle.hide-arrow::after,
+    .dropdown-toggle-hide-arrow > .dropdown-toggle::before,
+    .dropdown-toggle-hide-arrow > .dropdown-toggle::after {
+      display: none;
+    }
+
+    .dropdown-toggle::after {
+      margin-top: -0.28em;
+      width: 0.42em;
+      height: 0.42em;
+      border: 1px solid;
+      border-top: 0;
+      border-left: 0;
+      transform: rotate(45deg);
+    }
+
+    .dropend .dropdown-toggle::after {
+      margin-top: -0.168em;
+      width: 0.42em;
+      height: 0.42em;
+      border: 1px solid;
+      border-top: 0;
+      border-left: 0;
+      transform: rotate(-45deg);
+    }
+
+    .dropstart .dropdown-toggle::before {
+      margin-top: -0.168em;
+      width: 0.42em;
+      height: 0.42em;
+      border: 1px solid;
+      border-top: 0;
+      border-right: 0;
+      transform: rotate(45deg);
+    }
+
+    .dropup .dropdown-toggle::after {
+      margin-top: 0;
+      width: 0.42em;
+      height: 0.42em;
+      border: 1px solid;
+      border-bottom: 0;
+      border-left: 0;
+      transform: rotate(-45deg);
+    }
+
+    .dropstart .dropdown-toggle::before,
+    .dropend .dropdown-toggle::after {
+      vertical-align: middle;
+    }
+
+  </style>
+  <div class="table-responsive text-nowrap">
+    <table class="table">
+      <thead class="table-light">
+      <tr>
+        <th>Nom</th>
+        <th>Date</th>
+        <th>Gratuit/Payée</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+      {% for evenement in evenements %}
+      <tr>
+        <td style="right: 5px;
+    position: relative;"><img   data-bs-toggle="tooltip"
+                   data-popup="tooltip-custom"
+                   data-bs-placement="top"
+                   class="avatar avatar-xs pull-up"
+                   src="{{ asset('frontOffice/assets/img/apple-touch-icon.png') }}" alt="Avatar" class="rounded-circle " />  <strong>{{ evenement.nom }}</strong></td>
+        <td>{{ evenement.date ? evenement.date|date('Y-m-d') : '' }}</td>
+        <td>
+          <span class="badge bg-label-primary me-1">Gratuit</span>
+        </td>
+        <td><span class="badge bg-label-primary me-1">Active</span></td>
+        <td>
+          <div class="dropdown">
+            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+              <i class="bx bx-dots-vertical-rounded"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="{{ path('app_profil-evenement-edit', {'id': evenement.id}) }}"
+              ><i class="bx bx-edit-alt me-1"></i> Edit</a
+              >
+              <form method="post" action="{#{{ path('app_profil-evenement-delete', {'id': evenement.id}) }}#}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ evenement.id) }}">
+                <button class="dropdown-item"><i class="bx bx-trash me-1"></i> Delete</button>
+              </form>
+            </div>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

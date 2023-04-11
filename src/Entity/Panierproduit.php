@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PanierproduitRepository;
 
+
 /**
  * Panierproduit
  *
@@ -24,18 +25,23 @@ class Panierproduit
 
 
     #[ORM\Column]
-    private ?int $quantity=null;
+    private ?int $quantity;
 
 
+
+    /*#[ORM\ManyToOne(targetEntity: Panier::class)]
+    private ?Panier $idPanier=null;*/
 
     #[ORM\ManyToOne(targetEntity: Panier::class)]
+    #[ORM\JoinColumn(name: 'id_panier', referencedColumnName: 'id')]
     private ?Panier $idPanier=null;
 
-
+  /*  #[ORM\ManyToOne(targetEntity: Produit::class)]
+    private ?Produit $idProduit=null;*/
 
     #[ORM\ManyToOne(targetEntity: Produit::class)]
+    #[ORM\JoinColumn(name: 'id_produit', referencedColumnName: 'id')]
     private ?Produit $idProduit=null;
-
 
 
 

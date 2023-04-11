@@ -16,13 +16,15 @@ class ReservationController extends AbstractController
     #[Route('/', name: 'app_reservation_index', methods: ['GET'])]
     public function index(ReservationRepository $reservationRepository): Response
     {
+        $reservations = $reservationRepository->findAll();
+        dump($reservations);
         return $this->render('reservation/index.html.twig', [
             'reservations' => $reservationRepository->findAll(),
         ]);
     }
 
     #[Route('/new', name: 'app_reservation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ReservationRepository $reservationRepository): Response
+    public function addReservation(Request $request, ReservationRepository $reservationRepository): Response
     {
         $reservation = new Reservation();
         $form = $this->createForm(ReservationType::class, $reservation);

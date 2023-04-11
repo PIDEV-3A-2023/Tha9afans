@@ -3,6 +3,34 @@
 {% block title %}New Question{% endblock %}
 
 {% block body %}
+    <style>
+        .form input, .form textarea {
+            display: block;
+            margin-bottom: 10px;
+            border-radius: 20px;
+        }
+
+        .form label {
+            font-weight: bold;
+            font-size: medium;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form {
+            width: 75%;
+            margin: 0 auto;
+        }
+
+        .upload {
+            display: block;
+            margin-top: auto;
+            margin-bottom: auto;
+            border-radius: 20px;
+        }
+
+
+
+    </style>
     <h1>Create new Question</h1>
 
     {{ include('question/_form.html.twig') }}

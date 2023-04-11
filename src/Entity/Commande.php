@@ -24,6 +24,7 @@ class Commande
 
 
 
+
     #[ORM\Column]
     #[ORM\GeneratedValue]// auto increment
     private ?\DateTime $datecommande=null;
@@ -34,8 +35,17 @@ class Commande
 
 
 
-    #[ORM\ManyToOne(targetEntity: Personnes::class)]
-    private ?Personnes $idUser=null;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: 'id_user', referencedColumnName: 'id')]
+    private ?User $idUser=null;
+
+
+    //relation avec table produit with id_produit
+
+    #[ORM\ManyToOne(targetEntity: Produit::class)]
+    #[ORM\JoinColumn(name: 'id_produit', referencedColumnName: 'id')]
+    private ?Produit $idProduit=null;
+
 
 
     public function getId(): ?int
@@ -67,14 +77,26 @@ class Commande
         return $this;
     }
 
-    public function getIdUser(): ?Personnes
+    public function getIdUser(): ?User
     {
         return $this->idUser;
     }
 
-    public function setIdUser(?Personnes $idUser): self
+    public function setIdUser(?User $idUser): self
     {
         $this->idUser = $idUser;
+
+        return $this;
+    }
+
+    public function getIdProduit(): ?Produit
+    {
+        return $this->idProduit;
+    }
+
+    public function setIdProduit(?Produit $idProduit): self
+    {
+        $this->idProduit = $idProduit;
 
         return $this;
     }
