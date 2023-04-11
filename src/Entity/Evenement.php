@@ -3,8 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EvenementRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+
 
 #[ORM\Entity(repositoryClass: EvenementRepository::class)]
 class Evenement
@@ -16,18 +16,20 @@ class Evenement
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+
     private ?string $nom = null;
 
     #[ORM\Column(length: 10000)]
+
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'evenements')]
     private ?CategorieEvenement $categorie=null;
 
+
+
     #[ORM\Column(type: 'date')]
     private ?\DateTime $date = null;
-
-
 
     #[ORM\ManyToOne(inversedBy: 'evenements')]
     private ?User $createur=null;
@@ -35,15 +37,14 @@ class Evenement
     #[ORM\Column(length: 255)]
     private ?string $localisation = null;
 
-    #[ORM\Column()]
-    private ?int $nbParticipants = null;
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $freeorpaid ;
 
-    #[ORM\Column()]
-    private ?int $nbAime = null;
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $online ;
 
-    #[ORM\Column()]
-
-    private ?int $prix = null;
+    #[ORM\Column(length: 255)]
+    private ?string $link = null;
 
 
 
@@ -112,37 +113,52 @@ class Evenement
         $this->localisation = $localisation;
     }
 
-    public function getNbParticipants(): ?int
+    /**
+     * @return bool|null
+     */
+    public function getFreeorpaid(): ?bool
     {
-        return $this->nbParticipants;
+        return $this->freeorpaid;
     }
 
-
-    public function setNbParticipants(?int $nbParticipants): void
+    /**
+     * @param bool|null $freeorpaid
+     */
+    public function setFreeorpaid(?bool $freeorpaid): void
     {
-        $this->nbParticipants = $nbParticipants;
+        $this->freeorpaid = $freeorpaid;
     }
 
-
-    public function getNbaime(): ?int
+    /**
+     * @return bool|null
+     */
+    public function getOnline(): ?bool
     {
-        return $this->nbAime;
+        return $this->online;
     }
 
-    public function setNbaime(?int $nbAime): void
+    /**
+     * @param bool|null $online
+     */
+    public function setOnline(?bool $online): void
     {
-        $this->$nbAime = $nbAime;
+        $this->online = $online;
     }
 
-    public function getPrix(): ?int
+    /**
+     * @return string|null
+     */
+    public function getLink(): ?string
     {
-        return $this->prix;
+        return $this->link;
     }
 
-
-    public function setPrix(?int $prix): void
+    /**
+     * @param string|null $link
+     */
+    public function setLink(?string $link): void
     {
-        $this->prix = $prix;
+        $this->link = $link;
     }
 
 

@@ -1,4 +1,18 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
+{{ form_start(form,{'attr': {'novalidate':'novalidate'}} ) }}
+{{ form_label(form.titre) }}
+{{ form_widget(form.titre) }}
+{{ form_errors(form.titre) }}
+{{ form_label(form.description) }}
+{{ form_widget(form.description) }}
+{{ form_errors(form.description) }}
+{{ form_label(form.parlant) }}
+{{ form_widget(form.parlant) }}
+{{ form_errors(form.parlant) }}
+{{ form_label(form.debit) }}
+{{ form_widget(form.debit) }}
+{{ form_errors(form.debit) }}
+{{ form_label(form.fin) }}
+{{ form_widget(form.fin) }}
+{{ form_errors(form.fin) }}
 <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

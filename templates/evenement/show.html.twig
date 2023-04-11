@@ -108,6 +108,10 @@
                             <a href="#contact"class="nav-link scrollto " >Contact</a>
                         </div>
                         </nav><!-- .nav-menu -->
+                        <form method="post" action="{{ path('app_reservation_new', {'eventId': evenement.id}) }}">
+                            <button class="btn">next</button>
+                        </form>
+
                     </div>
                     <div class="col-lg-8" >
                         <section id="Description" class="Description" >
