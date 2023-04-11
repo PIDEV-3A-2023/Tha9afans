@@ -209,9 +209,9 @@
                                             </a><!--//nav-link-->
                                             <div id="submenu-1" class="collapse submenu submenu-1 {% if (app.request.attributes.get('_route') == 'app_profil-evenement') or (app.request.attributes.get('_route') == 'app_profil-addevenement') or (app.request.attributes.get('_route') == 'app_profil-evenement-edit') %} show {% else %}collapsing {% endif %}" data-bs-parent="#menu-accordion">
                                                 <ul class="submenu-list list-unstyled">
-                                                    <li class="submenu-item"><a class="submenu-link {% if app.request.attributes.get('_route') == 'app_profil-addevenement'%}active {% endif %}" href="{{ path('app_profil-addevenement') }}">Create event</a></li>
-                                                    <li class="submenu-item "><a class="submenu-link {% if (app.request.attributes.get('_route') == 'app_profil-evenement') or (app.request.attributes.get('_route') == 'app_profil-evenement-edit') %}active {% endif %}" href="{{ path('app_profil-evenement') }}">event list</a></li>
-                                                    <li class="submenu-item"><a class="submenu-link" href="settings.html">Stats</a></li>
+{#                                                    <li class="submenu-item"><a class="submenu-link {% if app.request.attributes.get('_route') == 'app_profil-addevenement'%}active {% endif %}" href="{{ path('app_profil-addevenement') }}">Create event</a></li>#}
+{#                                                    <li class="submenu-item "><a class="submenu-link {% if (app.request.attributes.get('_route') == 'app_profil-evenement') or (app.request.attributes.get('_route') == 'app_profil-evenement-edit') %}active {% endif %}" href="{{ path('app_profil-evenement') }}">event list</a></li>#}
+{#                                                    <li class="submenu-item"><a class="submenu-link" href="settings.html">Stats</a></li>#}
                                                 </ul>
                                             </div>
                                         </li><!--//nav-item-->
