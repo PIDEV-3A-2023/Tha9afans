@@ -53,19 +53,16 @@ class RegistrationFormType extends AbstractType
             ->add('cin', null, [
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Le champ CIN ne doit pas être vide',
+                        'message' => 'Le champ cin ne doit pas être vide',
                     ]),
-                    new Assert\Length([
+                    new Length([
                         'min' => 8,
                         'max' => 8,
                         'exactMessage' => 'Le champ CIN doit contenir exactement 8 caractères',
                     ]),
-                    new Assert\Regex([
+                    new Regex([
                         'pattern' => '/^[0-9]{8}$/',
                         'message' => 'Le champ CIN doit contenir uniquement des chiffres',
-                    ]),
-                    new Assert\Unique([
-                        'message' => 'Ce CIN est déjà utilisé',
                     ]),
                 ],
             ])

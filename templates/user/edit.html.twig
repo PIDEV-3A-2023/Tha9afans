@@ -7,8 +7,8 @@
 
         .box{
             box-sizing: border-box;
-            width: 510px;
-            height: 890px;
+            width: 750px;
+            height: auto;
             border: 2px solid #A8DADC;
             box-shadow: -3px -3px 7px #ffffff73,
             3px 3px 5px rgba(94,104,121,0.288);
@@ -18,7 +18,13 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            margin-left: 550px;
+            margin-left: 220px;
+        }
+        .form-control-file{
+            color: black;
+        }
+        .custom-class{
+            color: black;
         }
         .form-control-file.custom-class {
             margin-left: 70px;
@@ -34,7 +40,7 @@
             height: 135px;
             border-radius: 50%;
             margin: 0;
-            margin-left: 170px;
+            margin-left: 300px;
             border: 5px solid #A8DADC;
             padding: 3px;
             background-color: white;
@@ -49,7 +55,7 @@
             box-sizing: border-box;
             background: none;
             background-color: white !important;
-            color:white;
+            color:black;
             margin-bottom: 30px;
             padding: 4px;
             width: 220px;
@@ -64,21 +70,31 @@
         .form-control:focus{
             border-bottom: 2px solid #A8DADC;
             border-bottom-right-radius: 20px;
-            color: #A8DADC;
+            color: black;
             transition: 0.2s ease;
+        }
+        a{
+
+            color: white;
+
+            margin-bottom: 20px;
+            transition: all 0.3s;
+            font-size: 22px;
+            font-weight: bold;
+            margin-left: 280px;
         }
         .btn{
             border: 1px solid #A8DADC;
             background-color: white;
             color: #001A23;
             height: 50px;
-            width: 100px;
+            width: 200px;
             border-radius: 20px;
             margin: 0px;
             transition: all 0.3s;
-            font-size: 18px;
+            font-size: 22px;
             font-weight: bold;
-            margin-left: 170px;
+            margin-left: 250px;
         }
         .btn:hover{
             transform: scale(1.1);
@@ -103,8 +119,8 @@
         }
         .form-control{}
         .box:hover{
-            width: 530px;
-            height: 890px;
+            width: 750px;
+            height: auto;
             border-radius: 5px;
         }
         input{
@@ -125,23 +141,32 @@
         input:focus{
             border-bottom: 2px solid #A8DADC;
             border-bottom-right-radius: 20px;
-            color: #A8DADC;
+            color: black;
             transition: 0.2s ease;
         }
-
-        </style>
+    </style>
 
     <div class="box">
         <br>
-        <h3 style="margin-left: 105px">Modifier Utilisateur</h3>
+        <h3 style="margin-left: 230px">Modifier Utilisateur</h3>
         <img class="imgprofile" src="{{ path('user_show', {'id': user.id}) }}" alt="{{ user.nom }}">
-        {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
-        {{ include('user/_delete_form.html.twig') }}
+        <br><br><br>
+        {% include 'user/_form.html.twig' with {'form': form, 'button_label': 'Update', 'hide_password': true} %}
 
+        <a href="{{ path('app_user_index') }}" >back to list</a>
+
+        {% if hide_password %}
+            <script>
+                var passwordField = document.getElementById('{{ form.plainPassword.vars.id }}');
+                var passwordLabel = document.querySelector('label[for="{{ form.plainPassword.vars.id }}"]');
+                passwordField.style.display = 'none';
+                passwordLabel.style.display = 'none';
+            </script>
+        {% endif %}
     </div>
-    x
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
+
+
 
 
 {% endblock %}

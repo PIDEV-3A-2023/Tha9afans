@@ -10,7 +10,7 @@
         .box{
             box-sizing: border-box;
             width: 700px;
-            height: 700px;
+            height: auto;
             border: 2px solid #A8DADC;
             box-shadow: -3px -3px 7px #ffffff73,
             3px 3px 5px rgba(94,104,121,0.288);
@@ -70,7 +70,7 @@
         .form-control:focus{
             border-bottom: 2px solid #A8DADC;
             border-bottom-right-radius: 20px;
-            color: #A8DADC;
+            color: #001A23;
             transition: 0.2s ease;
         }
         .btn{
@@ -80,6 +80,7 @@
             height: 50px;
             width: 100px;
             border-radius: 20px;
+            margin-bottom: 20px;
             margin: 0px;
             transition: all 0.3s;
             font-size: 18px;
@@ -110,7 +111,7 @@
         .form-control{}
         .box:hover{
             width: 700px;
-            height: 700px;
+            height: auto;
             border-radius: 10px;
         }
         input{
@@ -122,6 +123,8 @@
             width: 220px;
             height: 30px;
             border: none;
+            color: black;
+            margin-left: 10px;
             border-bottom: 1px solid #A8DADC;
             font-family: 'Roboto', sans-serif;
             font-weight: 250;
@@ -146,8 +149,7 @@
     {% endfor %}
         <br>
 
-
-        {{ form_start(registrationForm) }}
+        {{ form_start(registrationForm,{'attr': {'novalidate': 'novalidate'}} ) }}
         <div class="row">
             <div class="col">
                 {{ form_row(registrationForm.cin, {
@@ -195,7 +197,7 @@
         </div>
 
 
-            <button type="submit" class="btn" style="margin-left: 300px">Register</button>
+            <button type="submit" class="btn" style="margin-left: 300px;margin-bottom: 20px">Register</button>
         {{ form_end(registrationForm) }}
     </div>
 {% endblock %}
