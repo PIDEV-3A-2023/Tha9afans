@@ -215,10 +215,10 @@
     </style>
     <!-- louay : ons hani zedtek hethi lena bech t5ali el espace labyeth teht navbar  -->
 
-    <section id="hero" class="hero d-flex flex-column ">
-    </section>
+    <!--section id="hero" class="hero d-flex flex-column ">
+    </section-->
 
-    <div class="box" >
+    <div class="box" style="margin-top: 200px;margin-bottom: 65px;" >
         <span class="borderline"></span>
         <form method="post" >
             {% if error %}
@@ -231,7 +231,7 @@
                 </div>
             {% endif %}
 
-            <h2>Login</h2>
+            <h2 style="font-weight: bold">Login</h2>
             <div class="inputBox">
                 <input type="email" value="{{ last_username }}" name="email" id="inputEmail" required autofocus>
                 <span>Email</span>
@@ -265,7 +265,7 @@
             <input type="submit" value="Login" class="loginbutton" style="--clr:#A8DADC">
             <div class="links">
                 <a href="">Mot de passe oublié?</a>
-                <a href="#">SignUp</a>
+                <a href="{{ path('app_register') }}">SignUp</a>
 
             </div>
 

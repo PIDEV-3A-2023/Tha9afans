@@ -5,12 +5,7 @@ namespace App\Entity;
 use App\Repository\EvenementRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-/**
- * Evenement
- *
- * @ORM\Table(name="Evenement")
- * @ORM\Entity(repositoryClass="App\Repository\EvenementRepository")
- */
+
 #[ORM\Entity(repositoryClass: EvenementRepository::class)]
 class Evenement
 {
@@ -24,6 +19,9 @@ class Evenement
 
     #[ORM\Column(length: 10000)]
     private ?string $description = null;
+
+    #[ORM\ManyToOne(inversedBy: 'evenements')]
+    private ?CategorieEvenement $categorie=null;
 
     #[ORM\Column(type: 'date')]
     private ?\DateTime $date = null;
@@ -43,10 +41,10 @@ class Evenement
     private ?int $nbAime = null;
 
     #[ORM\Column()]
+
     private ?int $prix = null;
 
-    #[ORM\ManyToOne(inversedBy: 'evenements')]
-    private ?CategorieEvenement $categorie=null;
+
 
 
     public function getId(): ?int
@@ -125,14 +123,14 @@ class Evenement
     }
 
 
-    public function getNbAime(): ?int
+    public function getNbaime(): ?int
     {
         return $this->nbAime;
     }
 
-    public function setNbAime(?int $nbAime): void
+    public function setNbaime(?int $nbAime): void
     {
-        $this->nbAime = $nbAime;
+        $this->$nbAime = $nbAime;
     }
 
     public function getPrix(): ?int

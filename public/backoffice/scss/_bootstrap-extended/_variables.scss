@@ -13,8 +13,8 @@
 // *******************************************************************************
 
 // scss-docs-start gray-color-variables
-$white: #fff !default;
-$black: #435971 !default;
+$white: #000000 !default;
+$black: #003d7a !default;
 $gray-25: rgba($black, 0.025) !default; // (C)
 $gray-50: rgba($black, 0.05) !default; // (C)
 $gray-100: rgba($black, 0.1) !default;
@@ -113,13 +113,13 @@ $sizes-px: (
   auto: auto
 ) !default; // (C)
 
-$rgba-to-hex-bg: #fff !default; // (C)
+$rgba-to-hex-bg: #ff0606 !default; // (C)
 $rgba-to-hex-bg-inverted: #000 !default; // (C)
 
 // * Body
 // *******************************************************************************
 
-$body-bg: #f5f5f9 !default;
+$body-bg: #0202f8 !default;
 $body-color: rgba-to-hex($gray-800, $rgba-to-hex-bg) !default;
 
 // * Links

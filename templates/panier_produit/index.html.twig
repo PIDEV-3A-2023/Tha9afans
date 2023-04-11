@@ -5,142 +5,211 @@
 {% block body %}
     <h1>Panierproduit index</h1>
 
-   {# <table class="table">
-        <thead>
-            <tr>
-                <th>image</th>
-                <th>nom</th>
-                <th>description</th>
-                <th>Quantity</th>
-                <th>prix</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for panierproduit in panierproduits %}
-            <tr>
-                <td>
 
-                {% if panierproduit.idProduit.image is not empty %}
-                    <img src="{{ path('produitimageshow', {'id': panierproduit.idProduit}) }}">
-                {% else %}
-                    Aucune photo disponible
-                {% endif %}
-                </td>
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap');
 
 
 
-                <td> {{ panierproduit.idProduit.nom }}</td>
-               <td>{{ panierproduit.idProduit.description}}</td>
-                <td>{{ panierproduit.quantity }}</td>
-                <td>{{ panierproduit.idProduit.prix }}</td>
+        form .inputBox{
+            margin-top: 20px;
+        }
 
-                #}{#<td>{{ panierproduit.idPanier.total }}</td>#}{#
+        form .inputBox span{
 
-                <td>
-                    <a href="{{ path('app_panier_produit_show', {'id': panierproduit.id}) }}">show</a>
-                    <a href="{{ path('app_panier_produit_edit', {'id': panierproduit.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">No records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>#}
+            font-family: 'Quicksand', sans-serif;
+            font-size: 40px;
+            display: block;
+            color:#001A23;
+            padding-bottom: 5px;
+        }
 
-  {#  <a href="{{ path('app_panier_produit_new') }}">Create new</a>#}
+        form .inputBox input,
+         form .inputBox select{
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border:1px solid rgba(0,0,0,.3);
+            color:#444;
+        }
+        .titlepanier
+        {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 40px;
+            display: block;
+            color:#001A23;
+            padding-bottom: 5px;
+        }
+        .filter
+        {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 25px;
+            color:#A8DADC;
+
+        }
+        .price
+        {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 20px;
+            color:#001A23;
+
+        }
+        .box {
+            background-color: #a8dadc;
+            border-radius: 10px;
+            background:linear-gradient(90deg, #F1FAEE, #001A23);
+            box-shadow: 0 0 20px rgb(69, 123, 157);
+        }
+        .box1 {
+            background-color: #a8dadc;
+            border-radius: 20px;
+            background:linear-gradient(45deg, #F1FAEE , #001A23);
+            box-shadow: 0 0 20px rgb(69, 123, 157);
+
+        }
+        .text{
+            font-family: 'Quicksand', sans-serif;
+            font-size: 25px;
+            color:#F1FAEE;
+        }
+        .highlight {
+            font-family: 'Quicksand', sans-serif;
+            background:linear-gradient(45deg, darkseagreen, #e3e5e5);
+            color: #001A23;
+        }
+        .btnqt{
+            font-size: 20px;
+            color:#001A23;
+        }
+        .textqt{
+            text-align: center;
+            font-size: 20px;
+            color:#001A23;
+        }
+        .textproduitname{
+            font-family: 'Quicksand', sans-serif;
+            font-size: 25px;
+            color:#001A23;
+        }
+        .textproduitdesc{
+            font-family: 'Quicksand', sans-serif;
+            font-size: 20px;
+            color: #0b3844;
+        }
+        .btncenter{
+           /* centre the btn*/
+            text-align: center;
 
 
+        }
 
-<section class="pt-5 pb-5" style="color: #0a0d13">
-    <div class="container">
-        <div class="row w-100">
-            <div class="col-lg-12 col-md-12 col-12">
-                <h3 class="display-5 mb-2 text-center">Shopping Cart</h3>
-                <p class="mb-5 text-center">
-                    {# <i class="text-info font-weight-bold">3</i> items in your cart</p>#}
-                <table id="shoppingCart" class="table table-condensed table-responsive">
-                    <thead>
-                    <tr>
-                        <th style="width:60%">Product</th>
-                        <th style="width:12%">Price</th>
-                        <th style="width:10%">Quantity</th>
-                        <th style="width:16%"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
+
+    </style>
+    <section class="h-100" style="background-color: #eee;">
+        <div class="container h-100 py-5">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-10">
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="titlepanier fw-normal mb-0 text-black">Shopping Cart</h3>
+                        <div>
+                            <p class="mb-0"><span class="filter text-muted">Sort by:</span> <a href="#!" class="price text-body">price <i
+                                            class="fas fa-angle-down mt-1"></i></a></p>
+                        </div>
+                    </div>
                     {% set subtotal = 0.0 %}
                     {% for panierproduit in panierproduits %}
-                        <tr>
-                            <td data-th="Product">
-                                <div class="row">
-                                    <div class="col-md-3 text-left">
-                                        <img src="{{ path('produitimageshow', {'id': panierproduit.idProduit}) }}">
-                                        {#
-                                        <img src="https://via.placeholder.com/250x250/5fa9f8/ffffff" alt="" class="img-fluid d-none d-md-block rounded mb-2 shadow ">
-                                        #}
-                                    </div>
-                                    <div class="col-md-9 text-left mt-sm-2">
-                                        <h4> {{ panierproduit.idProduit.nom }}</h4>
-                                        <p class="font-weight-light">{{ panierproduit.idProduit.description }}</p>
-                                    </div>
+                    <div class="card rounded-3 mb-4">
+                        <div class="box card-body p-4">
+                            <div class="row d-flex justify-content-between align-items-center">
+                                <div class="col-md-2 col-lg-2 col-xl-2">
+                                    {% if panierproduit.idProduit.image is not empty %}
+                                        <img  src="{{ path('produit_image_show', {'id': panierproduit.idProduit.id}) }}" alt="{{ panierproduit.idProduit.nom }} " width="100px",height="100px">
+                                    {% else %}
+                                        Aucune photo disponible
+                                    {% endif %}
                                 </div>
-                            </td>
-                            <td data-th="Price">{{ panierproduit.idProduit.prix }} DT</td>
-
-
-
-
-                            <td data-th="Quantity">
-                                <input type="number" class="form-control form-control-lg text-center" value="1" min="1" name="quantite" id="quantite_{{ panierproduit.id }}">
-                            </td>
-
-
-
-                            <td class="actions" data-th="">
-                                <div class="text-right">
-                                    <button class="btn btn-white border-secondary bg-white btn-md mb-2">
-
-                                        <i class="fas fa-sync"></i>
-
+                                <div class="col-md-3 col-lg-3 col-xl-3">
+                                    <p class="textproduitname lead fw-normal mb-2">{{ panierproduit.idProduit.nom }}</p>
+                                    <p class="textproduitdesc">{{ panierproduit.idProduit.description }}</p>
+                                </div>
+                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                    <button class="btn btn-link px-2"
+                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                    <a href="{{ path('app_panierproduit_updateminus',{'id':panierproduit.id}) }}"><i class="btnqt fas fa-minus"></i></a>
                                     </button>
-                                    <a href="{{ path('app_panier_produit_remove', {'id': panierproduit.id}) }}" class="btn btn-white border-secondary bg-white btn-md mb-2">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
 
-                                    <button class="btn btn-white border-secondary bg-white btn-md mb-2">
-                                        <i class="fas fa-trash"></i>
 
+                                    <input id="form1" type="text"  min="0" name="quantity{{ panierproduit.idProduit }}" value="{{ panierproduit.quantity }}"  class="textqt form-control form-control-sm">
+                                    <button class="btn btn-link px-2"
+                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                        <a href="{{ path('app_panier_produit_updateplus',{'id':panierproduit.id}) }}"><i class="btnqt fas fa-plus"></i></a>
                                     </button>
                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                        </tr>
-                        {% set subtotal = subtotal + panierproduit.idProduit.prix %}
+                                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                    <h5 class="text mb-0"><span>{{ panierproduit.idProduit.prix}} </span>DT</h5>
+                                </div>
+                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+
+                                    <a href="{{ path('app_panier_produit_remove',{'id':panierproduit.id}) }}" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        {% set subtotal =subtotal + (panierproduit.quantity * panierproduit.idProduit.prix) %}
                     {% endfor %}
-                    </tbody>
-                </table>
-                <div class="float-right text-right">
-                    <h4>Subtotal:</h4>
-                    <h1>{{ subtotal }} DT</h1>
+                    <div class="float-right text-right">
+                        <h4 >Subtotal:</h4>
+                        <h1 class="highlight">{{ subtotal }} DT</h1>
+                    </div>
+
+
+
+                <br>
+
+                    <div class="box1 card mb-5">
+                        <div class="card-body p-4 d-flex flex-row">
+                            <div class=" form-outline flex-fill">
+                                {#<input type="text" id="form1" class="form-control form-control-lg" />
+                                <label class="form-label" for="form1">Discound code</label>#}
+                                <form action="">
+                                    <div class="inputBox">
+                                        <span>Discound code</span>
+                                        <input type="text" maxlength="16" class="card-number-input">
+                                    </div>
+                                </form>
+                            </div>
+{#
+                            <button type="button" class="btn btn-outline-warning btn-lg ms-3">Apply</button>
+#}
+                        </div>
+                    </div>
+
+                 {#   <div class="float-right text-right">
+                        <h4></h4>
+                        <h1></h1>
+                    </div>#}
+
+                    <div class="box1 card">
+                        <div class="card-body" style="text-align: center;">
+                            <a href="{{ path('app_payment') }}" class="btn btn-warning btn-lg">Proceed to Pay</a>
+                        </div>
+
+                    </div>
+
+
                 </div>
             </div>
         </div>
-        <div class="row mt-4 d-flex align-items-center">
-            <div class="col-sm-6 order-md-2 text-right">
-                {# <a href="catalog.html" class="btn btn-primary mb-4 btn-lg pl-5 pr-5">Checkout</a>#}
-                <a href="card.html.twig" class="btn btn-outline-primary mb-4 btn-lg pl-5 pr-5">Checkout</a>
-            </div>
-            <div class="col-sm-6 mb-3 mb-m-1 order-md-1 text-md-left">
-                <a href="catalog.html">
-                    <i class="fas fa-arrow-left mr-2"></i> Continue Shopping</a>
 
-            </div>
-        </div>
-    </div>
-</section>
 
-            {% endblock %}
+
+
+    </section>
+
+
+
+
+
+{% endblock %}

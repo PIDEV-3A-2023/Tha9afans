@@ -8,13 +8,13 @@
   @if not $active-bg {
     $active-bg: rgba-to-hex(
       rgba(map-get($colors, bg), 1 - if($contrast-percent < 0.75, 0.025, 0.05)),
-      if($contrast-percent > 0.25, #fff, #000)
+      if($contrast-percent > 0.25, #ff0000, #000)
     );
   }
 
   $menu-active-bg: rgba-to-hex(
     rgba($active-bg, 1 - if($contrast-percent < 0.75, 0.025, 0.05)),
-    if($contrast-percent > 0.25, #fff, #000)
+    if($contrast-percent > 0.25, #ff0000, #000)
   );
 
   #{$parent} {

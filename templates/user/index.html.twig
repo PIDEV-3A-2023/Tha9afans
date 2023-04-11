@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'backBase.html.twig' %}
 {% block title %}Liste des personnes{% endblock %}
 
 {% block body %}
@@ -291,6 +291,8 @@
             height: auto;
         }
     </style>
+    <section id="hero" class="hero d-flex flex-column ">
+    </section>
     {% if app.user %}
         <h1 style="color: red">{{ app.user.email }}</h1>
     {% endif %}
@@ -348,5 +350,7 @@
         </section>
     </main>
     <a href="{{ path('app_user_new') }}" style="background-color: #1D3557; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;width:170px">Ajouter Nouveau</a>
+    <section id="hero" class="hero d-flex flex-column ">
+    </section>
 
 {% endblock %}
