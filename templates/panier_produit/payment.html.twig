@@ -231,7 +231,7 @@
 
         </div>
 
-        <form action="">
+     {#   <form action="">
             <div class="inputBox">
                 <span>card number</span>
                 <input type="text" maxlength="16" class="card-number-input">
@@ -281,7 +281,33 @@
                 </div>
             </div>
             <input type="submit" value="submit" class="submit-btn">
-        </form>
+        </form>#}
+        {{ form_start(form) }}
+        <div class="inputBox">
+            {{ form_label(form.card_number) }}
+            {{ form_widget(form.card_number, { 'attr': {'class': 'card-number-input'} }) }}
+        </div>
+        <div class="inputBox">
+            {{ form_label(form.card_holder) }}
+            {{ form_widget(form.card_holder, { 'attr': {'class': 'card-holder-input'} }) }}
+        </div>
+        <div class="flexbox">
+            <div class="inputBox">
+                {{ form_label(form.expiration_month) }}
+                {{ form_widget(form.expiration_month, { 'attr': {'class': 'month-input'} }) }}
+            </div>
+            <div class="inputBox">
+                {{ form_label(form.expiration_year) }}
+                {{ form_widget(form.expiration_year, { 'attr': {'class': 'year-input'} }) }}
+            </div>
+            <div class="inputBox">
+                {{ form_label(form.cvv) }}
+                {{ form_widget(form.cvv, { 'attr': {'class': 'cvv-input'} }) }}
+            </div>
+        </div>
+        {{ form_widget(form.submit, { 'attr': {'class': 'submit-btn'} }) }}
+        {{ form_end(form) }}
+
 
     </div>
 {% endblock %}
