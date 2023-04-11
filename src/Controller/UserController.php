@@ -6,6 +6,8 @@ use App\Entity\Personnes;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Service\MailerService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +20,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 #[Route('/user')]
 class UserController extends AbstractController
 {
-    #[Route('/', name: 'app_user_index', methods: ['GET'])]
+    #[Route('/', name: 'app_user_index', methods: ['GET']),IsGranted("ROLE_ADMIN")]
     public function index(UserRepository $userRepository): Response
     {
         return $this->render('user/index.html.twig', [
@@ -35,6 +37,7 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $userRepository->save($user, true);
+
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -65,7 +68,7 @@ class UserController extends AbstractController
 
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
     #[Route('/{id}/edit', name: 'app_personnes_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, UserRepository $userRepository): Response
+    public function edit(Request $request, User $user, UserRepository $userRepository,MailerService $mailer): Response
     {
         $new=false;
         $form = $this->createForm(UserType::class, $user);
@@ -86,9 +89,15 @@ class UserController extends AbstractController
             }
 
             $userRepository->save($user, true);
+            $mailMessage=$user->getNom().' '.$user->getPrenom();
+            $mailer->sendEmail(content: $mailMessage);
+
+
+
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
+
 
         return $this->renderForm('user/edit.html.twig', [
             'user' => $user,
@@ -104,6 +113,7 @@ class UserController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $userRepository->remove($user, true);
+
         }
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);

@@ -5,15 +5,11 @@ namespace App\Entity;
 use App\Repository\EvenementRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-/**
- * Evenement
- *
- * @ORM\Table(name="Evenement")
- * @ORM\Entity(repositoryClass="App\Repository\EvenementRepository")
- */
+
 #[ORM\Entity(repositoryClass: EvenementRepository::class)]
 class Evenement
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]// auto increment
     #[ORM\Column]
@@ -25,13 +21,16 @@ class Evenement
     #[ORM\Column(length: 10000)]
     private ?string $description = null;
 
+    #[ORM\ManyToOne(inversedBy: 'evenements')]
+    private ?CategorieEvenement $categorie=null;
+
     #[ORM\Column(type: 'date')]
     private ?\DateTime $date = null;
 
 
 
     #[ORM\ManyToOne(inversedBy: 'evenements')]
-    private ?Personnes $createur=null;
+    private ?User $createur=null;
 
     #[ORM\Column(length: 255)]
     private ?string $localisation = null;
@@ -43,10 +42,10 @@ class Evenement
     private ?int $nbAime = null;
 
     #[ORM\Column()]
+
     private ?int $prix = null;
 
-    #[ORM\ManyToOne(inversedBy: 'evenements')]
-    private ?CategorieEvenement $categorie=null;
+
 
 
     public function getId(): ?int
@@ -91,13 +90,13 @@ class Evenement
     }
 
 
-    public function getcreateur(): ?Personnes
+    public function getcreateur(): ?User
     {
         return $this->createur;
     }
 
 
-    public function setCreateur(?Personnes $createur): void
+    public function setCreateur(?User $createur): void
     {
         $this->createur = $createur;
     }
@@ -125,14 +124,14 @@ class Evenement
     }
 
 
-    public function getNbAime(): ?int
+    public function getNbaime(): ?int
     {
         return $this->nbAime;
     }
 
-    public function setNbAime(?int $nbAime): void
+    public function setNbaime(?int $nbAime): void
     {
-        $this->nbAime = $nbAime;
+        $this->$nbAime = $nbAime;
     }
 
     public function getPrix(): ?int

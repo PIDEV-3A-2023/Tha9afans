@@ -23,7 +23,7 @@ class EvenementController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_evenement_new', methods: ['GET', 'POST'])]
+   /* #[Route('/new', name: 'app_evenement_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EvenementRepository $evenementRepository): Response
     {
         $evenement = new Evenement();
@@ -40,8 +40,43 @@ class EvenementController extends AbstractController
             'evenement' => $evenement,
             'form' => $form,
         ]);
-    }
+    }*/
+    #[Route('/new', name: 'app_profil-addevenement', methods: ['GET', 'POST'])]
+    public function new(Request $request, EvenementRepository $evenementRepository): Response
+    {
+        $evenement = new Evenement();
+        $form = $this->createForm(EvenementType::class, $evenement);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $evenementRepository->save($evenement, true);
+            $id = $evenement->getId();
+            return $this->redirectToRoute('app_profil-evenement-session-add', ['id' => $id], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('profil/addEvenement.html.twig', [
+            'evenement' => $evenement,
+            'form' => $form,
+        ]);
+
+    }
+    #[Route('/{id}/edit', name: 'app_profil-evenement-edit', methods: ['GET', 'POST'])]
+    public function editEvenement(Request $request, Evenement $evenement, EvenementRepository $evenementRepository): Response
+    {
+        $form = $this->createForm(EvenementType::class, $evenement);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $evenementRepository->save($evenement, true);
+
+            return $this->redirectToRoute('app_profil-evenement', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('profil/editEvenement.html.twig', [
+            'evenement' => $evenement,
+            'form' => $form,
+        ]);
+    }
     #[Route('/{id}', name: 'app_evenement_show', methods: ['GET'])]
     public function show(Evenement $evenement,SessionRepository $sessionRepository,GalerieRepository $galerieRepository): Response
     { $sessions = $sessionRepository->findBy(['evenement' => $evenement]);
@@ -51,7 +86,7 @@ class EvenementController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_evenement_edit', methods: ['GET', 'POST'])]
+  /*  #[Route('/{id}/edit', name: 'app_evenement_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Evenement $evenement, EvenementRepository $evenementRepository): Response
     {
         $form = $this->createForm(EvenementType::class, $evenement);
@@ -67,9 +102,9 @@ class EvenementController extends AbstractController
             'evenement' => $evenement,
             'form' => $form,
         ]);
-    }
+    }*/
 
-    #[Route('/{id}', name: 'app_evenement_delete', methods: ['POST'])]
+   /* #[Route('/{id}', name: 'app_evenement_delete', methods: ['POST'])]
     public function delete(Request $request, Evenement $evenement, EvenementRepository $evenementRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$evenement->getId(), $request->request->get('_token'))) {
@@ -77,5 +112,14 @@ class EvenementController extends AbstractController
         }
 
         return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
+    }*/
+    #[Route('/{id}', name: 'app_profil-evenement-delete', methods: ['POST'])]
+    public function delete(Request $request, Evenement $evenement, EvenementRepository $evenementRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$evenement->getId(), $request->request->get('_token'))) {
+            $evenementRepository->remove($evenement, true);
+        }
+
+        return $this->redirectToRoute('app_profil-evenement', [], Response::HTTP_SEE_OTHER);
     }
 }
