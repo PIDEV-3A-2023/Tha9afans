@@ -15,23 +15,24 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProfilController extends AbstractController
 {
-    #[Route('/profil', name: 'app_profil')]
-    public function index(): Response
-    {
-        return $this->render('profil/index.html.twig', [
-            'controller_name' => 'ProfilController',
-        ]);
-    }
-    #[Route('/profil/Myaccount/', name: 'app_profil-Myaccount')]
-    public function Myaccount(): Response
-    {
-        return $this->render('profil/myAccount.html.twig');
-    }
-    #[Route('/profil/facture/', name: 'app_profil-facture')]
-    public function facture(): Response
-    {
-        return $this->render('profil/facture.html.twig');
-    }
+
+      #[Route('/profil', name: 'app_profil')]
+        public function index(): Response
+        {
+            return $this->render('profil/index.html.twig', [
+                'controller_name' => 'ProfilController',
+            ]);
+        }
+        #[Route('/profil/Myaccount/', name: 'app_profil-Myaccount')]
+        public function Myaccount(): Response
+        {
+            return $this->render('profil/myAccount.html.twig');
+        }
+        #[Route('/profil/facture/', name: 'app_profil-facture')]
+        public function facture(): Response
+        {
+            return $this->render('profil/facture.html.twig');
+        }
 
 
     #[Route('/profil/evenement/', name: 'app_profil-evenement')]
@@ -41,18 +42,4 @@ class ProfilController extends AbstractController
             'evenements' => $evenementRepository->findAll(),
         ]);
     }
-/*    */
-
-
-/**/
-
-
-   /* */
-
-
-   /* */
-
-
-
-
 }
