@@ -15,7 +15,10 @@ class BilletType extends AbstractType
             ->add('code')
             ->add('dateValidite')
             ->add('prix')
-            ->add('idEvenement')
+            ->add('type')
+            ->add('nbrBilletAvailable')
+            ->add('evenement')
+            ->add('reservation')
         ;
     }
 

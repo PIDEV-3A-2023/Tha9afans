@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Billet;
-use App\Form\Billet1Type;
+use App\Form\BilletType;
 use App\Repository\BilletRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +25,7 @@ class BilletController extends AbstractController
     public function new(Request $request, BilletRepository $billetRepository): Response
     {
         $billet = new Billet();
-        $form = $this->createForm(Billet1Type::class, $billet);
+        $form = $this->createForm(BilletType::class, $billet);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -51,7 +51,7 @@ class BilletController extends AbstractController
     #[Route('/{id}/edit', name: 'app_billet_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Billet $billet, BilletRepository $billetRepository): Response
     {
-        $form = $this->createForm(Billet1Type::class, $billet);
+        $form = $this->createForm(BilletType::class, $billet);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

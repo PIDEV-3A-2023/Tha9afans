@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Evenement;
+use App\Entity\Reservation;
 use App\Form\EvenementType;
+use App\Form\ReservationType;
 use App\Repository\EvenementRepository;
+use App\Repository\ReservationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,6 +32,29 @@ class ProfilController extends AbstractController
     {
         return $this->render('profil/evenement.html.twig',[
             'evenements' => $evenementRepository->findAll(),
+        ]);
+    }
+    #[Route('/profil/reservation/', name: 'app_profil-reservation')]
+    public function reservation(ReservationRepository $reservationRepository): Response
+    {
+        return $this->render('profil/reservation.html.twig',[
+            'reservations' => $reservationRepository->findAll()
+        ]);
+    }
+    #[Route('/{id}/edit', name: 'app_profil-reservation-edit', methods: ['GET', 'POST'])]
+    public function editReservation(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
+    {
+        $form = $this->createForm(ReservationType::class, $reservation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reservationRepository->save($reservation, true);
+
+            return $this->redirectToRoute('app_profil-reservation', [], Response::HTTP_SEE_OTHER);
+        }
+        return $this->renderForm('profil/editReservation.html.twig', [
+            'evenement' => $reservationRepository,
+            'form' => $form,
         ]);
     }
     #[Route('/{id}/edit', name: 'app_profil-evenement-edit', methods: ['GET', 'POST'])]
@@ -67,6 +93,16 @@ class ProfilController extends AbstractController
         ]);
 
     }
+    #[Route('/{id}', name: 'app_profil-reservation-delete', methods: ['POST'])]
+    public function deleteReservation(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$reservation->getId(), $request->request->get('_token'))) {
+            $reservationRepository->remove($reservation, true);
+        }
+
+        return $this->redirectToRoute('app_profil-reservation', [], Response::HTTP_SEE_OTHER);
+    }
+
     #[Route('/{id}', name: 'app_profil-evenement-delete', methods: ['POST'])]
     public function delete(Request $request, Evenement $evenement, EvenementRepository $evenementRepository): Response
     {

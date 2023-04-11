@@ -5,7 +5,9 @@ namespace App\Entity;
 use App\Repository\ReservationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Reservation
@@ -20,31 +22,45 @@ class Reservation
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[ORM\Column(type: 'integer')]
     private $id;
+
     #[ORM\Column(type: 'date', name: 'date_reservation')]
+    #[Assert\NotBlank(message: "Date of reservation cannot be blank.")]
+    #[Assert\Type(\DateTimeInterface::class, message: "Date of reservation should be a valid date.")]
     private $dateReservation;
+
     #[ORM\Column(type: 'string', length: 20)]
-    private $status; // new property for reservation status
-    #[ORM\Column(type: 'string', length: 255, name: 'payment_info')]
+    #[Assert\NotBlank(message: "Status cannot be blank.")]
+    #[Assert\Length(max: 20, Maxmessage: "Status cannot exceed {{ limit }} characters.")]
+    private $status;
+
+    #[ORM\Column(type: 'string', name: 'payment_info')]
+    #[Assert\NotBlank(message: "Payment info cannot be blank.")]
+    #[Assert\Length(max: 255, Maxmessage: "Payment info cannot exceed {{ limit }} characters.")]
     private $paymentInfo;
+
     #[ORM\Column(type: 'integer', name: 'total_price')]
+    #[Assert\NotBlank(message: "Total price cannot be blank.")]
+    #[Assert\Positive(message: "Total price should be a positive integer.")]
     private $totalPrice;
+
     #[ORM\Column(type: 'string', length: 50, name: 'payment_status')]
+    #[Assert\NotBlank(message: "Payment status cannot be blank.")]
+    #[Assert\Length(max: 50, Maxmessage: "Payment status cannot exceed {{ limit }} characters.")]
     private $paymentStatus;
-    #[ORM\Column(type: 'integer', name: 'nbr_billets')]
-    private $nbrBillets;
-    #[ORM\Column(type: 'integer', name: 'nbr_ticket_type_1_reserved')]
-    private $nbrTicketType1Reserved;
-    #[ORM\Column(type: 'integer', name: 'nbr_ticket_type_2_reserved')]
-    private $nbrTicketType2Reserved;
-    #[ORM\OneToMany(targetEntity: 'Billet', mappedBy: 'reservation', cascade: ['persist'])]
-    private $billets;
+
     #[ORM\ManyToOne(targetEntity: 'User')]
     #[ORM\JoinColumn(name: 'id_user', referencedColumnName: 'id')]
     private $user;
 
+    #[ORM\OneToMany(targetEntity: 'BilletReserver', mappedBy: 'reservation', cascade: ['persist'])]
+    private $billetReservers;
+
+
+
     public function __construct()
     {
         $this->billets = new ArrayCollection();
+        $this->billetReservers = new ArrayCollection();
     }
 
 
@@ -191,6 +207,36 @@ class Reservation
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BilletReserver>
+     */
+    public function getBilletReservers(): Collection
+    {
+        return $this->billetReservers;
+    }
+
+    public function addBilletReserver(BilletReserver $billetReserver): self
+    {
+        if (!$this->billetReservers->contains($billetReserver)) {
+            $this->billetReservers->add($billetReserver);
+            $billetReserver->setReservation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBilletReserver(BilletReserver $billetReserver): self
+    {
+        if ($this->billetReservers->removeElement($billetReserver)) {
+            // set the owning side to null (unless already changed)
+            if ($billetReserver->getReservation() === $this) {
+                $billetReserver->setReservation(null);
+            }
+        }
 
         return $this;
     }

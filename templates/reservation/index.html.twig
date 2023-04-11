@@ -3,7 +3,6 @@
 {% block title %}Reservation index{% endblock %}
 
 {% block body %}
-    <h1>Reservation index</h1>
     <div class="breadcrumbs">
         <div class="page-header d-flex align-items-center"
              style="background-image: url('../frontOffice/assets/img/page-header.jpg');">
@@ -17,45 +16,6 @@
             </div>
         </div>
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>DateReservation</th>
-                <th>Status</th>
-                <th>PaymentInfo</th>
-                <th>TotalPrice</th>
-                <th>PaymentStatus</th>
-                <th>NbrBillets</th>
-                <th>NbrTicketType1Reserved</th>
-                <th>NbrTicketType2Reserved</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for reservation in reservations %}
-            <tr>
-                <td>{{ reservation.id }}</td>
-                <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
-                <td>{{ reservation.status }}</td>
-                <td>{{ reservation.paymentInfo }}</td>
-                <td>{{ reservation.totalPrice }}</td>
-                <td>{{ reservation.paymentStatus }}</td>
-                <td>{{ reservation.nbrBillets }}</td>
-                <td>{{ reservation.nbrTicketType1Reserved }}</td>
-                <td>{{ reservation.nbrTicketType2Reserved }}</td>
-                <td>
-                    <a href="{{ path('app_reservation_show', {'id': reservation.id}) }}">show</a>
-                    <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
+    <h1>Reservation pour l'evenement {{ event.nom }}  {{ app.user.id}} {{app.user.nom}}</h1>
     <a href="{{ path('app_reservation_new') }}">Create new</a>
 {% endblock %}

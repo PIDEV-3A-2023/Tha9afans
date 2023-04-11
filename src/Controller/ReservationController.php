@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Evenement;
 use App\Entity\Reservation;
-use App\Form\Reservation1Type;
+use App\Entity\User;
+use App\Form\ReservationType;
+use App\Repository\EvenementRepository;
 use App\Repository\ReservationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,19 +16,21 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/reservation')]
 class ReservationController extends AbstractController
 {
-    #[Route('/', name: 'app_reservation_index', methods: ['GET'])]
-    public function index(ReservationRepository $reservationRepository): Response
+    #[Route('/{eventId}/participate', name: 'app_reservation_index', methods: ['GET'])]
+    public function index($eventId, EvenementRepository $eventRepository): Response
     {
+        $event = $eventRepository->find($eventId);
         return $this->render('reservation/index.html.twig', [
-            'reservations' => $reservationRepository->findAll(),
+            'event' => $event
         ]);
     }
+
 
     #[Route('/new', name: 'app_reservation_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ReservationRepository $reservationRepository): Response
     {
         $reservation = new Reservation();
-        $form = $this->createForm(Reservation1Type::class, $reservation);
+        $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -51,7 +56,7 @@ class ReservationController extends AbstractController
     #[Route('/{id}/edit', name: 'app_reservation_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
     {
-        $form = $this->createForm(Reservation1Type::class, $reservation);
+        $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
