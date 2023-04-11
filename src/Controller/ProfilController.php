@@ -60,6 +60,7 @@ class ProfilController extends AbstractController
         ]);
     }*/
 
+
 /*#[Route('/new', name: 'app_profil-addevenement', methods: ['GET', 'POST'])]
     public function new(Request $request, EvenementRepository $evenementRepository): Response
     {
@@ -79,6 +80,26 @@ class ProfilController extends AbstractController
         ]);
 
     }*/
+
+//#[Route('/new', name: 'app_profil-addevenement', methods: ['GET', 'POST'])]
+//    public function new(Request $request, EvenementRepository $evenementRepository): Response
+//    {
+//        $evenement = new Evenement();
+//        $form = $this->createForm(EvenementType::class, $evenement);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $evenementRepository->save($evenement, true);
+//            $id = $evenement->getId();
+//            return $this->redirectToRoute('app_profil-evenement-session-add', ['id' => $id], Response::HTTP_SEE_OTHER);
+//        }
+//
+//        return $this->renderForm('profil/addEvenement.html.twig', [
+//            'evenement' => $evenement,
+//            'form' => $form,
+//        ]);
+//
+//    }
 /*    #[Route('/{id}', name: 'app_profil-evenement-delete', methods: ['POST'])]
     public function delete(Request $request, Evenement $evenement, EvenementRepository $evenementRepository): Response
     {
@@ -109,5 +130,8 @@ class ProfilController extends AbstractController
             'form' => $form,
         ]);
     }*/
+
+
+
 
 }
