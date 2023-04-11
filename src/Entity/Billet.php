@@ -16,6 +16,7 @@ use App\Repository\BilletRepository;
  * @ORM\Entity(repositoryClass="App\Repository\BilletRepository")
  */
 #[ORM\Entity(repositoryClass: BilletRepository::class)]
+
 class Billet
 {
     #[ORM\Id]
@@ -25,12 +26,13 @@ class Billet
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(message: 'The code cannot be blank.')]
-    #[Assert\Length(max: 150, maxMessage: 'The code cannot exceed {{ limit }} characters.')]
+    #[Assert\Length(max:150,maxMessage: 'The code cannot exceed {{ limit }} characters.')]
     private ?string $code = null;
-    #[ORM\Column(type: 'date')]
-    #[Assert\NotNull(message: 'The date validity cannot be null.')]
-    #[Assert\Date(message: 'The date validity should be a valid date.')]
-    private $dateValidite;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Assert\NotNull(message: 'The date cannot be null.')]
+    #[Assert\GreaterThan('today', message: 'The date should be greater than or equal to today.')]
+    private ?\DateTimeInterface $dateValidite = null;
 
     #[ORM\Column(type: 'float')]
     #[Assert\NotNull(message: 'The price cannot be null.')]
@@ -39,7 +41,7 @@ class Billet
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(message: "The type cannot be blank.")]
-    #[Assert\Length(max: 50, Maxmessage: "The type cannot exceed {{ limit }} characters.")]
+    #[Assert\Length(max: 50, maxMessage: "The type cannot exceed {{ limit }} characters.")]
     private $type; // new property for billet type
     #[ORM\Column(type: 'integer')]
     #[Assert\NotNull(message: "The number of available tickets cannot be null.")]
@@ -48,12 +50,10 @@ class Billet
 
     #[ORM\ManyToOne(targetEntity: 'Evenement', inversedBy: 'billets')]
     #[ORM\JoinColumn(name: 'id_evenement', referencedColumnName: 'id')]
-    #[Assert\NotNull(message: 'The Ticket must belong to and Event.')]
     private $evenement;
 
     #[ORM\OneToMany(targetEntity: 'BilletReserver', mappedBy: 'billet', cascade: ['persist'])]
     #[Assert\NotNull]
-    #[Assert\PositiveOrZero(message: 'Error.')]
     private $billetReservers;
 
     public function __construct()
@@ -82,7 +82,7 @@ class Billet
         return $this->dateValidite;
     }
 
-    public function setDateValidite(\DateTimeInterface $dateValidite): self
+    public function setDateValidite(?\DateTimeInterface $dateValidite): self
     {
         $this->dateValidite = $dateValidite;
 
@@ -132,18 +132,6 @@ class Billet
     public function setEvenement(?Evenement $evenement): self
     {
         $this->evenement = $evenement;
-
-        return $this;
-    }
-
-    public function getReservation(): ?Reservation
-    {
-        return $this->reservation;
-    }
-
-    public function setReservation(?Reservation $reservation): self
-    {
-        $this->reservation = $reservation;
 
         return $this;
     }
