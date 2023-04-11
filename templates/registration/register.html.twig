@@ -3,25 +3,199 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
+    <style>
+        label{
+            margin-left: 10px;
+        }
+        .box{
+            box-sizing: border-box;
+            width: 700px;
+            height: 700px;
+            border: 2px solid #A8DADC;
+            box-shadow: -3px -3px 7px #ffffff73,
+            3px 3px 5px rgba(94,104,121,0.288);
+            border-radius: 20px;
+            background-color: #001A23;
+            margin-top: 120px;
+            margin-bottom: 120px;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin-left: 320px;
+        }
+        .form-control-file.custom-class {
+            margin-left: 70px;
+            margin-right: auto;
+        }
+        .my-custom-class {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .imgprofile{
+            box-sizing: border-box;
+            width: 135px;
+            height: 135px;
+            border-radius: 50%;
+            margin: 0;
+            margin-left: 170px;
+            border: 5px solid #A8DADC;
+            padding: 3px;
+            background-color: white;
+        }
+        label{
+            color:white;
+        }
+
+
+        .form-control{
+            display: block;
+            box-sizing: border-box;
+            background: none;
+            background-color: white !important;
+            color:white;
+            margin-bottom: 30px;
+            padding: 4px;
+            width: 220px;
+            height: 32px;
+            border: none;
+            border-bottom: 1px solid #A8DADC;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400;
+            font-size: 15px;
+            transition: 0.2s ease;
+        }
+        .has-error {
+            color: white;
+        }
+        .form-control:focus{
+            border-bottom: 2px solid #A8DADC;
+            border-bottom-right-radius: 20px;
+            color: #A8DADC;
+            transition: 0.2s ease;
+        }
+        .btn{
+            border: 1px solid #A8DADC;
+            background-color: white;
+            color: #001A23;
+            height: 50px;
+            width: 100px;
+            border-radius: 20px;
+            margin: 0px;
+            transition: all 0.3s;
+            font-size: 18px;
+            font-weight: bold;
+            margin-left: 170px;
+        }
+        .btn:hover{
+            transform: scale(1.1);
+            background: #A8DADC
+        ;
+            color:#001A23 ;
+            box-shadow: 0 0 35px #A8DADC;
+        }
+        file-input{
+            box-sizing: border-box;
+            font-size: 20px;
+            background-color: #001A23;
+            border: 1px solid #A8DADC;
+            padding: 2px 15px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            margin-top: -200px;
+        }
+        file-input:hover{
+            background-color: #A8DADC;
+            color: black;
+        }
+        .form-control{}
+        .box:hover{
+            width: 700px;
+            height: 700px;
+            border-radius: 10px;
+        }
+        input{
+            background: none;
+            background-color: white !important;
+            color:#001A23;
+            margin-bottom: 20px;
+            padding: 4px;
+            width: 220px;
+            height: 30px;
+            border: none;
+            border-bottom: 1px solid #A8DADC;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 250;
+            font-size: 15px;
+            transition: 0.2s ease;
+        }
+        input:focus{
+            border-bottom: 2px solid #A8DADC;
+            border-bottom-right-radius: 20px;
+            color: #001A23;
+            transition: 0.2s ease;
+        }
+
+    </style>
+    <div class="box">
+
+        <br>
+        <div style="color: white;margin-left: 300px;font-weight: bold;font-size: 1.8em">Sign Up</div>
+        <br>
+        {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
+        <br>
 
-    <h1>Register</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.cin) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.nom) }}
-        {{ form_row(registrationForm.prenom) }}
-        {{ form_row(registrationForm.datenaissance) }}
-        {{ form_row(registrationForm.telephone) }}
-        {{ form_row(registrationForm.adresse) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        {{ form_start(registrationForm) }}
+        <div class="row">
+            <div class="col">
+                {{ form_row(registrationForm.cin, {
+                    label: 'Carte identité'
+                }, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
+            </div>
+            <div class="col">
+                {{ form_row(registrationForm.nom, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_row(registrationForm.prenom, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
+            </div>
+            <div class="col">
+                {{ form_row(registrationForm.email, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_row(registrationForm.telephone, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
+            </div>
+            <div class="col">
+                {{ form_row(registrationForm.adresse, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_row(registrationForm.plainPassword, {
+                    label: 'Password'
+                }, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_row(registrationForm.datenaissance,  {
+                    label: 'Date de naissance'
+                },{'attr': {'class': 'form-control-file custom-class text-center'}}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_row(registrationForm.agreeTerms, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
+            </div>
+        </div>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+
+            <button type="submit" class="btn" style="margin-left: 300px">Register</button>
+        {{ form_end(registrationForm) }}
+    </div>
 {% endblock %}
