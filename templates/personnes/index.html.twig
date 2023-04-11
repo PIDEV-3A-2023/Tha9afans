@@ -291,62 +291,65 @@
             height: auto;
         }
     </style>
-    {% if app.user %}
-        <h1 style="color: red">{{ app.user.email }}</h1>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <main class="table" style="margin-top: 30px">
+            <section class="table__header">
+                <h1 style="color: #001A23">liste des personnes</h1>
+                <div class="input-group">
+                    <input type="search" placeholder="Entrez le nom" >
+                    <img src="{{asset('frontOffice/assets/img/logo.png') }}" alt="" width="100px" height="70px">
+                </div>
+
+                <div class="export__file">
+                    <label for="export-file" class="export__file-btn" title="Export File"></label>
+                </div>
+            </section>
+            <section class="table__body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cin</th>
+                            <th>Nom</th>
+                            <th>Prenom</th>
+                            <th>Email</th>
+                            <th>Photo</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for personne in personnes %}
+                        <tr>
+                            <td>{{ personne.cin }}</td>
+                            <td>{{ personne.nom }}</td>
+                            <td>{{ personne.prenom }}</td>
+                            <td>{{ personne.email }}</td>
+                            <td>
+                                {% if personne.photo is not empty %}
+                                    <img src="{{ path('personne_show', {'id': personne.id}) }}" alt="{{ personne.nom }}">
+                                {% else %}
+                                    Aucune photo disponible
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{{ path('app_personnes_show', {'id': personne.id}) }}" style="background-color: #001A23; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Détail</a>
+
+                                <a href="{{ path('app_personnes_edit', {'id': personne.id}) }}" style="background-color: #1D3557; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Modifier</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="12">no records found</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </section>
+        </main>
+        <a href="{{ path('app_personnes_new') }}" style="background-color: #1D3557; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;width:170px">Ajouter Nouveau</a>
+    {% else %}
+        {% include 'errorpage.html.twig' %}
+        <section id="hero" class="hero d-flex flex-column ">
+        </section>
     {% endif %}
-    <main class="table" style="margin-top: 30px">
-        <section class="table__header">
-            <h1 style="color: #001A23">liste des personnes</h1>
-            <div class="input-group">
-                <input type="search" placeholder="Entrez le nom" >
-                <img src="{{asset('frontOffice/assets/img/logo.png') }}" alt="" width="100px" height="70px">
-            </div>
-
-            <div class="export__file">
-                <label for="export-file" class="export__file-btn" title="Export File"></label>
-            </div>
-        </section>
-        <section class="table__body">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Cin</th>
-                        <th>Nom</th>
-                        <th>Prenom</th>
-                        <th>Email</th>
-                        <th>Photo</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for personne in personnes %}
-                    <tr>
-                        <td>{{ personne.cin }}</td>
-                        <td>{{ personne.nom }}</td>
-                        <td>{{ personne.prenom }}</td>
-                        <td>{{ personne.email }}</td>
-                        <td>
-                            {% if personne.photo is not empty %}
-                                <img src="{{ path('personne_show', {'id': personne.id}) }}" alt="{{ personne.nom }}">
-                            {% else %}
-                                Aucune photo disponible
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a href="{{ path('app_personnes_show', {'id': personne.id}) }}" style="background-color: #001A23; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Détail</a>
-
-                            <a href="{{ path('app_personnes_edit', {'id': personne.id}) }}" style="background-color: #1D3557; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Modifier</a>
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="12">no records found</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        </section>
-    </main>
-    <a href="{{ path('app_personnes_new') }}" style="background-color: #1D3557; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;width:170px">Ajouter Nouveau</a>
 
 {% endblock %}
