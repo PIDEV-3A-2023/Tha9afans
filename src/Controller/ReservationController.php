@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/reservation')]
 class ReservationController extends AbstractController
 {
-    #[Route('/{eventId}/participate', name: 'app_reservation_index', methods: ['GET'])]
+    #[Route('/index', name: 'app_reservation_index', methods: ['GET'])]
     public function index($eventId, EvenementRepository $eventRepository): Response
     {
         $event = $eventRepository->find($eventId);
@@ -26,20 +26,21 @@ class ReservationController extends AbstractController
     }
 
 
-    #[Route('/new', name: 'app_reservation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ReservationRepository $reservationRepository): Response
+    #[Route('/{eventId}/participate', name: 'app_reservation_new', methods: ['GET', 'POST'])]
+    public function new($eventId,EvenementRepository $eventRepository, Request $request, ReservationRepository $reservationRepository): Response
     {
         $reservation = new Reservation();
+        $event = $eventRepository->find($eventId);
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $reservationRepository->save($reservation, true);
 
-            return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_evenement_show', ['id'=>$event->getId()], Response::HTTP_SEE_OTHER);
         }
-
         return $this->renderForm('reservation/new.html.twig', [
+            'event' => $event,
             'reservation' => $reservation,
             'form' => $form,
         ]);

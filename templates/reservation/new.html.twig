@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Reservation{% endblock %}
+
+{% block body %}
+    <style>
+        .mt-5{
+            margin-top: 100px;
+            width: 50%;
+        }
+    </style>
+    <div class="mt-5">
+         {{ include('reservation/_form.html.twig') }}
+    </div>
+{% endblock %}

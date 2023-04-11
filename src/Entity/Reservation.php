@@ -24,18 +24,20 @@ class Reservation
     private $id;
 
     #[ORM\Column(type: 'date', name: 'date_reservation')]
-    #[Assert\NotBlank(message: "Date of reservation cannot be blank.")]
+    #[Assert\NotNull(message: 'The date cannot be null.')]
+    #[Assert\GreaterThan('today', message: 'The date should be greater than or equal to today.')]
     #[Assert\Type(\DateTimeInterface::class, message: "Date of reservation should be a valid date.")]
     private $dateReservation;
 
     #[ORM\Column(type: 'string', length: 20)]
     #[Assert\NotBlank(message: "Status cannot be blank.")]
-    #[Assert\Length(max: 20, Maxmessage: "Status cannot exceed {{ limit }} characters.")]
+    #[Assert\Length(max: 20, maxMessage: "Status cannot exceed {{ limit }} characters.")]
+
     private $status;
 
     #[ORM\Column(type: 'string', name: 'payment_info')]
     #[Assert\NotBlank(message: "Payment info cannot be blank.")]
-    #[Assert\Length(max: 255, Maxmessage: "Payment info cannot exceed {{ limit }} characters.")]
+    #[Assert\Length(max: 255, maxMessage: "Payment info cannot exceed {{ limit }} characters.")]
     private $paymentInfo;
 
     #[ORM\Column(type: 'integer', name: 'total_price')]
@@ -45,7 +47,7 @@ class Reservation
 
     #[ORM\Column(type: 'string', length: 50, name: 'payment_status')]
     #[Assert\NotBlank(message: "Payment status cannot be blank.")]
-    #[Assert\Length(max: 50, Maxmessage: "Payment status cannot exceed {{ limit }} characters.")]
+    #[Assert\Length(max: 50, maxMessage: "Payment status cannot exceed {{ limit }} characters.")]
     private $paymentStatus;
 
     #[ORM\ManyToOne(targetEntity: 'User')]
