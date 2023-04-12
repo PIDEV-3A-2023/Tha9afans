@@ -4,9 +4,39 @@
 
 {% block body %}
     <style>
-        .mt-5{
+        .mt-5 {
             margin-top: 100px !important;
             width: 50%;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            color: blue;
+            text-decoration: none;
+            margin-right: 5px;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
     </style>
     <div class="mt-5">
@@ -33,13 +63,16 @@
                         <td>{{ b.prix }}</td>
                         <td>{{ b.nbrBilletAvailable }}</td>
                         <td>
-                            <a href="{{ path('app_billet_show', {'billet': b}) }}">show</a>
+                            <a href="">show</a>
                             <a href="{{ path('app_billet_edit', {'id': b.id}) }}">edit</a>
+                            <form method="post" action="{{path('app-billet-delete', {'id': b.id}) }}}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ b.id) }}">
+                                <button class="dropdown-item"><i class="bx bx-trash me-1"></i> Delete</button>
+                            </form>
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
-
     </div>
 {% endblock %}

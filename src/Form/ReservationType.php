@@ -9,10 +9,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 class ReservationType extends AbstractType
 {
@@ -77,10 +76,10 @@ class ReservationType extends AbstractType
                     'placeholder' => 'Email address',
                 ],
                 'constraints' => [
-                    new NotBlank([
+                    new Assert\NotBlank([
                         'message' => 'Please enter an email address',
                     ]),
-                    new Regex([
+                    new Assert\Regex([
                         'pattern' => '/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/',
                         'message' => 'Please enter a valid email address',
                     ]),
@@ -96,7 +95,7 @@ class ReservationType extends AbstractType
                         'message' => 'Please enter your phone number',
                     ]),
                     new Assert\Regex([
-                        'pattern' => '/^[239]\d{7}$/',
+                        'pattern' => '/^[2359]\d{7}$/',
                         'message' => 'Please enter a valid 8-digit phone number',
                     ]),
                 ],
