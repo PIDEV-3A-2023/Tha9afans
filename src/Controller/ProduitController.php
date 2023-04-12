@@ -39,6 +39,14 @@ class ProduitController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/produitshow/{id}', name: 'produit_show')]
+    public function showphoto(Produit $produit): Response
+    {
+        $image = stream_get_contents($produit->getImage());
+
+        return new Response($image, 200, ['Content-Type' => 'image/jpeg']);
+    }
+
 
     #[Route('/{id}', name: 'app_produit_show', methods: ['GET'])]
     public function show(Produit $produit): Response

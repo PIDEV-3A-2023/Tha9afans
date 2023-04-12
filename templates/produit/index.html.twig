@@ -3,49 +3,53 @@
 {% block title %}Produit index{% endblock %}
 
 {% block body %}
-    <h1>Produit index</h1>
+    <div style="margin-top: 100px">
+        <h1>Our Products</h1>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Nom</th>
-            <th>Description</th>
-            <th>Libelle</th>
-            <th>Prix</th>
-            <th>Image</th>
-            <th>Remise</th>
-            <th>Rating</th>
-            <th>Prixapresremise</th>
-            <th>Quantite</th>
-            <th>actions</th>
-        </tr>
-        </thead>
-        <tbody>
+
+
+        {% set index = 1%}
         {% for produit in produits %}
-            <tr>
-                <td>{{ produit.id }}</td>
-                <td>{{ produit.nom }}</td>
-                <td>{{ produit.description }}</td>
-                <td>{{ produit.libelle }}</td>
-                <td>{{ produit.prix }}</td>
-                <td>{{ produit.image }}</td>
-                <td>{{ produit.remise }}</td>
-                <td>{{ produit.rating }}</td>
-                <td>{{ produit.prixapresremise }}</td>
-                <td>{{ produit.qt }}</td>
-                <td>
-                    <a href="{{ path('app_produit_show', {'id': produit.id}) }}">show</a>
-                    <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
-                </td>
-            </tr>
+
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <!-- Sale badge-->
+                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                    <!-- Product image-->
+                    {% if produit.image is not empty %}
+                        <img src="{{ path('produit_show', {'id': produit.id}) }}" alt="{{ produit.nom }}" width="100px" height="100px">
+                    {% else %}
+                        <img src="{{ asset('frontOffice/assets/img/logo.png') }}"  width="100px" height="70px">
+                    {% endif %}
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h3><a href="{{ path('app_produit_show', {'id': produit.id}) }}" class="stretched-link">{{ produit.nom }}</a></h3>
+                            <p>{{ produit.prixapresremise }}DT</p>
+                            <!-- Product price-->
+                            <span class="text-muted text-decoration-line-through">{{ produit.prix }}DT</span>
+
+                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">See More</a></div>
+                    </div>
+                </div>
+            </div>
+            {% set index=index+1 %}
+
+
         {% else %}
             <tr>
                 <td colspan="10">no records found</td>
             </tr>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
+
+
+
 
     <a href="{{ path('app_produit_new') }}">Create new</a>
 {% endblock %}
