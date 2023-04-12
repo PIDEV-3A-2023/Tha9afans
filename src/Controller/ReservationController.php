@@ -30,6 +30,31 @@ class ReservationController extends AbstractController
     }
 
 
+    #[Route('/{reservationId}/{event}/participate/ticket', name: 'app_ticket', methods: ['GET', 'POST'])]
+    // function that retrieve the reservation and returns the ticket page
+    public function ticket(Request $request,$reservationId,$event,EvenementRepository $evenementRepository, ReservationRepository $reservationRepository,BilletRepository $billetRepository, BilletReserverRepository $billetReserverRepository): Response
+    {
+        $listBillets = $billetRepository->findBy(['evenement' => $event]);
+        $billetReserverNormal= new BilletReserver();
+        $billetReserverNormal->setBillet($billetRepository->find($listBillets[0]));
+        $billetReserverNormal->setReservation($reservationRepository->find($reservationId));
+        $billetReserverNormal->setNombre(0);
+        $billetReserverVip= new BilletReserver();
+        $billetReserverVip->setBillet($billetRepository->find($listBillets[1]));
+        $billetReserverVip->setReservation($reservationRepository->find($reservationId));
+        $billetReserverVip->setNombre(0);
+        $billetReserverEtudiant= new BilletReserver();
+        $billetReserverEtudiant->setBillet($billetRepository->find($listBillets[2]));
+        $billetReserverEtudiant->setReservation($reservationRepository->find($reservationId));
+        $billetReserverEtudiant->setNombre(0);
+        $reservation = $reservationRepository->find($reservationId);
+        $billetReserver = $billetReserverRepository->findBy(['reservation' => $reservationId]);
+        return $this->render('reservation/next.html.twig', [
+            'reservation' => $reservation,
+            'billetReserver' => $billetReserver,
+            'billets' =>$listBillets,
+        ]);
+    }
     #[Route('/{eventId}/participate', name: 'app_reservation_new', methods: ['GET', 'POST'])]
     public function new(BilletRepository $billetRepository, $eventId,EvenementRepository $eventRepository, Request $request, ReservationRepository $reservationRepository): Response
     {
@@ -38,11 +63,10 @@ class ReservationController extends AbstractController
         $event = $eventRepository->find($eventId);
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $reservationRepository->save($reservation, true);
-
-            return $this->redirectToRoute('app_evenement_show', ['id'=>$event->getId()], Response::HTTP_SEE_OTHER);
+            $id = $reservationRepository->find($reservation)->getId();
+            return $this->redirectToRoute('app_ticket', ['reservationId'=>$id ,'event'=>$event->getId()], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('reservation/new.html.twig', [
             'billets' => $billet,
@@ -51,6 +75,8 @@ class ReservationController extends AbstractController
             'form' => $form,
         ]);
     }
+
+
 
     #[Route('/{id}', name: 'app_reservation_show', methods: ['GET'])]
     public function show(Reservation $reservation): Response
@@ -110,7 +136,7 @@ class ReservationController extends AbstractController
     #[Route('/updateplus/{id}', name: 'app_panier_produit_updateplus', methods: ['GET'])]
     public function updateplus(BilletReserver $billetReserver, BilletReserverRepository $billetReserverRepository): Response
     {
-
+        $quantity = $billetReserver->getNombre();
         $maxQuantity = $billetReserver->getReservation()->getQt(); //here
         $newQuantity = $quantity + 1;
         if ($newQuantity <= $maxQuantity) {

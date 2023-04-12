@@ -22,11 +22,7 @@
     {{ form_label(form.address) }}
     {{ form_widget(form.address) }}
     {{ form_errors(form.address) }}<br>
-<label style="font-weight:bold; color:red;">Tickets:</label><br>
-    {{ include('billet/billet.html.twig') }}
-    {{ form_label(form.totalPrice) }}
-    {{ form_widget(form.totalPrice) }}
-<button class="btn">{{ button_label|default('Confirmer Reservation') }}</button>
+<button class="btn">{{ button_label|default('Suivant') }}</button>
 {{ form_end(form) }}
 
 
