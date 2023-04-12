@@ -26,7 +26,6 @@ class BilletType extends AbstractType
             ])
             ->add('prix')
             ->add('nbrBilletAvailable')
-//            ->add('evenement')
         ;
     }
 

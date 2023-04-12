@@ -24,30 +24,18 @@ class Reservation
     private $id;
 
     #[ORM\Column(type: 'date', name: 'date_reservation')]
-    #[Assert\NotNull(message: 'The date cannot be null.')]
-    #[Assert\GreaterThan('today', message: 'The date should be greater than or equal to today.')]
-    #[Assert\Type(\DateTimeInterface::class, message: "Date of reservation should be a valid date.")]
     private $dateReservation;
 
     #[ORM\Column(type: 'string', length: 20)]
-    #[Assert\NotBlank(message: "Status cannot be blank.")]
-    #[Assert\Length(max: 20, maxMessage: "Status cannot exceed {{ limit }} characters.")]
-
     private $status;
 
     #[ORM\Column(type: 'string', name: 'payment_info')]
-    #[Assert\NotBlank(message: "Payment info cannot be blank.")]
-    #[Assert\Length(max: 255, maxMessage: "Payment info cannot exceed {{ limit }} characters.")]
     private $paymentInfo;
 
     #[ORM\Column(type: 'integer', name: 'total_price')]
-    #[Assert\NotBlank(message: "Total price cannot be blank.")]
-    #[Assert\Positive(message: "Total price should be a positive integer.")]
     private $totalPrice;
 
     #[ORM\Column(type: 'string', length: 50, name: 'payment_status')]
-    #[Assert\NotBlank(message: "Payment status cannot be blank.")]
-    #[Assert\Length(max: 50, maxMessage: "Payment status cannot exceed {{ limit }} characters.")]
     private $paymentStatus;
 
     #[ORM\ManyToOne(targetEntity: 'User')]
@@ -56,6 +44,81 @@ class Reservation
 
     #[ORM\OneToMany(targetEntity: 'BilletReserver', mappedBy: 'reservation', cascade: ['persist'])]
     private $billetReservers;
+
+    #[ORM\Column(type: 'string')]
+    private $location;
+    #[ORM\Column(type: 'string')]
+    private $nom;
+    #[ORM\Column(type: 'string')]
+    private $prenom;
+    #[ORM\Column(type: 'string')]
+    private $email;
+    #[ORM\Column(type: 'string')]
+    private $telephone;
+    #[ORM\Column(type: 'string')]
+    private $address;
+
+    public function getNom()
+    {
+        return $this->nom;
+    }
+        public function setNom($nom): void
+    {
+        $this->nom = $nom;
+    }
+    public function getPrenom()
+    {
+        return $this->prenom;
+    }
+
+      public function setPrenom($prenom): void
+    {
+        $this->prenom = $prenom;
+    }
+
+      public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setEmail($email): void
+    {
+        $this->email = $email;
+    }
+
+     public function getTelephone()
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone($telephone): void
+    {
+        $this->telephone = $telephone;
+    }
+
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+     public function setAddress($address): void
+    {
+        $this->address = $address;
+    }
+
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    public function setLocation(string $location): self
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+
 
 
 
