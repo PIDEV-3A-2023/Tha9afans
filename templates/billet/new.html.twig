@@ -1,14 +1,7 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}New Reservation{% endblock %}
-
-{% block body %}
+{% extends '/profil/index.html.twig' %}
+{% block cardtitle %}edit Billet{% endblock %}
+{% block content %}
     <style>
-        .mt-5 {
-            margin-top: 100px !important;
-            width: 50%;
-        }
-
         table {
             border-collapse: collapse;
             width: 100%;
@@ -39,7 +32,7 @@
             text-decoration: underline;
         }
     </style>
-    <div class="mt-5">
+    <div >
         {{ include('billet/_form.html.twig') }}
     </div>
     <div>
