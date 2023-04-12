@@ -20,7 +20,7 @@ class PanierProduitController extends AbstractController
     public function index(PanierproduitRepository $panierproduitRepository): Response
     {
         return $this->render('panier_produit/index.html.twig', [
-            'panierproduits' => $panierproduitRepository->findAll(),
+            'panierproduits' => $panierproduitRepository->findPanierByUser($this->getUser())    // $panierproduitRepository->findAll(   ),
         ]);
     }
 
