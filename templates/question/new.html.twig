@@ -33,7 +33,7 @@
             border-radius: 20px;
         }
 
-        .btn {
+        .btn{
             /*display: block;*/
             margin-top: 10px;
             margin-bottom: auto;
@@ -46,13 +46,64 @@
             color: #001A23;
         }
 
-
-
-
     </style>
     <h1>Create new Question</h1>
 
-    {{ include('question/_form.html.twig') }}
+
+    <div class="form">
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}} ) }}
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.question, {'attr': {'class': 'form-control custom-class'}}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.answer, {'attr': {'class': 'form-control custom-class'}}) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.firstPossibleAnswer, {'attr': {'class': 'form-control custom-class'}}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.secondPossibleAnswer, {'attr': {'class': 'form-control custom-class'}}) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.thirdPossibleAnswer, {'attr': {'class': 'form-control custom-class'}}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.timer, {'attr': {'class': 'form-control custom-class'}}) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.image, {'attr': {'class': 'form-control custom-class'}}) }}
+            </div>
+        </div>
+
+        <button class="btn">{{ button_label|default('Add Question') }}</button>
+
+        {% if app.session.flashbag.has('success') %}
+            <div class="alert alert-success">
+                {% for message in app.session.flashbag.get('success') %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if app.session.flashbag.has('error') %}
+            <div class="alert alert-danger">
+                {% for message in app.session.flashbag.get('error') %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+
+        {{ form_end(form) }}
+
+    </div>
 
     <a href="{{ path('app_question_index') }}">back to list</a>
 {% endblock %}

@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Evenement;
-use App\Entity\Session;
+use App\Entity\Reservation;
 use App\Form\EvenementType;
-use App\Form\SessionType;
+use App\Form\ReservationType;
 use App\Repository\EvenementRepository;
+use App\Repository\ReservationRepository;
+use App\Entity\Session;
+use App\Form\SessionType;
 use App\Repository\SessionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,9 +35,14 @@ class ProfilController extends AbstractController
         {
             return $this->render('profil/facture.html.twig');
         }
-
-
-
+         #[Route('/profil/reservation/', name: 'app_profil-reservation')]
+    public function reservation(ReservationRepository $reservationRepository): Response
+    {
+        return $this->render('profil/reservation.html.twig',[
+            'reservations' => $reservationRepository->findAll()
+        ]);
+    }
+   
     #[Route('/profil/evenement/', name: 'app_profil-evenement')]
     public function evenement(EvenementRepository $evenementRepository): Response
     {
@@ -42,100 +50,11 @@ class ProfilController extends AbstractController
             'evenements' => $evenementRepository->findAll(),
         ]);
     }
-/*    #[Route('/{id}/edit', name: 'app_profil-evenement-edit', methods: ['GET', 'POST'])]
-    public function editEvenement(Request $request, Evenement $evenement, EvenementRepository $evenementRepository): Response
-    {
-        $form = $this->createForm(EvenementType::class, $evenement);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $evenementRepository->save($evenement, true);
-
-            return $this->redirectToRoute('app_profil-evenement', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('profil/editEvenement.html.twig', [
-            'evenement' => $evenement,
-            'form' => $form,
+    #[Route('/profil/evenement/{id}/session/', name: 'app_profil-evenement-session')]
+    public function session(SessionRepository $sessionRepository,$id): Response
+    {   $session = $sessionRepository->findBy(['evenement' => $id],['debit' => 'ASC']);
+        return $this->render('profil/session.html.twig',[
+            'sessions' => $session
         ]);
-    }*/
-
-
-
-/*#[Route('/new', name: 'app_profil-addevenement', methods: ['GET', 'POST'])]
->>>>>>> 9f6e89a46c1bbd41b5931e872114e55df4cb561c
-    public function new(Request $request, EvenementRepository $evenementRepository): Response
-    {
-        $evenement = new Evenement();
-        $form = $this->createForm(EvenementType::class, $evenement);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $evenementRepository->save($evenement, true);
-            $id = $evenement->getId();
-            return $this->redirectToRoute('app_profil-evenement-session-add', ['id' => $id], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('profil/addEvenement.html.twig', [
-            'evenement' => $evenement,
-            'form' => $form,
-        ]);
-
     }
-
-    }*/
-
-//#[Route('/new', name: 'app_profil-addevenement', methods: ['GET', 'POST'])]
-//    public function new(Request $request, EvenementRepository $evenementRepository): Response
-//    {
-//        $evenement = new Evenement();
-//        $form = $this->createForm(EvenementType::class, $evenement);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $evenementRepository->save($evenement, true);
-//            $id = $evenement->getId();
-//            return $this->redirectToRoute('app_profil-evenement-session-add', ['id' => $id], Response::HTTP_SEE_OTHER);
-//        }
-//
-//        return $this->renderForm('profil/addEvenement.html.twig', [
-//            'evenement' => $evenement,
-//            'form' => $form,
-//        ]);
-//
-//    }
-/*    #[Route('/{id}', name: 'app_profil-evenement-delete', methods: ['POST'])]
-    public function delete(Request $request, Evenement $evenement, EvenementRepository $evenementRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$evenement->getId(), $request->request->get('_token'))) {
-            $evenementRepository->remove($evenement, true);
-        }
-
-        return $this->redirectToRoute('app_profil-evenement', [], Response::HTTP_SEE_OTHER);
-    }*/
-
-
-   /* #[Route('/{id}/new', name: 'app_profil-evenement-session-add', methods: ['GET', 'POST'])]
-    public function newSession(Request $request,Evenement $evenement, SessionRepository $sessionRepository): Response
-    {
-        $session = new Session();
-        $form = $this->createForm(SessionType::class, $session);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $form->getData()->setEvenement($evenement);
-            $sessionRepository->save($session, true);
-
-            return $this->redirectToRoute('app_profil-evenement', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('profil/addSession.html.twig', [
-            'session' => $session,
-            'form' => $form,
-        ]);
-    }*/
-
-
-
-
 }

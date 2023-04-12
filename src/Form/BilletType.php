@@ -4,18 +4,77 @@ namespace App\Form;
 
 use App\Entity\Billet;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class BilletType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('code')
-            ->add('dateValidite')
-            ->add('prix')
-            ->add('idEvenement')
+            ->add('code',null, [
+
+        'constraints' => [
+            new Assert\NotBlank([
+                'message' => 'Please enter a first name',
+            ]),
+            new Assert\Length([
+                'min' => 3,
+                'max' => 15,
+                'minMessage' => 'the code should have at least {{ limit }} characters',
+                'maxMessage' => 'The code should have at most {{ limit }} characters',
+            ]),
+        ],
+        'attr' => [
+            'class' => 'form-control',
+            'placeholder' => 'code'
+        ]
+    ])
+            ->add('dateValidite', null, [
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'Please enter a reservation date',
+                    ]),
+                    new Assert\GreaterThan([
+                        'value' => 'today',
+                        'message' => 'The date must be greater than today',
+                    ]),
+                ],
+            ])
+            ->add('type', ChoiceType::class, [
+
+                'choices' => [
+                    'VIP' => "VIP",
+                    'Normal' => "Normal",
+                    'Etudiant' => "Etudiant",
+                ],
+                'expanded' => true, // afficher les choix sous forme de boutons radio
+
+            ])
+            ->add('prix', NumberType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Prix',
+                ],
+                'constraints' => [
+                    new Assert\GreaterThanOrEqual(0),
+                ],
+            ])
+            ->add('nbrBilletAvailable',NumberType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Nombre de billet ',
+                ],
+                'constraints' => [
+                    new Assert\GreaterThanOrEqual(0),
+                ],
+            ])
         ;
     }
 

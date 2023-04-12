@@ -119,44 +119,48 @@
                         </div>
                     </div>
                     {% set subtotal = 0.0 %}
+                    {% if app.session.flashbag.has('error') %}
+                        <div class="alert alert-danger">
+                            {% for message in app.session.flashbag.get('error') %}
+                                {{ message }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                     {% for panierproduit in panierproduits %}
-                    <div class="card rounded-3 mb-4">
-                        <div class="box card-body p-4">
-                            <div class="row d-flex justify-content-between align-items-center">
-                                <div class="col-md-2 col-lg-2 col-xl-2">
-                                    {% if panierproduit.idProduit.image is not empty %}
-                                        <img  src="{{ path('produit_image_show', {'id': panierproduit.idProduit.id}) }}" alt="{{ panierproduit.idProduit.nom }} " width="100px",height="100px">
-                                    {% else %}
-                                        Aucune photo disponible
-                                    {% endif %}
-                                </div>
-                                <div class="col-md-3 col-lg-3 col-xl-3">
-                                    <p class="textproduitname lead fw-normal mb-2">{{ panierproduit.idProduit.nom }}</p>
-                                    <p class="textproduitdesc">{{ panierproduit.idProduit.description }}</p>
-                                </div>
-                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                    <button class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                    <a href="{{ path('app_panierproduit_updateminus',{'id':panierproduit.id}) }}"><i class="btnqt fas fa-minus"></i></a>
-                                    </button>
-
-
-                                    <input id="form1" type="text"  min="0" name="quantity{{ panierproduit.idProduit }}" value="{{ panierproduit.quantity }}"  class="textqt form-control form-control-sm">
-                                    <button class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                        <a href="{{ path('app_panier_produit_updateplus',{'id':panierproduit.id}) }}"><i class="btnqt fas fa-plus"></i></a>
-                                    </button>
-                                </div>
-                                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                    <h5 class="text mb-0"><span>{{ panierproduit.idProduit.prix}} </span>DT</h5>
-                                </div>
-                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-
-                                    <a href="{{ path('app_panier_produit_remove',{'id':panierproduit.id}) }}" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
+                        <div class="card rounded-3 mb-4">
+                            <div class="box card-body p-4">
+                                <div class="row d-flex justify-content-between align-items-center">
+                                    <div class="col-md-2 col-lg-2 col-xl-2">
+                                        {% if panierproduit.idProduit.image is not empty %}
+                                            <img  src="{{ path('produit_image_show', {'id': panierproduit.idProduit.id}) }}" alt="{{ panierproduit.idProduit.nom }} " width="100px",height="100px">
+                                        {% else %}
+                                            Aucune photo disponible
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-3 col-lg-3 col-xl-3">
+                                        <p class="textproduitname lead fw-normal mb-2">{{ panierproduit.idProduit.nom }}</p>
+                                        <p class="textproduitdesc">{{ panierproduit.idProduit.description }}</p>
+                                    </div>
+                                    <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                        <button class="btn btn-link px-2"
+                                                onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                            <a href="{{ path('app_panierproduit_updateminus',{'id':panierproduit.id}) }}"><i class="btnqt fas fa-minus"></i></a>
+                                        </button>
+                                        <input id="form1" type="text"  min="0" name="quantity{{ panierproduit.idProduit }}" value="{{ panierproduit.quantity }}"  class="textqt form-control form-control-sm">
+                                        <button class="btn btn-link px-2"
+                                                onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                            <a href="{{ path('app_panier_produit_updateplus',{'id':panierproduit.id}) }}"><i class="btnqt fas fa-plus"></i></a>
+                                        </button>
+                                    </div>
+                                    <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                        <h5 class="text mb-0"><span>{{ panierproduit.idProduit.prix}} </span>DT</h5>
+                                    </div>
+                                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                        <a href="{{ path('app_panier_produit_remove',{'id':panierproduit.id}) }}" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                         {% set subtotal =subtotal + (panierproduit.quantity * panierproduit.idProduit.prix) %}
                     {% endfor %}
                     <div class="float-right text-right">
@@ -193,7 +197,7 @@
 
                     <div class="box1 card">
                         <div class="card-body" style="text-align: center;">
-                            <a href="{{ path('app_payment') }}" class="btn btn-warning btn-lg">Proceed to Pay</a>
+                            <a href="{{ path('app_payment_s_new_panierproduit') }}" class="btn btn-warning btn-lg">Proceed to Pay</a>
                         </div>
 
                     </div>

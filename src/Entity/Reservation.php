@@ -3,8 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\ReservationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Reservation
@@ -23,25 +26,113 @@ class Reservation
     #[ORM\Column(type: 'date', name: 'date_reservation')]
     private $dateReservation;
 
-    #[ORM\Column(type: 'boolean', name: 'isPaid')]
-    private $isPaid = null;
+    #[ORM\Column(type: 'string', length: 20)]
+    private $status;
 
-    #[ORM\Column(type: 'string', length: 255, name: 'payment_info')]
+    #[ORM\Column(type: 'string', name: 'payment_info')]
     private $paymentInfo;
 
-    #[ORM\ManyToOne(targetEntity: 'Billet')]
-    #[ORM\JoinColumn(name: 'id_billet', referencedColumnName: 'id')]
-    private $idBillet;
+    #[ORM\Column(type: 'integer', name: 'total_price')]
+    private $totalPrice;
 
-    #[ORM\ManyToOne(targetEntity: 'Personnes')]
+    #[ORM\Column(type: 'string', length: 50, name: 'payment_status')]
+    private $paymentStatus;
+
+    #[ORM\ManyToOne(targetEntity: 'User')]
     #[ORM\JoinColumn(name: 'id_user', referencedColumnName: 'id')]
-    private $idUser;
+    private $user;
+
+    #[ORM\OneToMany(targetEntity: 'BilletReserver', mappedBy: 'reservation', cascade: ['persist'])]
+    private $billetReservers;
+
+    #[ORM\Column(type: 'string')]
+    private $location;
+    #[ORM\Column(type: 'string')]
+    private $nom;
+    #[ORM\Column(type: 'string')]
+    private $prenom;
+    #[ORM\Column(type: 'string')]
+    private $email;
+    #[ORM\Column(type: 'string')]
+    private $telephone;
+    #[ORM\Column(type: 'string')]
+    private $address;
+
+    public function getNom()
+    {
+        return $this->nom;
+    }
+        public function setNom($nom): void
+    {
+        $this->nom = $nom;
+    }
+    public function getPrenom()
+    {
+        return $this->prenom;
+    }
+
+      public function setPrenom($prenom): void
+    {
+        $this->prenom = $prenom;
+    }
+
+      public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setEmail($email): void
+    {
+        $this->email = $email;
+    }
+
+     public function getTelephone()
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone($telephone): void
+    {
+        $this->telephone = $telephone;
+    }
+
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+     public function setAddress($address): void
+    {
+        $this->address = $address;
+    }
+
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    public function setLocation(string $location): self
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+
+
+
+
+    public function __construct()
+    {
+        $this->billets = new ArrayCollection();
+        $this->billetReservers = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
-
 
     public function getDateReservation(): ?\DateTimeInterface
     {
@@ -55,14 +146,14 @@ class Reservation
         return $this;
     }
 
-    public function getIsPaid(): ?bool
+    public function getStatus(): ?string
     {
-        return $this->isPaid;
+        return $this->status;
     }
 
-    public function setIsPaid(bool $isPaid): self
+    public function setStatus(string $status): self
     {
-        $this->ispaid = $isPaid;
+        $this->status = $status;
 
         return $this;
     }
@@ -79,28 +170,139 @@ class Reservation
         return $this;
     }
 
-    public function getIdBillet(): ?Billet
+    public function getTotalPrice(): ?int
     {
-        return $this->idBillet;
+        return $this->totalPrice;
     }
 
-    public function setIdBillet(?Billet $idBillet): self
+    public function setTotalPrice(int $totalPrice): self
     {
-        $this->idBillet = $idBillet;
+        $this->totalPrice = $totalPrice;
 
         return $this;
     }
 
-    public function getIdUser(): ?Personnes
+    public function getPaymentStatus(): ?string
     {
-        return $this->idUser;
+        return $this->paymentStatus;
     }
 
-    public function setIdUser(?Personnes $idUser): self
+    public function setPaymentStatus(string $paymentStatus): self
     {
-        $this->idUser = $idUser;
+        $this->paymentStatus = $paymentStatus;
 
         return $this;
     }
 
+    public function getNbrBillets(): ?int
+    {
+        return $this->nbrBillets;
+    }
+
+    public function setNbrBillets(int $nbrBillets): self
+    {
+        $this->nbrBillets = $nbrBillets;
+
+        return $this;
+    }
+
+    public function getNbrTicketType1Reserved(): ?int
+    {
+        return $this->nbrTicketType1Reserved;
+    }
+
+    public function setNbrTicketType1Reserved(int $nbrTicketType1Reserved): self
+    {
+        $this->nbrTicketType1Reserved = $nbrTicketType1Reserved;
+
+        return $this;
+    }
+
+    public function getNbrTicketType2Reserved(): ?int
+    {
+        return $this->nbrTicketType2Reserved;
+    }
+
+    public function setNbrTicketType2Reserved(int $nbrTicketType2Reserved): self
+    {
+        $this->nbrTicketType2Reserved = $nbrTicketType2Reserved;
+
+        return $this;
+    }
+
+    public function getBillets(): Collection
+    {
+        return $this->billets;
+    }
+
+    public function addUser(User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function addBillet(Billet $billet): self
+    {
+        if (!$this->billets->contains($billet)) {
+            $this->billets->add($billet);
+            $billet->setReservation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBillet(Billet $billet): self
+    {
+        if ($this->billets->removeElement($billet)) {
+            // set the owning side to null (unless already changed)
+            if ($billet->getReservation() === $this) {
+                $billet->setReservation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BilletReserver>
+     */
+    public function getBilletReservers(): Collection
+    {
+        return $this->billetReservers;
+    }
+
+    public function addBilletReserver(BilletReserver $billetReserver): self
+    {
+        if (!$this->billetReservers->contains($billetReserver)) {
+            $this->billetReservers->add($billetReserver);
+            $billetReserver->setReservation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBilletReserver(BilletReserver $billetReserver): self
+    {
+        if ($this->billetReservers->removeElement($billetReserver)) {
+            // set the owning side to null (unless already changed)
+            if ($billetReserver->getReservation() === $this) {
+                $billetReserver->setReservation(null);
+            }
+        }
+
+        return $this;
+    }
 }

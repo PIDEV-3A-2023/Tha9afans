@@ -1,0 +1,30 @@
+{{ form_start(form,{'attr': {'novalidate':'novalidate'}} ) }}
+{{ form_label(form.nom)}}
+{{ form_widget(form.nom) }}
+{{ form_errors(form.nom) }}
+{{ form_label(form.description) }}
+{{ form_widget(form.description)}}
+{{ form_errors(form.description) }}
+{{ form_label(form.date) }}
+{{ form_widget(form.date) }}
+{{ form_errors(form.date) }}
+{{ form_label(form.localisation) }}
+{{ form_widget(form.localisation) }}
+{{ form_errors(form.localisation) }}
+{{ form_label(form.createur) }}
+{{ form_widget(form.createur) }}
+{{ form_errors(form.createur) }}
+{{ form_label(form.freeorpaid) }}
+{{ form_widget(form.freeorpaid) }}
+{{ form_errors(form.freeorpaid) }}
+{{ form_label(form.online) }}
+{{ form_widget(form.online) }}
+{{ form_errors(form.online) }}
+{{ form_label(form.link) }}
+{{ form_widget(form.link) }}
+{{ form_errors(form.link) }}
+{{ form_label(form.Categorie) }}
+{{ form_widget(form.Categorie) }}
+{{ form_errors(form.Categorie) }}
+<button class="btn btn-primary btn-lg active">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

@@ -37,7 +37,7 @@
         }
 
         .a span {
-            background: #f2594b;
+            background: #0b3844;
             border-radius: 4px;
             color: #ffffff;
             display: inline-block;
@@ -149,6 +149,8 @@
             <th class="col-md-5 col-xs-5">Date Facture</th>
             <th class="col-md-4 col-xs-4">TVA</th>
             <th class="col-md-4 col-xs-4">total</th>
+            <th class="col-md-4 col-xs-4">Produit</th>
+            <th class="col-md-4 col-xs-4">user</th>
             <th class="col-md-4 col-xs-4">Action</th>
 
         </tr>
@@ -164,28 +166,13 @@
                 <td>{{ facture.tva }}</td>
                 <td>{{ facture.idCommende.total }}</td>
                 <td>{{ facture.idCommende.idProduit.nom }}</td>
-
-
-
-
+                <td>{{ facture.idCommende.idUser.email }}</td>
                 <td>
-                    <a class="a" href="{{ path('facture_pdf', {'id': facture.id}) }}" download><span>Download</span><span>PDF</span></a>
-
-                    <a href="{{ path('facture_pdf', {'id': facture.id}) }}" class="btn btn-info">Email</a>
-
-
-                    <a href="{{ path('facture_pdf', {'id': facture.id}) }}" class="btn btn-info">
-
-                            <button class="btn btn-inside btn-boarder"><img src="https://i.cloudup.com/gBzAn-oW_S-2000x2000.png" width="64px" height="64px" id="plane"></button>
-                            <div class="bg"><img src="https://i.cloudup.com/2ZAX3hVsBE-3000x3000.png" id="bg" width="32px" height="32px" style="opacity:0;"></div>
-                            <div class="around around-boarder" onclick="ani(); anitwo();"></div>
-                    </a>
+                    <a class="a" href="{{ path('facture_pdf', {'id': facture.id}) }}" download><span >Download</span><span>PDF</span></a>
+                    <a class="a" href="{{ path('facture_pdf', {'id': facture.id}) }}" download><span >Send</span><span>Mail</span></a>
                 </td>
-
             </tr>
         {% endfor %}
-
-
         <script >
             function ani(){
                 document.getElementById('plane').className ='animation';
