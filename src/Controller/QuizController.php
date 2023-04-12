@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Quiz;
 use App\Form\QuizType;
+use App\Repository\QuestionRepository;
 use App\Repository\QuizRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,13 +23,30 @@ class QuizController extends AbstractController
     }
 
     #[Route('/new', name: 'app_quiz_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, QuizRepository $quizRepository): Response
+    public function new(Request $request, QuizRepository $quizRepository, QuestionRepository $questionRepository): Response
     {
         $quiz = new Quiz();
+        $question = $questionRepository->findAll();
         $form = $this->createForm(QuizType::class, $quiz);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            // get uploaded file for photo field
+            $photoFile = $form->get('quizCover')->getData();
+
+            if ($photoFile) {
+                // open file and get contents as string
+                $photoContent = file_get_contents($photoFile->getRealPath());
+                $quiz->setQuizCover($photoContent);
+            }
+
+
+            if ($quizRepository->findBy(['quizName' => $quiz->getQuizName()])) {
+                $this->addFlash('error', 'Quiz already exists in database!');
+                return $this->redirectToRoute('app_quiz_new');
+            }
+
             $quizRepository->save($quiz, true);
 
             return $this->redirectToRoute('app_quiz_index', [], Response::HTTP_SEE_OTHER);
@@ -37,7 +55,15 @@ class QuizController extends AbstractController
         return $this->renderForm('quiz/new.html.twig', [
             'quiz' => $quiz,
             'form' => $form,
+            'questions' => $question,
         ]);
+    }
+
+    #[Route('/quizShow/{id}', name: 'quiz_show_image')]
+    public function showPhoto(Quiz $quiz): Response
+    {
+        $image = stream_get_contents($quiz->getQuizCover());
+        return new Response($image, 200, ['Content-Type' => 'image/jpeg']);
     }
 
     #[Route('/{quizId}', name: 'app_quiz_show', methods: ['GET'])]
@@ -55,6 +81,15 @@ class QuizController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // get uploaded file for photo field
+            $photoFile = $form->get('quizCover')->getData();
+
+            if ($photoFile) {
+                // open file and get contents as string
+                $photoContent = file_get_contents($photoFile->getRealPath());
+                $quiz->setQuizCover($photoContent);
+            }
+
             $quizRepository->save($quiz, true);
 
             return $this->redirectToRoute('app_quiz_index', [], Response::HTTP_SEE_OTHER);
@@ -65,6 +100,7 @@ class QuizController extends AbstractController
             'form' => $form,
         ]);
     }
+
 
     #[Route('/{quizId}', name: 'app_quiz_delete', methods: ['POST'])]
     public function delete(Request $request, Quiz $quiz, QuizRepository $quizRepository): Response

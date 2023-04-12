@@ -1,0 +1,10 @@
+{% extends 'backBase.html.twig' %}
+
+{% block title %}Quiz BackOffice Management{% endblock %}
+
+{% block body %}
+    <a href="{{ path('app_question_new') }}"> Add Question </a>
+    <a href="{{ path('app_question_index') }}">List Questions</a>
+    <a href="{{ path('app_quiz_new') }}"> Add Quiz </a>
+    <a href="{{ path('app_quiz_index') }}">List Quizzes</a>
+{% endblock %}

@@ -27,8 +27,8 @@ class Quiz
     #[ORM\Column(name: "nbr_questions", type: "integer", nullable: false)]
     private $nbrQuestions;
 
-    #[ORM\Column(name: "quiz_cover", type: "blob", length: 0, nullable: true)]
-    private $quizCover;
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private  $quizCover;
 
     #[ORM\Column(name: "quiz_description", type: "string", length: 200, nullable: false)]
     private $quizDescription;
