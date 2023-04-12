@@ -1,13 +1,96 @@
-{% extends 'base.html.twig' %}
+{% extends 'backBase.html.twig' %}
 
 {% block title %}Edit Quiz{% endblock %}
 
 {% block body %}
     <h1>Edit Quiz</h1>
 
-    {{ include('quiz/_form.html.twig', {'button_label': 'Update'}) }}
+    <style>
+        .form input, .form textarea {
+            display: block;
+            margin-bottom: 10px;
+            border-radius: 20px;
+        }
 
-    <a href="{{ path('app_quiz_index') }}">back to list</a>
 
-    {{ include('quiz/_delete_form.html.twig') }}
+        .form label {
+            font-weight: bold;
+            font-size: medium;
+            display: block;
+            margin-bottom: 5px;
+            color: white;
+        }
+        .form {
+            width: 80%;
+            margin: 0 auto;
+            background-color: #001A23;
+            padding: 60px;
+            border-radius: 20px;
+        }
+
+        .upload {
+            display: block;
+            margin-top: auto;
+            margin-bottom: auto;
+            border-radius: 20px;
+        }
+
+        .btn{
+            /*display: block;*/
+            margin-top: 10px;
+            margin-bottom: auto;
+            border-radius: 20px;
+            color: white;
+            border-color: white;
+        }
+        .btn:hover {
+            background-color: white;
+            color: #001A23;
+        }
+
+    </style>
+
+
+    <div class="form">
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}} ) }}
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.quizName, {'attr': {'class': 'form-control custom-class'}}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.nbrQuestions, {'attr': {'class': 'form-control custom-class'}}) }}
+            </div>
+            <div class="col">
+                {{ form_row(form.quizCover, {'attr': {'class': 'form-control custom-class'}}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.quizDescription, {'attr': {'class': 'form-control custom-class'}}) }}
+            </div>
+        </div>
+
+
+        {% if app.session.flashbag.has('success') %}
+            <div class="alert alert-success">
+                {% for message in app.session.flashbag.get('success') %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if app.session.flashbag.has('error') %}
+            <div class="alert alert-danger">
+                {% for message in app.session.flashbag.get('error') %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <button class="btn">{{ button_label|default('Update Quiz') }}</button>
+        {{ form_end(form) }}
+    </div>
+
 {% endblock %}
