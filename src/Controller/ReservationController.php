@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Billet;
 use App\Entity\Evenement;
 use App\Entity\Reservation;
 use App\Entity\User;
 use App\Form\ReservationType;
+use App\Repository\BilletRepository;
 use App\Repository\EvenementRepository;
 use App\Repository\ReservationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,8 +29,9 @@ class ReservationController extends AbstractController
 
 
     #[Route('/{eventId}/participate', name: 'app_reservation_new', methods: ['GET', 'POST'])]
-    public function new($eventId,EvenementRepository $eventRepository, Request $request, ReservationRepository $reservationRepository): Response
+    public function new(BilletRepository $billetRepository, $eventId,EvenementRepository $eventRepository, Request $request, ReservationRepository $reservationRepository): Response
     {
+        $billet= $billetRepository->findById($eventRepository->find($eventId));
         $reservation = new Reservation();
         $event = $eventRepository->find($eventId);
         $form = $this->createForm(ReservationType::class, $reservation);
@@ -40,6 +43,7 @@ class ReservationController extends AbstractController
             return $this->redirectToRoute('app_evenement_show', ['id'=>$event->getId()], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('reservation/new.html.twig', [
+            'billets' => $billet,
             'event' => $event,
             'reservation' => $reservation,
             'form' => $form,
