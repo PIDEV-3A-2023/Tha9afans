@@ -2,7 +2,13 @@
 {% block cardtitle %}Ajouter Evenement{% endblock %}
 {% block content %}
 
-
+    {% if app.session.flashbag.has('danger') %}
+        <div class="alert alert-danger">
+            {% for message in app.session.flashbag.get('danger') %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
     {{ include('evenement/_form.html.twig') }}
 
     <a href="{{ path('app_profil-evenement') }}">back to list</a>

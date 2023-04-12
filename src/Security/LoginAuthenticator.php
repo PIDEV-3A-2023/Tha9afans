@@ -15,6 +15,9 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use App\Repository\UserRepository;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+
 
 class LoginAuthenticator extends AbstractLoginFormAuthenticator
 {
@@ -22,8 +25,10 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    public function __construct(UserRepository $userRepository, UrlGeneratorInterface $urlGenerator)
     {
+        $this->userRepository = $userRepository;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function authenticate(Request $request): Passport
@@ -31,6 +36,16 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         $email = $request->request->get('email', '');
 
         $request->getSession()->set(Security::LAST_USERNAME, $email);
+
+        $user = $this->userRepository->findOneBy(['email' => $email]);
+
+        if (!$user) {
+            throw new AuthenticationException('Vérifier votre mot de passe et email');
+        }
+
+        if ($user->getIsBlocked()) {
+            throw new AuthenticationException('Your account is blocked.');
+        }
 
         return new Passport(
             new UserBadge($email),
@@ -48,11 +63,13 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        // For example:
-        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
-        //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+        $roles = $token->getRoleNames();
 
-        return  new RedirectResponse($this->urlGenerator->generate('app_user_index'));
+        if (in_array('ROLE_ADMIN', $roles)) {
+            return new RedirectResponse($this->urlGenerator->generate('app_user_index'));
+        } else {
+            return new RedirectResponse($this->urlGenerator->generate('app_evenement_index'));
+        }
     }
 
     protected function getLoginUrl(Request $request): string

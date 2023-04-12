@@ -1,6 +1,10 @@
 <?php
 namespace App\Form;
+
 use Symfony\Component\Validator\Constraints as Assert;
+
+
+
 use App\Entity\Categorie;
 use App\Entity\Produit;
 use App\Entity\User;
@@ -10,7 +14,9 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+
 
 
 class ProduitType extends AbstractType
@@ -75,12 +81,14 @@ class ProduitType extends AbstractType
                 'class' =>Categorie::class,
                 'choice_label' => 'nom', // ou une autre propriété de Joueur à afficher
             ])
+
             ->add('qt', null, [
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Positive(),
                 ]
             ])
+
 
         ;
     }

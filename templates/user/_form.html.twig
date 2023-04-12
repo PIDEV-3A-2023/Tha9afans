@@ -1,55 +1,59 @@
-<style>
-
-</style>
-{{ form_start(form, {'attr': {'style': 'background-color: #001A23;' }}) }}
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
 <div class="row">
     <div class="col">
-        {{ form_row(form.photo, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
+        {{ form_row(form.cin, {
+            label: 'Carte identité'
+        }, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
+    </div>
+    <div class="col">
+        {{ form_row(form.nom, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
     </div>
 </div>
-<br><br>
 <div class="row">
     <div class="col">
-        {{ form_row(form.cin, {'attr': {'class': ' custom-class'}}) }}
+        {{ form_row(form.prenom, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
     </div>
     <div class="col">
-        {{ form_row(form.nom, {'attr': {'class': 'custom-class'}}) }}
+        {{ form_row(form.email, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
     </div>
 </div>
-
 <div class="row">
     <div class="col">
-        {{ form_row(form.prenom, {'attr': {'class': 'custom-class'}}) }}
+        {{ form_row(form.telephone, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
     </div>
     <div class="col">
-        {{ form_row(form.adresse, {'attr': {'class': 'custom-class'}}) }}
+        {{ form_row(form.adresse, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
     </div>
 </div>
-
 <div class="row">
     <div class="col">
-        {{ form_row(form.email, {'attr': {'class': 'custom-class'}}) }}
+        {% if not hide_password %}
+            {{ form_row(form.plainPassword, {
+                label: 'Password'
+            }, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
+        {% endif %}
     </div>
 </div>
-
 <div class="row">
     <div class="col">
-        {{ form_row(form.datenaissance, {'attr': {'class': 'custom-class'}}) }}
-    </div>
-    <div class="col">
-        {{ form_row(form.telephone, {'attr': {'class': 'custom-class','style': 'background-color: blue;'}}) }}
+        {{ form_row(form.datenaissance,  {
+            label: 'Date de naissance'
+        },{'attr': {'class': 'form-control-file custom-class text-center'}}) }}
     </div>
 </div>
-
-
-
 <div class="row">
-
     <div class="col">
-        {{ form_row(form.roles, {'attr': {'class': 'custom-class'}}) }}
+        {{ form_row(form.roles, {'label_attr': {'class': 'checkbox-label', 'for': 'user_roles_0'}}) }}
+    </div>
+    <div class="col">
+        {{ form_row(form.photo,{'attr': {'class': 'form-control-file custom-class text-center'}}) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        {{ form_row(form.isBlocked,{label:'Bloquer personne:'}, {'label_attr': {'class': 'checkbox-label'}}) }}
     </div>
 </div>
 
-<button type="submit" class="btn">{{ button_label|default('Save') }}</button>
-
+<button class="btn" style="margin-bottom: 20px">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

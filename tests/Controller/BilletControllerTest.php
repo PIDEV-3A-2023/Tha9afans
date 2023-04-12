@@ -47,7 +47,10 @@ class BilletControllerTest extends WebTestCase
             'billet[code]' => 'Testing',
             'billet[dateValidite]' => 'Testing',
             'billet[prix]' => 'Testing',
-            'billet[idEvenement]' => 'Testing',
+            'billet[type]' => 'Testing',
+            'billet[nbrBilletAvailable]' => 'Testing',
+            'billet[evenement]' => 'Testing',
+            'billet[reservation]' => 'Testing',
         ]);
 
         self::assertResponseRedirects('/billet/');
@@ -62,7 +65,10 @@ class BilletControllerTest extends WebTestCase
         $fixture->setCode('My Title');
         $fixture->setDateValidite('My Title');
         $fixture->setPrix('My Title');
-        $fixture->setIdEvenement('My Title');
+        $fixture->setType('My Title');
+        $fixture->setNbrBilletAvailable('My Title');
+        $fixture->setEvenement('My Title');
+        $fixture->setReservation('My Title');
 
         $this->repository->save($fixture, true);
 
@@ -81,7 +87,10 @@ class BilletControllerTest extends WebTestCase
         $fixture->setCode('My Title');
         $fixture->setDateValidite('My Title');
         $fixture->setPrix('My Title');
-        $fixture->setIdEvenement('My Title');
+        $fixture->setType('My Title');
+        $fixture->setNbrBilletAvailable('My Title');
+        $fixture->setEvenement('My Title');
+        $fixture->setReservation('My Title');
 
         $this->repository->save($fixture, true);
 
@@ -91,7 +100,10 @@ class BilletControllerTest extends WebTestCase
             'billet[code]' => 'Something New',
             'billet[dateValidite]' => 'Something New',
             'billet[prix]' => 'Something New',
-            'billet[idEvenement]' => 'Something New',
+            'billet[type]' => 'Something New',
+            'billet[nbrBilletAvailable]' => 'Something New',
+            'billet[evenement]' => 'Something New',
+            'billet[reservation]' => 'Something New',
         ]);
 
         self::assertResponseRedirects('/billet/');
@@ -101,7 +113,10 @@ class BilletControllerTest extends WebTestCase
         self::assertSame('Something New', $fixture[0]->getCode());
         self::assertSame('Something New', $fixture[0]->getDateValidite());
         self::assertSame('Something New', $fixture[0]->getPrix());
-        self::assertSame('Something New', $fixture[0]->getIdEvenement());
+        self::assertSame('Something New', $fixture[0]->getType());
+        self::assertSame('Something New', $fixture[0]->getNbrBilletAvailable());
+        self::assertSame('Something New', $fixture[0]->getEvenement());
+        self::assertSame('Something New', $fixture[0]->getReservation());
     }
 
     public function testRemove(): void
@@ -114,7 +129,10 @@ class BilletControllerTest extends WebTestCase
         $fixture->setCode('My Title');
         $fixture->setDateValidite('My Title');
         $fixture->setPrix('My Title');
-        $fixture->setIdEvenement('My Title');
+        $fixture->setType('My Title');
+        $fixture->setNbrBilletAvailable('My Title');
+        $fixture->setEvenement('My Title');
+        $fixture->setReservation('My Title');
 
         $this->repository->save($fixture, true);
 
