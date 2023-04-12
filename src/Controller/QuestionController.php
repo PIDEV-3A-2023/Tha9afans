@@ -29,15 +29,34 @@ class QuestionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $questionRepository->save($question, true);
 
+            // get uploaded file for photo field
+            $photoFile = $form->get('image')->getData();
+            if ($photoFile) {
+                // open file and get contents as string
+                $photoContent = file_get_contents($photoFile->getRealPath());
+                $question->setImage($photoContent);
+            }
+
+            if ($questionRepository->findBy(['question' => $question->getQuestion()])) {
+                $this->addFlash('error', 'Question already exists in database!');
+                return $this->redirectToRoute('app_question_new');
+            }
+
+            $questionRepository->save($question, true);
             return $this->redirectToRoute('app_question_index', [], Response::HTTP_SEE_OTHER);
         }
-
         return $this->renderForm('question/new.html.twig', [
             'question' => $question,
             'form' => $form,
         ]);
+    }
+
+    #[Route('/questionShow/{id}', name: 'question_show_image')]
+    public function showPhoto(Question $question): Response
+    {
+        $image = stream_get_contents($question->getImage());
+        return new Response($image, 200, ['Content-Type' => 'image/jpeg']);
     }
 
     #[Route('/{questionId}', name: 'app_question_show', methods: ['GET'])]
@@ -55,6 +74,14 @@ class QuestionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // get uploaded file for photo field
+            $photoFile = $form->get('image')->getData();
+            if ($photoFile) {
+                // open file and get contents as string
+                $photoContent = file_get_contents($photoFile->getRealPath());
+                $question->setImage($photoContent);
+            }
+
             $questionRepository->save($question, true);
 
             return $this->redirectToRoute('app_question_index', [], Response::HTTP_SEE_OTHER);
@@ -75,4 +102,6 @@ class QuestionController extends AbstractController
 
         return $this->redirectToRoute('app_question_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
 }
