@@ -1,5 +1,19 @@
 {% extends '/profil/index.html.twig' %}
 {% block cardtitle %}new Session{% endblock %}
 {% block content %}
+    {% if app.session.flashbag.has('danger') %}
+        <div class="alert alert-danger">
+            {% for message in app.session.flashbag.get('danger') %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if app.session.flashbag.has('success') %}
+        <div class="alert alert-success">
+            {% for message in app.session.flashbag.get('success') %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
     {{ include('session/_form.html.twig') }}
 {% endblock %}
