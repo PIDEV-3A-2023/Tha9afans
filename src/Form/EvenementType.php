@@ -8,6 +8,7 @@ use App\Entity\User;
 use phpDocumentor\Reflection\Type;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -30,10 +31,28 @@ class EvenementType extends AbstractType
             ])
             ->add('localisation')
             ->add('createur',EntityType::class,['class'=>User::class,'choice_label'=>'nom'])
-            ->add('freeorpaid')
-            ->add('online',) //choices true or false
+            ->add('freeorpaid', ChoiceType::class, [
+                'label' => 'Payement :',
+                'choices' => [
+                    'Gratuit' => false,
+                    'Payant' => true,
+                ],
+                'choice_label' => function($value, $key, $index) {
+                    return $value ? 'Gratuit' : 'Payant';
+                },
+            ])
+            ->add('online',ChoiceType::class, [
+                'label' => "Type d'evenement  :",
+                'choices' => [
+                    'Online' => false,
+                    'Ofline' => true,
+                ],
+                'choice_label' => function($value, $key, $index) {
+                    return $value ? 'Online' : 'Ofline';
+                },
+            ]) //choices true or false
             ->add('link',null,['constraints'=>[
-                new Assert\Url(message: "le lien doit etre une URL valide.")]
+                new Assert\Url(message: "le lien doit etre une URL valide.")],
             ])
             ->add('Categorie',EntityType::class,['class'=>CategorieEvenement::class,'choice_label'=>'nom'])
         ;

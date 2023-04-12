@@ -54,7 +54,8 @@ class ProfilController extends AbstractController
     public function session(SessionRepository $sessionRepository,$id): Response
     {   $session = $sessionRepository->findBy(['evenement' => $id],['debit' => 'ASC']);
         return $this->render('profil/session.html.twig',[
-            'sessions' => $session
+            'sessions' => $session,
+            'id' => $id
         ]);
     }
 }
