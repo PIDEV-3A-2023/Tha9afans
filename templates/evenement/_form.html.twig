@@ -20,11 +20,37 @@
 {{ form_label(form.online) }}
 {{ form_widget(form.online) }}
 {{ form_errors(form.online) }}
-{{ form_label(form.link) }}
-{{ form_widget(form.link) }}
-{{ form_errors(form.link) }}
+<div id="link-field">
+    {{ form_label(form.link) }}
+    {{ form_widget(form.link) }}
+    {{ form_errors(form.link) }}
+</div>
 {{ form_label(form.Categorie) }}
 {{ form_widget(form.Categorie) }}
 {{ form_errors(form.Categorie) }}
 <button class="btn btn-primary btn-lg active">{{ button_label|default('Save') }}</button>
+{% block javascripts %}
+    <script>
+        $(document).ready(function() {
+            var linkField = $('#{{ form.link.vars.id }}');
+            var onlineField = $('#{{ form.online.vars.id }}');
+
+            // Hide the link field if the event is offline
+            if (!onlineField.val()) {
+                linkField.hide();
+            }
+
+            // Show/hide the link field when the online field value changes
+            onlineField.change(function() {
+                if (onlineField.val()) {
+                    linkField.show();
+                } else {
+                    linkField.hide();
+                }
+            });
+        });     
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+{% endblock %}
 {{ form_end(form) }}
