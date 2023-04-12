@@ -2,10 +2,14 @@
 
 namespace App\Form;
 
+use App\Entity\Categorie;
 use App\Entity\Produit;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 
 class ProduitType extends AbstractType
 {
@@ -20,8 +24,15 @@ class ProduitType extends AbstractType
             ->add('remise')
             ->add('rating')
             ->add('prixapresremise')
-            ->add('idVendeur')
-            ->add('idCategorie')
+            ->add('idVendeur', EntityType::class, [
+                'class' => User::class,
+                'choice_label' => 'nom', // ou une autre propriété de Joueur à afficher
+            ])
+            ->add('idCategorie', EntityType::class, [
+                'class' =>Categorie::class,
+                'choice_label' => 'nom', // ou une autre propriété de Joueur à afficher
+            ])
+
         ;
     }
 
