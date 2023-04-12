@@ -2,8 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Billet;
+use App\Entity\Evenement;
 use App\Entity\Reservation;
+use App\Entity\User;
 use App\Form\ReservationType;
+use App\Repository\BilletRepository;
+use App\Repository\EvenementRepository;
 use App\Repository\ReservationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,30 +18,33 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/reservation')]
 class ReservationController extends AbstractController
 {
-    #[Route('/', name: 'app_reservation_index', methods: ['GET'])]
-    public function index(ReservationRepository $reservationRepository): Response
+    #[Route('/index', name: 'app_reservation_index', methods: ['GET'])]
+    public function index($eventId, EvenementRepository $eventRepository): Response
     {
-        $reservations = $reservationRepository->findAll();
-        dump($reservations);
+        $event = $eventRepository->find($eventId);
         return $this->render('reservation/index.html.twig', [
-            'reservations' => $reservationRepository->findAll(),
+            'event' => $event
         ]);
     }
 
-    #[Route('/new', name: 'app_reservation_new', methods: ['GET', 'POST'])]
-    public function addReservation(Request $request, ReservationRepository $reservationRepository): Response
+
+    #[Route('/{eventId}/participate', name: 'app_reservation_new', methods: ['GET', 'POST'])]
+    public function new(BilletRepository $billetRepository, $eventId,EvenementRepository $eventRepository, Request $request, ReservationRepository $reservationRepository): Response
     {
+        $billet= $billetRepository->findById($eventRepository->find($eventId));
         $reservation = new Reservation();
+        $event = $eventRepository->find($eventId);
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $reservationRepository->save($reservation, true);
 
-            return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_evenement_show', ['id'=>$event->getId()], Response::HTTP_SEE_OTHER);
         }
-
         return $this->renderForm('reservation/new.html.twig', [
+            'billets' => $billet,
+            'event' => $event,
             'reservation' => $reservation,
             'form' => $form,
         ]);

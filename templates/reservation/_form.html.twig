@@ -1,0 +1,32 @@
+{{ form_start(form, {'attr': {'novalidate':'novalidate'}} ) }}
+<label style="font-weight:bold; color:red;">Reservation details:</label><br>
+    {{ form_label(form.dateReservation,"Reservation Date") }}
+    {{ form_widget(form.dateReservation) }}
+    {{ form_errors(form.dateReservation) }}
+    {{ form_label(form.location) }}
+    {{ form_widget(form.location)  }}
+    {{ form_errors(form.location) }}<br>
+<label style="font-weight:bold; color:red;">Contact informations:</label><br>
+    {{ form_label(form.prenom) }}
+    {{ form_widget(form.prenom) }}
+    {{ form_errors(form.prenom) }}
+   {{ form_label(form.nom) }}
+    {{ form_widget(form.nom) }}
+    {{ form_errors(form.nom) }}
+    {{ form_label(form.email) }}
+    {{ form_widget(form.email) }}
+    {{ form_errors(form.email) }}
+    {{ form_label(form.telephone) }}
+    {{ form_widget(form.telephone) }}
+    {{ form_errors(form.telephone) }}
+    {{ form_label(form.address) }}
+    {{ form_widget(form.address) }}
+    {{ form_errors(form.address) }}<br>
+<label style="font-weight:bold; color:red;">Tickets:</label><br>
+    {{ include('billet/billet.html.twig') }}
+    {{ form_label(form.totalPrice) }}
+    {{ form_widget(form.totalPrice) }}
+<button class="btn">{{ button_label|default('Confirmer Reservation') }}</button>
+{{ form_end(form) }}
+
+

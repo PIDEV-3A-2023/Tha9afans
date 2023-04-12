@@ -153,6 +153,7 @@
                 {{ form_row(registrationForm.cin, {
                     label: 'Carte identité'
                 }, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
+                {{ form_errors(registrationForm.cin,{'attr':{'class':'invalid-feedback'}}) }}
             </div>
             <div class="col">
                 {{ form_row(registrationForm.nom, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}

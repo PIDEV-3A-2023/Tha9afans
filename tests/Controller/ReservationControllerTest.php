@@ -45,10 +45,14 @@ class ReservationControllerTest extends WebTestCase
 
         $this->client->submitForm('Save', [
             'reservation[dateReservation]' => 'Testing',
-            'reservation[isPaid]' => 'Testing',
+            'reservation[status]' => 'Testing',
             'reservation[paymentInfo]' => 'Testing',
-            'reservation[idBillet]' => 'Testing',
-            'reservation[idUser]' => 'Testing',
+            'reservation[totalPrice]' => 'Testing',
+            'reservation[paymentStatus]' => 'Testing',
+            'reservation[nbrBillets]' => 'Testing',
+            'reservation[nbrTicketType1Reserved]' => 'Testing',
+            'reservation[nbrTicketType2Reserved]' => 'Testing',
+            'reservation[user]' => 'Testing',
         ]);
 
         self::assertResponseRedirects('/reservation/');
@@ -61,10 +65,14 @@ class ReservationControllerTest extends WebTestCase
         $this->markTestIncomplete();
         $fixture = new Reservation();
         $fixture->setDateReservation('My Title');
-        $fixture->setIsPaid('My Title');
+        $fixture->setStatus('My Title');
         $fixture->setPaymentInfo('My Title');
-        $fixture->setIdBillet('My Title');
-        $fixture->setIdUser('My Title');
+        $fixture->setTotalPrice('My Title');
+        $fixture->setPaymentStatus('My Title');
+        $fixture->setNbrBillets('My Title');
+        $fixture->setNbrTicketType1Reserved('My Title');
+        $fixture->setNbrTicketType2Reserved('My Title');
+        $fixture->setUser('My Title');
 
         $this->repository->save($fixture, true);
 
@@ -81,10 +89,14 @@ class ReservationControllerTest extends WebTestCase
         $this->markTestIncomplete();
         $fixture = new Reservation();
         $fixture->setDateReservation('My Title');
-        $fixture->setIsPaid('My Title');
+        $fixture->setStatus('My Title');
         $fixture->setPaymentInfo('My Title');
-        $fixture->setIdBillet('My Title');
-        $fixture->setIdUser('My Title');
+        $fixture->setTotalPrice('My Title');
+        $fixture->setPaymentStatus('My Title');
+        $fixture->setNbrBillets('My Title');
+        $fixture->setNbrTicketType1Reserved('My Title');
+        $fixture->setNbrTicketType2Reserved('My Title');
+        $fixture->setUser('My Title');
 
         $this->repository->save($fixture, true);
 
@@ -92,10 +104,14 @@ class ReservationControllerTest extends WebTestCase
 
         $this->client->submitForm('Update', [
             'reservation[dateReservation]' => 'Something New',
-            'reservation[isPaid]' => 'Something New',
+            'reservation[status]' => 'Something New',
             'reservation[paymentInfo]' => 'Something New',
-            'reservation[idBillet]' => 'Something New',
-            'reservation[idUser]' => 'Something New',
+            'reservation[totalPrice]' => 'Something New',
+            'reservation[paymentStatus]' => 'Something New',
+            'reservation[nbrBillets]' => 'Something New',
+            'reservation[nbrTicketType1Reserved]' => 'Something New',
+            'reservation[nbrTicketType2Reserved]' => 'Something New',
+            'reservation[user]' => 'Something New',
         ]);
 
         self::assertResponseRedirects('/reservation/');
@@ -103,10 +119,14 @@ class ReservationControllerTest extends WebTestCase
         $fixture = $this->repository->findAll();
 
         self::assertSame('Something New', $fixture[0]->getDateReservation());
-        self::assertSame('Something New', $fixture[0]->getIsPaid());
+        self::assertSame('Something New', $fixture[0]->getStatus());
         self::assertSame('Something New', $fixture[0]->getPaymentInfo());
-        self::assertSame('Something New', $fixture[0]->getIdBillet());
-        self::assertSame('Something New', $fixture[0]->getIdUser());
+        self::assertSame('Something New', $fixture[0]->getTotalPrice());
+        self::assertSame('Something New', $fixture[0]->getPaymentStatus());
+        self::assertSame('Something New', $fixture[0]->getNbrBillets());
+        self::assertSame('Something New', $fixture[0]->getNbrTicketType1Reserved());
+        self::assertSame('Something New', $fixture[0]->getNbrTicketType2Reserved());
+        self::assertSame('Something New', $fixture[0]->getUser());
     }
 
     public function testRemove(): void
@@ -117,10 +137,14 @@ class ReservationControllerTest extends WebTestCase
 
         $fixture = new Reservation();
         $fixture->setDateReservation('My Title');
-        $fixture->setIsPaid('My Title');
+        $fixture->setStatus('My Title');
         $fixture->setPaymentInfo('My Title');
-        $fixture->setIdBillet('My Title');
-        $fixture->setIdUser('My Title');
+        $fixture->setTotalPrice('My Title');
+        $fixture->setPaymentStatus('My Title');
+        $fixture->setNbrBillets('My Title');
+        $fixture->setNbrTicketType1Reserved('My Title');
+        $fixture->setNbrTicketType2Reserved('My Title');
+        $fixture->setUser('My Title');
 
         $this->repository->save($fixture, true);
 
