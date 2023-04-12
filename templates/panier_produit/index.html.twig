@@ -119,6 +119,13 @@
                         </div>
                     </div>
                     {% set subtotal = 0.0 %}
+                    {% if app.session.flashbag.has('error') %}
+                        <div class="alert alert-danger">
+                            {% for message in app.session.flashbag.get('error') %}
+                                {{ message }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                     {% for panierproduit in panierproduits %}
                         <div class="card rounded-3 mb-4">
                             <div class="box card-body p-4">
