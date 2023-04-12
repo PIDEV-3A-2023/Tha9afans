@@ -49,9 +49,18 @@ class SessionController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $form->getData()->setEvenement($evenement);
-            $sessionRepository->save($session, true);
-
-            return $this->redirectToRoute('app_profil-evenement', [], Response::HTTP_SEE_OTHER);
+            if($form->getData()->getEnd() < $form->getData()->getDate()){
+                $this->addFlash('danger', 'Date de fin doit etre superieur a la date de debut!');
+                return $this->redirectToRoute('app_profil-evenement-session-add', ['id' => $evenement->getId()], Response::HTTP_SEE_OTHER);
+            }
+            if ($sessionRepository->findOneBy(['nom' => $session->getNom(),'parlant'=>$session->getParlant(),'date'=>$session->getDate(),'debit'=>$session->getDebit(),'end'=>$session->getEnd(),'evenement'=>$session->getEvenement()])) {
+                $this->addFlash('danger', 'Session deja existe!');
+                return $this->redirectToRoute('app_profil-evenement-session-add', ['id' => $evenement->getId()], Response::HTTP_SEE_OTHER);
+            }
+            if($sessionRepository->save($session, true)){
+                $this->addFlash('success', 'Session ajouter avec succes!');
+                return $this->redirectToRoute('app_profil-evenement-session-add', ['id' => $evenement->getId()], Response::HTTP_SEE_OTHER);
+                }
         }
 
         return $this->renderForm('profil/addSession.html.twig', [
@@ -67,7 +76,6 @@ class SessionController extends AbstractController
             'session' => $session,
         ]);
     }
-
     #[Route('/{id}/edit', name: 'app_session_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Session $session, SessionRepository $sessionRepository): Response
     {
