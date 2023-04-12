@@ -17,6 +17,7 @@
                 <th>Remise</th>
                 <th>Rating</th>
                 <th>Prixapresremise</th>
+                <th>Quantite</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -32,6 +33,7 @@
                 <td>{{ produit.remise }}</td>
                 <td>{{ produit.rating }}</td>
                 <td>{{ produit.prixapresremise }}</td>
+                <td>{{ produit.qt }}</td>
                 <td>
                     <a href="{{ path('app_produit_show', {'id': produit.id}) }}">show</a>
                     <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
