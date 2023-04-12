@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Billet;
+use App\Entity\BilletReserver;
 use App\Entity\Evenement;
 use App\Entity\Reservation;
 use App\Entity\User;
 use App\Form\ReservationType;
 use App\Repository\BilletRepository;
+use App\Repository\BilletReserverRepository;
 use App\Repository\EvenementRepository;
 use App\Repository\ReservationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,7 +33,7 @@ class ReservationController extends AbstractController
     #[Route('/{eventId}/participate', name: 'app_reservation_new', methods: ['GET', 'POST'])]
     public function new(BilletRepository $billetRepository, $eventId,EvenementRepository $eventRepository, Request $request, ReservationRepository $reservationRepository): Response
     {
-        $billet= $billetRepository->findById($eventRepository->find($eventId));
+        $billet= $billetRepository->findBy(['evenement' => $eventId]);
         $reservation = new Reservation();
         $event = $eventRepository->find($eventId);
         $form = $this->createForm(ReservationType::class, $reservation);
@@ -84,5 +86,39 @@ class ReservationController extends AbstractController
         }
 
         return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+
+    #[Route('/update/{id}', name: 'app_panierproduit_updateminus', methods: ['GET'])]
+    public function updateminus(BilletReserver $billetReserver, BilletReserverRepository $billetReserverRepository): Response
+    {
+        $quantity = $billetReserver->getNombre();
+        if ($quantity >= 1) {
+            $quantity--;
+            $billetReserver->setNombre($quantity);
+            $billetReserverRepository->save($billetReserver, true);
+            if ($quantity == 0) {
+                $billetReserverRepository->remove($billetReserver, true);
+            }
+        }
+        return $this->redirectToRoute('app_panier_produit_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+
+    #[Route('/updateplus/{id}', name: 'app_panier_produit_updateplus', methods: ['GET'])]
+    public function updateplus(BilletReserver $billetReserver, BilletReserverRepository $billetReserverRepository): Response
+    {
+
+        $maxQuantity = $billetReserver->getReservation()->getQt(); //here
+        $newQuantity = $quantity + 1;
+        if ($newQuantity <= $maxQuantity) {
+            $billetReserver->setNombre($newQuantity);
+            $billetReserverRepository->save($billetReserver, true);
+        } else {
+            $this->addFlash('error', 'La quantité maximale est atteinte');
+        }
+        return $this->redirectToRoute('app_panier_produit_index', [], Response::HTTP_SEE_OTHER);
     }
 }

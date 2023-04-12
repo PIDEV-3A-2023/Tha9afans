@@ -13,6 +13,33 @@
         {{ include('billet/_form.html.twig') }}
     </div>
     <div>
+        <table border="2px">
+            <thead>
+                <tr>
+                    <th>code</th>
+                    <th>type</th>
+                    <th>dateValidite</th>
+                    <th>prix</th>
+                    <th>nbr de billet</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for b in billets %}
+                    <tr>
+                        <td>{{ b.code }}</td>
+                        <td>{{ b.type }}</td>
+                        <td>{{ b.dateValidite ? b.dateValidite|date('Y-m-d') : ''  }}</td>
+                        <td>{{ b.prix }}</td>
+                        <td>{{ b.nbrBilletAvailable }}</td>
+                        <td>
+                            <a href="{{ path('app_billet_show', {'billet': b}) }}">show</a>
+                            <a href="{{ path('app_billet_edit', {'id': b.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
     </div>
 {% endblock %}

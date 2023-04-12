@@ -25,27 +25,17 @@ class Billet
     private $id;
 
     #[ORM\Column(type: 'string')]
-    #[Assert\NotBlank(message: 'The code cannot be blank.')]
-    #[Assert\Length(max:150,maxMessage: 'The code cannot exceed {{ limit }} characters.')]
     private ?string $code = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    #[Assert\NotNull(message: 'The date cannot be null.')]
-    #[Assert\GreaterThan('today', message: 'The date should be greater than or equal to today.')]
-    private ?\DateTimeInterface $dateValidite = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $dateValidite;
 
     #[ORM\Column(type: 'float')]
-    #[Assert\NotNull(message: 'The price cannot be null.')]
-    #[Assert\PositiveOrZero(message: 'The price should be a positive number.')]
     private $prix;
 
     #[ORM\Column(type: 'string')]
-    #[Assert\NotBlank(message: "The type cannot be blank.")]
-    #[Assert\Length(max: 50, maxMessage: "The type cannot exceed {{ limit }} characters.")]
     private $type; // new property for billet type
     #[ORM\Column(type: 'integer')]
-    #[Assert\NotNull(message: "The number of available tickets cannot be null.")]
-    #[Assert\PositiveOrZero(message: "The number of available tickets should be a positive number or zero.")]
     private $nbrBilletAvailable; // new property for available billets
 
     #[ORM\ManyToOne(targetEntity: 'Evenement', inversedBy: 'billets')]
@@ -53,7 +43,6 @@ class Billet
     private $evenement;
 
     #[ORM\OneToMany(targetEntity: 'BilletReserver', mappedBy: 'billet', cascade: ['persist'])]
-    #[Assert\NotNull]
     private $billetReservers;
 
     public function __construct()
