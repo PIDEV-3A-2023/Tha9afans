@@ -20,7 +20,8 @@ class EvenementType extends AbstractType
             ->add('nom',null,['constraints'=>[new Assert\NotBlank(message: 'Saisit le nom evenement.'),
                 new Assert\Length(max:50,maxMessage: 'le nom evenement ne doit depasser {{ limit }} characters.')]
             ])
-            ->add('description',null,['constraints'=>[new Assert\NotBlank(message: 'Saisit le nom evenement.'),
+            ->add('description',null,[
+                'constraints'=>[new Assert\NotBlank(message: 'Saisit le nom evenement.'),
                new Assert\Length(min:100,minMessage: 'la description doit contenir au moins {{ limit }} characters.')]
             ])
             ->add('date',null,['constraints'=>[new Assert\NotBlank(message: 'Saisit la date evenement.'),

@@ -1,9 +1,9 @@
 {{ form_start(form,{'attr': {'novalidate':'novalidate'}} ) }}
-{{ form_label(form.nom) }}
+{{ form_label(form.nom)}}
 {{ form_widget(form.nom) }}
 {{ form_errors(form.nom) }}
 {{ form_label(form.description) }}
-{{ form_widget(form.description) }}
+{{ form_widget(form.description)}}
 {{ form_errors(form.description) }}
 {{ form_label(form.date) }}
 {{ form_widget(form.date) }}
@@ -26,5 +26,5 @@
 {{ form_label(form.Categorie) }}
 {{ form_widget(form.Categorie) }}
 {{ form_errors(form.Categorie) }}
-<button class="btn">{{ button_label|default('Save') }}</button>
+<button class="btn btn-primary btn-lg active">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

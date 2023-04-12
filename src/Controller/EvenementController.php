@@ -50,6 +50,10 @@ class EvenementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($evenementRepository->findOneBy(['nom' => $evenement->getNom(),'date'=>$evenement->getDate(),'description'=>$evenement->getDescription()])){
+                $this->addFlash('danger', 'Evenement deja existe!');
+                return $this->redirectToRoute('app_profil-addevenement', [], Response::HTTP_SEE_OTHER);
+            }
             $evenementRepository->save($evenement, true);
             $id = $evenement->getId();
 
