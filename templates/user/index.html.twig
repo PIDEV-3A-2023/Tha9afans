@@ -293,9 +293,6 @@
     </style>
     <section id="hero" class="hero d-flex flex-column ">
     </section>
-    {% if app.user %}
-        <h1 style="color: red">{{ app.user.email }}</h1>
-    {% endif %}
     <main class="table" style="margin-top: 30px">
         <section class="table__header">
             <h1 style="color: #001A23">liste des personnes</h1>
@@ -338,6 +335,7 @@
                             <a href="{{ path('app_user_show', {'id': user.id}) }}" style="background-color: #001A23; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Détail</a>
 
                             <a href="{{ path('app_user_edit', {'id': user.id}) }}" style="background-color: #1D3557; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Modifier</a>
+                            <a href="{{ path('block_user', {'id': user.id}) }}" style="background-color: #457B9D; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Bloquer</a>
                         </td>
                     </tr>
                 {% else %}

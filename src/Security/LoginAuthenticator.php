@@ -15,6 +15,9 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use App\Repository\UserRepository;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+
 
 class LoginAuthenticator extends AbstractLoginFormAuthenticator
 {
@@ -22,8 +25,10 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    public function __construct(UserRepository $userRepository, UrlGeneratorInterface $urlGenerator)
     {
+        $this->userRepository = $userRepository;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function authenticate(Request $request): Passport
@@ -31,6 +36,16 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         $email = $request->request->get('email', '');
 
         $request->getSession()->set(Security::LAST_USERNAME, $email);
+
+        $user = $this->userRepository->findOneBy(['email' => $email]);
+
+        if (!$user) {
+            throw new AuthenticationException('Vérifier votre mot de passe et email');
+        }
+
+        if ($user->getIsBlocked()) {
+            throw new AuthenticationException('Your account is blocked.');
+        }
 
         return new Passport(
             new UserBadge($email),
