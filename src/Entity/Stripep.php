@@ -23,7 +23,7 @@ class Stripep
     private ?int $expiration_month = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $expiration_year = null;
+    private ?string $expiration_year = null;
 
     #[ORM\Column(length: 3,nullable: true)]
     private ?string $cvv = null;
@@ -74,7 +74,7 @@ class Stripep
         return $this->expiration_year;
     }
 
-    public function setExpirationYear(?int $expiration_year): self
+    public function setExpirationYear(?string $expiration_year): self
     {
         $this->expiration_year = $expiration_year;
 
