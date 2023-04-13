@@ -16,9 +16,17 @@ use Symfony\Component\Validator\Constraints\Range;
 
 
 class StripepFormType extends AbstractType
+
+
 {
+
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $currentYear = (int)date('Y');
+        $years = array_combine(range($currentYear, $currentYear + 10), range($currentYear, $currentYear + 10));
+        $choices = ['year' => ''] + $years;
+
         $builder
             //card_number NotBlank Regex 16 digits start with 4 or 5
             ->add('card_number', null, [
@@ -51,10 +59,10 @@ class StripepFormType extends AbstractType
                 ]
             ])
 
-            ->add('expiration_year', ChoiceType::class, [
+    /*        ->add('expiration_year', ChoiceType::class, [
                 'choices' => [
                     'year' => null,
-                    '21' => '21',
+                    '2021' => '21',
                     '22' => '22',
                     '23' => '23',
                     '24' => '24',
@@ -73,7 +81,7 @@ class StripepFormType extends AbstractType
                 'attr' => [
                     'class' => 'year-input'
                 ]
-            ])
+            ])*/
            /* ->add('expiration_month')*/
            ->add('expiration_month', ChoiceType::class, [
                'choices' => [
@@ -105,16 +113,16 @@ class StripepFormType extends AbstractType
 
 
 
-    /*        ->add('expiration_year', ChoiceType::class, [
+            ->add('expiration_year', ChoiceType::class, [
                 'label' => 'Expiration Year',
                 'required' => true,
-                'choices' => array_combine(range(date('Y'), date('Y') + 10), range(date('Y'), date('Y') + 10)),
+                'choices' => $choices,
                 'attr' => ['class' => 'year-input'],
                 'constraints' => [
                     new NotBlank(['message' => 'Please select the expiration year.']),
                 ],
-                'data' => date('Y'),
-            ])*/
+                'data' => null,
+            ])
 
 
             ->add('cvv', TextType::class, [
