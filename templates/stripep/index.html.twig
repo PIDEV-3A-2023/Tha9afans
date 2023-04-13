@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Stripep index{% endblock %}
+
+{% block body %}
+    <h1>Stripep index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Card_number</th>
+                <th>Card_holder</th>
+                <th>Expiration_month</th>
+                <th>Expiration_year</th>
+                <th>Cvv</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for stripep in stripeps %}
+            <tr>
+                <td>{{ stripep.id }}</td>
+                <td>{{ stripep.cardNumber }}</td>
+                <td>{{ stripep.cardHolder }}</td>
+                <td>{{ stripep.expirationMonth }}</td>
+                <td>{{ stripep.expirationYear }}</td>
+                <td>{{ stripep.cvv }}</td>
+                <td>
+                    <a href="{{ path('app_stripep_show', {'id': stripep.id}) }}">show</a>
+                    <a href="{{ path('app_stripep_edit', {'id': stripep.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_stripep_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Stripep{% endblock %}
+
+{% block body %}
+    <h1>Create new Stripep</h1>
+
+    {{ include('stripep/_form.html.twig') }}
+
+    <a href="{{ path('app_panier_produit_index') }}">back to list</a>
+{% endblock %}
