@@ -22,10 +22,18 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class UserController extends AbstractController
 {
     #[Route('/', name: 'app_user_index', methods: ['GET']),IsGranted("ROLE_ADMIN")]
-    public function index(UserRepository $userRepository): Response
+    public function index(Request $request, UserRepository $userRepository): Response
     {
+        $query = $request->query->get('query');
+
+        if ($query) {
+            $users = $this->getDoctrine()->getRepository(User::class)->findByNomPrenomEmail($query);
+        } else {
+            $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+        }
+
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $users,
         ]);
     }
 
@@ -138,4 +146,25 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/rechercher', name: 'app_user_search')]
+    public function search(Request $request)
+    {
+        $query = $request->query->get('query');
+        $users = $this->getDoctrine()->getRepository(User::class)->findByNomPrenomEmail($query);
+
+        $data = array();
+        foreach ($users as $user) {
+            $data[] = array(
+                'id' => $user->getId(),
+                'cin' => $user->getCin(),
+                'nom' => $user->getNom(),
+                'prenom' => $user->getPrenom(),
+                'email' => $user->getEmail(),
+                'photo' => $user->getPhoto(),
+            );
+        }
+
+        return new JsonResponse($data);
+    }
+
 }

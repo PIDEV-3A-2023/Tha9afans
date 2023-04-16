@@ -19,7 +19,12 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
+            ->add('email', null, [
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'Le champ email ne doit pas être vide',
+                    ]), ],
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -104,13 +109,7 @@ class RegistrationFormType extends AbstractType
                     new Assert\NotBlank([
                         'message' => 'Le champ date de naissance ne doit pas être vide',
                     ]),
-                    new Assert\Date([
-                        'message' => 'Le champ date de naissance doit être une date valide',
-                    ]),
-                    new Assert\LessThanOrEqual([
-                        'value' => 'today',
-                        'message' => 'Le champ date de naissance doit être inférieure ou égale à aujourd\'hui',
-                    ]),
+                    
                 ],
             ])
         ;

@@ -22,17 +22,17 @@
             align-items: center;
         }
 
-        .table__header .input-group {
-            width: 35%;
-            height: 100%;
+        .table__header form {
+            width: 50%;
+            height: 70px;
             background-color: white;
             padding: 0 .8rem;
             border-radius: 2rem;
-
+            margin-top: 90px;
+            margin-left: 50px;
             display: flex;
             justify-content: center;
             align-items: center;
-
             transition: .2s;
         }
         body{
@@ -40,15 +40,25 @@
             margin-right: 20px;
         }
 
-        .table__header .input-group:hover {
-            width: 45%;
-            background-color: #f1f8fa;
+        .table__header form:hover {
+            width: 70%;
+            background-color: #fff;
+            box-shadow: 0 .1rem .4rem #eeeaea
+        }
+        .table__header form {
+            width: 50%;
+            height: 70px;
+            border-radius: 30px;
+            background-color: #fff;
             box-shadow: 0 .1rem .4rem #eeeaea
         }
 
         .table__header .input-group img {
-            width: 20px;
-            height: 20px;
+            width: 50px;
+            height: 50px;
+            margin-left: 300px;
+            margin-top: -10px;
+
         }
 
         .table__header .input-group input {
@@ -62,7 +72,7 @@
         .table__body {
             width: 95%;
             max-height: calc(89% - 1.6rem);
-            background-color: #F1FAEE;
+            background-color: #fff;
 
             margin: .8rem auto;
             border-radius: .6rem;
@@ -295,16 +305,17 @@
     </section>
     <main class="table" style="margin-top: 30px">
         <section class="table__header">
-            <h1 style="color: #001A23">liste des personnes</h1>
+            <h1 style="color: #001A23;margin-top:50px;">liste des personnes</h1>
             <div class="input-group">
-                <input type="search" placeholder="Entrez le nom" >
-                <img src="{{asset('frontOffice/assets/img/logo.png') }}" alt="" width="100px" height="70px">
+                <form id="search-form" >
+                    <input type="text" id="search-query" name="query" placeholder="entrez nom ou prénom ou email">
+                    <img src="{{asset('frontOffice/assets/img/logo.png') }}" alt="" width="100px" height="70px">
+                </form>
             </div>
-
             <div class="export__file">
                 <label for="export-file" class="export__file-btn" title="Export File"></label>
             </div>
-        </section>
+        </section><br><br>
         <section class="table__body">
             <table>
                 <thead>
@@ -317,7 +328,7 @@
                     <th>Actions</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="users-table-body">
                 {% for user in users %}
                     <tr>
                         <td>{{ user.cin }}</td>
@@ -352,3 +363,51 @@
     </section>
 
 {% endblock %}
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#search-form').on('submit', function(e) {
+                e.preventDefault();
+                var query = $('#search-query').val();
+                $.ajax({
+                    url: '{{ path('app_user_search') }}',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        query: query
+                    },
+                    success: function(response) {
+                        var users = response.users;
+                        var tableBody = $('#users-table-body');
+                        tableBody.empty();
+                        if (users.length > 0) {
+                            for (var i = 0; i < users.length; i++) {
+                                var user = users[i];
+                                var photoHtml = '';
+                                if (user.photo !== null) {
+                                    photoHtml = '<img src="{{ asset('uploads/user-photos/') }}' + user.photo + '" alt="' + user.nom + '">';
+                                } else {
+                                    photoHtml = 'Aucune photo disponible';
+                                }
+                                var actionsHtml = '<a href="{{ path('app_user_show', {'id': user.id}) }}" style="background-color: #001A23; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Détail</a><a href="{{ path('app_user_edit', {'id': user.id}) }}" style="background-color: #1D3557; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Modifier</a><a href="{{ path('block_user', {'id': user.id}) }}" style="background-color: #457B9D; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Bloquer</a>';
+
+                                var row = '<tr><td>' + user.cin + '</td><td>' + user.nom + '</td><td>' + user.prenom + '</td><td>' + user.email + '</td><td>' + photoHtml + '</td><td>' + actionsHtml + '</td></tr>';
+
+                                tableBody.append(row);
+                            }
+                        } else {
+                            tableBody.append('<tr><td colspan="6">no records found</td></tr>');
+                        }
+                    },
+                    error: function(response) {
+                        console.log('error');
+                        console.log(response);
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
+

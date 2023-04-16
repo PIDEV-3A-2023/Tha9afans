@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -21,7 +22,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+    /*#[Assert\NotBlank(message="Le champ email ne doit pas être vide")]*/
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
@@ -35,27 +36,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
+    /*#[Assert\Length(min=6,message="Votre mot de passe ne contient pas {{ limit }} caractères.")]*/
+
     #[ORM\Column]
+
     private ?string $password = null;
 
     #[ORM\Column(length: 30, nullable: true)]
+    /*#[Assert\NotBlank(message:"Le champ cin ne doit pas être vide")]*/
+
     private ?string $cin = null;
 
+    /*#[Assert\NotBlank(message:"Le champ nom ne doit pas être vide")]*/
     #[ORM\Column(length: 30,nullable: true)]
     private ?string $nom = null;
-
+    /*#[Assert\NotBlank(message="Le champ prenom ne doit pas être vide")]*/
     #[ORM\Column(length: 30, nullable: true)]
     private ?string $prenom = null;
-
+    /*#[Assert\NotBlank(message:"Le champ telephone ne doit pas être vide")]*/
     #[ORM\Column(length: 30, nullable: true)]
     private ?string $telephone = null;
-
+    /*#[Assert\NotBlank(message:"Le champ adresse ne doit pas être vide")]*/
     #[ORM\Column(length: 30, nullable: true)]
     private ?string $adresse = null;
 
     #[ORM\Column(type: Types::BLOB, nullable: true)]
     private $photo = null;
-
+    /*#[Assert\NotBlank(message:"Le champ date de naissance  ne doit pas être vide")]*/
+    /*#[Assert\DateTime(message:"La date n'est pas une date valide")]*/
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $datenaissance = null;
 
