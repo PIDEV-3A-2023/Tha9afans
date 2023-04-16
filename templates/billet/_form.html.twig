@@ -1,0 +1,26 @@
+{{ form_start(form, {'attr': {'novalidate':'novalidate'}} ) }}
+    {{ form_label(form.code) }}
+    {{ form_widget(form.code, {'attr': {'readonly': 'readonly'}}) }}
+    {{ form_errors(form.code) }}
+    {{ form_label(form.dateValidite) }}
+    {{ form_widget(form.dateValidite) }}
+    {{ form_errors(form.dateValidite) }}
+    {{ form_label(form.type) }}
+    {{ form_widget(form.type) }}
+    {{ form_errors(form.type) }}
+    {{ form_label(form.prix) }}
+    {{ form_widget(form.prix) }}
+    {{ form_errors(form.prix) }}
+    {{ form_label(form.nbrBilletAvailable) }}
+    {{ form_widget(form.nbrBilletAvailable) }}
+    {{ form_errors(form.nbrBilletAvailable) }}<br>
+<div class="text-end">
+    <button class="btn btn-primary rounded-pill py-2 px-5 text-uppercase" style="margin-bottom: 45px">
+        {{ button_label|default('Confirmer Billet') }}
+    </button>
+</div>
+
+
+{{ form_end(form) }}
+{{ blockScripts() }}
+{{  }}
