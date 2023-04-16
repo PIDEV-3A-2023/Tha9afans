@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 #[Route('/commande')]
 class CommandeController extends AbstractController
 {
@@ -75,4 +78,45 @@ class CommandeController extends AbstractController
 
         return $this->redirectToRoute('app_commande_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+    #[Route("//commande/pdf/{id}", name: 'commande_pdf')]
+
+    public function commandePdf(Commande $commande): Response
+    {
+        // Fetch the data you need to include in the PDF
+        $commandeeData = [
+            'refrancefacture' => $commande->getId(),
+            'datefacture' => $commande->getDatecommande(),
+            // ... add more data as needed
+        ];
+
+        // Configure the PDF rendering options
+        $options = new Options();
+        $options->set('defaultFont', 'Arial');
+
+        // Create the PDF content using Dompdf
+        $pdfContent = $this->renderView('commande/pdfC.html.twig', [
+            'facture' => $commandeeData,
+        ]);
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($pdfContent);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        // Create the HTTP response with the PDF content
+        $response = new Response($dompdf->output(), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => sprintf('attachment; filename="%s.pdf"', $commande->getId()),
+        ]);
+
+        return $response;
+    }
+
+    // ...
+
+
+
+
+
 }

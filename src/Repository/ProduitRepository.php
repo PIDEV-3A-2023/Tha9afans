@@ -30,6 +30,7 @@ class ProduitRepository extends ServiceEntityRepository
         }
     }
 
+
     public function remove(Produit $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -38,6 +39,8 @@ class ProduitRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    //diplay discout badget
+
 
 //    /**
 //     * @return Produit[] Returns an array of Produit objects

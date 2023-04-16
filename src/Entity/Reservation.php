@@ -58,6 +58,7 @@ class Reservation
     #[ORM\Column(type: 'string')]
     private $address;
 
+
     public function getNom()
     {
         return $this->nom;

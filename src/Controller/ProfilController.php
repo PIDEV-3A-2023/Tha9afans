@@ -50,4 +50,12 @@ class ProfilController extends AbstractController
             'evenements' => $evenementRepository->findAll(),
         ]);
     }
+    #[Route('/profil/evenement/{id}/session/', name: 'app_profil-evenement-session')]
+    public function session(SessionRepository $sessionRepository,$id): Response
+    {   $session = $sessionRepository->findBy(['evenement' => $id],['debit' => 'ASC']);
+        return $this->render('profil/session.html.twig',[
+            'sessions' => $session,
+            'id' => $id
+        ]);
+    }
 }

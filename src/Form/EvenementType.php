@@ -8,6 +8,8 @@ use App\Entity\User;
 use phpDocumentor\Reflection\Type;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -20,7 +22,7 @@ class EvenementType extends AbstractType
             ->add('nom',null,['constraints'=>[new Assert\NotBlank(message: 'Saisit le nom evenement.'),
                 new Assert\Length(max:50,maxMessage: 'le nom evenement ne doit depasser {{ limit }} characters.')]
             ])
-            ->add('description',null,[
+            ->add('description',TextareaType::class,[
                 'constraints'=>[new Assert\NotBlank(message: 'Saisit le nom evenement.'),
                new Assert\Length(min:100,minMessage: 'la description doit contenir au moins {{ limit }} characters.')]
             ])
@@ -29,12 +31,30 @@ class EvenementType extends AbstractType
             ])
             ->add('localisation')
             ->add('createur',EntityType::class,['class'=>User::class,'choice_label'=>'nom'])
-            ->add('freeorpaid')
-            ->add('online',) //choices true or false
-            ->add('link',null,['constraints'=>[new Assert\NotBlank(message: "Saisit le lien de l'evenement"),
-                new Assert\Url(message: "le lien doit etre une URL valide.")]
+            ->add('freeorpaid', ChoiceType::class, [
+                'label' => 'Payement :',
+                'choices' => [
+                    'Gratuit' => false,
+                    'Payant' => true,
+                ],
+                'choice_label' => function($value, $key, $index) {
+                    return $value ? 'Gratuit' : 'Payant';
+                },
             ])
-            ->add('Categorie',EntityType::class,['class'=>CategorieEvenement::class,'choice_label'=>'nom'/*,'multiple'=>'true'*/,'expanded'=>'true'])
+            ->add('online',ChoiceType::class, [
+                'label' => "Type d'evenement  :",
+                'choices' => [
+                    'Online' => false,
+                    'Ofline' => true,
+                ],
+                'choice_label' => function($value, $key, $index) {
+                    return $value ? 'Online' : 'Ofline';
+                },
+            ]) //choices true or false
+            ->add('link',null,['constraints'=>[
+                new Assert\Url(message: "le lien doit etre une URL valide.")],
+            ])
+            ->add('Categorie',EntityType::class,['class'=>CategorieEvenement::class,'choice_label'=>'nom'])
         ;
     }
 
