@@ -116,7 +116,7 @@ class ReservationController extends AbstractController
 
 
 
-    #[Route('/update/{id}', name: 'app_panierproduit_updateminus', methods: ['GET'])]
+    #[Route('/update/{id}', name: 'ap_updateminus', methods: ['GET'])]
     public function updateminus(BilletReserver $billetReserver, BilletReserverRepository $billetReserverRepository): Response
     {
         $quantity = $billetReserver->getNombre();
@@ -133,7 +133,7 @@ class ReservationController extends AbstractController
 
 
 
-    #[Route('/updateplus/{id}', name: 'app_panier_produit_updateplus', methods: ['GET'])]
+    #[Route('/updateplus/{id}', name: 'app_updateplus', methods: ['GET'])]
     public function updateplus(BilletReserver $billetReserver, BilletReserverRepository $billetReserverRepository): Response
     {
         $quantity = $billetReserver->getNombre();

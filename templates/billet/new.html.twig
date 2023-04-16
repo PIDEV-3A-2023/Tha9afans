@@ -1,5 +1,5 @@
 {% extends '/profil/index.html.twig' %}
-{% block cardtitle %}edit Billet{% endblock %}
+{% block cardtitle %}Creation des Billets{% endblock %}
 {% block content %}
     <style>
         table {
@@ -56,7 +56,7 @@
                         <td>{{ b.prix }}</td>
                         <td>{{ b.nbrBilletAvailable }}</td>
                         <td>
-                            <a href="">show</a>
+                            <a href="{{ path('app_billet_show', {'id': b.id}) }}">show</a>
                             <a href="{{ path('app_billet_edit', {'id': b.id}) }}">edit</a>
                             <form method="post" action="{{path('app-billet-delete', {'id': b.id}) }}}" onsubmit="return confirm('Are you sure you want to delete this item?');">
                                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ b.id) }}">

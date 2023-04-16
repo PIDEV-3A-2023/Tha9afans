@@ -120,13 +120,14 @@ class ReservationType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('totalPrice', null, [
-                'disabled' => true,
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'Total Price',
-                ],
-            ]);
+//            ->add('totalPrice', null, [
+//                'disabled' => true,
+//                'attr' => [
+//                    'class' => 'form-control',
+//                    'placeholder' => 'Total Price',
+//                ],
+//            ])
+    ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

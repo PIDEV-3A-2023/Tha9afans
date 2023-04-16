@@ -30,19 +30,26 @@ class BilletController extends AbstractController
     {
         $event= $evenementRepository->find($eventId);
         $billet = new Billet();
-        $form = $this->createForm(BilletType::class, $billet);
+        if (!$event->getFreeorpaid()) {
+            $prixInitialValue=0;
+        } else {
+            $prixInitialValue = null;
+        }
+        $form = $this->createForm(BilletType::class, $billet,[
+            'code_initial_value'=>"CODE".$billet->getType().$event->getId().$event->getNom().$event->getcreateur()->getId(),
+            'date_initial_value'=>$event->getDate(),
+            'prix_initial_value'=>$prixInitialValue,
+        ]);
         $form->handleRequest($request);
-
-        //if the type of the form is selected than the price is 50% of the normal price IF THE NORMAL BILLET IS EXIST
 
         if ($form->isSubmitted() && $form->isValid()) {
             // verify if the type of billet is already exist, so you can't add it again
             $billetType = $billetRepository->findOneBy(['type' => $billet->getType(), 'evenement' => $eventId]);
             if ($billetType) {
-                $this->addFlash('danger', 'Ce type de billet existe déjà');
+                //add a pop up message to inform the user that the type of billet is already exist
+                $this->addFlash('error', 'Ce type de billet existe déjà');
                 return $this->redirectToRoute('app_billet_new', ['eventId'=>$eventId], Response::HTTP_SEE_OTHER);
             }
-
             $billet->setEvenement($event);
             $billetRepository->save($billet, true);
 
@@ -55,15 +62,15 @@ class BilletController extends AbstractController
         ]);
     }
 
-    #[Route('/{billet}', name: 'app_billet_show', methods: ['GET'])]
-    public function show( $billet ,BilletRepository $billetRepository): Response
+    #[Route('/{id}/show', name: 'app_billet_show', methods: ['GET'])]
+    public function show(Billet $billet ): Response
     {
-        return $this->render('billet/billet.html.twig', [
-            'billets' => $billet,
+        return $this->render('billet/billetShow.html.twig', [
+            'billet' => $billet,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_billet_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_billet_edit', methods: ['GET','POST'])]
     public function edit($id,Request $request, Billet $billet, BilletRepository $billetRepository): Response
     {
         $form = $this->createFormBuilder($billet)
@@ -84,7 +91,7 @@ class BilletController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $billetRepository->save($billet, true);
 
-            return $this->redirectToRoute('app_billet_new', ['eventId'=>$id], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_billet_new', ['eventId'=>$billet->getEvenement()->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('billet/edit.html.twig', [
