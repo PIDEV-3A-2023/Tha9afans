@@ -18,6 +18,7 @@ class BilletController extends AbstractController
     {
         return $this->render('billet/index.html.twig', [
             'billets' => $billetRepository->findAll(),
+
         ]);
     }
 
@@ -72,6 +73,7 @@ class BilletController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$billet->getId(), $request->request->get('_token'))) {
             $billetRepository->remove($billet, true);
         }
+
         return $this->redirectToRoute('app_billet_index', [], Response::HTTP_SEE_OTHER);
     }
 }

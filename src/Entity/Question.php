@@ -40,8 +40,8 @@ class Question
     #[ORM\Column(name: 'third_possible_answer', type: 'string', length: 50)]
     private $thirdPossibleAnswer;
 
-    #[ORM\Column(type: 'blob', nullable: true)]
-    private $image;
+    #[ORM\Column(type: Types::BLOB, nullable: true)]
+    private  $image;
 
 
 

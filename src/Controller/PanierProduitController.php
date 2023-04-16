@@ -152,15 +152,16 @@ class PanierProduitController extends AbstractController
     {
         $quantity = $panierproduit->getQuantity();
         $maxQuantity = $panierproduit->getIdProduit()->getQt();
-        if ($quantity < $maxQuantity) {
-            $quantity++;
-            $panierproduit->setQuantity($quantity);
+        $newQuantity = $quantity + 1;
+        if ($newQuantity <= $maxQuantity) {
+            $panierproduit->setQuantity($newQuantity);
             $panierproduitRepository->save($panierproduit, true);
         } else {
-           echo "la quantité maximale est atteinte";
+            $this->addFlash('error', 'La quantité maximale est atteinte');
         }
         return $this->redirectToRoute('app_panier_produit_index', [], Response::HTTP_SEE_OTHER);
     }
+
 
 
 
