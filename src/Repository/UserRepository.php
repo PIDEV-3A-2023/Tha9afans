@@ -84,6 +84,24 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult();
     }
+    public function findAllOrderByCin(): array
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->orderBy('u.cin', 'ASC')
+            ->getQuery();
+
+        return $qb->execute();
+    }
+
+    public function findAllOrderByDateNaissance(): array
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->orderBy('u.datenaissance', 'ASC')
+            ->getQuery();
+
+        return $qb->execute();
+    }
+
 
 
 //    /**

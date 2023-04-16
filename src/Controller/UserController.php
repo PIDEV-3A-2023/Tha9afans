@@ -25,17 +25,35 @@ class UserController extends AbstractController
     public function index(Request $request, UserRepository $userRepository): Response
     {
         $query = $request->query->get('query');
+        $sortBy = $request->query->get('sort-by');
 
-        if ($query) {
-            $users = $this->getDoctrine()->getRepository(User::class)->findByNomPrenomEmail($query);
-        } else {
-            $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+        switch($sortBy) {
+            case 'cin':
+                $users = $userRepository->findAllOrderByCin();
+                break;
+            case 'date_naissance':
+                $users = $userRepository->findAllOrderByDateNaissance();
+                break;
+            default:
+                $users = $userRepository->findAll();
+                break;
+        }
+
+        if($query) {
+            $users = $userRepository->searchByNomPrenomEmail($query);
+        }
+        if($request->isXmlHttpRequest()) {
+            return $this->render('user/_users_table.html.twig', [
+                'users' => $users
+            ]);
         }
 
         return $this->render('user/index.html.twig', [
-            'users' => $users,
+            'users' => $users
         ]);
     }
+
+
 
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, UserRepository $userRepository, UserPasswordHasherInterface $userPasswordHasher): Response
@@ -160,6 +178,7 @@ class UserController extends AbstractController
                 'nom' => $user->getNom(),
                 'prenom' => $user->getPrenom(),
                 'email' => $user->getEmail(),
+                'datenaissance' =>$user->getDatenaissance(),
                 'photo' => $user->getPhoto(),
             );
         }

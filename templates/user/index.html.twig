@@ -23,7 +23,7 @@
         }
 
         .table__header form {
-            width: 50%;
+            width: 60%;
             height: 70px;
             background-color: white;
             padding: 0 .8rem;
@@ -41,12 +41,12 @@
         }
 
         .table__header form:hover {
-            width: 70%;
+            width: 80%;
             background-color: #fff;
             box-shadow: 0 .1rem .4rem #eeeaea
         }
         .table__header form {
-            width: 50%;
+            width: 70%;
             height: 70px;
             border-radius: 30px;
             background-color: #fff;
@@ -315,6 +315,17 @@
             <div class="export__file">
                 <label for="export-file" class="export__file-btn" title="Export File"></label>
             </div>
+            <div>
+
+            </div>
+            <form id="sort-form" >
+                <label for="sort-by">Trier par:</label>
+                <select id="sort-by" name="sort-by">
+                    <option value="cin">CIN</option>
+                    <option value="date_naissance">Date de Naissance</option>
+                </select>
+                <button type="submit">trier</button>
+            </form>
         </section><br><br>
         <section class="table__body">
             <table>
@@ -324,8 +335,10 @@
                     <th>Nom</th>
                     <th>Prenom</th>
                     <th>Email</th>
+                    <th>Date de naissance</th>
                     <th>Photo</th>
                     <th>Actions</th>
+
                 </tr>
                 </thead>
                 <tbody id="users-table-body">
@@ -335,6 +348,7 @@
                         <td>{{ user.nom }}</td>
                         <td>{{ user.prenom }}</td>
                         <td>{{ user.email }}</td>
+                        <td>{{ user.datenaissance|date('d/m/Y') }}</td>
                         <td>
                             {% if user.photo is not empty %}
                                 <img src="{{ path('user_show', {'id': user.id}) }}" alt="{{ user.nom }}">
@@ -363,51 +377,47 @@
     </section>
 
 {% endblock %}
-{% block javascripts %}
+{% block scripts %}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('#search-form').on('submit', function(e) {
-                e.preventDefault();
-                var query = $('#search-query').val();
+        $(function () {
+            // Submit form on search button click
+            $('#search-form').submit(function (event) {
+                event.preventDefault();
+                submitSearchForm();
+            });
+
+            // Submit form on select field change
+            $('#sort-field').change(function () {
+                submitSearchForm();
+            });
+
+            // Submit form on sort order change
+            $('input[type=radio][name=sort-order]').change(function () {
+                submitSearchForm();
+            });
+
+            // Function to submit the search form with selected sort and order
+            function submitSearchForm() {
+                var sortField = $('#sort-field').val();
+                var sortOrder = $('input[type=radio][name=sort-order]:checked').val();
+                var searchQuery = $('#search-query').val();
                 $.ajax({
                     url: '{{ path('app_user_search') }}',
-                    type: 'POST',
-                    dataType: 'json',
+                    type: 'GET',
                     data: {
-                        query: query
+                        sortField: sortField,
+                        sortOrder: sortOrder,
+                        searchQuery: searchQuery
                     },
-                    success: function(response) {
-                        var users = response.users;
-                        var tableBody = $('#users-table-body');
-                        tableBody.empty();
-                        if (users.length > 0) {
-                            for (var i = 0; i < users.length; i++) {
-                                var user = users[i];
-                                var photoHtml = '';
-                                if (user.photo !== null) {
-                                    photoHtml = '<img src="{{ asset('uploads/user-photos/') }}' + user.photo + '" alt="' + user.nom + '">';
-                                } else {
-                                    photoHtml = 'Aucune photo disponible';
-                                }
-                                var actionsHtml = '<a href="{{ path('app_user_show', {'id': user.id}) }}" style="background-color: #001A23; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Détail</a><a href="{{ path('app_user_edit', {'id': user.id}) }}" style="background-color: #1D3557; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Modifier</a><a href="{{ path('block_user', {'id': user.id}) }}" style="background-color: #457B9D; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Bloquer</a>';
-
-                                var row = '<tr><td>' + user.cin + '</td><td>' + user.nom + '</td><td>' + user.prenom + '</td><td>' + user.email + '</td><td>' + photoHtml + '</td><td>' + actionsHtml + '</td></tr>';
-
-                                tableBody.append(row);
-                            }
-                        } else {
-                            tableBody.append('<tr><td colspan="6">no records found</td></tr>');
-                        }
-                    },
-                    error: function(response) {
-                        console.log('error');
-                        console.log(response);
+                    success: function (response) {
+                        $('#users-table-body').html(response);
                     }
                 });
-            });
+            }
         });
     </script>
 {% endblock %}
+
 
 
