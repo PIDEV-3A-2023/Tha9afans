@@ -1,0 +1,56 @@
+{{ form_start(form, {'attr': {'novalidate':'novalidate'}} ) }}
+    {{ form_label(form.code) }}
+    {{ form_widget(form.code, {'attr': {'readonly': 'readonly'}}) }}
+    {{ form_errors(form.code) }}
+    {{ form_label(form.dateValidite) }}
+    {{ form_widget(form.dateValidite) }}
+    {{ form_errors(form.dateValidite) }}
+<br>
+<div>
+    {{ form_label(form.type) }}<br>
+    <div style="display: inline-block; margin-right: 40px;margin-top: 20px">
+        {{ form_widget(form.type[0]) }}
+        {{ form_label(form.type[0]) }}
+    </div>
+    <div style="display: inline-block; margin-right: 40px">
+        {{ form_widget(form.type[1]) }}
+        {{ form_label(form.type[1]) }}
+    </div>
+    <div style="display: inline-block; margin-right: 40px;margin-bottom: 15px">
+        {{ form_widget(form.type[2]) }}
+        {{ form_label(form.type[2]) }}
+    </div>
+    {{ form_errors(form.type) }}
+</div>
+    {{ form_label(form.prix) }}
+    {{ form_widget(form.prix) }}
+    {{ form_errors(form.prix) }}
+    {{ form_label(form.nbrBilletAvailable) }}
+    {{ form_widget(form.nbrBilletAvailable) }}
+    {{ form_errors(form.nbrBilletAvailable) }}<br>
+<div class="text-end">
+    <button class="btn btn-primary rounded-pill py-2 px-5 text-uppercase" style="margin-bottom: 15px">
+        {{ button_label|default('Confirmer Billet') }}
+    </button>
+</div>
+{{ form_end(form) }}
+
+
+{% block js %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function() {
+            console.log('Document ready');
+            // Listen to the change event on the radio buttons
+            $('input[name="{{form.type.vars.full_name }}"]').change(function(e) {
+                // Get the selected radio button value
+                var type = $('input[name="{{ form.type.vars.full_name }}"]:checked').val();
+                console.log('Selected type:', type);
+
+                // Update the value of the code field
+                var code = 'CODE' + type + '{{ event.id }}{{ event.nom }}{{ event.createur.id }}';
+                $('#billet_code').val(code);
+            });
+        });
+    </script>
+{% endblock %}
