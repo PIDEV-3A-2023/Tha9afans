@@ -12,6 +12,10 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use BaconQrCode\Renderer\Image\RendererInterface;
+use BaconQrCode\Renderer\Image\Png;
+use BaconQrCode\Writer;
+
 
 #[Route('/billet')]
 class BilletController extends AbstractController
@@ -47,26 +51,36 @@ class BilletController extends AbstractController
             $billetType = $billetRepository->findOneBy(['type' => $billet->getType(), 'evenement' => $eventId]);
             if ($billetType) {
                 //add a pop up message to inform the user that the type of billet is already exist
-                $this->addFlash('error', 'Ce type de billet existe déjà');
+                $this->addFlash('warning', 'Ce type de billet existe déjà');
                 return $this->redirectToRoute('app_billet_new', ['eventId'=>$eventId], Response::HTTP_SEE_OTHER);
             }
             $billet->setEvenement($event);
             $billetRepository->save($billet, true);
-
+            $this->addFlash('success', 'Le billet a été ajouté avec succès.');
             return $this->redirectToRoute('app_billet_new', ['eventId'=>$eventId], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('billet/new.html.twig', [
             'billets' => $billetRepository->findBy(['evenement' => $eventId]),
             'billet' => $billet,
             'form' => $form,
+            'event' => $event,
         ]);
     }
 
     #[Route('/{id}/show', name: 'app_billet_show', methods: ['GET'])]
     public function show(Billet $billet ): Response
     {
+        // generate the QR code
+        $billetCode = $billet->getCode();
+        $renderer = new Png();
+        $renderer->setWidth(250);
+        $renderer->setHeight(250);
+        $writer = new Writer($renderer);
+        $qrCode = $writer->writeString($billetCode);
+        $qrCodeDataUri = "data:image/png;base64," . base64_encode($qrCode);
         return $this->render('billet/billetShow.html.twig', [
             'billet' => $billet,
+            'qrCodeDataUri'=> $qrCodeDataUri,
         ]);
     }
 

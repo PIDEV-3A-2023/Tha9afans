@@ -330,29 +330,36 @@
         <table class="table">
             <thead class="table-light">
             <tr>
-                <th>ID</th>
+                <th>Nom</th>
                 <th>Date_reservation</th>
-                <th>Total_price</th>
+                <th>Evenement</th>
+                <th>Nombre de Billets</th>
+                <th>Type de Billet</th>
                 <th>Payment_status</th>
+                <th>Prix</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody class="table-border-bottom-0">
             {% for reservation in reservations %}
                 <tr>
-                    <td style="right: 5px;
-    position: relative;"><img   data-bs-toggle="tooltip"
-                                data-popup="tooltip-custom"
-                                data-bs-placement="top"
-                                class="avatar avatar-xs pull-up"
-                                src="{{ asset('frontOffice/assets/img/apple-touch-icon.png') }}" alt="Avatar" class="rounded-circle " />
-                     <strong>{{ reservation.id }}</strong></td>
-                    <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
-                    <td>{{ reservation.paymentStatus}}</td>
-                    <td>{{ reservation.totalPrice }}</td>
-                    <td>
-                       imprimer billet
-                    </td>
+                    {% for billetReserver in reservation.billetReservers %}
+                        <td>{{ reservation.nom }}</td>
+                        <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
+                        <td>{{ billetReserver.billet.evenement.nom }}</td>
+                        <td>{{ billetReserver.nombre }}</td>
+                        <td>{{ billetReserver.billet.type }}</td>
+                        <td>{{ reservation.paymentStatus }}</td>
+                        <td>{{ reservation.totalPrice }}</td>
+                        <td>
+                            <a href="#" class="btn btn-sm btn-primary" >
+                                <i class="fas fa-print" style="color:#9b9b00;"></i>
+                            </a>
+                            <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}" class="btn btn-secondary btn-sm" >
+                                <i class="bi bi-pencil" style="color:#20c57d"></i>
+                            </a>
+                        </td>
+                    {% endfor %}
                 </tr>
             {% endfor %}
             </tbody>
