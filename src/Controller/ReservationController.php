@@ -2,11 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Billet;
 use App\Entity\BilletReserver;
-use App\Entity\Evenement;
 use App\Entity\Reservation;
-use App\Entity\User;
 use App\Form\ReservationType;
 use App\Repository\BilletRepository;
 use App\Repository\BilletReserverRepository;
@@ -20,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/reservation')]
 class ReservationController extends AbstractController
 {
-    #[Route('/index', name: 'app_reservation_index', methods: ['GET'])]
+    #[Route('/index/', name: 'app_reservation_index', methods: ['GET'])]
     public function index($eventId, EvenementRepository $eventRepository): Response
     {
         $event = $eventRepository->find($eventId);
@@ -58,12 +55,25 @@ class ReservationController extends AbstractController
     #[Route('/{eventId}/participate', name: 'app_reservation_new', methods: ['GET', 'POST'])]
     public function new(BilletRepository $billetRepository, $eventId,EvenementRepository $eventRepository, Request $request, ReservationRepository $reservationRepository): Response
     {
+        // hna 3andek les billets eli mawjoudin fel l'evenement
         $billet= $billetRepository->findBy(['evenement' => $eventId]);
+        // houni 3andna el reservation sna3neha jdida new new
         $reservation = new Reservation();
+        // ici 3andi l'evenement
         $event = $eventRepository->find($eventId);
-        $form = $this->createForm(ReservationType::class, $reservation);
+        // w jebna el user
+        $user= $this->getUser();
+
+        $form = $this->createForm(ReservationType::class, $reservation,[
+            'localisation-initial-value' => $event->getLocalisation(),
+            'date-initial-value' => $event->getDate(),
+        ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $reservation->setUser($user);
+            $reservation->setStatus('en attente');
+            $reservation->setPaymentStatus('non payé');
+            $reservation->setLocation($event->getLocalisation());
             $reservationRepository->save($reservation, true);
             $id = $reservationRepository->find($reservation)->getId();
             return $this->redirectToRoute('app_ticket', ['reservationId'=>$id ,'event'=>$event->getId()], Response::HTTP_SEE_OTHER);
@@ -79,10 +89,12 @@ class ReservationController extends AbstractController
 
 
     #[Route('/{id}', name: 'app_reservation_show', methods: ['GET'])]
-    public function show(Reservation $reservation): Response
+    public function show(ReservationRepository $reservationRepository): Response
     {
+        $user= $this->getUser();
+        $reservations = $reservationRepository->findBy(['user' => $user]);
         return $this->render('reservation/show.html.twig', [
-            'reservation' => $reservation,
+            'reservations' => $reservations,
         ]);
     }
 

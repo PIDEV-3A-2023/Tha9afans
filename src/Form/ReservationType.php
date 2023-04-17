@@ -28,6 +28,7 @@ class ReservationType extends AbstractType
                         'message' => 'Reservation date must be greater than today',
                     ]),
                 ],
+                'data' => $options['date-initial-value'],
             ])
             ->add('location', null, [
                 'disabled' => true,
@@ -35,6 +36,7 @@ class ReservationType extends AbstractType
                     'class' => 'form-control',
                     'placeholder' => 'Location',
                 ],
+                'data' => $options['localisation-initial-value'],
             ])
             ->add('prenom', null, [
                 'constraints' => [
@@ -134,6 +136,8 @@ class ReservationType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Reservation::class,
+            'localisation-initial-value'=> null,
+            'date-initial-value'=> null,
         ]);
     }
 }
