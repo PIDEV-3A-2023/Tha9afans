@@ -47,11 +47,12 @@ class BilletController extends AbstractController
             $billetType = $billetRepository->findOneBy(['type' => $billet->getType(), 'evenement' => $eventId]);
             if ($billetType) {
                 //add a pop up message to inform the user that the type of billet is already exist
-                $this->addFlash('error', 'Ce type de billet existe déjà');
+                $this->addFlash('warning', 'Ce type de billet existe déjà');
                 return $this->redirectToRoute('app_billet_new', ['eventId'=>$eventId], Response::HTTP_SEE_OTHER);
             }
             $billet->setEvenement($event);
             $billetRepository->save($billet, true);
+            $this->addFlash('success', 'Le billet a été ajouté avec succès.');
 
             return $this->redirectToRoute('app_billet_new', ['eventId'=>$eventId], Response::HTTP_SEE_OTHER);
         }
@@ -59,6 +60,7 @@ class BilletController extends AbstractController
             'billets' => $billetRepository->findBy(['evenement' => $eventId]),
             'billet' => $billet,
             'form' => $form,
+            'event' => $event,
         ]);
     }
 

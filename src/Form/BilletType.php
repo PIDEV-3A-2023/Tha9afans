@@ -22,7 +22,7 @@ class BilletType extends AbstractType
                     ]),
                     new Assert\Length([
                         'min' => 3,
-                        'max' => 15,
+                        'max' => 40,
                         'minMessage' => 'the code should have at least {{ limit }} characters',
                         'maxMessage' => 'The code should have at most {{ limit }} characters',
                     ]),
@@ -50,14 +50,18 @@ class BilletType extends AbstractType
                 'data' => $options['date_initial_value'],
             ])
             ->add('type', ChoiceType::class, [
-
                 'choices' => [
                     'VIP' => "VIP",
                     'Normal' => "Normal",
                     'Etudiant' => "Etudiant",
                 ],
-                'expanded' => true, // afficher les choix sous forme de boutons radio
-
+                'expanded' => true, // display as radio buttons
+                'label_attr' => [
+                    'class' => 'radio-label', // set the class of the label
+                ],
+                'attr' => [
+                    'class' => 'radio-input', // set the class of the input
+                ],
             ])
             ->add('prix', NumberType::class, [
                 'attr' => [
