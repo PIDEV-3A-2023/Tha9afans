@@ -6,6 +6,8 @@ use App\Entity\Evenement;
 use App\Entity\Reservation;
 use App\Form\EvenementType;
 use App\Form\ReservationType;
+use App\Repository\BilletRepository;
+use App\Repository\BilletReserverRepository;
 use App\Repository\EvenementRepository;
 use App\Repository\ReservationRepository;
 use App\Entity\Session;
@@ -35,11 +37,31 @@ class ProfilController extends AbstractController
         {
             return $this->render('profil/facture.html.twig');
         }
+
          #[Route('/profil/reservation/', name: 'app_profil-reservation')]
-    public function reservation(ReservationRepository $reservationRepository): Response
+    public function reservation(ReservationRepository $reservationRepository , BilletReserverRepository $billetReserverRepository): Response
     {
+        $user= $this->getUser();
+        // te5o les reservation mta3 current user !!
+        $reservations = $reservationRepository->findBy(['user' => $user]);
+        // 3ando 2 reservations
+        // loula fiha (2 types billets )
+        // thenia (3 types billets)
+        foreach ($reservations as $reservation) {
+            // jebt les 2 billets mta3 reservation loula
+            $billetReservers = $billetReserverRepository->findBy(['reservation' => $reservation]);
+            $resultatPrixReservation=0;
+            $resultatNombreBillet=0;
+            $result []=[] ;
+            // bouclit 3lihom
+            foreach ($billetReservers as $billetReserver) {
+               $resultatPrixReservation += $billetReserver->getBillet()->getPrix();
+               $resultatNombreBillet += $billetReserver->getNombre();
+
+            }
+        }
         return $this->render('profil/reservation.html.twig',[
-            'reservations' => $reservationRepository->findAll()
+            'reservations' => $reservations
         ]);
     }
    
