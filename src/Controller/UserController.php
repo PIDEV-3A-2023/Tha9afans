@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Personnes;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
@@ -13,9 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use League\Csv\Writer;
 
 
 #[Route('/user')]
@@ -47,6 +44,24 @@ class UserController extends AbstractController
                 'users' => $users
             ]);
         }
+        // Check if a download request was made
+        $download = $request->query->get('download');
+        if($download) {
+            // Create the CSV file
+            $csv = Writer::createFromString('');
+            $csv->insertOne([ 'CIN','Nom', 'Prenom','Email','Adresse','Telephone']);
+            foreach ($users as $user) {
+                $csv->insertOne([$user->getCin(),$user->getNom(), $user->getPrenom(), $user->getEmail(),$user->getAdresse(),$user->getTelephone()]);
+            }
+
+            // Send the CSV file as a response
+            $response = new Response($csv->getContent());
+            $response->headers->set('Content-Type', 'text/csv');
+            $filename = sprintf('users_%s.csv', date('Y-m-d')); // current date in YYYY-MM-DD format
+            $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s"', $filename));
+            return $response;
+        }
+
 
         return $this->render('user/index.html.twig', [
             'users' => $users
@@ -91,9 +106,6 @@ class UserController extends AbstractController
             'user' => $user,
         ]);
     }
-    /**
-     * @Route("/usersshow/{id}", name="user_show")
-     */
     #[Route('/usershow/{id}', name: 'user_show')]
     public function showphoto(User $user): Response
     {
@@ -164,6 +176,7 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
+
     #[Route('/rechercher', name: 'app_user_search')]
     public function search(Request $request)
     {
