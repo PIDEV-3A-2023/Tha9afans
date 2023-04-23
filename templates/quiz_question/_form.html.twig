@@ -1,4 +1,69 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+
+<style>
+    .form input, .form textarea {
+        display: block;
+        margin-bottom: 10px;
+        border-radius: 20px;
+    }
+
+
+    .form label {
+        font-weight: bold;
+        font-size: medium;
+        display: block;
+        margin-bottom: 5px;
+        color: white;
+    }
+    .form {
+        width: 100%;
+        margin: auto;
+        background-color: #001A23;
+        padding: 60px;
+        border-radius: 20px;
+    }
+
+    .btn{
+        /*display: block;*/
+        margin-top: 10px;
+        margin-bottom: auto;
+        border-radius: 20px;
+        color: white;
+        border-color: white;
+    }
+    .btn:hover {
+        background-color: white;
+        color: #001A23;
+    }
+
+    .btnn:hover {
+        color: white;
+    }
+</style>
+
+<div class="form container">
+    <div class="form-group row">
+        <div class="col-md-12">
+            {{ form_label(form.quiz, 'Select a Quiz:', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.quiz, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label class="form-label">Select Questions:</label>
+            {% for choice in form.questions %}
+                <div class="form-check">
+                    {{ form_widget(choice, {'attr': {'class': 'form-check-input', 'id': choice.vars.id}}) }}
+                    {{ form_label(choice, choice.vars.label, {'label_attr': {'class': 'form-check-label', 'for': choice.vars.id}}) }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
+</div>
+
+
+
+
 {{ form_end(form) }}

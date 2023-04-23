@@ -24,21 +24,28 @@ class QuizQuestionController extends AbstractController
     #[Route('/new', name: 'app_quiz_question_new', methods: ['GET', 'POST'])]
     public function new(Request $request, QuizQuestionRepository $quizQuestionRepository): Response
     {
-        $quizQuestion = new QuizQuestion();
-        $form = $this->createForm(QuizQuestionType::class, $quizQuestion);
+        $form = $this->createForm(QuizQuestionType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $quizQuestionRepository->save($quizQuestion, true);
+            $quiz = $form->get('quiz')->getData();
+            $questions = $form->get('questions')->getData();
+
+            foreach ($questions as $question) {
+                $quizQuestion = new QuizQuestion();
+                $quizQuestion->setQuiz($quiz);
+                $quizQuestion->setQuestion($question);
+                $quizQuestionRepository->save($quizQuestion, true);
+            }
 
             return $this->redirectToRoute('app_quiz_question_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('quiz_question/new.html.twig', [
-            'quiz_question' => $quizQuestion,
             'form' => $form,
         ]);
     }
+
 
     #[Route('/{id}', name: 'app_quiz_question_show', methods: ['GET'])]
     public function show(QuizQuestion $quizQuestion): Response

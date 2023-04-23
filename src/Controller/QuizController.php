@@ -36,12 +36,11 @@ class QuizController extends AbstractController
             $photoFile = $form->get('quizCover')->getData();
 
             if ($photoFile) {
-                // open file and get contents as string
                 $photoContent = file_get_contents($photoFile->getRealPath());
                 $quiz->setQuizCover($photoContent);
             }
 
-
+            // check if quiz already exists in database
             if ($quizRepository->findBy(['quizName' => $quiz->getQuizName()])) {
                 $this->addFlash('error', 'Quiz already exists in database!');
                 return $this->redirectToRoute('app_quiz_new');
