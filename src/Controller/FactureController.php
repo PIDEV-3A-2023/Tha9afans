@@ -30,6 +30,7 @@ class FactureController extends AbstractController
     {
 
         $facture = new Facture();
+        $facture->setRefrancefacture(uniqid());
         $form = $this->createForm(FactureType::class, $facture);
         $form->handleRequest($request);
 

@@ -107,6 +107,8 @@
 
     </style>
     <section class="h-100" style="background-color: #eee;">
+
+
         <div class="container h-100 py-5">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-10">
@@ -118,7 +120,7 @@
                                             class="fas fa-angle-down mt-1"></i></a></p>
                         </div>
                     </div>
-                    {% set subtotal = 0.0 %}
+
                     {% if app.session.flashbag.has('error') %}
                         <div class="alert alert-danger">
                             {% for message in app.session.flashbag.get('error') %}
@@ -161,49 +163,46 @@
                                 </div>
                             </div>
                         </div>
-                        {% set subtotal =subtotal + (panierproduit.quantity * panierproduit.idProduit.prix) %}
+
+
+
                     {% endfor %}
-                    <div class="float-right text-right">
-                        <h4 >Subtotal:</h4>
-                        <h1 class="highlight">{{ subtotal }} DT</h1>
-                    </div>
 
-
-
-                <br>
-
-                    <div class="box1 card mb-5">
-                        <div class="card-body p-4 d-flex flex-row">
-                            <div class=" form-outline flex-fill">
-                                {#<input type="text" id="form1" class="form-control form-control-lg" />
-                                <label class="form-label" for="form1">Discound code</label>#}
-                                <form action="">
-                                    <div class="inputBox">
-                                        <span>Discound code</span>
-                                        <input type="text" maxlength="16" class="card-number-input">
-                                    </div>
-                                </form>
-                            </div>
-{#
-                            <button type="button" class="btn btn-outline-warning btn-lg ms-3">Apply</button>
-#}
+                    <form action="{{path('app_checkout')}}" method="post">
+                        <div class="float-right text-right">
+                            <input type="hidden" name="qt" value="1">
+                            <h1 class="highlight" name="subtotal">{{ prixtotale }} DT </h1>
                         </div>
-                    </div>
+                        <button type="submit" class="btn">
+                            <span class="paynow">Pay Now</span>
+                        </button>
+                    </form>
 
-                 {#   <div class="float-right text-right">
+                    <br>
+
+
+
+                    <div class="float-right text-right">
                         <h4></h4>
                         <h1></h1>
-                    </div>#}
+                    </div>
 
-                    <div class="box1 card">
+              {#      <div class="box1 card">
                         <div class="card-body" style="text-align: center;">
-                            <a href="{{ path('app_payment_s_new_panierproduit') }}" class="btn btn-warning btn-lg">Proceed to Pay</a>
+
+                            <button type="submit" class="btn">
+
+                                <span class="paynow">Pay Now</span>
+
+                            </button>
+
                         </div>
 
-                    </div>
+                    </div>#}
 
 
                 </div>
+
             </div>
         </div>
 
@@ -211,6 +210,9 @@
 
 
     </section>
+
+
+
 
 
 

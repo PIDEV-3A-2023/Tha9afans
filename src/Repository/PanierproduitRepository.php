@@ -74,4 +74,17 @@ public function findPanierByUser($id): array
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+public function findpanier($id): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.idPanier = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
 }
