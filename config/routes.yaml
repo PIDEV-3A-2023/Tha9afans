@@ -10,3 +10,10 @@ app_cancel:
   controller: App\Controller\PanierProduitController::cancel
   methods: [GET]
 
+# config/routes.yaml
+search_commandes:
+  path: /search-commandes
+  controller: App\Controller\CommandeController::searchCommandes
+  methods: [POST]
+
+

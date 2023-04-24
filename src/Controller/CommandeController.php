@@ -19,6 +19,8 @@ class CommandeController extends AbstractController
     #[Route('/', name: 'app_commande_index', methods: ['GET'])]
     public function index(CommandeRepository $commandeRepository): Response
     {
+
+
         return $this->render('commande/index.html.twig', [
             'commandes' => $commandeRepository->findAll(),
         ]);
@@ -114,7 +116,19 @@ class CommandeController extends AbstractController
         return $response;
     }
 
-    // ...
+    public function searchCommandes(Request $request, CommandeRepository $commandeRepository): \Symfony\Component\HttpFoundation\JsonResponse
+    {
+        $searchTerm = $request->request->get('searchTerm');
+
+        $queryBuilder = $commandeRepository->createQueryBuilder('c')
+            ->where('c.dateCommande LIKE :searchTerm')
+            ->setParameter('searchTerm', '%'.$searchTerm.'%')
+            ->getQuery();
+
+        $commandes = $queryBuilder->getResult();
+
+        return $this->json($commandes);
+    }
 
 
 
