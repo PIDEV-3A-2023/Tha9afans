@@ -139,7 +139,7 @@
 
     </style>
     <div class="form-group pull-right">
-        <input type="text" class="search form-control" placeholder="Qu'est-ce que tu cherches?">
+        <input type="text" class="search form-control" placeholder="Qu'est-ce que tu cherches?" id="search-input">
     </div>
     <span class="counter pull-right"></span>
     <table class="table table-hover table-bordered results">
@@ -173,6 +173,39 @@
             </tr>
         {% endfor %}
         <script >
+            $(function() {
+                $('#search-input').on('input', function() {
+                    var searchTerm = $(this).val();
+
+                    $.ajax({
+                        url: '{{ path('search_commandes') }}',
+                        type: 'POST',
+                        data: {
+                            searchTerm: searchTerm
+                        },
+                        success: function(response) {
+                            // Clear the existing table rows
+                            $('.results tbody tr').remove();
+
+                            // Add the filtered rows to the table
+                            for (var i = 0; i < response.length; i++) {
+                                var commande = response[i];
+                                var row = '<tr>' +
+                                    '<td>' + commande.id + '</td>' +
+                                    '<td>' + commande.datecommande + '</td>' +
+                                    '<td>' + commande.idProduit.nom + '</td>' +
+                                    '<td>' + commande.idProduit.prix + '</td>' +
+                                    '<td>' + commande.total + '</td>' +
+                                    '<td>' +
+
+                                    '</td>' +
+                                    '</tr>';
+                                $('.results tbody').append(row);
+                            }
+                        }
+                    });
+                });
+            });
             function ani(){
                 document.getElementById('plane').className ='animation';
             }
