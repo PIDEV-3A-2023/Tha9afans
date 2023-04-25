@@ -42,29 +42,25 @@ class ProfilController extends AbstractController
     public function reservation(ReservationRepository $reservationRepository , BilletReserverRepository $billetReserverRepository): Response
     {
         $user= $this->getUser();
-        // te5o les reservation mta3 current user !!
         $reservations = $reservationRepository->findBy(['user' => $user]);
-        // 3ando 2 reservations
-        // loula fiha (2 types billets )
-        // thenia (3 types billets)
         foreach ($reservations as $reservation) {
-            // jebt les 2 billets mta3 reservation loula
             $billetReservers = $billetReserverRepository->findBy(['reservation' => $reservation]);
             $resultatPrixReservation=0;
             $resultatNombreBillet=0;
             $result []=[] ;
-            // bouclit 3lihom
             foreach ($billetReservers as $billetReserver) {
                $resultatPrixReservation += $billetReserver->getBillet()->getPrix();
                $resultatNombreBillet += $billetReserver->getNombre();
-
             }
+            $reservation->setTotalPrice($resultatPrixReservation);
+            $reservation->setNombreBillet($resultatNombreBillet);
         }
         return $this->render('profil/reservation.html.twig',[
             'reservations' => $reservations
         ]);
     }
-   
+
+
     #[Route('/profil/evenement/', name: 'app_profil-evenement')]
     public function evenement(EvenementRepository $evenementRepository): Response
     {
