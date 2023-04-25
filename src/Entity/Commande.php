@@ -37,14 +37,14 @@ class Commande
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: 'id_user', referencedColumnName: 'id')]
-    private ?User $idUser=null;
+    private ?User $idUser;
 
 
     //relation avec table produit with id_produit
 
     #[ORM\ManyToOne(targetEntity: Produit::class)]
     #[ORM\JoinColumn(name: 'id_produit', referencedColumnName: 'id')]
-    private ?Produit $idProduit=null;
+    private ?Produit $idProduit;
 
 
 

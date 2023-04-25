@@ -147,8 +147,8 @@
         <tr>
             <th class="col-md-5 col-xs-5">refrance </th>
             <th class="col-md-5 col-xs-5">Date Commande</th>
-            <th class="col-md-4 col-xs-4">Nom Produit</th>
-            <th class="col-md-4 col-xs-4">Prix</th>
+
+
             <th class="col-md-4 col-xs-4">total</th>
            {# <th class="col-md-4 col-xs-4">user</th>#}
             <th class="col-md-4 col-xs-4">Action</th>
@@ -163,8 +163,8 @@
             <tr>
                 <td>{{ commande.id }}</td>
                 <td>{{ commande.datecommande ? commande.datecommande|date('Y-m-d') : '' }}</td>
-                <td>{{ commande.idProduit.nom }}</td>
-                <td>{{ commande.idProduit.prix }}</td>
+
+
                 <td>{{ commande.total }}</td>
                 <td>
                     <a class="a" href="{{ path('commande_pdf', {'id': commande.id}) }}" download><span >Download</span><span>PDF</span></a>
