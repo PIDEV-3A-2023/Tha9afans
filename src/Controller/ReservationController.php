@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\BilletReserver;
 use App\Entity\Reservation;
+use App\Form\ReservationEditType;
 use App\Form\ReservationType;
 use App\Repository\BilletRepository;
 use App\Repository\BilletReserverRepository;
@@ -86,8 +87,6 @@ class ReservationController extends AbstractController
         ]);
     }
 
-
-
     #[Route('/{id}', name: 'app_reservation_show', methods: ['GET'])]
     public function show(ReservationRepository $reservationRepository): Response
     {
@@ -101,13 +100,13 @@ class ReservationController extends AbstractController
     #[Route('/{id}/edit', name: 'app_reservation_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
     {
-        $form = $this->createForm(ReservationType::class, $reservation);
+        $form = $this->createForm(ReservationEditType::class, $reservation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $reservationRepository->save($reservation, true);
 
-            return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_profil-reservation', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('reservation/edit.html.twig', [

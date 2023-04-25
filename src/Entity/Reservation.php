@@ -58,6 +58,24 @@ class Reservation
     #[ORM\Column(type: 'string')]
     private $address;
 
+    private $nombreBillet;
+
+    /**
+     * @return mixed
+     */
+    public function getNombreBillet()
+    {
+        return $this->nombreBillet;
+    }
+
+    /**
+     * @param mixed $nombreBillet
+     */
+    public function setNombreBillet($nombreBillet): void
+    {
+        $this->nombreBillet = $nombreBillet;
+    }
+
 
     public function getNom()
     {
