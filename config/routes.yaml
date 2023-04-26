@@ -16,4 +16,8 @@ search_commandes:
   controller: App\Controller\CommandeController::searchCommandes
   methods: [POST]
 
+download_pdf:
+  path: /reservation/{reservationId}/download-pdf
+  controller: App\Controller\ProfilController::downloadPdfAction
+
 

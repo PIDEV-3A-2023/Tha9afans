@@ -37,9 +37,10 @@
         }
 
         .card {
-            display: table-row;
-            width: 49%;
-            background-color: #fff;
+            display: block;
+            width: 70%;
+            height: 100%;
+            background-color: #F5F5F5;
             color: #989898;
             margin-bottom: 10px;
             font-family: 'Oswald', sans-serif;
@@ -107,9 +108,9 @@
 
         .card-cont {
             display: table-cell;
-            width: 75%;
+            margin: auto;
             font-size: 85%;
-            padding: 10px 10px 30px 50px
+            padding-left: 35px;
         }
 
         .card-cont h3 {
@@ -129,7 +130,7 @@
         .card-cont .even-info i,
         .card-cont .even-date time,
         .card-cont .even-info p {
-            display: table-cell
+            display: table-cell;
         }
 
         .card-cont .even-date i,
@@ -138,7 +139,7 @@
         }
 
         .card-cont .even-info p {
-            padding: 30px 50px 0 0
+            padding: 30px 250px 0 0
         }
 
         .card-cont .even-date time span {
@@ -182,24 +183,13 @@
             .card-cont .even-info {
                 font-size: 75%
             }
-        }</style>
-    <form>
-        <label style="font-weight:bold; color:red;">Tickets:</label><br>
+        }
+    </style>
+    <form method="POST" action="{{ path('app_ticket', {'reservationId': reservation.id, 'eventId': eventId}) }}" style="margin-top: 100px">
         {% for billet in billets %}
             <section class="container">
-                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                    <button class="btn btn-link px-2"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                        <a href=""><i class="btnqt fas fa-minus"></i></a>
-                    </button>
-                    <input id="form1" type="text" min="0" value="{{ billet.nbrBilletAvailable }}"
-                           class="textqt form-control form-control-sm">
-                    <button class="btn btn-link px-2"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                        <a href=""><i class="btnqt fas fa-plus"></i></a>
-                    </button>
-                </div>
-                <article class="card fl-left">
+                <input type="number" name="{{ billet.type }}" value="0"><br><br>
+                <article class="card fl-left flex">
                     <section class="date">
                         <time>
                             <span>{{ billet.dateValidite ? billet.dateValidite|date('d') : '' }}</span>
@@ -207,13 +197,14 @@
                         </time>
                     </section>
                     <section class="card-cont">
+                        <h3>{{ billet.evenement.nom }}</h3>
                         <small>{{ billet.evenement.createur.nom }}</small>
-                        <h3>live In {{ billet.evenement.nom }}</h3>
+                        <h3>live In {{ billet.evenement.localisation }}</h3>
                         <div class="even-date">
                             <i class="fa fa-calendar"></i>
                             <time>
                                 <span>{{ billet.dateValidite ? billet.dateValidite|date('Y-m-d') : '' }}</span>
-                                <span>08:55pm to 12:00 am</span>
+                                <span>session.debit - session.fin </span>
                             </time>
                         </div>
                         <div class="even-info">
@@ -221,20 +212,19 @@
                             <p>
                                 {{ billet.evenement.localisation }}
                             </p>
+
                         </div>
-                        <label style="color: black;float: right;">{{ billet.type }}</label>
+                        <label style="color: black;float: right; margin-right: 47%;">{{ billet.type }} : {{ billet.prix }} DT</label><br><br>
+                        <div style="font-size: 60%;">for any information contact us on 74 800 008 or on 21 080 080 </div>
+                    </section>
+                    <section class="card-cont" >
+                        <img src="{{ qrCodeTable[loop.index0] }}" alt="QR code" style="width: 100px;height: 100px;float: right;margin-right: 20px;">
                     </section>
                 </article>
             </section>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
+
         {% endfor %}
-        <div class="form-group">
-            <label for="prix-total">Prix Total</label>
-            <input type="text" id="prix-total" name="prix-total" class="form-control" style="width: 100px;margin-bottom: 40px;">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+
+        <button type="submit">Submit</button>
     </form>
 {% endblock %}
