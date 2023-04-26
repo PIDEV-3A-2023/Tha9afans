@@ -327,6 +327,9 @@
 
     </style>
     <div class="table-responsive text-nowrap">
+        <form class="form-inline mb-3">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="search-input">
+        </form>
         <table class="table">
             <thead class="table-light">
             <tr>
@@ -355,7 +358,7 @@
                             <td>{{ reservation.paymentStatus }}</td>
                             <td>{{ reservation.totalPrice }}</td>
                             <td>
-                                <a href="#" class="btn btn-sm btn-primary">
+                                <a href="{{ path('download_pdf', {'reservationId': reservation.id}) }}" class="btn btn-sm btn-primary">
                                     <i class="fas fa-print" style="color:#9b9b00;"></i>
                                 </a>
                                 <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}" class="btn btn-secondary btn-sm" >
@@ -369,4 +372,6 @@
             </tbody>
         </table>
     </div>
+
 {% endblock %}
+

@@ -10,6 +10,8 @@ use App\Repository\BilletRepository;
 use App\Repository\BilletReserverRepository;
 use App\Repository\EvenementRepository;
 use App\Repository\ReservationRepository;
+use BaconQrCode\Renderer\Image\Png;
+use BaconQrCode\Writer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,42 +29,77 @@ class ReservationController extends AbstractController
         ]);
     }
 
-
-    #[Route('/{reservationId}/{event}/participate/ticket', name: 'app_ticket', methods: ['GET', 'POST'])]
-    // function that retrieve the reservation and returns the ticket page
-    public function ticket(Request $request,$reservationId,$event,EvenementRepository $evenementRepository, ReservationRepository $reservationRepository,BilletRepository $billetRepository, BilletReserverRepository $billetReserverRepository): Response
+    #[Route('/{reservationId}/{eventId}/participate/ticket', name: 'app_ticket', methods: ['GET', 'POST'])]
+    public function ticket(Request $request, $reservationId, $eventId, EvenementRepository $evenementRepository, ReservationRepository $reservationRepository, BilletRepository $billetRepository, BilletReserverRepository $billetReserverRepository): Response
     {
-        $listBillets = $billetRepository->findBy(['evenement' => $event]);
-        $billetReserverNormal= new BilletReserver();
-        $billetReserverNormal->setBillet($billetRepository->find($listBillets[0]));
-        $billetReserverNormal->setReservation($reservationRepository->find($reservationId));
-        $billetReserverNormal->setNombre(0);
-        $billetReserverVip= new BilletReserver();
-        $billetReserverVip->setBillet($billetRepository->find($listBillets[1]));
-        $billetReserverVip->setReservation($reservationRepository->find($reservationId));
-        $billetReserverVip->setNombre(0);
-        $billetReserverEtudiant= new BilletReserver();
-        $billetReserverEtudiant->setBillet($billetRepository->find($listBillets[2]));
-        $billetReserverEtudiant->setReservation($reservationRepository->find($reservationId));
-        $billetReserverEtudiant->setNombre(0);
         $reservation = $reservationRepository->find($reservationId);
-        $billetReserver = $billetReserverRepository->findBy(['reservation' => $reservationId]);
+        $billets = $billetRepository->findBy(['evenement' => $eventId]);
+
+        // Initialize an empty array to hold the BilletReserver objects
+        $billetReserversByType = [];
+        $qrCodeTable = [];
+        //  foreach billet store the qrCideDataUri in a table named qrCodeTable and render it in the view
+        foreach ($billets as $billet) {
+            $billetCode = "CODE".$billet->getType().$billet->getEvenement()->getNom().$billet->getEvenement()->getcreateur()->getId().$reservation->getNom();
+            $renderer = new Png();
+            $renderer->setWidth(250);
+            $renderer->setHeight(250);
+            $writer = new Writer($renderer);
+            $qrCode = $writer->writeString($billetCode);
+            $qrCodeDataUri = "data:image/png;base64," . base64_encode($qrCode);
+            $qrCodeTable[] = $qrCodeDataUri;
+        }
+
+
+        if ($request->getMethod() == 'POST') {
+            // Retrieve the form data
+            $normalCount = $request->request->getInt('Normal');
+            $vipCount = $request->request->getInt('VIP');
+            $studentCount = $request->request->getInt('Etudiant');
+            // Create new BilletReserver objects for the selected ticket types
+            foreach ($billets as $billet) {
+                $type = $billet->getType();
+                $billetReserver = new BilletReserver();
+                $billetReserver->setBillet($billet);
+                $billetReserver->setReservation($reservation);
+                $billetReserver->setNombre(0);
+
+
+                if ($type == 'Normal') {
+                    $billetReserver->setNombre($normalCount);
+                } elseif ($type == 'VIP') {
+                    $billetReserver->setNombre($vipCount);
+                } elseif ($type == 'Etudiant') {
+                    $billetReserver->setNombre($studentCount);
+                }
+
+                $billetReserversByType[$type] = $billetReserver;
+            }
+
+            // Save the new BilletReserver objects to the database
+            $entityManager = $this->getDoctrine()->getManager();
+            foreach ($billetReserversByType as $billetReserver) {
+                $entityManager->persist($billetReserver);
+            }
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_ticket', ['reservationId' => $reservationId, 'eventId'=>$eventId]);
+        }
+
         return $this->render('reservation/next.html.twig', [
             'reservation' => $reservation,
-            'billetReserver' => $billetReserver,
-            'billets' =>$listBillets,
+            'billets'=>$billets,
+            'eventId' => $eventId,
+            'qrCodeTable' => $qrCodeTable,
         ]);
     }
+
     #[Route('/{eventId}/participate', name: 'app_reservation_new', methods: ['GET', 'POST'])]
     public function new(BilletRepository $billetRepository, $eventId,EvenementRepository $eventRepository, Request $request, ReservationRepository $reservationRepository): Response
     {
-        // hna 3andek les billets eli mawjoudin fel l'evenement
         $billet= $billetRepository->findBy(['evenement' => $eventId]);
-        // houni 3andna el reservation sna3neha jdida new new
         $reservation = new Reservation();
-        // ici 3andi l'evenement
         $event = $eventRepository->find($eventId);
-        // w jebna el user
         $user= $this->getUser();
 
         $form = $this->createForm(ReservationType::class, $reservation,[
@@ -77,7 +114,7 @@ class ReservationController extends AbstractController
             $reservation->setLocation($event->getLocalisation());
             $reservationRepository->save($reservation, true);
             $id = $reservationRepository->find($reservation)->getId();
-            return $this->redirectToRoute('app_ticket', ['reservationId'=>$id ,'event'=>$event->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_ticket', ['reservationId'=>$id ,'eventId'=>$event->getId()], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('reservation/new.html.twig', [
             'billets' => $billet,
@@ -100,15 +137,14 @@ class ReservationController extends AbstractController
     #[Route('/{id}/edit', name: 'app_reservation_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
     {
+
         $form = $this->createForm(ReservationEditType::class, $reservation);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $reservationRepository->save($reservation, true);
-
             return $this->redirectToRoute('app_profil-reservation', [], Response::HTTP_SEE_OTHER);
         }
-
+        /*dump($form->getErrors());*/
         return $this->renderForm('reservation/edit.html.twig', [
             'reservation' => $reservation,
             'form' => $form,
