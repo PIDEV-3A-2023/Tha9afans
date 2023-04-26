@@ -17,6 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Dompdf\Dompdf;
 
 class ProfilController extends AbstractController
 {
@@ -37,34 +38,57 @@ class ProfilController extends AbstractController
         {
             return $this->render('profil/facture.html.twig');
         }
-
-         #[Route('/profil/reservation/', name: 'app_profil-reservation')]
+        #[Route('/profil/reservation/', name: 'app_profil-reservation')]
     public function reservation(ReservationRepository $reservationRepository , BilletReserverRepository $billetReserverRepository): Response
     {
         $user= $this->getUser();
-        // te5o les reservation mta3 current user !!
         $reservations = $reservationRepository->findBy(['user' => $user]);
-        // 3ando 2 reservations
-        // loula fiha (2 types billets )
-        // thenia (3 types billets)
         foreach ($reservations as $reservation) {
-            // jebt les 2 billets mta3 reservation loula
             $billetReservers = $billetReserverRepository->findBy(['reservation' => $reservation]);
             $resultatPrixReservation=0;
             $resultatNombreBillet=0;
             $result []=[] ;
-            // bouclit 3lihom
             foreach ($billetReservers as $billetReserver) {
                $resultatPrixReservation += $billetReserver->getBillet()->getPrix();
                $resultatNombreBillet += $billetReserver->getNombre();
-
             }
+            $reservation->setTotalPrice($resultatPrixReservation);
+            $reservation->setNombreBillet($resultatNombreBillet);
         }
+
         return $this->render('profil/reservation.html.twig',[
             'reservations' => $reservations
         ]);
     }
-   
+    public function downloadPdfAction($reservationId, ReservationRepository $reservationRepository, BilletReserverRepository $billetReserverRepository,BilletRepository $billetRepository)
+    {
+        // Get the reservation and associated ticket information
+        $reservation = $reservationRepository->find($reservationId);
+        // get billet from billetReserver
+        $billets = $billetReserverRepository->findBy(['reservation' => $reservation]);
+        $tickets= $billetRepository->findBy(['id' => $billets]);
+
+        // Render the ticket as HTML
+        $html = $this->renderView('profil/ticket.html.twig', [
+            'reservation' => $reservation,
+            'billets' => $tickets
+        ]);
+
+        // Generate the PDF file
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        // Return the PDF file as a response
+        $response = new Response();
+        $response->setContent($dompdf->output());
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Disposition', 'attachment; filename="ticket.pdf"');
+
+        return $response;
+    }
+
     #[Route('/profil/evenement/', name: 'app_profil-evenement')]
     public function evenement(EvenementRepository $evenementRepository): Response
     {
