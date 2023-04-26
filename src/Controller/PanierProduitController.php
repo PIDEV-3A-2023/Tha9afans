@@ -2,21 +2,28 @@
 
 namespace App\Controller;
 
+use App\Entity\Commande;
+use App\Entity\Commandeproduit;
 use App\Entity\Panier;
 use App\Entity\Panierproduit;
 use App\Entity\Produit;
 use App\Form\PanierproduitType;
+use App\Repository\CommandeproduitRepository;
+use App\Repository\CommandeRepository;
 use App\Repository\PanierproduitRepository;
 use App\Repository\PanierRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping as ORM;
 use JetBrains\PhpStorm\NoReturn;
 use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
 
 
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -24,22 +31,31 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 #[Route('/panierproduit')]
 class PanierProduitController extends AbstractController
 {
-    #[Route('/', name: 'app_panier_produit_index', methods: ['GET'])]
-    public function index(PanierproduitRepository $panierproduitRepository): Response
-    {
-        $prixtotale = 0;
-        $paniersproduits = $panierproduitRepository->findPanierByUser($this->getUser());
 
+
+    #[Route('/', name: 'app_panier_produit_index', methods: ['GET'])]
+    public function index(PanierproduitRepository $panierproduitRepository , PanierRepository $panierRepository): Response
+    {
+
+
+        $prixtotale = 0;
+
+       /* $paniersproduits = $panierproduitRepository->findPanierByUser($this->getUser());*/
+
+        $panier = $panierRepository->findPanierByUser($this->getUser());
+        $paniersproduits = $panierproduitRepository->findBy(['idPanier' => $panier]);
         foreach ($paniersproduits as $panierproduit) {
             $quantite = $panierproduit->getQuantity();
             $prix = $panierproduit->getIdProduit()->getPrix();
             $prixtotale += $quantite * $prix;
         }
-        $this->get('session')->set('prixtotale', $prixtotale);
 
+
+        $this->get('session')->set('prixtotale', $prixtotale);
         return $this->render('panier_produit/index.html.twig', [
             'panierproduits' => $paniersproduits,
-            'prixtotale' => $prixtotale
+            'prixtotale' => $prixtotale,
+
         ]);
 
     }
@@ -156,7 +172,6 @@ class PanierProduitController extends AbstractController
 
 
 
-    //clacluler
 
 
 
@@ -164,9 +179,7 @@ class PanierProduitController extends AbstractController
 //checkout stripe service
 
     private $manager;
-
     private $gateway;
-
 
     public function __construct(EntityManagerInterface $manager)
     {
@@ -176,41 +189,128 @@ class PanierProduitController extends AbstractController
     }
 
     #[Route('/checkout', name: 'app_checkout', methods:"POST")]
-    public function checkout(Request $request): Response
+    public function checkout(Request $request ,PanierproduitRepository $panierproduitRepository , PanierRepository $panierRepository): Response
     {
-        $storedtotale=$this->get('session')->get('prixtotale');
-        $amount=$storedtotale*100;
-        //créer le checkout
-        $checkout=$this->gateway->checkout->sessions->create(
-            [
-                'line_items'=>[[
-                    'price_data'=>[
-                        'currency'=>$_ENV['STRIPE_CURRENCY'],
-                        'unit_amount'=>intval($amount),
-                        'product_data'=>[
-                            'name'=>'ff',
-                            'description'=>'ff',
-                            'images'=>["https://images.unsplash.com/photo-1612837017391-4b6b7b0b0b0b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bmlrZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80"],
-                        ],
+        //récupérer les produits du panier
+        $panier = $panierRepository->findPanierByUser($this->getUser());
+        $paniersproduits = $panierproduitRepository->findBy(['idPanier' => $panier]);
+
+
+        $line_items = [];
+        foreach ($paniersproduits as $panierproduit) {
+            $quantite = $panierproduit->getQuantity();
+            $prix = $panierproduit->getIdProduit()->getPrix();
+            $nom_produit = $panierproduit->getIdProduit()->getNom();
+            $description_produit = $panierproduit->getIdProduit()->getDescription();
+            $image_produit = $panierproduit->getIdProduit()->getImage();
+
+            $line_items[] = [
+                'price_data'=>[
+                    'currency'=>$_ENV['STRIPE_CURRENCY'],
+                    'unit_amount'=>intval($prix * 100),
+                    'product_data'=>[
+                        'name'=>$nom_produit,
+                        'description'=>$description_produit,
+                       /* 'images'=>[$image_produit],*/
+
                     ],
-                    'quantity'=>1
-                ]],
-                'mode'=>'payment',
-                'success_url'=>'https://127.0.0.1:8000/success?id_sessions={CHECKOUT_SESSION_ID}',
-                'cancel_url'=>'https://127.0.0.1:8000/cancel?id_sessions={CHECKOUT_SESSION_ID}'
-            ]);
+                ],
+                'quantity'=>$quantite,
+            ];
+        }
+
+
+        //créer le checkout
+        $checkout = $this->gateway->checkout->sessions->create([
+            'line_items' => $line_items,
+            'mode' => 'payment',
+
+            'success_url' => 'https://127.0.0.1:8000/success?id_sessions={CHECKOUT_SESSION_ID}',
+            'cancel_url' => 'https://127.0.0.1:8000/cancel?id_sessions={CHECKOUT_SESSION_ID}'
+        ]);
         return $this->redirect($checkout->url);
     }
     #[Route('/success', name: 'app_success', methods: ['GET'])]
-    public function success(Request $request,PanierproduitRepository $panierproduitRepository): Response
+    public function success(Request $request,PanierproduitRepository $panierproduitRepository , CommandeRepository $commandeRepository , PanierRepository $panierRepository,CommandeproduitRepository $commandeproduitRepository): Response
     {
         $id_sessions=$request->query->get('id_sessions');
+
 
         //Récupère le customer via l'id de la  session
         $customer=$this->gateway->checkout->sessions->retrieve(
             $id_sessions,
             []
         );
+
+
+        //Récupérer les informations du customer et de la transaction
+
+        $name=$customer["customer_details"]["name"];
+
+        $email=$customer["customer_details"]["email"];
+
+        $payment_status=$customer["payment_status"];
+
+        $amount=$customer['amount_total'];
+
+
+        // Create a new instance of the Commande entity
+        $commande = new Commande();
+
+        // Set the properties of the Commande entity
+        $commande->setDatecommande(new \DateTime());
+        $commande->setTotal($amount);
+        $commande->setEtat("1");
+        $commande->setIdUser($this->getUser()); // assuming that you are using Symfony's security component
+        //set all produit in commande from panierproduit for user connected
+
+
+        // Persist the Commande entity to the database
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($commande);
+        $entityManager->flush();
+
+        //returne the commande id
+        $commandeid=$commandeRepository->findBy([
+            'datecommande' => $commande->getDatecommande(),
+            'total' => $commande->getTotal(),
+            /*'id_user' => $commande->getIdUser()->getId(),*/
+        ]);
+
+        $panierproduits = $panierproduitRepository->findPanierByUser($this->getUser());
+
+
+        $panier = $panierRepository->findPanierByUser($this->getUser());
+        $paniersproduits = $panierproduitRepository->findBy(['idPanier' => $panier]);
+
+        foreach ($paniersproduits as $panierproduit) {
+            $commandeproduit = new Commandeproduit();
+            $commandeproduit->setIdCommende($commandeid[0]);
+            $commandeproduit->setQuantite($panierproduit->getQuantity());
+            $commandeproduit->setIdProduit($panierproduit->getIdProduit()->getId());
+
+            $commandeproduitRepository->save($commandeproduit, true);
+
+        }
+
+
+
+
+
+        //Email au customer using sendgrid
+
+
+
+
+
+        //remove the panierproduit after success
+        /*   $panierproduits=$panierproduitRepository->findPanierByUser($this->getUser());
+           foreach($panierproduits as $panierproduit){
+               $panierproduitRepository->remove($panierproduit, true);
+           }*/
+
+
+
         return $this->render('success/success.html.twig',[
 
         ]);
@@ -221,7 +321,7 @@ class PanierProduitController extends AbstractController
     #[Route('/cancel', name: 'app_cancel')]
     public function cancel(Request $request): Response
     {
-        dd("cancel");
+       dd('cancel');
     }
 
 }

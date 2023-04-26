@@ -147,10 +147,7 @@
         <tr>
             <th class="col-md-5 col-xs-5">refrance </th>
             <th class="col-md-5 col-xs-5">Date Facture</th>
-            <th class="col-md-4 col-xs-4">TVA</th>
             <th class="col-md-4 col-xs-4">total</th>
-            <th class="col-md-4 col-xs-4">Produit</th>
-            <th class="col-md-4 col-xs-4">user</th>
             <th class="col-md-4 col-xs-4">Action</th>
 
         </tr>
@@ -163,13 +160,14 @@
             <tr>
                 <td>{{ facture.refrancefacture }}</td>
                 <td>{{ facture.datefacture ? facture.dateFacture|date('Y-m-d') : '' }}</td>
-                <td>{{ facture.tva }}</td>
                 <td>{{ facture.idCommende.total }}</td>
-                <td>{{ facture.idCommende.idProduit.nom }}</td>
-                <td>{{ facture.idCommende.idUser.email }}</td>
+
+
                 <td>
-                    <a class="a" href="{{ path('facture_pdf', {'id': facture.id}) }}" download><span >Download</span><span>PDF</span></a>
+                    <a class="a" href="{{ path('app_facture_pdf', {'id': facture.id}) }}" download><span >Download</span><span>PDF</span></a>
+{#
                     <a class="a" href="{{ path('facture_pdf', {'id': facture.id}) }}" download><span >Send</span><span>Mail</span></a>
+#}
                 </td>
             </tr>
         {% endfor %}
