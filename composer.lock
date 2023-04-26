@@ -4,9 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-
     "content-hash": "73d49cdb145e0aaa6877258d94729dfe",
-
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1571,7 +1569,6 @@
         },
         {
             "name": "masterminds/html5",
-
             "version": "2.8.0",
             "source": {
                 "type": "git",
@@ -1590,7 +1587,6 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.8.35 || ^5.7.21 || ^6 || ^7 || ^8"
-
             },
             "type": "library",
             "extra": {
@@ -1634,11 +1630,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Masterminds/html5-php/issues",
-
                 "source": "https://github.com/Masterminds/html5-php/tree/2.8.0"
             },
             "time": "2023-04-26T07:27:39+00:00"
-
         },
         {
             "name": "monolog/monolog",
@@ -2349,7 +2343,6 @@
             "time": "2021-12-11T13:40:54+00:00"
         },
         {
-
             "name": "sendgrid/php-http-client",
             "version": "3.14.4",
             "source": {
@@ -2479,7 +2472,6 @@
             "time": "2022-08-10T18:37:45+00:00"
         },
         {
-
             "name": "sensio/framework-extra-bundle",
             "version": "v6.2.10",
             "source": {
