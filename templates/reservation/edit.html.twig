@@ -1,9 +1,10 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Edit Reservation {% endblock %}
-{% block body %}
-<div style="margin-top: 100px">
+{% extends '/profil/index.html.twig' %}
+{% block cardtitle %}Edit Reservation{% endblock %}
+{% block content %}
+<div>
     {{ form_start(form, {'attr': {'novalidate':'novalidate'}} ) }}
+    {{ form_row(form._token) }}
+    {{ form_errors(form) }}
     {{ form_label(form.prenom) }}
     {{ form_widget(form.prenom) }}
     {{ form_errors(form.prenom) }}

@@ -45,6 +45,20 @@ class Billet
     #[ORM\OneToMany(targetEntity: 'BilletReserver', mappedBy: 'billet', cascade: ['persist'])]
     private $billetReservers;
 
+    private $qrCodeDataUri="zaken,azkjenzaeaze";
+
+
+    public function getQrCodeDataUri()
+    {
+        return $this->qrCodeDataUri;
+    }
+
+    public function setQrCodeDataUri($qrCodeDataUri): void
+    {
+        $this->qrCodeDataUri = $qrCodeDataUri;
+    }
+
+
     public function __construct()
     {
         $this->billetReservers = new ArrayCollection();
@@ -65,6 +79,7 @@ class Billet
 
         return $this;
     }
+
 
     public function getDateValidite(): ?\DateTimeInterface
     {
