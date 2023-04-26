@@ -37,16 +37,17 @@ class Commande
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(name: 'id_user', referencedColumnName: 'id')]
-    private ?User $idUser;
+    private ?User $idUser=null;
 
 
     //relation avec table produit with id_produit
 
     #[ORM\ManyToOne(targetEntity: Produit::class)]
     #[ORM\JoinColumn(name: 'id_produit', referencedColumnName: 'id')]
-    private ?Produit $idProduit;
+    private ?Produit $idProduit=null;
 
-
+    #[ORM\Column(type: 'boolean')]
+    private $etat = false;
 
     public function getId(): ?int
     {
@@ -101,6 +102,17 @@ class Commande
         return $this;
     }
 
+    public function getEtat(): ?bool
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(bool $etat): self
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
 
 
 }

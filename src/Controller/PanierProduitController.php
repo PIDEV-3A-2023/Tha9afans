@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Commande;
+use App\Entity\Commandeproduit;
 use App\Entity\Panier;
 use App\Entity\Panierproduit;
 use App\Entity\Produit;
 use App\Form\PanierproduitType;
+use App\Repository\CommandeproduitRepository;
+use App\Repository\CommandeRepository;
 use App\Repository\PanierproduitRepository;
 use App\Repository\PanierRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,12 +34,16 @@ class PanierProduitController extends AbstractController
 
 
     #[Route('/', name: 'app_panier_produit_index', methods: ['GET'])]
-    public function index(PanierproduitRepository $panierproduitRepository): Response
+    public function index(PanierproduitRepository $panierproduitRepository , PanierRepository $panierRepository): Response
     {
 
 
         $prixtotale = 0;
-        $paniersproduits = $panierproduitRepository->findPanierByUser($this->getUser());
+
+       /* $paniersproduits = $panierproduitRepository->findPanierByUser($this->getUser());*/
+
+        $panier = $panierRepository->findPanierByUser($this->getUser());
+        $paniersproduits = $panierproduitRepository->findBy(['idPanier' => $panier]);
         foreach ($paniersproduits as $panierproduit) {
             $quantite = $panierproduit->getQuantity();
             $prix = $panierproduit->getIdProduit()->getPrix();
@@ -45,8 +52,6 @@ class PanierProduitController extends AbstractController
 
 
         $this->get('session')->set('prixtotale', $prixtotale);
-
-
         return $this->render('panier_produit/index.html.twig', [
             'panierproduits' => $paniersproduits,
             'prixtotale' => $prixtotale,
@@ -184,10 +189,13 @@ class PanierProduitController extends AbstractController
     }
 
     #[Route('/checkout', name: 'app_checkout', methods:"POST")]
-    public function checkout(Request $request ,PanierproduitRepository $panierproduitRepository): Response
+    public function checkout(Request $request ,PanierproduitRepository $panierproduitRepository , PanierRepository $panierRepository): Response
     {
         //récupérer les produits du panier
-        $paniersproduits = $panierproduitRepository->findPanierByUser($this->getUser());
+        $panier = $panierRepository->findPanierByUser($this->getUser());
+        $paniersproduits = $panierproduitRepository->findBy(['idPanier' => $panier]);
+
+
         $line_items = [];
         foreach ($paniersproduits as $panierproduit) {
             $quantite = $panierproduit->getQuantity();
@@ -223,13 +231,9 @@ class PanierProduitController extends AbstractController
         return $this->redirect($checkout->url);
     }
     #[Route('/success', name: 'app_success', methods: ['GET'])]
-    public function success(Request $request,PanierproduitRepository $panierproduitRepository): Response
+    public function success(Request $request,PanierproduitRepository $panierproduitRepository , CommandeRepository $commandeRepository , PanierRepository $panierRepository,CommandeproduitRepository $commandeproduitRepository): Response
     {
         $id_sessions=$request->query->get('id_sessions');
-
-
-
-
 
 
         //Récupère le customer via l'id de la  session
@@ -256,17 +260,41 @@ class PanierProduitController extends AbstractController
         // Set the properties of the Commande entity
         $commande->setDatecommande(new \DateTime());
         $commande->setTotal($amount);
+        $commande->setEtat("1");
         $commande->setIdUser($this->getUser()); // assuming that you are using Symfony's security component
         //set all produit in commande from panierproduit for user connected
-        $panierproduits=$panierproduitRepository->findPanierByUser($this->getUser());
-        foreach($panierproduits as $panierproduit){
-            $commande->setIdProduit($panierproduit->getIdProduit());
-        }
+
 
         // Persist the Commande entity to the database
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($commande);
         $entityManager->flush();
+
+        //returne the commande id
+        $commandeid=$commandeRepository->findBy([
+            'datecommande' => $commande->getDatecommande(),
+            'total' => $commande->getTotal(),
+            /*'id_user' => $commande->getIdUser()->getId(),*/
+        ]);
+
+        $panierproduits = $panierproduitRepository->findPanierByUser($this->getUser());
+
+
+        $panier = $panierRepository->findPanierByUser($this->getUser());
+        $paniersproduits = $panierproduitRepository->findBy(['idPanier' => $panier]);
+
+        foreach ($paniersproduits as $panierproduit) {
+            $commandeproduit = new Commandeproduit();
+            $commandeproduit->setIdCommende($commandeid[0]);
+            $commandeproduit->setQuantite($panierproduit->getQuantity());
+            $commandeproduit->setIdProduit($panierproduit->getIdProduit()->getId());
+
+            $commandeproduitRepository->save($commandeproduit, true);
+
+        }
+
+
+
 
 
         //Email au customer using sendgrid

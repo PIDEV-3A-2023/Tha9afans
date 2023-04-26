@@ -171,13 +171,15 @@
 
                     <form action="{{path('app_checkout')}}" method="post">
                         <div class="float-right text-right">
-
-                           {# <h1 type="hidden" class="highlight" name="quantite">{{ quantite }} qt </h1>#}
                             <h1 class="highlight" name="subtotal">{{ prixtotale }} DT </h1>
                         </div>
-                        <button type="submit" class="btn">
-                            <span class="paynow">Pay Now</span>
-                        </button>
+                        <div class="">
+                            <div class="card-body" style="text-align: center;">
+                                <button type="submit" class="btn">
+                                    <span class="paynow">Pay Now</span>
+                                </button>
+                            </div>
+                        </div>
                     </form>
 
                     <br>
@@ -189,18 +191,7 @@
                         <h1></h1>
                     </div>
 
-              {#      <div class="box1 card">
-                        <div class="card-body" style="text-align: center;">
 
-                            <button type="submit" class="btn">
-
-                                <span class="paynow">Pay Now</span>
-
-                            </button>
-
-                        </div>
-
-                    </div>#}
 
 
                 </div>
