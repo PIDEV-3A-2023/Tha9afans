@@ -339,7 +339,7 @@
                 <th>Nombre de Billets</th>
 {#<th>Type de Billet</th>#}
                 <th>Payment_status</th>
-                <th>Prix</th>
+                <th>PrixTotal</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -356,7 +356,7 @@
                             <td>{{ eventName }}</td>
                             <td>{{ reservation.nombreBillet }}</td>
                             <td>{{ reservation.paymentStatus }}</td>
-                            <td>{{ reservation.totalPrice }}</td>
+                            <td>{{ reservation.totalPrice * reservation.nombreBillet }} DT</td>
                             <td>
                                 <a href="{{ path('download_pdf', {'reservationId': reservation.id}) }}" class="btn btn-sm btn-primary">
                                     <i class="fas fa-print" style="color:#9b9b00;"></i>
