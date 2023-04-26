@@ -321,7 +321,9 @@ class PanierProduitController extends AbstractController
     #[Route('/cancel', name: 'app_cancel')]
     public function cancel(Request $request): Response
     {
-       dd('cancel');
+        $this->addFlash('warning', 'You have cancelled the payment.');
+        return $this->redirectToRoute('app_panier_produit_index');
     }
+
 
 }

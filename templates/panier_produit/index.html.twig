@@ -128,6 +128,13 @@
                             {% endfor %}
                         </div>
                     {% endif %}
+                    {% if app.session.flashbag.has('warning') %}
+                        <div id="alert-box" class="alert alert-warning">
+                            {% for message in app.session.flashbag.get('warning') %}
+                                {{ message }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                     {% for panierproduit in panierproduits %}
 
                         <div class="card rounded-3 mb-4">
@@ -204,7 +211,15 @@
 
     </section>
 
-
+    <script>
+        // Wait for 5 seconds and then hide the alert box
+        setTimeout(function() {
+            var alertBox = document.getElementById('alert-box');
+            if (alertBox) {
+                alertBox.style.display = 'none';
+            }
+        }, 5000);
+    </script>
 
 
 
