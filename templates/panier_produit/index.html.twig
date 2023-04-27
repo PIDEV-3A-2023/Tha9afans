@@ -116,14 +116,22 @@
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h3 class="titlepanier fw-normal mb-0 text-black">Shopping Cart</h3>
                         <div>
-                            <p class="mb-0"><span class="filter text-muted">Sort by:</span> <a href="#!" class="price text-body">price <i
+                            <p class="mb-0"><span class="filter text-muted">Sort by:</span> <a href="#" class="price text-body">price <i
                                             class="fas fa-angle-down mt-1"></i></a></p>
                         </div>
+
                     </div>
 
                     {% if app.session.flashbag.has('error') %}
                         <div class="alert alert-danger">
                             {% for message in app.session.flashbag.get('error') %}
+                                {{ message }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% if app.session.flashbag.has('warning') %}
+                        <div id="alert-box" class="alert alert-warning">
+                            {% for message in app.session.flashbag.get('warning') %}
                                 {{ message }}
                             {% endfor %}
                         </div>
@@ -169,20 +177,40 @@
 
                     {% endfor %}
 
+
+
                     <form action="{{path('app_checkout')}}" method="post">
                         <div class="float-right text-right">
                             <h1 class="highlight" name="subtotal">{{ prixtotale }} DT </h1>
                         </div>
                         <div class="">
                             <div class="card-body" style="text-align: center;">
-                                <button type="submit" class="btn">
-                                    <span class="paynow">Pay Now</span>
-                                </button>
+
+                                <div class="box1 card mb-5">
+                                    <div class="card-body p-4 d-flex flex-row">
+                                        <div class=" form-outline flex-fill">
+                                            <form method="post" action="{{ path('app_checkout') }}">
+                                                <div class="form-group">
+                                                    <label for="discount_code">Discount code:</label>
+                                                    <input type="text" name="discount_code" id="discount_code" class="form-control">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Checkout</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </form>
 
                     <br>
+
+
+
+
+
+
 
 
 
@@ -204,7 +232,15 @@
 
     </section>
 
-
+    <script>
+        // Wait for 5 seconds and then hide the alert box
+        setTimeout(function() {
+            var alertBox = document.getElementById('alert-box');
+            if (alertBox) {
+                alertBox.style.display = 'none';
+            }
+        }, 5000);
+    </script>
 
 
 

@@ -86,19 +86,6 @@ class CommandeController extends AbstractController
 
 
 
-    public function searchCommandes(Request $request, CommandeRepository $commandeRepository): \Symfony\Component\HttpFoundation\JsonResponse
-    {
-        $searchTerm = $request->request->get('searchTerm');
-
-        $queryBuilder = $commandeRepository->createQueryBuilder('c')
-            ->where('c.dateCommande LIKE :searchTerm')
-            ->setParameter('searchTerm', '%'.$searchTerm.'%')
-            ->getQuery();
-
-        $commandes = $queryBuilder->getResult();
-
-        return $this->json($commandes);
-    }
 
 
     #[Route('/facture/{id}', name: 'app_commande_facture', methods: ['GET'])]

@@ -180,16 +180,12 @@
 <section class="flex">
     <dl class="bloc">
         <dt>Facturé à:</dt>
-        <dd>{{ facture.idCommende.idUser.nom}}
-            <dl>
-               {# <dt>Adresse:</dt>
-                <dd>{{ facture.user.adresse }}</dd>
-                <dt>Ville:</dt>
-                <dd>{{ facture.user.ville }}</dd>
-                <dt>Pays:</dt>
-                <dd>{{ facture.user.pays }}</dd>#}
-            </dl>
-        </dd>
+        <dd>{{ facture.idCommende.idUser.nom }} {{ facture.idCommende.idUser.prenom }}</dd>
+
+
+
+
+
     </dl>
     <dl class="bloc">
 
@@ -206,6 +202,8 @@
     <tr>
 
         <td>{{ facture.idCommende.total }}</td>
+
+
     </tr>
     </tbody>
     <tfoot>

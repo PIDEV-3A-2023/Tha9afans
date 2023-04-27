@@ -4,17 +4,19 @@ namespace App\Controller;
 
 use App\Entity\Commande;
 use App\Entity\Commandeproduit;
-use App\Entity\Panier;
+
 use App\Entity\Panierproduit;
 use App\Entity\Produit;
-use App\Form\PanierproduitType;
+
 use App\Repository\CommandeproduitRepository;
 use App\Repository\CommandeRepository;
 use App\Repository\PanierproduitRepository;
 use App\Repository\PanierRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping as ORM;
-use JetBrains\PhpStorm\NoReturn;
+
+use Exception;
+use SendGrid\Mail\Mail;
+use SendGrid\Mail\TypeException;
 use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
 
@@ -25,13 +27,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
+
+
+
+
+
+
 
 
 #[Route('/panierproduit')]
 class PanierProduitController extends AbstractController
 {
-
 
     #[Route('/', name: 'app_panier_produit_index', methods: ['GET'])]
     public function index(PanierproduitRepository $panierproduitRepository , PanierRepository $panierRepository): Response
@@ -52,6 +59,7 @@ class PanierProduitController extends AbstractController
 
 
         $this->get('session')->set('prixtotale', $prixtotale);
+        $this->get('session')->set('', $paniersproduits);
         return $this->render('panier_produit/index.html.twig', [
             'panierproduits' => $paniersproduits,
             'prixtotale' => $prixtotale,
@@ -189,12 +197,14 @@ class PanierProduitController extends AbstractController
     }
 
     #[Route('/checkout', name: 'app_checkout', methods:"POST")]
-    public function checkout(Request $request ,PanierproduitRepository $panierproduitRepository , PanierRepository $panierRepository): Response
+    public function checkout(Request $request, PanierproduitRepository $panierproduitRepository, PanierRepository $panierRepository): Response
     {
-        //récupérer les produits du panier
+        // récupérer le code de réduction
+        $discountCode = $request->request->get('discount_code');
+
+        // récupérer les produits du panier
         $panier = $panierRepository->findPanierByUser($this->getUser());
         $paniersproduits = $panierproduitRepository->findBy(['idPanier' => $panier]);
-
 
         $line_items = [];
         foreach ($paniersproduits as $panierproduit) {
@@ -202,17 +212,22 @@ class PanierProduitController extends AbstractController
             $prix = $panierproduit->getIdProduit()->getPrix();
             $nom_produit = $panierproduit->getIdProduit()->getNom();
             $description_produit = $panierproduit->getIdProduit()->getDescription();
-            $image_produit = $panierproduit->getIdProduit()->getImage();
+
+            // apply discount if discount code is valid
+            if ($discountCode === 'tha9afans' || $discountCode === 'marwen' || $discountCode === 'ons') {
+                $discounted_price = $prix * 0.8; // apply 20% discount
+            } else {
+                $discounted_price = $prix;
+            }
+            
 
             $line_items[] = [
                 'price_data'=>[
                     'currency'=>$_ENV['STRIPE_CURRENCY'],
-                    'unit_amount'=>intval($prix * 100),
+                    'unit_amount' => intval($discounted_price * 100),
                     'product_data'=>[
                         'name'=>$nom_produit,
                         'description'=>$description_produit,
-                       /* 'images'=>[$image_produit],*/
-
                     ],
                 ],
                 'quantity'=>$quantite,
@@ -220,49 +235,43 @@ class PanierProduitController extends AbstractController
         }
 
 
-        //créer le checkout
+        // créer le checkout
         $checkout = $this->gateway->checkout->sessions->create([
             'line_items' => $line_items,
             'mode' => 'payment',
-
             'success_url' => 'https://127.0.0.1:8000/success?id_sessions={CHECKOUT_SESSION_ID}',
             'cancel_url' => 'https://127.0.0.1:8000/cancel?id_sessions={CHECKOUT_SESSION_ID}'
         ]);
+
         return $this->redirect($checkout->url);
     }
+
+    /**
+     * @throws ApiErrorException
+     * @throws TypeException
+     */
     #[Route('/success', name: 'app_success', methods: ['GET'])]
     public function success(Request $request,PanierproduitRepository $panierproduitRepository , CommandeRepository $commandeRepository , PanierRepository $panierRepository,CommandeproduitRepository $commandeproduitRepository): Response
     {
-        $id_sessions=$request->query->get('id_sessions');
-
-
+        $id_sessions = $request->query->get('id_sessions');
         //Récupère le customer via l'id de la  session
-        $customer=$this->gateway->checkout->sessions->retrieve(
+        $customer = $this->gateway->checkout->sessions->retrieve(
             $id_sessions,
             []
         );
-
-
         //Récupérer les informations du customer et de la transaction
-
-        $name=$customer["customer_details"]["name"];
-
-        $email=$customer["customer_details"]["email"];
-
-        $payment_status=$customer["payment_status"];
-
-        $amount=$customer['amount_total'];
-
+        $name = $customer["customer_details"]["name"];
+        $email = $customer["customer_details"]["email"];
+        $payment_status = $customer["payment_status"];
+        $amount = $customer['amount_total'];
 
         // Create a new instance of the Commande entity
         $commande = new Commande();
-
         // Set the properties of the Commande entity
         $commande->setDatecommande(new \DateTime());
         $commande->setTotal($amount);
         $commande->setEtat("1");
         $commande->setIdUser($this->getUser()); // assuming that you are using Symfony's security component
-        //set all produit in commande from panierproduit for user connected
 
 
         // Persist the Commande entity to the database
@@ -271,14 +280,11 @@ class PanierProduitController extends AbstractController
         $entityManager->flush();
 
         //returne the commande id
-        $commandeid=$commandeRepository->findBy([
+        $commandeid = $commandeRepository->findBy([
             'datecommande' => $commande->getDatecommande(),
             'total' => $commande->getTotal(),
             /*'id_user' => $commande->getIdUser()->getId(),*/
         ]);
-
-        $panierproduits = $panierproduitRepository->findPanierByUser($this->getUser());
-
 
         $panier = $panierRepository->findPanierByUser($this->getUser());
         $paniersproduits = $panierproduitRepository->findBy(['idPanier' => $panier]);
@@ -288,26 +294,18 @@ class PanierProduitController extends AbstractController
             $commandeproduit->setIdCommende($commandeid[0]);
             $commandeproduit->setQuantite($panierproduit->getQuantity());
             $commandeproduit->setIdProduit($panierproduit->getIdProduit()->getId());
-
             $commandeproduitRepository->save($commandeproduit, true);
 
         }
-
-
-
-
-
-        //Email au customer using sendgrid
-
-
-
+        // Create a new SendGrid email
 
 
         //remove the panierproduit after success
-        /*   $panierproduits=$panierproduitRepository->findPanierByUser($this->getUser());
-           foreach($panierproduits as $panierproduit){
-               $panierproduitRepository->remove($panierproduit, true);
-           }*/
+        $panier = $panierRepository->findPanierByUser($this->getUser());
+        $paniersproduits = $panierproduitRepository->findBy(['idPanier' => $panier]);
+        foreach($paniersproduits as $panierproduit){
+            $panierproduitRepository->remove($panierproduit, true);
+        }
 
 
 
@@ -321,7 +319,15 @@ class PanierProduitController extends AbstractController
     #[Route('/cancel', name: 'app_cancel')]
     public function cancel(Request $request): Response
     {
-       dd('cancel');
+        $this->addFlash('warning', 'You have cancelled the payment.');
+        return $this->redirectToRoute('app_panier_produit_index');
     }
+
+
+
+
+
+
+
 
 }

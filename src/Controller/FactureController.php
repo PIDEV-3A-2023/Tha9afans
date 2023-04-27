@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Repository\CommandeRepository;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-
+use SendGrid\Mail\Mail;
+use SendGrid;
 
 
 use App\Entity\Facture;
@@ -138,6 +140,8 @@ class FactureController extends AbstractController
 
     }
 
+
+
     //create a function that show the facture of user connected
     #[Route('/facture/showfacture', name: 'app_facture_showfacture', methods: ['GET'])]
     public function showfacture(FactureRepository $factureRepository ,CommandeRepository $commandeRepository): Response
@@ -149,6 +153,13 @@ class FactureController extends AbstractController
             'factures' => $facture,
         ]);
     }
+
+
+
+
+
+
+
 
 
 
