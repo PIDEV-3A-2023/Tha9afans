@@ -36,6 +36,13 @@
                     <h2>Evenements disponibles</h2>
                 </div>
                 <div class="row gy-4">
+                    <form id="search-form">
+                        <label for="">Search</label>
+                        <input type="text" id="search-query" name="query"  ">
+                        <input type="submit" value="Find" >
+                    </form>
+
+
                     {% set index = 1%}
                     {% for evenement in evenements %}
                         {% set timer = index*100 %}
@@ -45,14 +52,88 @@
                                     <img src="../frontOffice/assets/img/logotha9afans.png" alt="" class="img-fluid">
                                 </div>
                                 <h3><a href="{{ path('app_evenement_show', {'id': evenement.id}) }}" class="stretched-link">{{ evenement.nom }}</a></h3>
-                                <p>{{ evenement.description }}</p>
+                                <p style="height: 50px;white-space: normal;overflow: hidden;text-overflow: clip;">{{ evenement.description }}</p>
                             </div>
                         </div><!-- End Card Item -->
                         {% set index=index+1 %}
                     {% endfor %}
                 </div>
             </div>
+                <div id="calendar-holder"></div>
         </section><!-- End Services Section -->
+            <script>
+                const searchForm = document.querySelector('#search-form');
+                searchForm.addEventListener('submit', (event) => {
+                    event.preventDefault(); // prevent the page from reloading
+                    search();
+                });
+                function search() {
+                    const searchQuery = document.querySelector('#search-query').value;
+                    const url = '{{ path('app_evenement_search') }}'; // replace with your search route URL
+                    const params = new URLSearchParams();
+                    params.append('query', searchQuery);
 
+                    fetch(url + '?' + params)
+                        .then(response => response.json())
+                        .then(evenements => {
+                            const evenementsContainer = document.querySelector('.row');
+                            evenementsContainer.innerHTML = ''; // clear the current evenements
+
+                            evenements.forEach(evenement => {
+                                const evenementCard = `
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up">
+                        <div class="card">
+                            <div class="card-img">
+                                <img src="../frontOffice/assets/img/logotha9afans.png" alt="" class="img-fluid">
+                            </div>
+                            <h3><a href="" class="stretched-link">${evenement.nom}</a></h3>
+                            <p style="height: 50px;white-space: normal;overflow: hidden;text-overflow: clip;">${evenement.description}</p>
+                        </div>
+                    </div>
+                `;
+                                evenementsContainer.innerHTML += evenementCard; // add the evenement to the container
+                            });
+                        });
+                }
+
+            </script>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                var calendarEl = document.getElementById('calendar-holder');
+
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    defaultView: 'dayGridMonth',
+                    editable: true,
+                    eventSources: [
+                        {
+                            url: "/fc-load-events",
+                            method: "POST",
+                            extraParams: {
+                                filters: JSON.stringify({})
+                            },
+                            failure: () => {
+                                // alert("There was an error while fetching FullCalendar!");
+                            },
+                        },
+                    ],
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay',
+                    },
+                    plugins: [ 'interaction', 'dayGrid', 'timeGrid' ], // https://fullcalendar.io/docs/plugin-index
+                    timeZone: 'UTC',
+                });
+                calendar.render();
+            });
+        </script>
     </main><!-- End #main -->
 {% endblock %}

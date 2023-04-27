@@ -25,14 +25,14 @@ class Commentaire
     private ?string $commentaire = null;
 
 
-    #[ORM\Column(type: 'date')]
-    private ?DateTime $date = null;
+    #[ORM\Column(type: 'datetime')]
+    private ?\DateTime $date = null;
 
     #[ORM\ManyToOne(inversedBy: 'commentaires')]
-    private ?Personnes $idUser=null;
+    private ?User $User=null;
 
     #[ORM\ManyToOne(inversedBy: 'commentaires')]
-    private ?Evenement $idEvent=null;
+    private ?Evenement $evenement=null;
 
 
     public function getId(): ?int
@@ -52,41 +52,32 @@ class Commentaire
         $this->commentaire = $commentaire;
     }
 
-
-    public function getDate(): ?DateTime
+    public function getDate(): ?\DateTime
     {
         return $this->date;
     }
 
-
-    public function setDate(?DateTime $date): void
+    public function setDate(?\DateTime $date): void
     {
         $this->date = $date;
     }
-
-
-    public function getIdUser(): ?Personnes
+    public function getUser(): ?User
     {
-        return $this->idUser;
+        return $this->User;
     }
 
-    public function setIdUser(?Personnes $idUser): void
+    public function setUser(?User $User): void
     {
-        $this->idUser = $idUser;
+        $this->User = $User;
     }
 
-    public function getIdEvent(): ?Evenement
+    public function getEvenement(): ?Evenement
     {
-        return $this->idEvent;
+        return $this->evenement;
     }
 
-    public function setIdEvent(?Evenement $idEvent): void
+    public function setEvenement(?Evenement $evenement): void
     {
-        $this->idEvent = $idEvent;
+        $this->evenement = $evenement;
     }
-    public function getIdEvenement(): ?Evenement
-    {
-        return $this->idEvenement;
-    }
-
 }

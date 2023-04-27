@@ -7,6 +7,7 @@ parameters:
     user_directory: '%kernel.project_dir%/public/uploads/personnes'
 
 services:
+    App\EventSubscriber\CalendarSubscriber:
     App\Security\PersonnesProvider:
             arguments: [ '@doctrine.orm.entity_manager' ]
     # default configuration for services in *this* file
