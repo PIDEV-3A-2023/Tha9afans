@@ -214,12 +214,12 @@ class PanierProduitController extends AbstractController
             $description_produit = $panierproduit->getIdProduit()->getDescription();
 
             // apply discount if discount code is valid
-            if ($discountCode === "ons") {
+            if ($discountCode === 'tha9afans' || $discountCode === 'marwen' || $discountCode === 'ons') {
                 $discounted_price = $prix * 0.8; // apply 20% discount
             } else {
                 $discounted_price = $prix;
             }
-
+            
 
             $line_items[] = [
                 'price_data'=>[

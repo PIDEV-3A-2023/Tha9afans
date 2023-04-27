@@ -185,9 +185,21 @@
                         </div>
                         <div class="">
                             <div class="card-body" style="text-align: center;">
-                                <button type="submit" class="btn">
-                                    <span class="paynow">Pay Now</span>
-                                </button>
+
+                                <div class="box1 card mb-5">
+                                    <div class="card-body p-4 d-flex flex-row">
+                                        <div class=" form-outline flex-fill">
+                                            <form method="post" action="{{ path('app_checkout') }}">
+                                                <div class="form-group">
+                                                    <label for="discount_code">Discount code:</label>
+                                                    <input type="text" name="discount_code" id="discount_code" class="form-control">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Checkout</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </form>
@@ -195,28 +207,10 @@
                     <br>
 
 
-                    <div class="box1 card mb-5">
-                        <div class="card-body p-4 d-flex flex-row">
-                            <div class=" form-outline flex-fill">
-                                <form action="">
-                                    <div class="inputBox">
-                                        <span>Discount code</span>
-                                        <input type="text" maxlength="16" name="discount_code" class="card-number-input">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
 
 
 
-                    <form method="post" action="{{ path('app_checkout') }}">
-                        <div class="form-group">
-                            <label for="discount_code">Discount code:</label>
-                            <input type="text" name="discount_code" id="discount_code" class="form-control">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Checkout</button>
-                    </form>
+
 
 
 
