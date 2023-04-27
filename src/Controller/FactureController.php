@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Commande;
+use App\Repository\CommandeproduitRepository;
 use App\Repository\CommandeRepository;
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -22,10 +24,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class FactureController extends AbstractController
 {
     #[Route('/', name: 'app_facture_index', methods: ['GET'])]
-    public function index(FactureRepository $factureRepository): Response
+    public function index(FactureRepository $factureRepository ): Response
     {
+
+
+
+
         return $this->render('facture/index.html.twig', [
             'factures' => $factureRepository->findAll(),
+
         ]);
     }
 
@@ -89,11 +96,10 @@ class FactureController extends AbstractController
 
 
     #[Route('/facture/pdf/{id}', name: 'app_facture_pdf', methods: ['GET'])]
-    public function downloadPdfAction($id)
+    public function downloadPdfAction($id , CommandeproduitRepository $commandeproduitRepository  , FactureRepository $factureRepository): Response
     {
         // Get the facture entity by ID
         $facture = $this->getDoctrine()->getRepository(Facture::class)->find($id);
-
         // If no facture found, throw exception
         if (!$facture) {
             throw $this->createNotFoundException('No facture found for id '.$id);
@@ -110,7 +116,10 @@ class FactureController extends AbstractController
         // Retrieve the HTML generated in our twig file
 
         $html = $this->renderView('facture/pdf.html.twig', [
-            'facture' => $facture
+            'facture' => $facture,
+
+/*            'commandeproduits' => $commandeproduitRepository->findBy(['idCommande' => $facture->getIdCommende()]),*/
+
         ]);
 
         // Load HTML to Dompdf
