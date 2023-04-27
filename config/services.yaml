@@ -9,6 +9,14 @@ parameters:
     stripe_secret_key: '%env(STRIPE_SECRET_KEY)%'
     user_directory: '%kernel.project_dir%/public/uploads/personnes'
 
+# config/services.yaml
+
+    sendgrid_api_key: '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'
+
+
+
+
+
 services:
     App\Security\PersonnesProvider:
             arguments: [ '@doctrine.orm.entity_manager' ]
@@ -28,3 +36,6 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Service\SendGridService:
+        arguments:
+            $apiKey: '%sendgrid_api_key%'

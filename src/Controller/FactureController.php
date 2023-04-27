@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\CommandeRepository;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use SendGrid\Mail\Mail;
 use SendGrid;
@@ -152,6 +153,13 @@ class FactureController extends AbstractController
             'factures' => $facture,
         ]);
     }
+
+
+
+
+
+
+
 
 
 
