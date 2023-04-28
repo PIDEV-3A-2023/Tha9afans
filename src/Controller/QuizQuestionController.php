@@ -48,13 +48,7 @@ class QuizQuestionController extends AbstractController
     }
 
 
-    #[Route('/{id}', name: 'app_quiz_question_show', methods: ['GET'])]
-    public function show(QuizQuestion $quizQuestion): Response
-    {
-        return $this->render('quiz_question/show.html.twig', [
-            'quiz_question' => $quizQuestion,
-        ]);
-    }
+
 
     #[Route('/quiz/{quizId}/question/{questionId}/timer-sum', name:'app_quiz_question_timer_sum', methods:['GET'])]
     public function quizQuestionTimerSum(QuizQuestionRepository $quizQuestionRepository, int $quizId, int $questionId): Response

@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+//hetha backOffice
 class QuizHomeController extends AbstractController
 {
     #[Route('/quizHomeBack', name: 'app_quiz_home_back')]

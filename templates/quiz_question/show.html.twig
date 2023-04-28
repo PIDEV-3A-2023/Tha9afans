@@ -3,7 +3,6 @@
 {% block title %}QuizQuestion{% endblock %}
 
 {% block body %}
-
     <style>
         body {
             justify-content: center; /* centers content horizontally */
@@ -76,33 +75,57 @@
         }
 
     </style>
+
     <div class="display">
         <div class="flex">
             <div class="flex">
-                <div class="question">Timer: {{ quiz_question.question.timer }}</div>
-                <button>
-                    skip
-                </button>
-                <button>
-                    <a href="{{ path('app_quiz_question_skip', {id: quiz_question.quiz.quizId, questionId: quiz_question.question.questionId}) }}">Skip</a>
+                <div class="question">Timer: {{ question.timer }}</div>
+                <button id="skip-button">
+                    Skip
                 </button>
             </div>
             <br>
-            <div class="question">{{ quiz_question.question.question }}</div>
+            <div class="question">{{ question.question }}</div>
         </div>
         <div class="image">
-            {% if quiz_question.question.image is not empty %}
-                <img src="{{ path('question_show_image', {'id': quiz_question.question.questionId}) }}" alt="{{ quiz_question.question.question }}">
+            {% if question.image is not empty %}
+                <img src="{{ path('question_show_image', {'id': question.questionId}) }}" alt="{{ question.question }}">
             {% else %}
                 Aucune photo disponible
             {% endif %}
         </div>
         <div class="answers">
-            <button>{{ quiz_question.question.firstPossibleAnswer }}</button>
-            <button>{{ quiz_question.question.secondPossibleAnswer }}</button>
-            <button>{{ quiz_question.question.thirdPossibleAnswer }}</button>
+            <button class="answer-button">{{ question.firstPossibleAnswer }}</button>
+            <button class="answer-button">{{ question.secondPossibleAnswer }}</button>
+            <button class="answer-button">{{ question.thirdPossibleAnswer }}</button>
         </div>
     </div>
+
+    <script>
+        const skipButton = document.getElementById('skip-button');
+        // const answerButtons = document.querySelectorAll('.answer-button');
+
+        // Retrieve the shuffled list of questions from the session variable
+        const questions = {{ app.session.get('quizQuestions')|json_encode|raw }};
+        const currentQuestionIndex = questions.findIndex(q => q.id === {{ question.questionId }});
+
+
+        skipButton.addEventListener('click', () => {
+            // Load the next question from the shuffled list
+            const nextQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+            const nextQuestion = questions[nextQuestionIndex];
+
+            // Update the URL with the ID of the next question
+            window.location.href = '{{ path('app_quiz_question_start', {'id': quizId}) }}';
+        });
+
+        answerButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Handle the user's answer to the current question
+                // (you'll need to implement this functionality separately)
+            });
+        });
+    </script>
 
 
 {% endblock %}

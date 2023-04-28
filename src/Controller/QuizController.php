@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Question;
 use App\Entity\Quiz;
+use App\Entity\QuizQuestion;
 use App\Form\QuizType;
 use App\Repository\QuestionRepository;
 use App\Repository\QuizQuestionRepository;
@@ -24,22 +25,25 @@ class QuizController extends AbstractController
         ]);
     }
 
+
     #[Route('/{id}/start', name: 'app_quiz_question_start', methods: ['GET'])]
     public function startQuiz(Quiz $quiz, QuizQuestionRepository $quizQuestionRepository): Response
     {
         // Get all questions for the given quiz
         $questions = $quizQuestionRepository->findBy(['quiz' => $quiz]);
-
         // Shuffle the questions to get a random order
         shuffle($questions);
-
         // Create a session variable to store the questions and set it to the shuffled questions
         $this->get('session')->set('quizQuestions', $questions);
-
         // Redirect to the first question
         $question = reset($questions);
-        return $this->redirectToRoute('app_quiz_question_show', ['id' => $question->getId()]);
+
+        return $this->render('quiz_question/show.html.twig', ['question' => $question->getQuestion(),
+            'quizId' => $quiz->getQuizId()]);
     }
+
+
+
     #[Route('/homeQuiz', name: 'app_quiz_Home')]
     public function homequizz(QuizRepository $quizRepository ,QuizQuestionRepository $quizQuestionRepository): Response
     {
@@ -59,32 +63,6 @@ class QuizController extends AbstractController
             'timer' => $timers,
         ]);
     }
-
-    #[Route('/{id}/question/{questionId}/skip', name: 'app_quiz_question_skip', methods: ['GET'])]
-    public function skipQuestion(Quiz $quiz, int $questionId, QuizQuestionRepository $quizQuestionRepository): Response
-    {
-        // Get the current question from the session variable
-        $questions = $this->get('session')->get('quizQuestions');
-        $currentQuestion = $quizQuestionRepository->find($questionId);
-
-        // Remove the current question from the questions array
-        $key = array_search($currentQuestion, $questions);
-        if ($key !== false) {
-            unset($questions[$key]);
-        }
-
-        // Update the session variable with the remaining questions
-        $this->get('session')->set('quizQuestions', $questions);
-
-        // Redirect to the next question or to the quiz result page if all questions have been answered
-        $nextQuestion = reset($questions);
-        if ($nextQuestion) {
-            return $this->redirectToRoute('app_quiz_question_show', ['id' => $nextQuestion->getId()]);
-        } else {
-            return $this->redirectToRoute('app_quiz_result', ['id' => $quiz->getId()]);
-        }
-    }
-
 
     #[Route('/new', name: 'app_quiz_new', methods: ['GET', 'POST'])]
     public function new(Request $request, QuizRepository $quizRepository, QuestionRepository $questionRepository): Response
@@ -175,4 +153,6 @@ class QuizController extends AbstractController
 
         return $this->redirectToRoute('app_quiz_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
 }
