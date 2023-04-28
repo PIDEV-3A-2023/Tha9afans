@@ -124,9 +124,9 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($new){
+            /*if ($new){
                 $user->setCreatedBy($this->getUser());
-            }
+            }*/
 
             // get uploaded file for photo field
             $photoFile = $form->get('photo')->getData();
@@ -138,8 +138,8 @@ class UserController extends AbstractController
             }
 
             $userRepository->save($user, true);
-            $mailMessage=$user->getNom().' '.$user->getPrenom();
-            $mailer->sendEmail(content: $mailMessage);
+
+
 
 
 

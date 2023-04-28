@@ -8,6 +8,9 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Doctrine\ORM\Query\AST\Functions\SimpleFunction;
+use Doctrine\ORM\Query\AST\Functions\DateDiffFunction;
+use Doctrine\ORM\Query\Lexer;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -22,6 +25,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
+        // Register the DATEDIFF function with Doctrine
+        $entityManager = $this->getEntityManager();
+        $configuration = $entityManager->getConfiguration();
+        $configuration->addCustomDatetimeFunction('DATEDIFF', DateDiffFunction::class);
     }
 
     public function save(User $entity, bool $flush = false): void
@@ -101,6 +108,79 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         return $qb->execute();
     }
+    public function countByAdresse()
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->select('u.adresse, COUNT(u.id) as count')
+            ->groupBy('u.adresse');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function countByAgeAndGender()
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $qb->select('u.datenaissance')
+            ->addSelect("CASE WHEN DATEDIFF(CURRENT_DATE(), u.datenaissance) / 365 <= 18 THEN '<18' ELSE '>18' END as age")
+            ->addSelect('u.genre as genre')
+            ->addSelect('COUNT(u.id) as count')
+            ->andWhere($qb->expr()->isNotNull('u.datenaissance'))
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->eq('u.genre', "'homme'"),
+                $qb->expr()->eq('u.genre', "'femme'"),
+                $qb->expr()->eq('u.genre', "'autre'")
+            ))
+            ->groupBy('age')
+            ->addGroupBy('genre');
+
+        return $qb->getQuery()->getResult();
+    }
+    // UserRepository.php
+    public function countByAgeAndGenderLessThan18()
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $qb->select('u.datenaissance')
+            ->addSelect("'<' as age")
+            ->addSelect('u.genre as genre')
+            ->addSelect('COUNT(u.id) as count')
+            ->andWhere($qb->expr()->isNotNull('u.datenaissance'))
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->eq('u.genre', "'homme'"),
+                $qb->expr()->eq('u.genre', "'femme'"),
+                $qb->expr()->eq('u.genre', "'autre'")
+            ))
+            ->andWhere($qb->expr()->gt('DATE_DIFF(CURRENT_DATE(), u.datenaissance)', '6570')) // 6570 days = 18 years
+            ->groupBy('age')
+            ->addGroupBy('genre');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function countByAgeAndGenderGreaterThan18()
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $qb->select('u.datenaissance')
+            ->addSelect("'>' as age")
+            ->addSelect('u.genre as genre')
+            ->addSelect('COUNT(u.id) as count')
+            ->andWhere($qb->expr()->isNotNull('u.datenaissance'))
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->eq('u.genre', "'homme'"),
+                $qb->expr()->eq('u.genre', "'femme'"),
+                $qb->expr()->eq('u.genre', "'autre'")
+            ))
+            ->andWhere($qb->expr()->lte('DATE_DIFF(CURRENT_DATE(), u.datenaissance)', '6570')) // 6570 days = 18 years
+            ->groupBy('age')
+            ->addGroupBy('genre');
+
+        return $qb->getQuery()->getResult();
+    }
+
+
+
 
 
 

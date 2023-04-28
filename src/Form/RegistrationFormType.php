@@ -112,6 +112,20 @@ class RegistrationFormType extends AbstractType
                     
                 ],
             ])
+            ->add('genre', ChoiceType::class, [
+                'choices' => [
+                    'Homme' => 'homme',
+                    'Femme' => 'femme',
+                    'Autre' => 'autre',
+                ],
+                'required' => true,
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'Le champ genre ne doit pas être vide',
+                    ]),
+                    new Assert\Choice(['choices' => ['homme', 'femme', 'autre']])
+                ],
+            ])
         ;
     }
 

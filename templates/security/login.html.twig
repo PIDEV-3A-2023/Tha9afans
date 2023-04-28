@@ -345,7 +345,7 @@
                 <a href="{{ path('app_register') }}">SignUp</a>
                 <div class="share-buttons">
                     <div class="share-button">
-                        <a href="{{ path('fcb_login') }}">
+                        <a href="{{path('github_login')}}">
                             <div class="share-button-secondary">
                                 <div class="share-button-secondary-content">
                                     Connecter avec facebook
@@ -358,11 +358,14 @@
 
                     </div>
                     <div class="share-button">
-                        <div class="share-button-secondary">
-                            <div class="share-button-secondary-content">
-                                Connecter avec google
+                        <a href="{{ path('connect_google_start')}}">
+                            <div class="share-button-secondary">
+
+                                <div class="share-button-secondary-content">
+                                    Connecter avec google
+                                </div>
                             </div>
-                        </div>
+                        </a>
                         <div class="share-button-primary">
                             <i class="share-button-icon fa-brands fa-google fa-lg"></i>
                         </div>

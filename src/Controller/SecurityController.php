@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\ResetPasswordFormType;
 use App\Form\ResetPasswordRequestFormType;
 use App\Repository\UserRepository;
@@ -16,9 +17,26 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\RouterInterface;
+use App\Security\GoogleAuthenticatorController;
+use Symfony\Component\Security\Http\Util\TargetPathTrait;
+
 
 class SecurityController extends AbstractController
 {
+    use TargetPathTrait;
+
+    private $clientRegistry;
+    private $em;
+    private $router;
+    public function __construct(ClientRegistry $clientRegistry, EntityManagerInterface $em, RouterInterface $router)
+    {
+        $this->clientRegistry = $clientRegistry;
+        $this->em = $em;
+        $this->router = $router;
+    }
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -109,4 +127,83 @@ class SecurityController extends AbstractController
 
 
     }
+    private function getGoogleClient()
+    {
+        return $this->clientRegistry->getClient('google');
+    }
+
+    private function fetchAccessToken($client)
+    {
+        $token = $client->getAccessToken();
+        if (!$token) {
+            throw new \Exception('Failed to fetch access token');
+        }
+        return $token;
+    }
+
+    #[Route(path: '/connect/google', name: 'connect_google_start')]
+    public function redirectToGoogleAction(ClientRegistry $clientRegistry): RedirectResponse
+    {
+        return $clientRegistry
+            ->getClient('google')
+            ->redirect(['email'], []);
+    }
+    #[Route(path: '/connect/google/check', name: 'connect_google_check')]
+    public function checkGoogleAction(
+        Request $request,TokenGeneratorInterface $tokenGenerator,
+        EntityManagerInterface $entityManager,MailerService $mailerService)
+    {
+        $accessToken = $this->fetchAccessToken($this->getGoogleClient());
+        $googleUser = $this->clientRegistry
+            ->getClient('google')
+            ->fetchUserFromToken($accessToken);
+
+        $email = $googleUser->getEmail();
+        $user = $this->em->getRepository(User::class)
+            ->findOneBy(['email' => $email]);
+        $token = $tokenGenerator->generateToken();
+
+        if (!$user) {
+            $user = new User();
+            $user->setEmail($googleUser->getEmail());
+            $user->setNom($googleUser->getName());
+            $user->setPhoto($googleUser->getAvatar());
+            $user->setPassword('default-password');
+
+            $user->setResetToken($token);
+            $this->em->persist($user);
+            $this->em->flush();
+            $url = $this->generateUrl('reset_pass', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
+            //On crée les données de email
+            $context = compact('url', 'user');
+            //envoi du mail
+            $mailerService->sendEmail(
+                'fadhel.ons@esprit.tn',
+                $user->getEmail(),
+                'Réintialisation de mot de passe par gmail',
+                'password_reset',
+                $context
+            );
+            $this->addFlash('success','Email de réintialisation de mot de passe est envoyé avec succés');
+            return $this->redirectToRoute('app_login');
+        }
+            $user->setResetToken($token);
+            $this->em->persist($user);
+            $this->em->flush();
+            $url=$this->generateUrl('reset_pass',['token'=>$token],UrlGeneratorInterface::ABSOLUTE_URL);
+            //On crée les données de email
+            $context=compact('url','user');
+            //envoi du mail
+            $mailerService->sendEmail(
+                'fadhel.ons@esprit.tn',
+                $user->getEmail(),
+                'Réintialisation de mot de passe',
+                'password_reset',
+                $context
+            );
+            $this->addFlash('success','Email de réintialisation de mot de passe est envoyé avec succés');
+            return $this->redirectToRoute('app_login');
+    }
+
+
 }

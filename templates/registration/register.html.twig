@@ -9,7 +9,7 @@
         }
         .box{
             box-sizing: border-box;
-            width: 700px;
+            width: 730px;
             height: auto;
             border: 2px solid #A8DADC;
             box-shadow: -3px -3px 7px #ffffff73,
@@ -200,6 +200,9 @@
                 {{ form_row(registrationForm.plainPassword, {
                     label: 'Password'
                 }, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
+            </div>
+            <div class="col">
+                {{ form_row(registrationForm.genre, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
             </div>
         </div>
         <div class="row">

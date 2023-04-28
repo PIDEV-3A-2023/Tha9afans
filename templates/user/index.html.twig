@@ -309,11 +309,13 @@
             <div class="input-group">
                 <form id="search-form" >
                     <input type="text" id="search-query" name="query" placeholder="entrez nom ou prénom ou email">
-                    <img src="{{asset('frontOffice/assets/img/logo.png') }}" alt="" width="100px" height="70px">
+                    <img src="{{asset('frontOffice/assets/img/searchicon.png') }}" alt="" width="50px" height="50px">
                 </form>
             </div>
             <div class="export__file">
-                <a href="{{ path('app_user_index', {'download': true}) }}">Download CSV</a>
+                <a href="{{ path('app_user_index', {'download': true}) }}">
+                    <img src="{{asset('frontOffice/assets/img/csvicon.png') }}" alt="" width="50px" height="50px">
+                </a>
             </div>
 
             <div>
