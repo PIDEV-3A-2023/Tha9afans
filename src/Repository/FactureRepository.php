@@ -80,7 +80,16 @@ class FactureRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
+    //find facture by idcommande
+    public function findFactureByCommande($idcommande)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('c')
+            ->where('c.idcommande = :idcommande')
+            ->setParameter('idcommande', $idcommande)
+            ->getQuery();
+        return $qb->execute();
+    }
 
 
 }

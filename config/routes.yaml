@@ -19,12 +19,7 @@ download_pdf:
 
 
 
-search:
-  path: /search
-  methods: [GET]
-  controller: App\Controller\FactureController::searchAction
 
 
-search_ajax_factures:
-  path: /search-ajax-factures
-  controller: App\Controller\FactureController::searchFacturesAjax
+
+
