@@ -68,4 +68,19 @@ class FactureRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+
+    public function findUserByref($ref)
+    {
+        return $this->createQueryBuilder("facture")
+            ->where('facture.refrancefacture LIKE :ref')
+            ->setParameter('ref', '%' . $ref . '%')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
+
 }
