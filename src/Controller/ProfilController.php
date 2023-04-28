@@ -13,6 +13,8 @@ use App\Repository\ReservationRepository;
 use App\Entity\Session;
 use App\Form\SessionType;
 use App\Repository\SessionRepository;
+use BaconQrCode\Renderer\Image\Png;
+use BaconQrCode\Writer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -64,14 +66,30 @@ class ProfilController extends AbstractController
     {
         // Get the reservation and associated ticket information
         $reservation = $reservationRepository->find($reservationId);
-        // get billet from billetReserver
-        $billets = $billetReserverRepository->findBy(['reservation' => $reservation]);
-        $tickets= $billetRepository->findBy(['id' => $billets]);
+        $billetReservers = $billetReserverRepository->findBy(['reservation' => $reservation]);
 
+        // get billet from billetReserver
+        $x = $billetReserverRepository->findOneBy(['reservation' => $reservation]);
+        $eventId = $x->getBillet()->getEvenement()->getId();
+        $billets = $billetRepository->findBy(['evenement' => $eventId]);
+        $qrCodeTable = [];
+        //  foreach billet store the qrCideDataUri in a table named qrCodeTable and render it in the view
+        foreach ($billets as $billet) {
+            $billetCode = "CODE".$billet->getType().$billet->getEvenement()->getNom().$billet->getEvenement()->getcreateur()->getId().$reservation->getNom();
+            $renderer = new Png();
+            $renderer->setWidth(250);
+            $renderer->setHeight(250);
+            $writer = new Writer($renderer);
+            $qrCode = $writer->writeString($billetCode);
+            $qrCodeDataUri = "data:image/png;base64," . base64_encode($qrCode);
+            $qrCodeTable[] = $qrCodeDataUri;
+        }
         // Render the ticket as HTML
         $html = $this->renderView('profil/ticket.html.twig', [
             'reservation' => $reservation,
-            'billets' => $tickets
+            'billets' => $billets,
+            'qrCodeTable' => $qrCodeTable,
+            'billetReservers'=> $billetReservers
         ]);
 
         // Generate the PDF file
@@ -88,6 +106,7 @@ class ProfilController extends AbstractController
 
         return $response;
     }
+
 
     #[Route('/profil/evenement/', name: 'app_profil-evenement')]
     public function evenement(EvenementRepository $evenementRepository): Response

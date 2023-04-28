@@ -34,7 +34,7 @@ class BilletController extends AbstractController
     {
         $event= $evenementRepository->find($eventId);
         $billet = new Billet();
-        if (!$event->getFreeorpaid()) {
+        if ($event->getFreeorpaid()==1) {
             $prixInitialValue=0;
         } else {
             $prixInitialValue = null;
@@ -47,6 +47,7 @@ class BilletController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             // verify if the type of billet is already exist, so you can't add it again
             $billetType = $billetRepository->findOneBy(['type' => $billet->getType(), 'evenement' => $eventId]);
             if ($billetType) {
@@ -54,6 +55,8 @@ class BilletController extends AbstractController
                 $this->addFlash('warning', 'Ce type de billet existe déjà');
                 return $this->redirectToRoute('app_billet_new', ['eventId'=>$eventId], Response::HTTP_SEE_OTHER);
             }
+            $prix = $form->get('prix')->getData();
+            $billet->setPrix($prix);
             $billet->setEvenement($event);
             $billetRepository->save($billet, true);
             $this->addFlash('success', 'Le billet a été ajouté avec succès.');
@@ -67,14 +70,14 @@ class BilletController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/show', name: 'app_billet_show', methods: ['GET'])]
+     #[Route('/{id}/show', name: 'app_billet_show', methods: ['GET'])]
     public function show(Billet $billet ): Response
     {
         // generate the QR code
         $billetCode = $billet->getCode();
         $renderer = new Png();
-        $renderer->setWidth(250);
-        $renderer->setHeight(250);
+        $renderer->setWidth(150);
+        $renderer->setHeight(150);
         $writer = new Writer($renderer);
         $qrCode = $writer->writeString($billetCode);
         $qrCodeDataUri = "data:image/png;base64," . base64_encode($qrCode);

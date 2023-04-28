@@ -59,6 +59,11 @@ class BilletType extends AbstractType
                 'label_attr' => [
                     'class' => 'radio-label', // set the class of the label
                 ],
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'Please select a type', // customize the error message
+                    ]),
+                ],
                 'attr' => [
                     'class' => 'radio-input', // set the class of the input
                 ],
