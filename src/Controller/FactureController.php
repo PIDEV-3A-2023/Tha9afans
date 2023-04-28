@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Commande;
+use App\Repository\CommandeproduitRepository;
 use App\Repository\CommandeRepository;
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -18,15 +20,32 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+
+
+
+
+
+
 #[Route('/facture')]
 class FactureController extends AbstractController
 {
     #[Route('/', name: 'app_facture_index', methods: ['GET'])]
-    public function index(FactureRepository $factureRepository): Response
+    public function index(FactureRepository $factureRepository ): Response
     {
+
         return $this->render('facture/index.html.twig', [
             'factures' => $factureRepository->findAll(),
+
         ]);
+    }
+
+    #[Route('/recherche_ajax', name: 'recherche_ajax')]
+
+    public function rechercheAjax(Request $request, FactureRepository $sr): JsonResponse
+    {
+        $requestString = $request->query->get('searchValue');
+        $resultats = $sr->findUserByref($requestString);
+        return $this->json($resultats);
     }
 
     #[Route('/new', name: 'app_facture_new', methods: ['GET', 'POST'])]
@@ -89,11 +108,10 @@ class FactureController extends AbstractController
 
 
     #[Route('/facture/pdf/{id}', name: 'app_facture_pdf', methods: ['GET'])]
-    public function downloadPdfAction($id)
+    public function downloadPdfAction($id , CommandeproduitRepository $commandeproduitRepository  , FactureRepository $factureRepository): Response
     {
         // Get the facture entity by ID
         $facture = $this->getDoctrine()->getRepository(Facture::class)->find($id);
-
         // If no facture found, throw exception
         if (!$facture) {
             throw $this->createNotFoundException('No facture found for id '.$id);
@@ -110,7 +128,10 @@ class FactureController extends AbstractController
         // Retrieve the HTML generated in our twig file
 
         $html = $this->renderView('facture/pdf.html.twig', [
-            'facture' => $facture
+            'facture' => $facture,
+
+            'commandeproduits' => $commandeproduitRepository->findBy(['idCommande' => $facture->getIdCommende()]),
+
         ]);
 
         // Load HTML to Dompdf
@@ -158,10 +179,43 @@ class FactureController extends AbstractController
 
 
 
+    public function searchAction(Request $request): Response
+    {
+        $searchQuery = $request->query->get('searchQuery');
+
+        // Perform the search and retrieve the search results
+        $factures = $this->getDoctrine()->getRepository(Facture::class)->search($searchQuery);
+
+        // Render the search results as an HTML table
+        $html = $this->renderView('facture/index.html.twig', [
+            'factures' => $factures,
+        ]);
+
+        // Return the search results as an HTML response
+        return new Response($html);
+    }
 
 
 
+    public function searchFacturesAjax(Request $request): Response
+    {
+        $date = $request->request->get('date');
 
+        // récupérer le repository Facture
+        $factureRepository = $this->getDoctrine()->getRepository(Facture::class);
+
+        // effectuer une recherche en fonction du nom de la facture ou de la référence de la facture
+        $factures = $factureRepository->createQueryBuilder('f')
+            ->where('f.id LIKE :date')
+            ->setParameter('date', '%'.$date.'%')
+            ->getQuery()
+            ->getResult();
+
+        // renvoyer les résultats en format JSON
+        return $this->json([
+            'results' => $factures
+        ]);
+    }
 
 
 

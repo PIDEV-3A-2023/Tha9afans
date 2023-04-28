@@ -262,24 +262,19 @@
     </style>
 
     <main class="tablet" style="margin-top: 30px">
-        <section class="table__header">
-            <h1 style="color: #001A23">liste des factures</h1>
-            <div class="input-group">
-                <input type="search" placeholder="search ... " id="search-input">
-                <button id="search-button">Rechercher</button>
-            </div>
-        </section>
+        <input type="text" id="searchxx" class="form-control" placeholder="recherche selon Email">
+
         <section class="table__body" id="facture-list">
             <table>
                 <thead>
                 <tr>
-                    <th class="col-md-5 col-xs-5">refrance </th>
+                    <th class="col-md-5 col-xs-5">refrance</th>
                     <th class="col-md-5 col-xs-5">Date Facture</th>
                     <th class="col-md-4 col-xs-4">total</th>
                     <th class="col-md-4 col-xs-4">Action</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="all">
                 {% for facture in factures %}
                     <tr>
                         <td>{{ facture.refrancefacture }}</td>
@@ -296,14 +291,51 @@
                     </tr>
                 {% endfor %}
                 </tbody>
+                <tbody id="searchtab"></tbody>
             </table>
         </section>
     </main>
-    <script >
+    <script src="{{ asset('https://code.jquery.com/jquery-3.5.1.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#searchxx").keyup(function (e) { /* La variable value va prendre la valeur insérer dans le champ de texte
+            afin d'effectuer la recherche */
+                var value = $(this).val();
+                /* Ajax est lancé lors du remplissage du champ texte dont l'id est
+                            « search » pour faire la recherche */
+                $.ajax({ /* l’url est une chaine de caractères contenant l’adresse où la requête est
+                envoyée */
+                    url: "{{ path('recherche_ajax') }}",
+                    /* La méthode utilisée pour transférer les données est GET */
+                    type: 'GET',
+                    /*Ici search value va prendre la chaine entrée par un utilisateur dans la
+                                    zone de recherche et sera placée après l’url */
+                    data: {
+                        'searchValue': value
+                    },
+                    /*Cette fonction permet de vider le contenu du tableau pour recevoir le
+                                    nouveau contenu*/
+                    success: function (resultats) {
+                        if (resultats) {
+                            $('#t tbody#searchtab').empty();
+                            $.each(resultats, function (i, obj) {
+                                $('#t tbody#all').hide();
+                                $('#t tbody#searchtab').append('<tr><td> ' + obj.id + '</td><td> ' + obj.email + '</td><td> ' + obj. + '</td><td> ' + obj.nom + '</td><td><a href="' + obj.id + '/edit">update</a><a href="' + obj.id + '/show">show</a>     </td></tr>');
+                            });
+                        } else {
+                            $('#t tbody#all').show();
+                            $('#t tbody#searchtab').empty();
+                            $('#t tbody#searchtab').fadeIn('fast');
+                        }
+                    }
+                });
+                return false;
+            });
+        });
 
 
-
-            function ani(){
+    function ani(){
                 document.getElementById('plane').className ='animation';
             }
         function anitwo(){
@@ -311,6 +343,13 @@
         }
         </script>
 {% endblock %}
+
+
+
+
+
+
+
 
 
 

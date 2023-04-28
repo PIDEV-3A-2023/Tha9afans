@@ -1,0 +1,21 @@
+{% extends '/profil/index.html.twig' %}
+{% block cardtitle %}Factures{% endblock %}
+{% block content %}
+<tbody>
+{% for facture in factures %}
+    <tr>
+        <td>{{ facture.refrancefacture }}</td>
+        <td>{{ facture.dateFacture|date('Y-m-d') }}</td>
+        <td>{{ facture.idCommende.total }}</td>
+        <td>
+            <a href="{{ path('app_facture_pdf', {'id': facture.id}) }}" download>Download PDF</a>
+            <a href="#">Send Mail</a>
+        </td>
+    </tr>
+{% else %}
+    <tr>
+        <td colspan="4">No invoices found</td>
+    </tr>
+{% endfor %}
+</tbody>
+{% endblock %}
