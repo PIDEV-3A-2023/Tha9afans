@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Intervention\Image\ImageManagerStatic as Image;
 
 #[Route('/question')]
 class QuestionController extends AbstractController
@@ -33,9 +34,13 @@ class QuestionController extends AbstractController
             // get uploaded file for photo field
             $photoFile = $form->get('image')->getData();
             if ($photoFile) {
-                // open file and get contents as string
-                $photoContent = file_get_contents($photoFile->getRealPath());
-                $question->setImage($photoContent);
+                // resize image to maximum width of 500 pixels
+                $photo = Image::make($photoFile)->resize(500, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })->encode('jpg', 75);
+                // set image data on question entity
+                $question->setImage($photo);
             }
 
             if ($questionRepository->findBy(['question' => $question->getQuestion()])) {
@@ -46,11 +51,43 @@ class QuestionController extends AbstractController
             $questionRepository->save($question, true);
             return $this->redirectToRoute('app_question_index', [], Response::HTTP_SEE_OTHER);
         }
+
         return $this->renderForm('question/new.html.twig', [
             'question' => $question,
             'form' => $form,
         ]);
     }
+
+//    #[Route('/new', name: 'app_question_new', methods: ['GET', 'POST'])]
+//    public function new(Request $request, QuestionRepository $questionRepository): Response
+//    {
+//        $question = new Question();
+//        $form = $this->createForm(QuestionType::class, $question);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//
+//            // get uploaded file for photo field
+//            $photoFile = $form->get('image')->getData();
+//            if ($photoFile) {
+//                // open file and get contents as string
+//                $photoContent = file_get_contents($photoFile->getRealPath());
+//                $question->setImage($photoContent);
+//            }
+//
+//            if ($questionRepository->findBy(['question' => $question->getQuestion()])) {
+//                $this->addFlash('error', 'Question already exists in database!');
+//                return $this->redirectToRoute('app_question_new');
+//            }
+//
+//            $questionRepository->save($question, true);
+//            return $this->redirectToRoute('app_question_index', [], Response::HTTP_SEE_OTHER);
+//        }
+//        return $this->renderForm('question/new.html.twig', [
+//            'question' => $question,
+//            'form' => $form,
+//        ]);
+//    }
 
     #[Route('/questionShow/{id}', name: 'question_show_image')]
     public function showPhoto(Question $question): Response

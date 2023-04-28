@@ -21,6 +21,7 @@ class QuizQuestionController extends AbstractController
         ]);
     }
 
+
     #[Route('/new', name: 'app_quiz_question_new', methods: ['GET', 'POST'])]
     public function new(Request $request, QuizQuestionRepository $quizQuestionRepository): Response
     {
@@ -55,6 +56,18 @@ class QuizQuestionController extends AbstractController
         ]);
     }
 
+    #[Route('/quiz/{quizId}/question/{questionId}/timer-sum', name:'app_quiz_question_timer_sum', methods:['GET'])]
+    public function quizQuestionTimerSum(QuizQuestionRepository $quizQuestionRepository, int $quizId, int $questionId): Response
+    {
+        // Call the QuizQuestionRepository to calculate the sum of timer values
+        $timerSum = $quizQuestionRepository->calculateTimerSum($quizId, $questionId);
+
+        // Render the result in a template and pass the timerSum variable
+        return $this->render('quiz/quizHome.html.twig', [
+            'timerSum' => $timerSum,
+        ]);
+    }
+
     #[Route('/{id}/edit', name: 'app_quiz_question_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, QuizQuestion $quizQuestion, QuizQuestionRepository $quizQuestionRepository): Response
     {
@@ -82,4 +95,11 @@ class QuizQuestionController extends AbstractController
 
         return $this->redirectToRoute('app_quiz_question_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+    // This is going to be the part where the quiz home front is coded
+
+
+
 }
+

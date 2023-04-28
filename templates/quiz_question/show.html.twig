@@ -1,22 +1,108 @@
-{% extends 'backBase.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}QuizQuestion{% endblock %}
 
 {% block body %}
-    <h1>QuizQuestion</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ quiz_question.id }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <style>
+        body {
+            justify-content: center; /* centers content horizontally */
+            align-items: center; /* centers content vertically */
+            height: 100vh; /* makes sure the container fills the height of the viewport */
 
-    <a href="{{ path('app_quiz_question_index') }}">back to list</a>
+        }
 
-    <a href="{{ path('app_quiz_question_edit', {'id': quiz_question.id}) }}">edit</a>
+        .display {
+            background-color: #001A23;
+            margin-bottom: 2%;
+            margin-top: 5%;
+            border-radius: 20px;
+            container: inherit;
+            display: flex;
+            flex-direction: column; /* aligns child elements vertically */
+            justify-content: center; /* centers child elements horizontally */
+            align-items: center; /* centers child elements vertically */
+            padding: 20px;
+            max-width: 1200px; /* sets a maximum width for the container */
+            width: 100%; /* makes sure the container fills the width of the viewport */
+        }
 
-    {{ include('quiz_question/_delete_form.html.twig') }}
+
+        .question{
+            color: white;
+            font-size: 25px;
+            margin-bottom: 20px;
+            align-items: center; /* centers child elements vertically */
+
+        }
+
+        .image {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center; /* centers child elements horizontally */
+            align-items: center; /* centers child elements vertically */
+            width: 100%;
+
+        }
+
+        .image img {
+            max-width: 50%; /* makes sure the image fits within the container */
+            border-radius: 20px;
+        }
+
+        .answers{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        button{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .answers button{
+            background-color: white;
+            color: #001A23;
+            font-size: 20px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .flex{
+            display: flex;
+
+            width: 100%;
+        }
+
+    </style>
+    <div class="display">
+        <div class="flex">
+            <div class="flex">
+                <div class="question">Timer: {{ quiz_question.question.timer }}</div>
+                <button>
+                    skip
+                </button>
+                <button>
+                    <a href="{{ path('app_quiz_question_skip', {id: quiz_question.quiz.quizId, questionId: quiz_question.question.questionId}) }}">Skip</a>
+                </button>
+            </div>
+            <br>
+            <div class="question">{{ quiz_question.question.question }}</div>
+        </div>
+        <div class="image">
+            {% if quiz_question.question.image is not empty %}
+                <img src="{{ path('question_show_image', {'id': quiz_question.question.questionId}) }}" alt="{{ quiz_question.question.question }}">
+            {% else %}
+                Aucune photo disponible
+            {% endif %}
+        </div>
+        <div class="answers">
+            <button>{{ quiz_question.question.firstPossibleAnswer }}</button>
+            <button>{{ quiz_question.question.secondPossibleAnswer }}</button>
+            <button>{{ quiz_question.question.thirdPossibleAnswer }}</button>
+        </div>
+    </div>
+
+
 {% endblock %}

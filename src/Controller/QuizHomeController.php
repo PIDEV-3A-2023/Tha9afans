@@ -17,4 +17,13 @@ class QuizHomeController extends AbstractController
     }
 
 
+//    #[Route('/captcha', name: 'app_captcha')]
+//    public function captcha(): Response
+//    {
+//        return $this->render('quizHome/captcha.html.twig', [
+//            'captcha' => 'QuizHomeController',
+//        ]);
+//    }
+
+
 }
