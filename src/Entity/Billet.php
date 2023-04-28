@@ -120,13 +120,6 @@ class Billet
         return $this->nbrBilletAvailable;
     }
 
-    public function setNbrBilletAvailble(int $nbrBilletAvailable): self
-    {
-        $this->nbrBilletAvailable = $nbrBilletAvailable;
-
-        return $this;
-    }
-
 
     public function getEvenement(): ?Evenement
     {
