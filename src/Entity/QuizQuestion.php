@@ -26,6 +26,9 @@ class QuizQuestion
 
     #[ORM\ManyToOne(targetEntity: Question::class)]
     #[ORM\JoinColumn(name: "question_id", referencedColumnName: "question_id")]
+
+
+
     private $question;
 
     public function getId(): ?int
@@ -89,6 +92,23 @@ class QuizQuestion
     public function removeQuestion(Question $question): self
     {
         $this->questions->removeElement($question);
+
+        return $this;
+    }
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isCorrect = false;
+
+    public function getIsCorrect(): bool
+    {
+        return $this->isCorrect;
+    }
+
+    public function setIsCorrect(bool $isCorrect): self
+    {
+        $this->isCorrect = $isCorrect;
 
         return $this;
     }

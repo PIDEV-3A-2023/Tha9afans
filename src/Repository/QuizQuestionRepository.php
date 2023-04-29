@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Entity\Question;
+use App\Entity\Quiz;
 use App\Entity\QuizQuestion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,6 +21,26 @@ class QuizQuestionRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, QuizQuestion::class);
+    }
+
+    public function getNextQuestion(Quiz $quiz, Question $question)
+    {
+        $quizQuestions = $quiz->getQuizQuestions();
+        $questions = [];
+        foreach ($quizQuestions as $qq) {
+            if ($qq->getQuestion() !== $question) {
+                $questions[] = $qq->getQuestion()->getId();
+            }
+        }
+
+        $qb = $this->createQueryBuilder('qq');
+        $qb->where('qq.quiz = :quiz')
+            ->andWhere('qq.question NOT IN (:questions)')
+            ->setParameter('quiz', $quiz)
+            ->setParameter('questions', $questions)
+            ->setMaxResults(1);
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     public function save(QuizQuestion $entity, bool $flush = false): void

@@ -8,6 +8,8 @@ parameters:
     recaptcha_site_key: '6Lc9hL4lAAAAACWOTlD-MKQkAzA2BVZgQua6RKw8'
     recaptcha_secret_key: '6Lc9hL4lAAAAAKpRFZfG5-ddznR-X2Z0BYd4IHbr'
 services:
+
+
     App\Security\PersonnesProvider:
             arguments: [ '@doctrine.orm.entity_manager' ]
     # default configuration for services in *this* file

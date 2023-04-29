@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Question;
+use App\Entity\Quiz;
 use App\Entity\QuizQuestion;
 use App\Form\QuizQuestionType;
 use App\Repository\QuizQuestionRepository;
@@ -47,20 +49,15 @@ class QuizQuestionController extends AbstractController
         ]);
     }
 
-
-
-
-    #[Route('/quiz/{quizId}/question/{questionId}/timer-sum', name:'app_quiz_question_timer_sum', methods:['GET'])]
-    public function quizQuestionTimerSum(QuizQuestionRepository $quizQuestionRepository, int $quizId, int $questionId): Response
+    #[Route('/{quizId}/question/{questionId}', name: 'app_quiz_question_show', methods: ['GET'])]
+    public function showQuestion(Quiz $quiz, Question $question): Response
     {
-        // Call the QuizQuestionRepository to calculate the sum of timer values
-        $timerSum = $quizQuestionRepository->calculateTimerSum($quizId, $questionId);
-
-        // Render the result in a template and pass the timerSum variable
-        return $this->render('quiz/quizHome.html.twig', [
-            'timerSum' => $timerSum,
+        return $this->render('quiz_question/show.html.twig', [
+            'quiz' => $quiz,
+            'question' => $question,
         ]);
     }
+
 
     #[Route('/{id}/edit', name: 'app_quiz_question_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, QuizQuestion $quizQuestion, QuizQuestionRepository $quizQuestionRepository): Response
