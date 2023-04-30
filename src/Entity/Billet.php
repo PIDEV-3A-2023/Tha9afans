@@ -45,7 +45,7 @@ class Billet
     #[ORM\OneToMany(targetEntity: 'BilletReserver', mappedBy: 'billet', cascade: ['persist'])]
     private $billetReservers;
 
-    private $qrCodeDataUri="zaken,azkjenzaeaze";
+    private $qrCodeDataUri;
 
 
     public function getQrCodeDataUri()
@@ -118,13 +118,6 @@ class Billet
     public function getNbrBilletAvailable(): ?int
     {
         return $this->nbrBilletAvailable;
-    }
-
-    public function setNbrBilletAvailble(int $nbrBilletAvailable): self
-    {
-        $this->nbrBilletAvailable = $nbrBilletAvailable;
-
-        return $this;
     }
 
 

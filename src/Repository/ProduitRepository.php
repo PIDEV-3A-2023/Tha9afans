@@ -63,6 +63,7 @@ class ProduitRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
    public function findByPrice ($price): array
     {
        return $this->createQueryBuilder('p')
@@ -74,6 +75,7 @@ class ProduitRepository extends ServiceEntityRepository
                 ->getResult()
             ;
 }
+
 
 
 }

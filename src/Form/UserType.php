@@ -4,12 +4,12 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -134,7 +134,21 @@ class UserType extends AbstractType
                     // this is read and encoded in the controller
                     'mapped' => false,
                     'attr' => ['autocomplete' => 'new-password']
-                ]);
+                ])
+            ->add('genre', ChoiceType::class, [
+                'choices' => [
+                    'Homme' => 'homme',
+                    'Femme' => 'femme',
+                    'Autre' => 'autre',
+                ],
+                'required' => true,
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'Le champ genre ne doit pas être vide',
+                    ]),
+                    new Assert\Choice(['choices' => ['homme', 'femme', 'autre']])
+                ],
+            ]);
         }
 
 

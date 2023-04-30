@@ -53,6 +53,7 @@ class ReservationController extends AbstractController
 
         if ($request->getMethod() == 'POST') {
             // Retrieve the form data
+            //if the number of tickets normalCount is more than the number of tickets available show and error message
             $normalCount = $request->request->getInt('Normal');
             $vipCount = $request->request->getInt('VIP');
             $studentCount = $request->request->getInt('Etudiant');
@@ -65,12 +66,23 @@ class ReservationController extends AbstractController
                 $billetReserver->setNombre(0);
 
 
-                if ($type == 'Normal') {
+                if ($type == 'Normal' and $normalCount <= $billet->getNbrBilletAvailable()) {
                     $billetReserver->setNombre($normalCount);
-                } elseif ($type == 'VIP') {
+                    $billet->setNbrBilletAvailable($billet->getNbrBilletAvailable() - $normalCount);
+                }elseif ($type == 'Normal' and $normalCount > $billet->getNbrBilletAvailable()){
+                    $this->addFlash('error', 'Le nombre de billets normaux est supérieur au nombre de billets disponibles');
+                    return $this->redirectToRoute('app_ticket', ['reservationId' => $reservationId, 'eventId'=>$eventId]);
+                }elseif ($type == 'VIP' and $vipCount > $billet->getNbrBilletAvailable()){
+                    $this->addFlash('error', 'Le nombre de billets VIP est supérieur au nombre de billets disponibles');
+                    return $this->redirectToRoute('app_ticket', ['reservationId' => $reservationId, 'eventId'=>$eventId]);
+                }elseif ($type == 'VIP' and $vipCount <= $billet->getNbrBilletAvailable()) {
                     $billetReserver->setNombre($vipCount);
-                } elseif ($type == 'Etudiant') {
+                    $billet->setNbrBilletAvailable($billet->getNbrBilletAvailable() - $vipCount);
+                } elseif ($type == 'Etudiant' and $studentCount <= $billet->getNbrBilletAvailable()) {
                     $billetReserver->setNombre($studentCount);
+                }elseif ($type == 'Etudiant' and $studentCount > $billet->getNbrBilletAvailable()){
+                    $this->addFlash('error', 'Le nombre de billets Etudiant est supérieur au nombre de billets disponibles');
+                    return $this->redirectToRoute('app_ticket', ['reservationId' => $reservationId, 'eventId'=>$eventId]);
                 }
 
                 $billetReserversByType[$type] = $billetReserver;

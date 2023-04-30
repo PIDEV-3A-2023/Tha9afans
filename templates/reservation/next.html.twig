@@ -3,6 +3,7 @@
 {% block title %}Pick Your Ticket{% endblock %}
 
 {% block body %}
+    <h2 style="color: red">Pick your ticket</h2>
     <style>@import url('https://fonts.googleapis.com/css?family=Oswald');
         * {
             margin: 0;
@@ -186,6 +187,13 @@
         }
     </style>
     <form method="POST" action="{{ path('app_ticket', {'reservationId': reservation.id, 'eventId': eventId}) }}" style="margin-top: 100px">
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="alert alert-warning" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
         {% for billet in billets %}
             <section class="container">
                 <input type="number" name="{{ billet.type }}" value="0"><br><br>
@@ -222,8 +230,8 @@
                     </section>
                 </article>
             </section>
-
         {% endfor %}
+
 
         <button type="submit">Submit</button>
     </form>
