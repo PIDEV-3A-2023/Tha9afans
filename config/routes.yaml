@@ -16,4 +16,10 @@
 #connect_facebook_check:
 #  path: /connect/facebook/check
 #  controller: 'App\Controller\FacebookController::handleFacebookCallbackAction'
+app_user_index:
+  path: /users
+  controller: App\Controller\UserController::index
+  methods: GET
+
+
 

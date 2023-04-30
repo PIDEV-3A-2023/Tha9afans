@@ -64,12 +64,19 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         $roles = $token->getRoleNames();
-
-        if (in_array('ROLE_ADMIN', $roles)) {
-            return new RedirectResponse($this->urlGenerator->generate('app_user_index'));
-        } else {
-            return new RedirectResponse($this->urlGenerator->generate('app_panier_produit_index'));
+        $user=$token->getUser();
+        $twofactor=$user->getTwofactor();
+        if($twofactor){
+            return new RedirectResponse($this->urlGenerator->generate('verifiercodesms'));
         }
+        else{
+            if (in_array('ROLE_ADMIN', $roles)) {
+                return new RedirectResponse($this->urlGenerator->generate('app_user_index'));
+            } else {
+                return new RedirectResponse($this->urlGenerator->generate('app_panier_produit_index'));
+            }
+        }
+
     }
 
     protected function getLoginUrl(Request $request): string

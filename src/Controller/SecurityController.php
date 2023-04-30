@@ -20,6 +20,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
+
 use App\Security\GoogleAuthenticatorController;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
@@ -169,6 +170,7 @@ class SecurityController extends AbstractController
             $user->setNom($googleUser->getName());
             $user->setPhoto($googleUser->getAvatar());
             $user->setPassword('default-password');
+            $user->setGenre('autre');
 
             $user->setResetToken($token);
             $this->em->persist($user);

@@ -10,6 +10,10 @@ use League\OAuth2\Client\Provider\Github;
 use League\OAuth2\Client\Provider\Facebook;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use App\Service\MailerService;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,13 +21,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-
+use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 
 class FacebookController extends AbstractController
 {
     private $session;
+    private $em;
+    private $clientRegistry;
+    private $router;
 
-    public function __construct(SessionInterface $session)
+    public function __construct(ClientRegistry $clientRegistry,SessionInterface $session, EntityManagerInterface $em, RouterInterface $router)
     {
         $this->provider = new Facebook([
             'clientId' => $_ENV['FCB_ID'],
@@ -37,6 +44,9 @@ class FacebookController extends AbstractController
             'redirectUri'       => $_ENV['GITHUB_CALLBACK'],
         ]);
         $this->session = $session;
+        $this->clientRegistry = $clientRegistry;
+        $this->em = $em;
+        $this->router = $router;
     }
 
     #[Route('/fcb-login', name: 'fcb_login')]
@@ -129,7 +139,9 @@ class FacebookController extends AbstractController
 
 
     #[Route('/github-callback', name: 'github_callback')]
-    public function githubCallBack(Request $request, GuardAuthenticatorHandler $guardHandler, LoginAuthenticator $loginAuthenticator): Response
+    public function githubCallBack(Request $request, GuardAuthenticatorHandler $guardHandler,
+     LoginAuthenticator $loginAuthenticator,EntityManagerInterface $entityManager,MailerService $mailerService,
+     TokenGeneratorInterface $tokenGenerator): Response
     {
         $token = $this->github_provider->getAccessToken('authorization_code', [
             'code' => $_GET['code']
@@ -138,16 +150,57 @@ class FacebookController extends AbstractController
         try {
             //Récupérer les informations de l'utilisateur
 
-            $user=$this->github_provider->getResourceOwner($token);
+            $usergithub = $this->github_provider->getResourceOwner($token);
 
-            $user=$user->toArray();
+            $usergithub = $usergithub->toArray();
 
-            $nom=$user['login'];
+            $nom = $usergithub['login'];
 
-            $picture=$user['avatar_url'];
+            $picture = $usergithub['avatar_url'];
+            $email = $usergithub['email'];$user = $this->em->getRepository(User::class)
+                ->findOneBy(['email' => $email]);
+            $token = $tokenGenerator->generateToken();
 
-            return $this->redirectToRoute('app_profil', [], Response::HTTP_SEE_OTHER);
-
+            if (!$user) {
+                $user = new User();
+                $user->setEmail($email);
+                $user->setNom($nom);
+                $user->setPhoto($picture);
+                $user->setPassword('default-password');
+                $user->setGenre('autre');
+                $user->setResetToken($token);
+                $this->em->persist($user);
+                $this->em->flush();
+                $url = $this->generateUrl('reset_pass', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
+                //On crée les données de email
+                $context = compact('url', 'user');
+                //envoi du mail
+                $mailerService->sendEmail(
+                    'fadhel.ons@esprit.tn',
+                    $user->getEmail(),
+                    'Réintialisation de mot de passe par votre compte github',
+                    'password_reset',
+                    $context
+                );
+                $this->addFlash('success','Email de réintialisation de mot de passe est envoyé avec succés');
+                return $this->redirectToRoute('app_login');
+            }
+            $user->setResetToken($token);
+            $this->em->persist($user);
+            $this->em->flush();
+            $url=$this->generateUrl('reset_pass',['token'=>$token],UrlGeneratorInterface::ABSOLUTE_URL);
+            //On crée les données de email
+            $context=compact('url','user');
+            //envoi du mail
+            $mailerService->sendEmail(
+                'fadhel.ons@esprit.tn',
+                $user->getEmail(),
+                'Réintialisation de mot de passe par votre compte github',
+                'password_reset',
+                $context
+            );
+            $this->addFlash('success','Email de réintialisation de mot de passe est envoyé avec succés');
+            return $this->redirectToRoute('app_login');
 
 
         } catch (\Throwable $th) {

@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Twilio\Rest\Client;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\CodeVerificationType;
@@ -41,13 +43,16 @@ class Authentification2facteurController extends AbstractController
         );
 
         // Retourne une réponse pour confirmer l'envoi
-        return new Response('Code envoyé avec succès : ' . $message->sid . $phoneNumber);
+        /*return new Response('Code envoyé avec succès : ' . $message->sid . $phoneNumber);*/
+        return $this->redirectToRoute('verifiercodesms', ['error' => 'Code envoyé avec succes']);
     }
     #[Route('/verifiercodesms', name: 'verifiercodesms')]
     public function verifierCodeAction(Request $request)
     {
         $error = null;
+        $error = $request->query->get('error');
         $form = $this->createForm(CodeVerificationType::class);
+        $roles = $this->getUser()->getRoles();
 
         $form->handleRequest($request);
 
@@ -57,7 +62,12 @@ class Authentification2facteurController extends AbstractController
 
             if ($code == $storedCode) {
                 // Code correct, faire ce que vous voulez ici
-                $error='Code correct';
+                if (in_array('ROLE_ADMIN', $roles)) {
+                    return $this->redirectToRoute('app_user_index');
+
+                } else {
+                    return $this->redirectToRoute('app_panier_produit_index');
+                }
             } else {
                 // Code incorrect
                 $error='Code incorrect';

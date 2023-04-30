@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Evenement;
 use App\Entity\Reservation;
+use App\Entity\User;
 use App\Form\ChangePasswordType;
 use App\Form\EvenementType;
 use App\Form\ReservationType;
@@ -87,5 +88,14 @@ class ProfilController extends AbstractController
         return $this->render('security/change_password.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+    #[Route('/authentification2factor', name: 'acivate_authentification')]
+    public function ActiverauthUser():Response
+    {
+        $user=$this->getUser();
+        $user->setTwofactor(true);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirectToRoute('account_seetings');
     }
 }

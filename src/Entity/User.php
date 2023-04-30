@@ -76,6 +76,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $genre = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $twofactor = null;
+
     public function __construct()
     {
         //
@@ -85,6 +88,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->id;
     }
+
 
     public function getEmail(): ?string
     {
@@ -300,6 +304,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setGenre(?string $genre): self
     {
         $this->genre = $genre;
+
+        return $this;
+    }
+
+    public function getTwofactor(): ?bool
+    {
+        return $this->twofactor;
+    }
+
+    public function setTwofactor(?bool $twofactor): self
+    {
+        $this->twofactor = $twofactor;
 
         return $this;
     }

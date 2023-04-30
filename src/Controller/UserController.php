@@ -157,10 +157,17 @@ class UserController extends AbstractController
 
 
     #[Route('/{id}/block', name: 'block_user')]
-    public function blockUser(User $user)
+    public function blockUser(User $user,MailerService $mailerService)
     {
         $user->setIsBlocked(true);
         $this->getDoctrine()->getManager()->flush();
+        $mailerService->sendEmail(
+            'fadhel.ons@esprit.tn',
+            $user->getEmail(),
+            'Bloquer compte utilisateur',
+            'blockuser',
+            ['content' => ''],
+        );
 
         return $this->redirectToRoute('app_user_index');
     }
