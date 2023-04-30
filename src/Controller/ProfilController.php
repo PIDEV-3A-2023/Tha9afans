@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Evenement;
 use App\Entity\Reservation;
+use App\Entity\User;
+use App\Form\ChangePasswordType;
 use App\Form\EvenementType;
 use App\Form\ReservationType;
 use App\Repository\BilletRepository;
@@ -122,5 +124,44 @@ class ProfilController extends AbstractController
             'sessions' => $session,
             'id' => $id
         ]);
+    }
+    #[Route('/profil/seetings', name: 'account_seetings')]
+    public function editPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(ChangePasswordType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Check if the current password is correct
+            $isCurrentPasswordValid = $passwordEncoder->isPasswordValid($user, $form->get('currentPassword')->getData());
+            if (!$isCurrentPasswordValid) {
+                $this->addFlash('danger', 'Le mot de passe actuel est incorrect.');
+            }
+
+            // Encode the new password and update the user
+            $newPassword = $form->get('password')->getData();
+            $encodedPassword = $passwordEncoder->encodePassword($user, $newPassword);
+            $user->setPassword($encodedPassword);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Votre mot de passe a été modifié avec succès.');
+            return $this->redirectToRoute('app_logout');
+        }
+
+        return $this->render('security/change_password.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+    #[Route('/authentification2factor', name: 'acivate_authentification')]
+    public function ActiverauthUser():Response
+    {
+        $user=$this->getUser();
+        $user->setTwofactor(true);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirectToRoute('account_seetings');
     }
 }

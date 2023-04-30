@@ -34,6 +34,11 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\Security\GoogleAuthenticatorController:
+        class: App\Security\GoogleAuthenticatorController
+        arguments: [ '@knpu.oauth2.registry', '@doctrine.orm.entity_manager', '@router' ]
+
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     App\Service\SendGridService:
