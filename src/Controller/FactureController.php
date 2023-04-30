@@ -102,7 +102,10 @@ class FactureController extends AbstractController
     public function downloadPdfAction($id , CommandeproduitRepository $commandeproduitRepository  , FactureRepository $factureRepository): Response
     {
         // Get the facture entity by ID
+
         $facture = $this->getDoctrine()->getRepository(Facture::class)->find($id);
+
+
         // If no facture found, throw exception
         if (!$facture) {
             throw $this->createNotFoundException('No facture found for id '.$id);
@@ -121,8 +124,10 @@ class FactureController extends AbstractController
 
         // Retrieve the HTML generated in our twig file
 
+
         $html = $this->renderView('facture/pdf.html.twig', [
             'facture' => $facture,
+
         ]);
 
         // Load HTML to Dompdf

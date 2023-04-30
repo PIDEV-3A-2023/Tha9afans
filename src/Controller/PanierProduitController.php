@@ -51,6 +51,16 @@ class PanierProduitController extends AbstractController
 
         $paniersproduits = $panierproduitRepository->findBy(['idPanier' => $panier]);
 
+        $sort = $request->query->get('sort');
+        if ($sort == 'DESC') {
+            usort($paniersproduits, function($a, $b) {
+                return $b->getIdProduit()->getPrix() <=> $a->getIdProduit()->getPrix();
+            });
+        } else {
+            usort($paniersproduits, function($a, $b) {
+                return $a->getIdProduit()->getPrix() <=> $b->getIdProduit()->getPrix();
+            });
+        }
 
         foreach ($paniersproduits as $panierproduit) {
             $quantite = $panierproduit->getQuantity();
@@ -64,10 +74,8 @@ class PanierProduitController extends AbstractController
         return $this->render('panier_produit/index.html.twig', [
             'panierproduits' => $paniersproduits,
             'prixtotale' => $prixtotale,
+            'sort' => $sort,
         ]);
-
-
-
     }
 
     /*#[Route('/new', name: 'app_panier_produit_new', methods: ['GET', 'POST'])]

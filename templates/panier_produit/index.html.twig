@@ -148,7 +148,7 @@
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h3 class="titlepanier fw-normal mb-0 text-black">Shopping Cart</h3>
                         <div>
-                            <a href="" class="price" id="sort-by-price">price <i class="fas fa-angle-down mt-1"></i></a>
+                            <a href="{{ path('app_panier_produit_index') }}?sort=asc" class="price" id="sort-by-price">price <i class="fas fa-angle-down mt-1"></i></a>
                         </div>
                     </div>
                     {% if app.session.flashbag.has('error') %}
