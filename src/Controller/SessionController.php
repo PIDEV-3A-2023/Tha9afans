@@ -66,6 +66,7 @@ class SessionController extends AbstractController
         return $this->renderForm('profil/addSession.html.twig', [
             'session' => $session,
             'form' => $form,
+            'event' => $evenement,
         ]);
     }
 

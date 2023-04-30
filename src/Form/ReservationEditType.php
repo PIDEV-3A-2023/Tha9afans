@@ -13,31 +13,11 @@ use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-class ReservationType extends AbstractType
+class ReservationEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('dateReservation', null, [
-                'constraints' => [
-                    new Assert\NotBlank([
-                        'message' => 'Please enter a reservation date',
-                    ]),
-                    new Assert\GreaterThan([
-                        'value' => 'today',
-                        'message' => 'Reservation date must be greater than today',
-                    ]),
-                ],
-                'data' => $options['date-initial-value'],
-            ])
-            ->add('location', null, [
-                'disabled' => true,
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'Location',
-                ],
-                'data' => $options['localisation-initial-value'],
-            ])
             ->add('prenom', null, [
                 'constraints' => [
                     new Assert\NotBlank([
@@ -121,23 +101,12 @@ class ReservationType extends AbstractType
                         'maxMessage' => 'The address option cannot be longer than {{ limit }} characters.',
                     ]),
                 ],
-            ])
-//            ->add('totalPrice', null, [
-//                'disabled' => true,
-//                'attr' => [
-//                    'class' => 'form-control',
-//                    'placeholder' => 'Total Price',
-//                ],
-//            ])
-    ;
+            ]);
     }
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Reservation::class,
-            'localisation-initial-value'=> null,
-            'date-initial-value'=> null,
+            'data_class' => Reservation::class
         ]);
     }
 }

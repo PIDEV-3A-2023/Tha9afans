@@ -9,8 +9,8 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Quantite</th>
-                <th>IdProduit</th>
+                <th>Qgdfgdftite</th>
+                <th>Produit</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -20,6 +20,7 @@
                 <td>{{ commandeproduit.id }}</td>
                 <td>{{ commandeproduit.quantite }}</td>
                 <td>{{ commandeproduit.idProduit }}</td>
+
                 <td>
                     <a href="{{ path('app_commande_produit_show', {'id': commandeproduit.id}) }}">show</a>
                     <a href="{{ path('app_commande_produit_edit', {'id': commandeproduit.id}) }}">edit</a>
