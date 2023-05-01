@@ -22,7 +22,7 @@ class BilletType extends AbstractType
                     ]),
                     new Assert\Length([
                         'min' => 3,
-                        'max' => 40,
+                        'max' => 100,
                         'minMessage' => 'the code should have at least {{ limit }} characters',
                         'maxMessage' => 'The code should have at most {{ limit }} characters',
                     ]),

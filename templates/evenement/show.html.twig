@@ -95,6 +95,10 @@
         </div><!-- End Breadcrumbs -->
 
 
+        {% if errorMessage %}
+            <div class="alert alert-danger">{{ errorMessage }}</div>
+        {% endif %}
+
         <section id="service-details" class="service-details" data-aos="fade-up">
             <div class="container" >
                 <div class="row gy-4">
@@ -109,7 +113,7 @@
                         </div>
                         </nav><!-- .nav-menu -->
                         <form method="post" action="{{ path('app_reservation_new', {'eventId': evenement.id}) }}">
-                            <button class="btn">next</button>
+                            <button class="btn btn-primary">Participer</button>
                         </form>
 
                     </div>
