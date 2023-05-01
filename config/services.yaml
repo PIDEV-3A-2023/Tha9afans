@@ -11,7 +11,6 @@ parameters:
 
 # config/services.yaml
 
-    sendgrid_api_key: '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'
 
 
 
@@ -34,8 +33,12 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\Security\GoogleAuthenticatorController:
+        class: App\Security\GoogleAuthenticatorController
+        arguments: [ '@knpu.oauth2.registry', '@doctrine.orm.entity_manager', '@router' ]
+
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    App\Service\SendGridService:
-        arguments:
-            $apiKey: '%sendgrid_api_key%'
+# app/config/services.yaml
+

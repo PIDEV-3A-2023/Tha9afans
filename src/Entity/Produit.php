@@ -26,6 +26,7 @@ class Produit
     private ?int $libelle =null;
 
 
+
     #[ORM\Column]
     private ?float $prix= null;
 
@@ -105,6 +106,7 @@ class Produit
         return $this;
     }
 
+
     public function getPrix(): ?float
     {
         return $this->prix;
@@ -160,7 +162,7 @@ class Produit
 
     public function setPrixapresremise(float $prixapresremise): self
     {
-        $this->prixapresremise = $prixapresremise;
+        $this->prixapresremise = $this->getPrix() * (1 - $this->getRemise() / 100);
 
         return $this;
     }
@@ -206,4 +208,12 @@ class Produit
         return $this;
     }
 
+
+//    public function updatePrixapresremise(): void
+//    {
+//        $this->prixapresremise = $this->getPrix() * (1 - $this->getRemise() / 100);
+//    }
+
+
 }
+

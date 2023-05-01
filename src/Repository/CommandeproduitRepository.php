@@ -63,4 +63,59 @@ class CommandeproduitRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+//find produit by idcommande
+    public function findProduitByCommande($idcommande)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('c')
+            ->where('c.idcommande = :idcommande')
+            ->setParameter('idcommande', $idcommande)
+            ->getQuery();
+
+        return $qb->execute();
+    }
+
+    //find produit by idcommande
+    public function findCommandeByProduit($idproduit)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('c')
+            ->where('c.idproduit = :idproduit')
+            ->setParameter('idproduit', $idproduit)
+            ->getQuery();
+
+        return $qb->execute();
+    }
+
+    //find produit by idcommande
+    public function findCommandeProduit($idproduit,$idcommande)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('c')
+            ->where('c.idproduit = :idproduit')
+            ->andWhere('c.idcommande = :idcommande')
+            ->setParameter('idproduit', $idproduit)
+            ->setParameter('idcommande', $idcommande)
+            ->getQuery();
+
+        return $qb->execute();
+    }
+
+    //find produit by idcommande
+    public function findCommandeProduitByCommande($idcommande)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('c')
+            ->where('c.idcommande = :idcommande')
+            ->setParameter('idcommande', $idcommande)
+            ->getQuery();
+
+        return $qb->execute();
+    }
+
+
+
+
 }

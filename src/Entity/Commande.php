@@ -46,6 +46,9 @@ class Commande
     #[ORM\JoinColumn(name: 'id_produit', referencedColumnName: 'id')]
     private ?Produit $idProduit=null;
 
+
+
+
     #[ORM\Column(type: 'boolean')]
     private $etat = false;
 
