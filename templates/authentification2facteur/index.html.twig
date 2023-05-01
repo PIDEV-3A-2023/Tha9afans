@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Authentification2facteurController!{% endblock %}
+
+{% block body %}
+    <style>
+        .box{
+            position: relative;
+            width: 500px;
+            height: 370px;
+            background: #001A23;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 65px auto auto auto;
+
+        }
+        .button
+        {
+            border: none;
+            outline: none;
+            padding:  9px 25px;
+            background: #F1FAEE;
+            color: #001A23;
+            cursor: pointer;
+            font-size: 1.2em;
+            border-radius: 50px;
+            font-weight: 600;
+            width: auto;
+            margin-top: 10px;
+            margin-left: 150px;
+        }
+         h3{
+            margin-top: 30px;
+            color: white;
+            text-align: center;
+        }
+        .link {
+            margin: 10px 0;
+            margin-left: 270px;
+            font-size: 1.0em;
+            color: white;
+            text-decoration: none;
+        }
+        .link:hover{
+            color: #457B9D;
+
+        }
+        form{
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+        form label{
+            color: white;
+            display: inline;
+            font-size: 1.7em;
+            font-weight: 600;
+        }
+    </style>
+    <div class="box" style="margin-top: 130px;margin-bottom: 65px;" >
+        <h3>Vérification de code SMS</h3>
+        <br>
+        {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+            {% if error %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+            {{ form_label(form.code, 'Entrez votre code') }}
+
+            {{ form_widget(form.code) }}
+        <br>
+            <button type="submit" class="button">Vérifier code </button>
+        {{ form_end(form) }}
+        <br>
+        <a href="{{ path('app_authentification2facteur') }}" class="link"> Envoyer code par sms? </a>
+    </div>
+{% endblock %}

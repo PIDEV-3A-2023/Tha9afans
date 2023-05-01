@@ -3,24 +3,26 @@
 namespace App\Controller;
 
 use App\Entity\Commande;
+use App\Entity\Facture;
 use App\Form\CommandeType;
 use App\Repository\CommandeRepository;
+use App\Repository\FactureRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-use Dompdf\Dompdf;
-use Dompdf\Options;
+
 
 #[Route('/commande')]
 class CommandeController extends AbstractController
 {
     #[Route('/', name: 'app_commande_index', methods: ['GET'])]
-    public function index(CommandeRepository $commandeRepository): Response
+    public function index(CommandeRepository $commandeRepository,FactureRepository $factureRepository): Response
     {
         return $this->render('commande/index.html.twig', [
             'commandes' => $commandeRepository->findAll(),
+            'factureRepository' => $factureRepository,
         ]);
     }
 
@@ -28,6 +30,7 @@ class CommandeController extends AbstractController
     public function new(Request $request, CommandeRepository $commandeRepository): Response
     {
         $commande = new Commande();
+
         $form = $this->createForm(CommandeType::class, $commande);
         $form->handleRequest($request);
 
@@ -80,40 +83,38 @@ class CommandeController extends AbstractController
     }
 
 
-    #[Route("//commande/pdf/{id}", name: 'commande_pdf')]
 
-    public function commandePdf(Commande $commande): Response
+
+
+    #[Route('/facture/{id}', name: 'app_commande_facture', methods: ['GET'])]
+    public function generateFacture($id, FactureRepository $factureRepository) : Response
     {
-        // Fetch the data you need to include in the PDF
-        $commandeeData = [
-            'refrancefacture' => $commande->getId(),
-            'datefacture' => $commande->getDatecommande(),
-            // ... add more data as needed
-        ];
+        // Retrieve the order details corresponding to the Facture button's row
+        $commande = $this->getDoctrine()->getRepository(Commande::class)->find($id);
 
-        // Configure the PDF rendering options
-        $options = new Options();
-        $options->set('defaultFont', 'Arial');
+        // Check if a Facture already exists for the given Commande
+        $existingFacture = $factureRepository->findOneBy(['idCommende' => $commande]);
 
-        // Create the PDF content using Dompdf
-        $pdfContent = $this->renderView('commande/pdfC.html.twig', [
-            'facture' => $commandeeData,
-        ]);
-        $dompdf = new Dompdf($options);
-        $dompdf->loadHtml($pdfContent);
-        $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render();
+        // If a Facture already exists, display a message to the user
+        if ($existingFacture) {
+            $this->addFlash('info', 'A facture already exists for this commande.');
 
-        // Create the HTTP response with the PDF content
-        $response = new Response($dompdf->output(), 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => sprintf('attachment; filename="%s.pdf"', $commande->getId()),
-        ]);
+            return $this->redirectToRoute('app_commande_index');
+        }
 
-        return $response;
+        // If no Facture exists for the given Commande, create a new one
+        $facture = new Facture();
+        $facture->setDateFacture(new \DateTime());
+        $facture->setRefrancefacture('REF' . substr(uniqid('', true), 0, 10)); // generate a random string starting with "REF"
+        $facture->setTva(10);
+        $facture->setIdCommende($commande);
+        $factureRepository->save($facture, true);
+
+        // Display a message to the user indicating that the Facture was successfully generated
+        $this->addFlash('success', 'Facture generated successfully.');
+
+        return $this->redirectToRoute('app_commande_index');
     }
-
-    // ...
 
 
 

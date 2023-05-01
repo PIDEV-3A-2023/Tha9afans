@@ -63,4 +63,15 @@ class PanierRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+//find panier by user connected
+    public function findPanierByUser($id): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.idUser = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

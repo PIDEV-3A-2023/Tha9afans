@@ -104,9 +104,43 @@
 
         }
 
+        .boxdis {
+            text-align: center;
+        }
+        .coupon {
+            display: inline-block;
+            border: 1px dashed #000;
+            padding: 0.8em 1.2em;
+            position: relative;
+            font-weight: bold;
+            background: #FFC107;
+        }
+
+        span.scissors {
+            position: absolute;
+            top: -12px;
+            right: 0;
+        }
+        .inner {
+            display: inline-block;
+            border: 1px solid #e8dddd;
+            padding: 1.2em 2.2em 2.2em 2.2em;
+        }
+
 
     </style>
+
+
     <section class="h-100" style="background-color: #eee;">
+        <div class="boxdis">
+            <div class="inner">
+                <p>Grab the deal</p>
+                <div class="coupon">
+                    <span class="scissors">✂</span>
+                    <span class="code" id="discount-code">30%</span>
+                </div>
+            </div>
+        </div>
         <div class="container h-100 py-5">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-10">
@@ -114,11 +148,9 @@
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h3 class="titlepanier fw-normal mb-0 text-black">Shopping Cart</h3>
                         <div>
-                            <p class="mb-0"><span class="filter text-muted">Sort by:</span> <a href="#!" class="price text-body">price <i
-                                            class="fas fa-angle-down mt-1"></i></a></p>
+                            <a href="{{ path('app_panier_produit_index') }}?sort=asc" class="price" id="sort-by-price">price <i class="fas fa-angle-down mt-1"></i></a>
                         </div>
                     </div>
-                    {% set subtotal = 0.0 %}
                     {% if app.session.flashbag.has('error') %}
                         <div class="alert alert-danger">
                             {% for message in app.session.flashbag.get('error') %}
@@ -126,7 +158,16 @@
                             {% endfor %}
                         </div>
                     {% endif %}
-                    {% for panierproduit in panierproduits %}
+                    {% if app.session.flashbag.has('warning') %}
+                        <div id="alert-box" class="alert alert-warning">
+                            {% for message in app.session.flashbag.get('warning') %}
+                                {{ message }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <div id="cart-items">
+                        {% for panierproduit in panierproduits %}
+
                         <div class="card rounded-3 mb-4">
                             <div class="box card-body p-4">
                                 <div class="row d-flex justify-content-between align-items-center">
@@ -146,7 +187,7 @@
                                                 onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
                                             <a href="{{ path('app_panierproduit_updateminus',{'id':panierproduit.id}) }}"><i class="btnqt fas fa-minus"></i></a>
                                         </button>
-                                        <input id="form1" type="text"  min="0" name="quantity{{ panierproduit.idProduit }}" value="{{ panierproduit.quantity }}"  class="textqt form-control form-control-sm">
+                                        <input id="form1" type="text"  min="0" name="quantityqt{{ panierproduit.idProduit }}" value="{{ panierproduit.quantity }}"  class="textqt form-control form-control-sm">
                                         <button class="btn btn-link px-2"
                                                 onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
                                             <a href="{{ path('app_panier_produit_updateplus',{'id':panierproduit.id}) }}"><i class="btnqt fas fa-plus"></i></a>
@@ -161,56 +202,96 @@
                                 </div>
                             </div>
                         </div>
-                        {% set subtotal =subtotal + (panierproduit.quantity * panierproduit.idProduit.prix) %}
                     {% endfor %}
-                    <div class="float-right text-right">
-                        <h4 >Subtotal:</h4>
-                        <h1 class="highlight">{{ subtotal }} DT</h1>
                     </div>
-
-
-
-                <br>
-
-                    <div class="box1 card mb-5">
-                        <div class="card-body p-4 d-flex flex-row">
-                            <div class=" form-outline flex-fill">
-                                {#<input type="text" id="form1" class="form-control form-control-lg" />
-                                <label class="form-label" for="form1">Discound code</label>#}
-                                <form action="">
-                                    <div class="inputBox">
-                                        <span>Discound code</span>
-                                        <input type="text" maxlength="16" class="card-number-input">
-                                    </div>
-                                </form>
-                            </div>
-{#
-                            <button type="button" class="btn btn-outline-warning btn-lg ms-3">Apply</button>
-#}
+                    <form action="{{path('app_checkout')}}" method="post">
+                        <div class="float-right text-right">
+                            <h1 class="highlight" name="subtotal">{{ prixtotale }} DT </h1>
                         </div>
-                    </div>
-
-                 {#   <div class="float-right text-right">
+                        <div class="">
+                            <div class="card-body" style="text-align: center;">
+                                <div class="box1 card mb-5">
+                                    <div class="card-body p-4 d-flex flex-row">
+                                        <div class=" form-outline flex-fill">
+                                            <form action="{{path('app_checkout')}}" method="post">
+                                                <div class="float-right text-right">
+                                                    {% if prixtotale == 0 %}
+                                                        <h1 class="">Your cart is empty</h1>
+                                                    {% else %}
+                                                    <label for="discount_code">Discount code:</label>
+                                                    <input type="text" name="discount_code" id="discount_code" class="form-control">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Checkout</button>
+                                                    {% endif %}
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    <div class="float-right text-right">
                         <h4></h4>
                         <h1></h1>
-                    </div>#}
-
-                    <div class="box1 card">
-                        <div class="card-body" style="text-align: center;">
-                            <a href="{{ path('app_payment_s_new_panierproduit') }}" class="btn btn-warning btn-lg">Proceed to Pay</a>
-                        </div>
-
                     </div>
-
-
                 </div>
             </div>
         </div>
-
-
-
-
     </section>
+    <script>
+
+        // Sort by price ajax code
+
+   /*     var sortByPrice = document.getElementById('sort-by-price');
+        sortByPrice.addEventListener('click', function(e) {
+            e.preventDefault();
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', this.href);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    var cartItems = document.getElementById('cart-items');
+                    cartItems.innerHTML = response.html;
+                }
+            };
+            xhr.send();
+        });*/
+
+
+
+
+
+
+
+        // Wait for 5 seconds and then hide the alert box
+        setTimeout(function() {
+            var alertBox = document.getElementById('alert-box');
+            if (alertBox) {
+                alertBox.style.display = 'none';
+            }
+        }, 5000);
+
+        //afficher alert box white discount code
+
+        // Define the list of discount codes
+        var discountCodes = ["ons", "marwen", "tha9afans"];
+
+        // Get a random discount code from the list
+        var discountCode = discountCodes[Math.floor(Math.random() * discountCodes.length)];
+
+        // Display the discount code in the box
+        document.getElementById("discount-code").textContent = discountCode;
+
+        // Hide the box after 5 seconds
+        setTimeout(function() {
+            document.querySelector(".boxdis").style.display = "none";
+        }, 5000);
+
+
+
+    </script>
+
 
 
 

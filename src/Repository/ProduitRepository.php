@@ -66,4 +66,19 @@ class ProduitRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+   public function findByPrice ($price): array
+    {
+       return $this->createQueryBuilder('p')
+               ->andWhere('p.price = :price')
+             ->setParameter('price', $price)
+               ->orderBy('p.prix', 'ASC')
+                ->setMaxResults(10)
+                ->getQuery()
+                ->getResult()
+            ;
+}
+
+
+
 }

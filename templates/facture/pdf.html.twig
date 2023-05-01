@@ -1,1 +1,233 @@
-sss
+
+
+{% block body %}
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        html {
+            height: 100%;
+        }
+        body {
+            min-height: 100%;
+            margin: 0;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: center;
+            align-items: stretch;
+            font: 12pt/1.5 'Raleway', 'Cambria', sans-serif;
+            font-weight: 300;
+            background: #fff;
+            color: #666;
+            -webkit-print-color-adjust: exact;
+        }
+        header {
+            padding: 16px;
+            position: relative;
+            color: #888;
+        }
+        header h1, header h2 {
+            font-weight: 200;
+            margin: 0;
+        }
+        header h1 {
+            font-size: 27pt;
+            letter-spacing: 4px;
+        }
+        body > * {
+            width: 100%;
+            max-width: 7in;
+            margin: 3px auto;
+            background: #F0f0f0;
+            text-align: center;
+        }
+        footer {
+            padding: 16px;
+        }
+        footer p {
+            font-size: 9pt;
+            margin: 0;
+            font-family: 'Nunito';
+            color: #777;
+        }
+        section,
+        table {
+            padding: 8px 0;
+            position: relative;
+        }
+        dl {
+            margin: 0;
+            letter-spacing: -4px;
+        }
+        dl dt,
+        dl dd {
+            letter-spacing: normal;
+            display: inline-block;
+            margin: 0;
+            padding: 0px 6px;
+            vertical-align: top;
+        }
+        dl.bloc > dt,
+        dl:not(.bloc) dt:not(:last-of-type),
+        dl:not(.bloc) dd:not(:last-of-type) {
+            border-bottom: 1px solid #ddd;
+        }
+        dl:not(.bloc) dt {
+            border-right: 1px solid #ddd;
+        }
+        dt {
+            width: 49%;
+            text-align: right;
+            letter-spacing: 1px !important;
+            overflow: hidden;
+        }
+        dd {
+            width: 49%;
+            text-align: left;
+        }
+        dd,
+        tr > td {
+            font-family: 'Nunito';
+        }
+        section.flex {
+            display: flex;
+            flex-flow: row wrap;
+            padding: 8px 16px;
+            justify-content: space-around;
+        }
+        dl.bloc {
+            padding: 0;
+            flex: 1;
+            vertical-align: top;
+            min-width: 240px;
+            margin: 0 8px 8px;
+        }
+        dl.bloc > dt {
+            text-align: left;
+            width: 100%;
+            margin-top: 12px;
+        }
+        dl.bloc > dd {
+            text-align: left;
+            width: 100%;
+            padding: 8px 0 5px 16px;
+            line-height: 1.25;
+            /*background: #fefefe;*/
+        }
+
+        dl.bloc > dd {
+            text-align: left;
+            width: 100%;
+            padding: 8px 0 5px 16px;
+            line-height: 1.25;
+            /*background: #fefefe;*/
+        }
+
+        dl.bloc {
+            padding: 0;
+            flex: 1;
+            vertical-align: top;
+            min-width: 240px;
+            margin: 0 8px 8px;
+        }
+
+        dl.bloc > dt {
+            text-align: left;
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        dl.bloc > dd {
+            text-align: left;
+            width: 100%;
+            padding: 8px 0 5px 16px;
+            line-height: 1.25;
+            /*background: #fefefe;*/
+        }
+
+        dl.bloc > dd > dl dt {
+            width: 33%;
+        }
+
+        dl.bloc > dd > dl dd {
+            width: 60%;
+        }
+
+        dl.bloc dl {
+            margin-top: 12px;
+        }
+
+        dl.bloc dd {
+            font-size: 11pt;
+        }
+    </style>
+
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Facture José Roux</title>
+        <link href="https://fonts.googleapis.com/css?family=Nunito:300|Raleway:200,300" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+    <header>
+        <h1>FACTURE</h1>
+        <h2>Tha9aFans</h2>
+    </header>
+    <section class="flex">
+        <dl>
+            <dt>Facture #</dt>
+            <dd>{{ facture.refrancefacture }}</dd>
+            <dt>Date de facturation</dt>
+            <dd>{{ facture.dateFacture|date('Y-m-d') }}</dd>
+        </dl>
+    </section>
+    <section class="flex">
+        <dl class="bloc">
+            <dt>Facturé à:</dt>
+            <dd>
+
+                    <dt>Nom :{{ facture.idCommende.idUser.nom }}</dt>
+
+                    <dt>Téléphone :{{ facture.idCommende.idUser.telephone}}</dt>
+
+                    <dt>Email :{{ facture.idCommende.idUser.email }}</dt>
+
+                    <dt>Adressse :{{ facture.idCommende.idUser.adresse }}</dt>
+
+        </dl>
+ <dl class="bloc">
+         {#   <dt>Description de service:</dt>
+            <dd>Développement AIR</dd>
+            <dt>Période totale:</dt>
+            <dd>24 Mai au 2 Juin 2014</dd>#}
+        </dl>
+
+    </section>
+
+    <section>
+        <table>
+            <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+            </tr>
+
+
+
+
+        </table>
+
+
+    <table>
+        <tr>
+            <td colspan="3"></td>
+            <td>Total:</td>
+            <td>{{ facture.idCommende.total }}</td>
+        </tr>
+    </table>
+    <footer>
+        <p>tha9afans teams | <a href="tha9afans.com">tha9afans.com</a></p>
+    </footer>
+
+
+{% endblock %}

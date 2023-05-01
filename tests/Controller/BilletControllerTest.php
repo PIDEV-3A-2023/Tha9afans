@@ -2,15 +2,13 @@
 
 namespace App\Test\Controller;
 
-use App\Entity\Billet;
-use App\Repository\BilletRepository;
+;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class BilletControllerTest extends WebTestCase
 {
     private KernelBrowser $client;
-    private BilletRepository $repository;
     private string $path = '/billet/';
 
     protected function setUp(): void

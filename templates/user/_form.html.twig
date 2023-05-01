@@ -53,6 +53,9 @@
     <div class="col">
         {{ form_row(form.isBlocked,{label:'Bloquer personne:'}, {'label_attr': {'class': 'checkbox-label'}}) }}
     </div>
+    <div class="col">
+        {{ form_row(form.genre, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
+    </div>
 </div>
 
 <button class="btn" style="margin-bottom: 20px">{{ button_label|default('Save') }}</button>
