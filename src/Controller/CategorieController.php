@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Categorie;
 use App\Form\CategorieType;
 use App\Repository\CategorieRepository;
+use App\Repository\ProduitRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,10 +15,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategorieController extends AbstractController
 {
     #[Route('/', name: 'app_categorie_index', methods: ['GET'])]
-    public function index(CategorieRepository $categorieRepository): Response
+    public function index(CategorieRepository $categorieRepository,ProduitRepository $produitRepository): Response
     {
 
         return $this->render('categorie/index.html.twig', [
+            'produits' => $produitRepository->findAll(),
+            'categories' => $categorieRepository->findAll(),
+        ]);
+        return $this->render('categorie/show.html.twig', [
+            'produits' => $produitRepository->findAll(),
             'categories' => $categorieRepository->findAll(),
         ]);
     }

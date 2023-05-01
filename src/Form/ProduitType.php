@@ -16,6 +16,9 @@
     use Symfony\Component\OptionsResolver\OptionsResolver;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     use Symfony\Component\Validator\Context\ExecutionContextInterface;
+    use Symfony\Component\Form\FormEvents;
+    use Symfony\Component\Form\Event\PostSetDataEvent;
+
 
 
 
@@ -75,14 +78,15 @@
                     ])
                 ]
             ])
-            ->add('prixapresremise')
+
+
             ->add('idVendeur', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'nom', // ou une autre propriété de Joueur à afficher
+                'choice_label' => 'nom', // ou une autre propriété de user à afficher
             ])
             ->add('idCategorie', EntityType::class, [
                 'class' =>Categorie::class,
-                'choice_label' => 'nom', // ou une autre propriété de Joueur à afficher
+                'choice_label' => 'nom', // ou une autre propriété categorie à afficher
             ])
 
             ->add('qt', null, [
@@ -90,10 +94,23 @@
                     new Assert\NotBlank(),
                     new Assert\Positive(),
                 ]
-            ])
+            ]);
+//        $builder->addEventListener(FormEvents::POST_SET_DATA, function (PostSetDataEvent $event) {
+//            $form = $event->getForm();
+//            $produit = $event->getData();
+//
+//            if ($produit instanceof Produit) {
+//                $prix = $produit->getPrix();
+//                $remise = $produit->getRemise();
+//                $prixapresremise = $prix * (1 - $remise / 100);
+//
+//                $form->get('prixapresremise')->setData($prixapresremise);
+//            }
+//        });
 
 
-        ;
+
+
 
     $builder
         ->add('nom', null, [
@@ -144,7 +161,7 @@
     ])
     ]
     ])
-    ->add('prixapresremise')
+
     ->add('idVendeur', EntityType::class, [
     'class' => User::class,
     'choice_label' => 'nom', // ou une autre propriété de Joueur à afficher

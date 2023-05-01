@@ -91,6 +91,7 @@
             width: fit-content;
             height: fit-content;
             position: relative;
+
         }
         .input-search{
             height: 50px;
@@ -141,6 +142,12 @@
             border-bottom:1px solid rgba(255,255,255,.5);
             transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
         }
+        .product-rating {
+            color: #ffc107;
+            font-size: 15px;
+        }
+
+
 
     </style>
 
@@ -160,27 +167,35 @@
         </div>
         <h1 style="text-align:center ; color:#f5795c;margin-top: 20px; ">Our Products</h1>
 
-        <div class="row">
+        <div class="row ">
             <div class="col-md-6">
-            <p >
                 <span style="color: #00a4bc;">Sort by:</span>
-                <a  style="color: #fbffff;">
+                <a style="color: #fbffff;">
                     Category
+                    <select onchange="location.href = '{{ url('app_produit_index') }}?category=' + this.value;">
+                        <option value="">All</option>
+                        {% for categorie in categories %}
+                            <option value="{{ categorie.id }}" {% if selectedCategoryId == categorie.id %}selected{% endif %}>{{ categorie.nom }}</option>
+                        {% endfor %}
+                    </select>
                     <i class="fas fa-angle-down mt-1" style="color: #fbffff;"></i>
-
-
-
-
-                </a></p>
-
-            <div class="search-box ,col-md-6 text-right ">
-                <button class="btn-search"><i class="fas fa-search"></i></button>
-                <input type="text" class="input-search" placeholder="Type to Search...">
+                </a>
             </div>
 
+
+
+
+                </a>
+
+{#            <div class="col-md-6 text-right">#}
+                <form action="{{ path('app_produit_search') }}" method="POST">
+                    <div class="search-box">
+                        <button class="btn-search"><i class="fas fa-search"></i></button>
+                        <input type="text" name="nom" class="input-search" placeholder="Search Your PRODUCT...">
+                    </div>
+                </form>
             </div>
-        </div>
-        </div>
+{#        </div>#}
 
 
 
@@ -193,7 +208,7 @@
             <div class="all-produit">
                 <div class="produit" style="position: relative;">
                     <!-- Sale badge-->
-                    {% if produit.remise is not null or produit.remise != 0 %}
+                    {% if produit.remise is not none and produit.remise != 0 %}
                         <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">-{{ produit.remise }}%</div>
                     {% else %}
                         <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
@@ -211,10 +226,29 @@
                         <div class="text-center">
                             <!-- Product name-->
                             <h3><a  class="textproduitname">{{ produit.nom }}</a></h3>
-                            <p>{{ produit.prixapresremise }}DT</p>
-                            <!-- Product price-->
-                            <span class="text-muted text-decoration-line-through">{{ produit.prix }}DT</span>
-
+                            <!-- Rating stars -->
+                            <div class="product-rating">
+                                {% for i in range(1, 5) %}
+                                    {% if produit.rating >= i %}
+                                        <i class="fas fa-star"></i>
+                                    {% else %}
+                                        <i class="far fa-star"></i>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if produit.rating is empty %}
+                                    <p>No rating yet</p>
+                                {% else %}
+                                    <span>{{ produit.rating }}</span>
+                                {% endif %}
+                            </div>
+                            {% if produit.remise == 0 %}
+                                <!-- Product price (no remise) -->
+                                <p>{{ produit.prix }}DT</p>
+                            {% else %}
+                                <!-- Product price with remise -->
+                                <span class="text-muted text-decoration-line-through">{{ produit.prix }}DT</span>
+                                <p>{{ produit.prixapresremise }}DT</p>
+                            {% endif %}
                         </div>
                     </div>
                     <!-- Product actions-->
@@ -237,5 +271,8 @@
 
 
 
-    <a href="{{ path('app_produit_new') }}">Add your Product </a>
+{#    <a href="{{ path('app_produit_edit') }}">Create new</a>#}
+    <a href="{{ path('nouveau_produit') }}">Create new</a>
+
+
 {% endblock %}
