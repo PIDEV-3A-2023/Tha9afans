@@ -63,4 +63,16 @@ class CommandeRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+    public function findcommandeByUser($id): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.idUser = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 }

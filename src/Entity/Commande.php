@@ -46,7 +46,8 @@ class Commande
     #[ORM\JoinColumn(name: 'id_produit', referencedColumnName: 'id')]
     private ?Produit $idProduit=null;
 
-
+    #[ORM\Column(type: 'boolean')]
+    private $etat = false;
 
     public function getId(): ?int
     {
@@ -101,6 +102,17 @@ class Commande
         return $this;
     }
 
+    public function getEtat(): ?bool
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(bool $etat): self
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
 
 
 }

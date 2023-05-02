@@ -3,8 +3,19 @@
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+
 parameters:
+    stripe_public_key: '%env(STRIPE_PUBLIC_KEY)%'
+    stripe_secret_key: '%env(STRIPE_SECRET_KEY)%'
     user_directory: '%kernel.project_dir%/public/uploads/personnes'
+
+# config/services.yaml
+
+    sendgrid_api_key: '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'
+
+
+
+
 
 services:
     App\Security\PersonnesProvider:
@@ -30,3 +41,6 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Service\SendGridService:
+        arguments:
+            $apiKey: '%sendgrid_api_key%'

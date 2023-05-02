@@ -1,25 +1,30 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
-#connect_google:
-#  path: /connect/google
-#  controller: 'App\Controller\GoogleController::redirectToGoogleAction'
+app_success:
+  path: /success
+  controller: App\Controller\PanierProduitController::success
+  methods: [GET]
+app_cancel:
+  path: /cancel
+  controller: App\Controller\PanierProduitController::cancel
+  methods: [GET]
 
-#connect_google_check:
-#  path: /connect/google/check
-#  controller: 'App\Controller\GoogleController::handleGoogleCallbackAction'
+# config/routes.yaml
 
-#connect_facebook:
-#  path: /connect/facebook
-#  controller: 'App\Controller\FacebookController::redirectToFacebookAction'
 
-#connect_facebook_check:
-#  path: /connect/facebook/check
-#  controller: 'App\Controller\FacebookController::handleFacebookCallbackAction'
-app_user_index:
-  path: /users
-  controller: App\Controller\UserController::index
-  methods: GET
+download_pdf:
+  path: /reservation/{reservationId}/download-pdf
+  controller: App\Controller\ProfilController::downloadPdfAction
 
 
 
+search:
+  path: /search
+  methods: [GET]
+  controller: App\Controller\FactureController::searchAction
+
+
+search_ajax_factures:
+  path: /search-ajax-factures
+  controller: App\Controller\FactureController::searchFacturesAjax
