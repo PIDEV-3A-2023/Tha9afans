@@ -3,20 +3,128 @@
 {% block title %}QuizQuestion{% endblock %}
 
 {% block body %}
-    <h1>QuizQuestion</h1>
+    <style>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ quiz_question.id }}</td>
-            </tr>
-        </tbody>
-    </table>
+        body {
 
-    <a href="{{ path('app_quiz_question_index') }}">back to list</a>
+        }
 
-    <a href="{{ path('app_quiz_question_edit', {'id': quiz_question.id}) }}">edit</a>
+        .display {
+            margin: auto;
+            background-color: #001A23;
+            margin-bottom: 2%;
+            margin-top: 5%;
+            border-radius: 30px;
+            container: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* centers child elements horizontally */
+            align-items: center; /* centers child elements vertically */
+            padding: 20px;
+            max-width: 1200px; /* sets a maximum width for the container */
+            width: 100%; /* makes sure the container fills the width of the viewport */
+        }
 
-    {{ include('quiz_question/_delete_form.html.twig') }}
+
+        .question{
+            color: white;
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .image {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center; /* centers child elements horizontally */
+            align-items: center; /* centers child elements vertically */
+            width: 100%;
+
+        }
+
+        .image img {
+            max-width: 50%; /* makes sure the image fits within the container */
+            border-radius: 20px;
+        }
+
+        .answers{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        button{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 900px;
+            max-width: 100%;
+
+        }
+
+        .answers button{
+            background-color: white;
+            color: #001A23;
+            font-size: 20px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            margin-bottom: 10px;
+        }
+        .flex{
+            display: flex;
+
+            width: 100%;
+        }
+
+        .textcont{
+            display: flex;
+            flex-direction: column;
+            left: 0;
+            width: 100%;
+        }
+
+    </style>
+
+
+    <div class="display flex">
+        {% if app.session.getFlashBag().has('error') %}
+            <div class="alert alert-danger">{{ app.session.getFlashBag().get('error')|join('<br>') }}</div>
+        {% endif %}
+
+        <div class="textcont">
+            <div>
+                <div class="question">Time remaining: <span id="timer">{{ question.timer }}</span></div>
+            </div>
+            <br>
+            <div class="question">{{ question.question }}</div>
+        </div>
+        <div class="image">
+            {% if question.image is not empty %}
+                <img src="{{ path('question_show_image', {'id': question.questionId}) }}" alt="{{ question.question }}">
+            {% else %}
+                Aucune photo disponible
+            {% endif %}
+        </div>
+        <div class="answers container">
+            <form method="POST" action="{{ path('app_quiz_question_answer', {'quizId': quiz.quizId, 'questionId': question.questionId}) }}">
+                <button type="submit" name="answer" value="{{ question.firstPossibleAnswer }}">{{ question.firstPossibleAnswer }}</button>
+                <button type="submit" name="answer" value="{{ question.secondPossibleAnswer}}">{{ question.secondPossibleAnswer }}</button>
+                <button type="submit" name="answer" value="{{ question.thirdPossibleAnswer }}">{{ question.thirdPossibleAnswer }}</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        var countDownDate = new Date().getTime() + ({{ question.timer }} * 1000);
+        var x = setInterval(function() {
+            var now = new Date().getTime();
+            var distance = countDownDate - now;
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById("timer").innerHTML = seconds + "s";
+            if (distance < 0) {
+                clearInterval(x);
+                document.forms[0].submit();
+            }
+        }, 1000);
+    </script>
+
+
 {% endblock %}

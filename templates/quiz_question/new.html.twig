@@ -1,11 +1,48 @@
-{% extends 'base.html.twig' %}
+{% extends 'backBase.html.twig' %}
 
 {% block title %}New QuizQuestion{% endblock %}
 
 {% block body %}
-    <h1>Create new QuizQuestion</h1>
+
+    <style>
+        btn{
+            /*display: block;*/
+            margin-top: 10px;
+            margin-bottom: auto;
+            border-radius: 20px;
+            color: white;
+            border-color: white;
+        }
+
+        .btn {
+            background-color: #001A23;
+            color: white;
+            border-radius: 20px;
+        }
+
+        .btnn{
+            /*display: block;*/
+            margin-top: 10px;
+            margin-bottom: auto;
+            border-radius: 20px;
+            color: white;
+            border-color: white;
+            background-color: #001A23;
+        }
+
+    </style>
+
+<div style="height: auto">
+    <h1>Create new Quiz</h1>
 
     {{ include('quiz_question/_form.html.twig') }}
 
-    <a href="{{ path('app_quiz_question_index') }}">back to list</a>
+
+    <form class="container"  action="{{ path('app_quiz_question_index') }}" method="GET">
+        <button class="btn btnn" style="background-color: #0b1526; width: 100%" type="submit">Back to List </button>
+    </form>
+</div>
+
 {% endblock %}
+
+

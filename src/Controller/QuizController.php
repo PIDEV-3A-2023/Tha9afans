@@ -2,10 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Question;
 use App\Entity\Quiz;
+use App\Entity\QuizQuestion;
+use App\Entity\Score;
 use App\Form\QuizType;
 use App\Repository\QuestionRepository;
+use App\Repository\QuizQuestionRepository;
 use App\Repository\QuizRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/quiz')]
 class QuizController extends AbstractController
 {
+    // for the backoffice
     #[Route('/', name: 'app_quiz_index', methods: ['GET'])]
     public function index(QuizRepository $quizRepository): Response
     {
@@ -21,6 +27,110 @@ class QuizController extends AbstractController
             'quizzes' => $quizRepository->findAll(),
         ]);
     }
+
+
+    #[Route('/{id}/start', name: 'app_quiz_question_start', methods: ['GET'])]
+    public function startQuiz(Quiz $quiz, QuizQuestionRepository $quizQuestionRepository): Response
+    {
+        // Get all questions for the given quiz
+        $questions = $quizQuestionRepository->findBy(['quiz' => $quiz]);
+
+        // Shuffle the questions to get a random order
+        shuffle($questions);
+
+        // Create a session variable to store the questions and set it to the shuffled questions
+        $this->get('session')->set('quizQuestions', $questions);
+
+        // Redirect to the first question
+        $question = reset($questions);
+        return $this->redirectToRoute('app_quiz_question_show', [
+            'quizId' => $quiz->getQuizId(),
+            'questionId' => $question->getQuestion()->getQuestionId(),
+        ]);
+    }
+
+    #[Route('/{quizId}/question/{questionId}', name: 'app_quiz_question_answer', methods: ['POST', 'GET'])]
+    public function answerQuestion(Request $request, Quiz $quiz, Question $question, QuizQuestionRepository $quizQuestionRepository): Response
+    {
+        $answerId = $request->request->get('answer');
+        $correctAnswerId = $question->getAnswer();
+
+        $quizQuestions = $this->get('session')->get('quizQuestions');
+
+        foreach ($quizQuestions as $quizQuestion) {
+            if ($quizQuestion->getQuestion()->getQuestionId() == $question->getQuestionId()) {
+                if ($answerId == $correctAnswerId) {
+                    $quizQuestion->setIsCorrect(true);
+                } else {
+                    $quizQuestion->setIsCorrect(false);
+                    $this->addFlash('error', 'Wrong answer! Please try again.');
+                }
+                break;
+            }
+        }
+
+        // Check if there are any unanswered questions
+        $unansweredQuestions = array_filter($quizQuestions, function($quizQuestion) {
+            return !$quizQuestion->getIsCorrect();
+        });
+
+        if (count($unansweredQuestions) > 0) {
+            // Redirect to the next unanswered question
+            $nextQuestion = reset($unansweredQuestions);
+            return $this->redirectToRoute('app_quiz_question_show', ['quizId' => $quiz->getQuizId(), 'questionId' => $nextQuestion->getQuestion()->getQuestionId(), 'id' => $nextQuestion->getQuestion()->getQuestionId()]);
+        } else {
+            // Calculate score
+            $score = 0;
+            foreach ($quizQuestions as $quizQuestion) {
+                if ($quizQuestion->getIsCorrect()) {
+                    $score += 100;
+                }
+            }
+
+            // Store score in session
+            $this->get('session')->set('quizScore', $score);
+
+            // Redirect to results page
+            return $this->redirectToRoute('app_results');
+        }
+    }
+
+
+
+
+    // it creates the quiz home page and converts the timer
+    #[Route('/homeQuiz', name: 'app_quiz_Home')]
+    public function homequizz(QuizRepository $quizRepository ,QuizQuestionRepository $quizQuestionRepository): Response
+    {
+        $quizzes = $quizRepository->findAll();
+        $timers = array();
+
+        foreach ($quizzes as $quiz) {
+            $questions = $quizQuestionRepository->findBy(['quiz' => $quiz->getQuizId()]);
+            $time = 0;
+            foreach ($questions as $question) {
+                $time += $question->getQuestion()->getTimer();
+            }
+            $timers[] = $time;
+        }
+
+        $timerFormatted = array();
+        foreach ($timers as $timer) {
+            if ($timer < 60) {
+                $timerFormatted[] = $timer . ' seconds';
+            } else if ($timer < 3600) {
+                $timerFormatted[] = floor($timer / 60) . ' minutes';
+            } else {
+                $timerFormatted[] = floor($timer / 3600) . ' hours';
+            }
+        }
+
+        return $this->render('quiz/quizHome.html.twig', [
+            'quizzes' => $quizzes,
+            'timer' => $timerFormatted,
+        ]);
+    }
+
 
     #[Route('/new', name: 'app_quiz_new', methods: ['GET', 'POST'])]
     public function new(Request $request, QuizRepository $quizRepository, QuestionRepository $questionRepository): Response
@@ -36,12 +146,11 @@ class QuizController extends AbstractController
             $photoFile = $form->get('quizCover')->getData();
 
             if ($photoFile) {
-                // open file and get contents as string
                 $photoContent = file_get_contents($photoFile->getRealPath());
                 $quiz->setQuizCover($photoContent);
             }
 
-
+            // check if quiz already exists in database
             if ($quizRepository->findBy(['quizName' => $quiz->getQuizName()])) {
                 $this->addFlash('error', 'Quiz already exists in database!');
                 return $this->redirectToRoute('app_quiz_new');
@@ -62,6 +171,7 @@ class QuizController extends AbstractController
     #[Route('/quizShow/{id}', name: 'quiz_show_image')]
     public function showPhoto(Quiz $quiz): Response
     {
+
         $image = stream_get_contents($quiz->getQuizCover());
         return new Response($image, 200, ['Content-Type' => 'image/jpeg']);
     }
@@ -111,4 +221,6 @@ class QuizController extends AbstractController
 
         return $this->redirectToRoute('app_quiz_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
 }

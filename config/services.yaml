@@ -9,14 +9,9 @@ parameters:
     stripe_secret_key: '%env(STRIPE_SECRET_KEY)%'
     user_directory: '%kernel.project_dir%/public/uploads/personnes'
 
-# config/services.yaml
-
-
-
-
-
-
 services:
+
+
     App\Security\PersonnesProvider:
             arguments: [ '@doctrine.orm.entity_manager' ]
     # default configuration for services in *this* file
