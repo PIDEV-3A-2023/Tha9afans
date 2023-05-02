@@ -3,7 +3,7 @@
 {% block title %}Pick Your Ticket{% endblock %}
 
 {% block body %}
-    <h2 style="color: red">Pick your ticket</h2>
+    <label style="color: dodgerblue; margin-top: 120px; margin-left: 60px ;font-size: 47px">Pick your ticket :</label>
     <style>@import url('https://fonts.googleapis.com/css?family=Oswald');
         * {
             margin: 0;
@@ -39,15 +39,16 @@
 
         .card {
             display: block;
-            width: 70%;
-            height: 100%;
-            background-color: #F5F5F5;
+            width: 750px;
+            height: 340px;
+            background-color: white;
             color: #989898;
             margin-bottom: 10px;
             font-family: 'Oswald', sans-serif;
             text-transform: uppercase;
             border-radius: 4px;
-            position: relative
+            position: relative;
+
         }
 
         .card+.card {
@@ -186,7 +187,7 @@
             }
         }
     </style>
-    <form method="POST" action="{{ path('app_ticket', {'reservationId': reservation.id, 'eventId': eventId}) }}" style="margin-top: 100px">
+    <form method="POST" action="{{ path('app_ticket', {'reservationId': reservation.id, 'eventId': eventId}) }}" >
         {% for type, messages in app.session.flashbag.all() %}
             {% for message in messages %}
                 <div class="alert alert-warning" role="alert">
@@ -196,7 +197,7 @@
         {% endfor %}
         {% for billet in billets %}
             <section class="container">
-                <input type="number" name="{{ billet.type }}" value="0"><br><br>
+                <div style="display: flex">
                 <article class="card fl-left flex">
                     <section class="date">
                         <time>
@@ -204,15 +205,15 @@
                             <span>{{ billet.dateValidite ? billet.dateValidite|date('F') : '' }}</span>
                         </time>
                     </section>
-                    <section class="card-cont">
-                        <h3>{{ billet.evenement.nom }}</h3>
+                    <section class="card-cont" >
+                        <h3 style="margin-top: -999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999%">{{ billet.evenement.nom }}</h3>
                         <small>{{ billet.evenement.createur.nom }}</small>
                         <h3>live In {{ billet.evenement.localisation }}</h3>
                         <div class="even-date">
                             <i class="fa fa-calendar"></i>
                             <time>
                                 <span>{{ billet.dateValidite ? billet.dateValidite|date('Y-m-d') : '' }}</span>
-                                <span>session.debit - session.fin </span>
+                                <span> Debut: 8:00 - Fin: 17:55 </span>
                             </time>
                         </div>
                         <div class="even-info">
@@ -220,19 +221,20 @@
                             <p>
                                 {{ billet.evenement.localisation }}
                             </p>
-
                         </div>
-                        <label style="color: black;float: right; margin-right: 47%;">{{ billet.type }} : {{ billet.prix }} DT</label><br><br>
+                        <label style="color: dodgerblue;float: right; margin-right: 47%;">{{ billet.type }} : {{ billet.prix }} DT</label><br><br>
                         <div style="font-size: 60%;">for any information contact us on 74 800 008 or on 21 080 080 </div>
                     </section>
                     <section class="card-cont" >
-                        <img src="{{ qrCodeTable[loop.index0] }}" alt="QR code" style="width: 100px;height: 100px;float: right;margin-right: 20px;">
+                        <img src="{{ qrCodeTable[loop.index0] }}" alt="QR code" style="width: 150px;height: 150px;float: right;margin-right: 20px;">
                     </section>
                 </article>
+                    <input type="number" class="form-control text-center" name="{{ billet.type }}" value="0" min="0" style="width: 70px;
+                     height: 40px; margin-top: 135px;margin-left: 100px">
+                </div>
             </section>
+
         {% endfor %}
-
-
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn btn-primary btn-lg active float-right" style="margin-left: 100px;margin-bottom: 40px">Submit</button>
     </form>
 {% endblock %}

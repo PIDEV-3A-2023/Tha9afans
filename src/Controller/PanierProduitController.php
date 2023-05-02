@@ -12,6 +12,8 @@ use App\Repository\CommandeproduitRepository;
 use App\Repository\CommandeRepository;
 use App\Repository\PanierproduitRepository;
 use App\Repository\PanierRepository;
+use App\Repository\ProduitRepository;
+use App\Service\MailerService;
 use Doctrine\ORM\EntityManagerInterface;
 
 use Exception;
@@ -20,7 +22,8 @@ use SendGrid\Mail\TypeException;
 use Stripe\Exception\ApiErrorException;
 use Stripe\StripeClient;
 
-
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,31 +44,38 @@ class PanierProduitController extends AbstractController
 {
 
     #[Route('/', name: 'app_panier_produit_index', methods: ['GET'])]
-    public function index(PanierproduitRepository $panierproduitRepository , PanierRepository $panierRepository): Response
+    public function index(Request $request ,PanierproduitRepository $panierproduitRepository , PanierRepository $panierRepository): Response
     {
-
-
         $prixtotale = 0;
-
-       /* $paniersproduits = $panierproduitRepository->findPanierByUser($this->getUser());*/
-
         $panier = $panierRepository->findPanierByUser($this->getUser());
+
         $paniersproduits = $panierproduitRepository->findBy(['idPanier' => $panier]);
+
+        $sort = $request->query->get('sort');
+        if ($sort == 'DESC') {
+            usort($paniersproduits, function($a, $b) {
+                return $b->getIdProduit()->getPrix() <=> $a->getIdProduit()->getPrix();
+            });
+        } else {
+            usort($paniersproduits, function($a, $b) {
+                return $a->getIdProduit()->getPrix() <=> $b->getIdProduit()->getPrix();
+            });
+        }
+
         foreach ($paniersproduits as $panierproduit) {
             $quantite = $panierproduit->getQuantity();
             $prix = $panierproduit->getIdProduit()->getPrix();
             $prixtotale += $quantite * $prix;
         }
 
-
         $this->get('session')->set('prixtotale', $prixtotale);
         $this->get('session')->set('', $paniersproduits);
+
         return $this->render('panier_produit/index.html.twig', [
             'panierproduits' => $paniersproduits,
             'prixtotale' => $prixtotale,
-
+            'sort' => $sort,
         ]);
-
     }
 
     /*#[Route('/new', name: 'app_panier_produit_new', methods: ['GET', 'POST'])]
@@ -206,6 +216,8 @@ class PanierProduitController extends AbstractController
         $panier = $panierRepository->findPanierByUser($this->getUser());
         $paniersproduits = $panierproduitRepository->findBy(['idPanier' => $panier]);
 
+
+
         $line_items = [];
         foreach ($paniersproduits as $panierproduit) {
             $quantite = $panierproduit->getQuantity();
@@ -215,9 +227,16 @@ class PanierProduitController extends AbstractController
 
             // apply discount if discount code is valid
             if ($discountCode === 'tha9afans' || $discountCode === 'marwen' || $discountCode === 'ons') {
-                $discounted_price = $prix * 0.8; // apply 20% discount
+                $discounted_price = $prix * 0.2;
             } else {
                 $discounted_price = $prix;
+            }
+
+            // check if total price is zero
+            if ($discounted_price == 0) {
+                // afficher le message d'erreur et rediriger vers la page de panier
+                $this->addFlash('error', 'Vous ne pouvez pas payer car le prix total est de 0.');
+                return $this->redirectToRoute('app_panier_produit_index');
             }
             
 
@@ -270,6 +289,7 @@ class PanierProduitController extends AbstractController
         // Set the properties of the Commande entity
         $commande->setDatecommande(new \DateTime());
         $commande->setTotal($amount);
+
         $commande->setEtat("1");
         $commande->setIdUser($this->getUser()); // assuming that you are using Symfony's security component
 
@@ -297,8 +317,7 @@ class PanierProduitController extends AbstractController
             $commandeproduitRepository->save($commandeproduit, true);
 
         }
-        // Create a new SendGrid email
-
+       //send email to the customer after success payment using MailerService  $name = $customer["customer_details"]["name"];
 
         //remove the panierproduit after success
         $panier = $panierRepository->findPanierByUser($this->getUser());
@@ -322,8 +341,6 @@ class PanierProduitController extends AbstractController
         $this->addFlash('warning', 'You have cancelled the payment.');
         return $this->redirectToRoute('app_panier_produit_index');
     }
-
-
 
 
 

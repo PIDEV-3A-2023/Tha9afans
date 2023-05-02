@@ -60,17 +60,11 @@ class Reservation
 
     private $nombreBillet;
 
-    /**
-     * @return mixed
-     */
     public function getNombreBillet()
     {
         return $this->nombreBillet;
     }
 
-    /**
-     * @param mixed $nombreBillet
-     */
     public function setNombreBillet($nombreBillet): void
     {
         $this->nombreBillet = $nombreBillet;
@@ -209,42 +203,6 @@ class Reservation
     public function setPaymentStatus(string $paymentStatus): self
     {
         $this->paymentStatus = $paymentStatus;
-
-        return $this;
-    }
-
-    public function getNbrBillets(): ?int
-    {
-        return $this->nbrBillets;
-    }
-
-    public function setNbrBillets(int $nbrBillets): self
-    {
-        $this->nbrBillets = $nbrBillets;
-
-        return $this;
-    }
-
-    public function getNbrTicketType1Reserved(): ?int
-    {
-        return $this->nbrTicketType1Reserved;
-    }
-
-    public function setNbrTicketType1Reserved(int $nbrTicketType1Reserved): self
-    {
-        $this->nbrTicketType1Reserved = $nbrTicketType1Reserved;
-
-        return $this;
-    }
-
-    public function getNbrTicketType2Reserved(): ?int
-    {
-        return $this->nbrTicketType2Reserved;
-    }
-
-    public function setNbrTicketType2Reserved(int $nbrTicketType2Reserved): self
-    {
-        $this->nbrTicketType2Reserved = $nbrTicketType2Reserved;
 
         return $this;
     }

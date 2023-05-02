@@ -6,6 +6,7 @@ use App\Entity\Quiz;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -61,7 +62,7 @@ class QuizType extends AbstractType
                     ])
                 ],
             ])
-            ->add('quizDescription', TextType::class, [
+            ->add('quizDescription', TextareaType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a question',

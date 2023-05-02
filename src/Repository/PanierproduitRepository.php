@@ -49,6 +49,18 @@ class PanierproduitRepository extends ServiceEntityRepository
         ;
     }
 
+    //order the panierproduit by prix produit
+    public function findPanierByUserOrderByPrix($id): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.idPanier = :val')
+            ->setParameter('val', $id)
+            ->orderBy('p.prixProduit', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 
 //    /**
 //     * @return Panierproduit[] Returns an array of Panierproduit objects
