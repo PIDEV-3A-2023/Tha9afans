@@ -97,23 +97,6 @@ class QuizController extends AbstractController
 
 
 
-    #[Route('/quiz/{id}/score/{score}', name: 'app_quiz_score')]
-    public function scoreQuiz(int $id, int $score, EntityManagerInterface $entityManager): Response
-    {
-        // Retrieve the quiz and create a new Score object
-        $quiz = $this->getDoctrine()->getRepository(Quiz::class)->find($id);
-        $scoreObject = new Score();
-        $scoreObject->setQuiz($quiz);
-        $scoreObject->setScore($score);
-
-        // Persist the score object to the database
-        $entityManager->persist($scoreObject);
-        $entityManager->flush();
-
-        // Redirect to the score index page
-        return $this->redirectToRoute('app_score_index');
-    }
-
 
     // it creates the quiz home page and converts the timer
     #[Route('/homeQuiz', name: 'app_quiz_Home')]

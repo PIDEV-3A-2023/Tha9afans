@@ -35,7 +35,7 @@ class QuestionController extends AbstractController
             $photoFile = $form->get('image')->getData();
             if ($photoFile) {
                 // resize image to maximum width of 500 pixels
-                $photo = Image::make($photoFile)->resize(500, null, function ($constraint) {
+                $photo = Image::make($photoFile)->resize(900, null, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 })->encode('jpg', 75);

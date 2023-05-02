@@ -18,4 +18,6 @@ class ResultsController extends AbstractController
             'score' => $score
         ]);
     }
+
+
 }
