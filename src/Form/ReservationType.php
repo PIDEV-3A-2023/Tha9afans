@@ -9,10 +9,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 class ReservationType extends AbstractType
 {
@@ -29,6 +28,7 @@ class ReservationType extends AbstractType
                         'message' => 'Reservation date must be greater than today',
                     ]),
                 ],
+                'data' => $options['date-initial-value'],
             ])
             ->add('location', null, [
                 'disabled' => true,
@@ -36,6 +36,7 @@ class ReservationType extends AbstractType
                     'class' => 'form-control',
                     'placeholder' => 'Location',
                 ],
+                'data' => $options['localisation-initial-value'],
             ])
             ->add('prenom', null, [
                 'constraints' => [
@@ -77,10 +78,10 @@ class ReservationType extends AbstractType
                     'placeholder' => 'Email address',
                 ],
                 'constraints' => [
-                    new NotBlank([
+                    new Assert\NotBlank([
                         'message' => 'Please enter an email address',
                     ]),
-                    new Regex([
+                    new Assert\Regex([
                         'pattern' => '/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/',
                         'message' => 'Please enter a valid email address',
                     ]),
@@ -96,7 +97,7 @@ class ReservationType extends AbstractType
                         'message' => 'Please enter your phone number',
                     ]),
                     new Assert\Regex([
-                        'pattern' => '/^[239]\d{7}$/',
+                        'pattern' => '/^[2359]\d{7}$/',
                         'message' => 'Please enter a valid 8-digit phone number',
                     ]),
                 ],
@@ -121,19 +122,22 @@ class ReservationType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('totalPrice', null, [
-                'disabled' => true,
-                'attr' => [
-                    'class' => 'form-control',
-                    'placeholder' => 'Total Price',
-                ],
-            ]);
+//            ->add('totalPrice', null, [
+//                'disabled' => true,
+//                'attr' => [
+//                    'class' => 'form-control',
+//                    'placeholder' => 'Total Price',
+//                ],
+//            ])
+    ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Reservation::class,
+            'localisation-initial-value'=> null,
+            'date-initial-value'=> null,
         ]);
     }
 }

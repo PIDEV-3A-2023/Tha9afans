@@ -71,11 +71,10 @@ class EvenementController extends AbstractController
     {
         $form = $this->createForm(EvenementType::class, $evenement);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $evenementRepository->save($evenement, true);
 
-            return $this->redirectToRoute('app_profil-evenement', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_profil-evenement-session', ['id'=>$evenement->getId()], Response::HTTP_SEE_OTHER  );
         }
 
         return $this->renderForm('profil/editEvenement.html.twig', [
@@ -84,11 +83,15 @@ class EvenementController extends AbstractController
         ]);
     }
     #[Route('/{id}', name: 'app_evenement_show', methods: ['GET'])]
-    public function show(Evenement $evenement,SessionRepository $sessionRepository,GalerieRepository $galerieRepository): Response
-    { $sessions = $sessionRepository->findBy(['evenement' => $evenement]);
+    public function show(Evenement $evenement, SessionRepository $sessionRepository, GalerieRepository $galerieRepository, Request $request): Response
+    {
+        $sessions = $sessionRepository->findBy(['evenement' => $evenement]);
+        $errorMessage = $request->query->get('errorMessage');
+
         return $this->render('evenement/show.html.twig', [
             'evenement' => $evenement,
             'sessions' => $sessions,
+            'errorMessage' => $errorMessage,
         ]);
     }
 
@@ -104,7 +107,7 @@ class EvenementController extends AbstractController
               return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
           }
 
-          return $this->renderForm('evenement/edit.html.twig', [
+          return $this->renderForm('evenement/editSession.html.twig', [
               'evenement' => $evenement,
               'form' => $form,
           ]);

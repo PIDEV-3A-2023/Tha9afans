@@ -9,8 +9,8 @@
         }
         .box{
             box-sizing: border-box;
-            width: 700px;
-            height: 700px;
+            width: 730px;
+            height: auto;
             border: 2px solid #A8DADC;
             box-shadow: -3px -3px 7px #ffffff73,
             3px 3px 5px rgba(94,104,121,0.288);
@@ -21,7 +21,7 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            margin-left: 320px;
+            margin-left: 500px;
         }
         .form-control-file.custom-class {
             margin-left: 70px;
@@ -45,6 +45,23 @@
         label{
             color:white;
         }
+        input[type=checkbox] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: 2px solid blue;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        input[type=checkbox]:checked:before {
+            content: "\2713";
+            display: block;
+            text-align: center;
+            font-size: 14px;
+            line-height: 18px;
+        }
 
 
         .form-control{
@@ -52,7 +69,7 @@
             box-sizing: border-box;
             background: none;
             background-color: white !important;
-            color:white;
+            color:black;
             margin-bottom: 30px;
             padding: 4px;
             width: 220px;
@@ -70,7 +87,7 @@
         .form-control:focus{
             border-bottom: 2px solid #A8DADC;
             border-bottom-right-radius: 20px;
-            color: #A8DADC;
+            color: #001A23;
             transition: 0.2s ease;
         }
         .btn{
@@ -80,6 +97,7 @@
             height: 50px;
             width: 100px;
             border-radius: 20px;
+            margin-bottom: 20px;
             margin: 0px;
             transition: all 0.3s;
             font-size: 18px;
@@ -96,6 +114,7 @@
         file-input{
             box-sizing: border-box;
             font-size: 20px;
+            color:black;
             background-color: #001A23;
             border: 1px solid #A8DADC;
             padding: 2px 15px;
@@ -110,7 +129,7 @@
         .form-control{}
         .box:hover{
             width: 700px;
-            height: 700px;
+            height: auto;
             border-radius: 10px;
         }
         input{
@@ -122,6 +141,8 @@
             width: 220px;
             height: 30px;
             border: none;
+            color: black;
+            margin-left: 10px;
             border-bottom: 1px solid #A8DADC;
             font-family: 'Roboto', sans-serif;
             font-weight: 250;
@@ -146,8 +167,7 @@
     {% endfor %}
         <br>
 
-
-        {{ form_start(registrationForm) }}
+        {{ form_start(registrationForm,{'attr': {'novalidate': 'novalidate'}} ) }}
         <div class="row">
             <div class="col">
                 {{ form_row(registrationForm.cin, {
@@ -181,6 +201,9 @@
                     label: 'Password'
                 }, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
             </div>
+            <div class="col">
+                {{ form_row(registrationForm.genre, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
+            </div>
         </div>
         <div class="row">
             <div class="col">
@@ -196,7 +219,7 @@
         </div>
 
 
-            <button type="submit" class="btn" style="margin-left: 300px">Register</button>
+            <button type="submit" class="btn" style="margin-left: 300px;margin-bottom: 20px">Register</button>
         {{ form_end(registrationForm) }}
     </div>
 {% endblock %}

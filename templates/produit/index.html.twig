@@ -3,47 +3,276 @@
 {% block title %}Produit index{% endblock %}
 
 {% block body %}
-    <h1>Produit index</h1>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>Libelle</th>
-                <th>Prix</th>
-                <th>Image</th>
-                <th>Remise</th>
-                <th>Rating</th>
-                <th>Prixapresremise</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+        body{
+            font-size: 1.7rem;
+            font-family: 'Merriweather Sans', sans-serif;
+            background: #2c3e50;
+            color: #ececec;
+            padding: 4rem;
+        }
+
+        h2{
+            text-align: center;
+            margin-bottom: 5rem;
+            font-size: 4rem;
+        }
+
+        .all-produit{
+
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            flex-direction: row;
+            display: inline-block;
+        }
+
+        .produit{
+            overflow: hidden;
+            background: #ffffff;
+            color: #21201e;
+            text-align: center;
+            width: 240px;
+            height: 400px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1.2rem;
+            margin: 2rem;
+
+            ;
+
+        }
+        .textproduitname{
+            color:#001A23;
+        }
+        .textproduitname, .text-muted text-decoration-line-through{
+            font-size: 18px;
+        }
+
+        .produit:hover image{
+            scale:  1.1;
+        }
+
+        .produit:hover {
+            box-shadow: 5px 15px 25px #eeeeee;
+        }
+
+        .image {
+            height: 200px;
+            margin: 1rem;
+            transition: all 0.3s;
+        }
+
+        .produit a:link, .produit a:visited{
+            color: #ececec;
+            display: inline-block;
+            text-decoration: none;
+            background-color: #2c3e50;
+            padding: 1.2rem 3rem;
+            border-radius: 1rem;
+            margin-top: 1rem;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .produit a:hover{
+            transform: scale(1.1);
+        }
+        .search-box{
+            width: fit-content;
+            height: fit-content;
+            position: relative;
+
+        }
+        .input-search{
+            height: 50px;
+            width: 50px;
+            border-style: none;
+            padding: 10px;
+            font-size: 18px;
+            letter-spacing: 2px;
+            outline: none;
+            border-radius: 25px;
+            transition: all .5s ease-in-out;
+            background-color: #22a6b3;
+            padding-right: 40px;
+            color:#fff;
+        }
+        .input-search::placeholder{
+            color:rgba(255,255,255,.5);
+            font-size: 18px;
+            letter-spacing: 2px;
+            font-weight: 100;
+        }
+        .btn-search{
+            width: 50px;
+            height: 50px;
+            border-style: none;
+            font-size: 20px;
+            font-weight: bold;
+            outline: none;
+            cursor: pointer;
+            border-radius: 50%;
+            position: absolute;
+            right: 0px;
+            color:#ffffff ;
+            background-color:transparent;
+            pointer-events: painted;
+        }
+        .btn-search:focus ~ .input-search{
+            width: 300px;
+            border-radius: 0px;
+            background-color: transparent;
+            border-bottom:1px solid rgba(255,255,255,.5);
+            transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+        }
+        .input-search:focus{
+            width: 300px;
+            border-radius: 0px;
+            background-color: transparent;
+            border-bottom:1px solid rgba(255,255,255,.5);
+            transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+        }
+        .product-rating {
+            color: #ffc107;
+            font-size: 15px;
+        }
+
+
+
+    </style>
+
+    <div style="margin-top: 10px">
+
+        <div class="breadcrumbs">
+            <div class="page-header d-flex align-items-center" style="background-image: url('{{ asset('images/culture-is-product.JPG') }}');background-size:contain;">
+                <div class="container position-relative">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-lg-6 text-center">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <h1 style="text-align:center ; color:#f5795c;margin-top: 20px; ">Our Products</h1>
+
+        <div class="row ">
+            <div class="col-md-6">
+                <span style="color: #00a4bc;">Sort by:</span>
+                <a style="color: #fbffff;">
+                    Category
+                    <select onchange="location.href = '{{ url('app_produit_index') }}?category=' + this.value;">
+                        <option value="">All</option>
+                        {% for categorie in categories %}
+                            <option value="{{ categorie.id }}" {% if selectedCategoryId == categorie.id %}selected{% endif %}>{{ categorie.nom }}</option>
+                        {% endfor %}
+                    </select>
+                    <i class="fas fa-angle-down mt-1" style="color: #fbffff;"></i>
+                </a>
+            </div>
+
+
+
+
+                </a>
+
+{#            <div class="col-md-6 text-right">#}
+                <form action="{{ path('app_produit_search') }}" method="POST">
+                    <div class="search-box">
+                        <button class="btn-search"><i class="fas fa-search"></i></button>
+                        <input type="text" name="nom" class="input-search" placeholder="Search Your PRODUCT...">
+                    </div>
+                </form>
+            </div>
+{#        </div>#}
+
+
+
+
+
+
+
         {% for produit in produits %}
-            <tr>
-                <td>{{ produit.id }}</td>
-                <td>{{ produit.nom }}</td>
-                <td>{{ produit.description }}</td>
-                <td>{{ produit.libelle }}</td>
-                <td>{{ produit.prix }}</td>
-                <td>{{ produit.image }}</td>
-                <td>{{ produit.remise }}</td>
-                <td>{{ produit.rating }}</td>
-                <td>{{ produit.prixapresremise }}</td>
-                <td>
-                    <a href="{{ path('app_produit_show', {'id': produit.id}) }}">show</a>
-                    <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
-                </td>
-            </tr>
+
+            <div class="all-produit">
+                <div class="produit" style="position: relative;">
+                    <!-- Sale badge-->
+                    {% if produit.remise is not none and produit.remise != 0 %}
+                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">-{{ produit.remise }}%</div>
+                    {% else %}
+                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                    {% endif %}
+                    <!-- Product image-->
+                     <div class="image"> {% if produit.image is not empty %}
+                        <img src="{{ path('produit_show', {'id': produit.id}) }}" alt="{{ produit.nom }}" width="100px" height="100px">
+                    {% else %}
+                        <img src="{{ asset('frontOffice/assets/img/logo.png') }}"  width="100px" height="70px">
+                    {% endif %}
+                     </div>
+
+                    <!-- Product details-->
+                    <div class="produit-info">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h3><a  class="textproduitname">{{ produit.nom }}</a></h3>
+                            <!-- Rating stars -->
+                            <div class="product-rating">
+                                {% for i in range(1, 5) %}
+                                    {% if produit.rating >= i %}
+                                        <i class="fas fa-star"></i>
+                                    {% else %}
+                                        <i class="far fa-star"></i>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if produit.rating is empty %}
+                                    <p>No rating yet</p>
+                                {% else %}
+                                    <span>{{ produit.rating }}</span>
+                                {% endif %}
+                            </div>
+                            {% if produit.remise == 0 %}
+                                <!-- Product price (no remise) -->
+                                <p>{{ produit.prix }}DT</p>
+                            {% else %}
+                                <!-- Product price with remise -->
+                                <span class="text-muted text-decoration-line-through">{{ produit.prix }}DT</span>
+                                <p>{{ produit.prixapresremise }}DT</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div style="white-space: nowrap" class="text-center"><a href="{{ path('app_produit_show', {'id': produit.id}) }}" class="btn btn-outline-dark mt-auto" >See More</a></div>
+                    </div>
+                </div>
+
+
+            </div>
+
         {% else %}
             <tr>
                 <td colspan="10">no records found</td>
             </tr>
         {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_produit_new') }}">Create new</a>
+    </div>
+
+
+
+
+{#    <a href="{{ path('app_produit_edit') }}">Create new</a>#}
+    <a href="{{ path('nouveau_produit') }}">Create new</a>
+
+
 {% endblock %}

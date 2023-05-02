@@ -16,20 +16,15 @@ class Produit
     #[ORM\Column]
     private ?int $id =null;
 
-
-
-
     #[ORM\Column(length: 255)]
     private ?string $nom =null ;
     #[ORM\Column(length: 255)]
     private ?string $description =null ;
 
 
-
-    #[ORM\Libelle]
-    #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $libelle =null;
+
 
 
     #[ORM\Column]
@@ -59,26 +54,16 @@ class Produit
 
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    #[ORM\JoinColumn(nullable: false,name: "vendeur_id",referencedColumnName: "id")]
-    private ?User $idVendeur=null;
+    #[ORM\JoinColumn(name: "vendeur_id",referencedColumnName: "id")]
+    private ?User $idVendeur;
 
 
 
     #[ORM\ManyToOne(targetEntity: Categorie::class)]
-    #[ORM\JoinColumn(nullable: false,name: "categorie_id",referencedColumnName: "id")]
-    private ?Categorie $idCategorie=null;
+    #[ORM\JoinColumn(name: "categorie_id",referencedColumnName: "id")]
+    private ?Categorie $idCategorie;
 
 
-
-    /**
-     * @var \Categorie
-     *
-     * @ORM\ManyToOne(targetEntity="Categorie")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_categorie", referencedColumnName="id")
-     * })
-     */
-    //private $idCategorie;
 
     public function getId(): ?int
     {
@@ -120,6 +105,7 @@ class Produit
 
         return $this;
     }
+
 
     public function getPrix(): ?float
     {
@@ -176,7 +162,7 @@ class Produit
 
     public function setPrixapresremise(float $prixapresremise): self
     {
-        $this->prixapresremise = $prixapresremise;
+        $this->prixapresremise = $this->getPrix() * (1 - $this->getRemise() / 100);
 
         return $this;
     }
@@ -222,4 +208,12 @@ class Produit
         return $this;
     }
 
+
+//    public function updatePrixapresremise(): void
+//    {
+//        $this->prixapresremise = $this->getPrix() * (1 - $this->getRemise() / 100);
+//    }
+
+
 }
+

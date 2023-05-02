@@ -38,6 +38,29 @@ class PanierproduitRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    //i want a function that return the  all panier of a connected user i only have attriute idPanier in Panierproduit entity
+    public function findPanierByUser($id): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.idPanier = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    //order the panierproduit by prix produit
+    public function findPanierByUserOrderByPrix($id): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.idPanier = :val')
+            ->setParameter('val', $id)
+            ->orderBy('p.prixProduit', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 
 //    /**
 //     * @return Panierproduit[] Returns an array of Panierproduit objects
@@ -63,4 +86,9 @@ class PanierproduitRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+
+
+
 }

@@ -39,6 +39,11 @@ class FactureRepository extends ServiceEntityRepository
         }
     }
 
+
+
+
+
+
 //    /**
 //     * @return Facture[] Returns an array of Facture objects
 //     */
@@ -63,4 +68,28 @@ class FactureRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+
+
+    public function findUserByref($ref)
+    {
+        return $this->createQueryBuilder("facture")
+            ->where('facture.refrancefacture LIKE :ref')
+            ->setParameter('ref', '%' . $ref . '%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    //find facture by idcommande
+    public function findFactureByCommande($idcommande)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('c')
+            ->where('c.idcommande = :idcommande')
+            ->setParameter('idcommande', $idcommande)
+            ->getQuery();
+        return $qb->execute();
+    }
+
+
 }

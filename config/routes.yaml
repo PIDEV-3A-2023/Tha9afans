@@ -1,3 +1,19 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+app_success:
+  path: /success
+  controller: App\Controller\PanierProduitController::success
+  methods: [GET]
+app_cancel:
+  path: /cancel
+  controller: App\Controller\PanierProduitController::cancel
+  methods: [GET]
+
+# config/routes.yaml
+
+
+download_pdf:
+  path: /reservation/{reservationId}/download-pdf
+  controller: App\Controller\ProfilController::downloadPdfAction
+

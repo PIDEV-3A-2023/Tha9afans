@@ -36,6 +36,10 @@
                 <td>{{ user.prenom }}</td>
             </tr>
             <tr>
+                <th>Bloqué</th>
+                <td>{{ user.isBlocked ? 'blouqué' : 'pas bloqué' }}</td>
+            </tr>
+            <tr>
                 <th>Telephone</th>
                 <td>{{ user.telephone }}</td>
             </tr>
@@ -47,9 +51,14 @@
                 <th>Photo</th>
                 <td>{{ user.photo }}</td>
             </tr>
+
             <tr>
                 <th>Datenaissance</th>
                 <td>{{ user.datenaissance ? user.datenaissance|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Genre</th>
+                <td>{{ user.genre }}</td>
             </tr>
         </tbody>
     </table>

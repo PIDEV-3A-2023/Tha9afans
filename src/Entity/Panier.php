@@ -29,6 +29,9 @@ class Panier
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private ?User $idUser=null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $ispayed = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -57,6 +60,21 @@ class Panier
 
         return $this;
     }
+
+    public function isIspayed(): ?bool
+    {
+        return $this->ispayed;
+    }
+
+    public function setIspayed(?bool $ispayed): self
+    {
+        $this->ispayed = $ispayed;
+
+        return $this;
+    }
+
+
+
 
 
 

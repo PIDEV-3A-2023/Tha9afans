@@ -31,11 +31,8 @@ class Commandeproduit
     private ?int $idProduit=null;
 
 
-
-
     /*#[ORM\ManyToOne(targetEntity: Commande::class)]
     private ?Commande $idCommende=null;*/
-
 
     #[ORM\ManyToOne(targetEntity: Commande::class)]
     #[ORM\JoinColumn(name: 'id_commende', referencedColumnName: 'id')]

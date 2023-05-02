@@ -22,17 +22,17 @@
             align-items: center;
         }
 
-        .table__header .input-group {
-            width: 35%;
-            height: 100%;
+        .table__header form {
+            width: 60%;
+            height: 70px;
             background-color: white;
             padding: 0 .8rem;
             border-radius: 2rem;
-
+            margin-top: 90px;
+            margin-left: 50px;
             display: flex;
             justify-content: center;
             align-items: center;
-
             transition: .2s;
         }
         body{
@@ -40,15 +40,25 @@
             margin-right: 20px;
         }
 
-        .table__header .input-group:hover {
-            width: 45%;
-            background-color: #f1f8fa;
+        .table__header form:hover {
+            width: 80%;
+            background-color: #fff;
+            box-shadow: 0 .1rem .4rem #eeeaea
+        }
+        .table__header form {
+            width: 70%;
+            height: 70px;
+            border-radius: 30px;
+            background-color: #fff;
             box-shadow: 0 .1rem .4rem #eeeaea
         }
 
         .table__header .input-group img {
-            width: 20px;
-            height: 20px;
+            width: 50px;
+            height: 50px;
+            margin-left: 300px;
+            margin-top: -10px;
+
         }
 
         .table__header .input-group input {
@@ -62,7 +72,7 @@
         .table__body {
             width: 95%;
             max-height: calc(89% - 1.6rem);
-            background-color: #F1FAEE;
+            background-color: #fff;
 
             margin: .8rem auto;
             border-radius: .6rem;
@@ -293,21 +303,33 @@
     </style>
     <section id="hero" class="hero d-flex flex-column ">
     </section>
-    {% if app.user %}
-        <h1 style="color: red">{{ app.user.email }}</h1>
-    {% endif %}
     <main class="table" style="margin-top: 30px">
         <section class="table__header">
-            <h1 style="color: #001A23">liste des personnes</h1>
+            <h1 style="color: #001A23;margin-top:50px;">liste des personnes</h1>
             <div class="input-group">
-                <input type="search" placeholder="Entrez le nom" >
-                <img src="{{asset('frontOffice/assets/img/logo.png') }}" alt="" width="100px" height="70px">
+                <form id="search-form" >
+                    <input type="text" id="search-query" name="query" placeholder="entrez nom ou prénom ou email">
+                    <img src="{{asset('frontOffice/assets/img/searchicon.png') }}" alt="" width="50px" height="50px">
+                </form>
+            </div>
+            <div class="export__file">
+                <a href="{{ path('app_user_index', {'download': true}) }}">
+                    <img src="{{asset('frontOffice/assets/img/csvicon.png') }}" alt="" width="50px" height="50px">
+                </a>
             </div>
 
-            <div class="export__file">
-                <label for="export-file" class="export__file-btn" title="Export File"></label>
+            <div>
+
             </div>
-        </section>
+            <form id="sort-form" >
+                <label for="sort-by">Trier par:</label>
+                <select id="sort-by" name="sort-by">
+                    <option value="cin">CIN</option>
+                    <option value="date_naissance">Date de Naissance</option>
+                </select>
+                <button type="submit">trier</button>
+            </form>
+        </section><br><br>
         <section class="table__body">
             <table>
                 <thead>
@@ -316,17 +338,20 @@
                     <th>Nom</th>
                     <th>Prenom</th>
                     <th>Email</th>
+                    <th>Date de naissance</th>
                     <th>Photo</th>
                     <th>Actions</th>
+
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="users-table-body">
                 {% for user in users %}
                     <tr>
                         <td>{{ user.cin }}</td>
                         <td>{{ user.nom }}</td>
                         <td>{{ user.prenom }}</td>
                         <td>{{ user.email }}</td>
+                        <td>{{ user.datenaissance|date('d/m/Y') }}</td>
                         <td>
                             {% if user.photo is not empty %}
                                 <img src="{{ path('user_show', {'id': user.id}) }}" alt="{{ user.nom }}">
@@ -338,6 +363,7 @@
                             <a href="{{ path('app_user_show', {'id': user.id}) }}" style="background-color: #001A23; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Détail</a>
 
                             <a href="{{ path('app_user_edit', {'id': user.id}) }}" style="background-color: #1D3557; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Modifier</a>
+                            <a href="{{ path('block_user', {'id': user.id}) }}" style="background-color: #457B9D; color:#F1FAEE; display: inline-block; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Bloquer</a>
                         </td>
                     </tr>
                 {% else %}
@@ -354,3 +380,47 @@
     </section>
 
 {% endblock %}
+{% block scripts %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function () {
+            // Submit form on search button click
+            $('#search-form').submit(function (event) {
+                event.preventDefault();
+                submitSearchForm();
+            });
+
+            // Submit form on select field change
+            $('#sort-field').change(function () {
+                submitSearchForm();
+            });
+
+            // Submit form on sort order change
+            $('input[type=radio][name=sort-order]').change(function () {
+                submitSearchForm();
+            });
+
+            // Function to submit the search form with selected sort and order
+            function submitSearchForm() {
+                var sortField = $('#sort-field').val();
+                var sortOrder = $('input[type=radio][name=sort-order]:checked').val();
+                var searchQuery = $('#search-query').val();
+                $.ajax({
+                    url: '{{ path('app_user_search') }}',
+                    type: 'GET',
+                    data: {
+                        sortField: sortField,
+                        sortOrder: sortOrder,
+                        searchQuery: searchQuery
+                    },
+                    success: function (response) {
+                        $('#users-table-body').html(response);
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}
+
+
+
