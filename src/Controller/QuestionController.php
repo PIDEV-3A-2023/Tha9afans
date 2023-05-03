@@ -33,15 +33,21 @@ class QuestionController extends AbstractController
 
             // get uploaded file for photo field
             $photoFile = $form->get('image')->getData();
-            if ($photoFile) {
+           /* if ($photoFile) {
                 // resize image to maximum width of 500 pixels
                 $photo = Image::make($photoFile)->resize(900, null, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
                 })->encode('jpg', 75);
                 // set image data on question entity
-                $question->setImage($photo);
+                $question->setImage($photoFile);
+            }*/
+            if ($photoFile) {
+                // open file and get contents as string
+                $photoContent = file_get_contents($photoFile->getRealPath());
+                $question->setImage($photoContent);
             }
+
 
             if ($questionRepository->findBy(['question' => $question->getQuestion()])) {
                 $this->addFlash('error', 'Question already exists in database!');
