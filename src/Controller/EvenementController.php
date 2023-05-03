@@ -43,7 +43,7 @@ class EvenementController extends AbstractController
             $evenements = $paginator->paginate(
                 $evenements,
                 $request->query->getInt('page', 1),
-                2,
+                3,
             );
             return $this->render('evenement/index.html.twig', [
                 'form' => $form->createView(),
@@ -55,7 +55,7 @@ class EvenementController extends AbstractController
         $events = $paginator->paginate(
             $evenementRepository->findAll(),
             $request->query->getInt('page', 1),
-            2
+            3
         );
 
         return $this->render('evenement/index.html.twig', [

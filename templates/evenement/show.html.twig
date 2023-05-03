@@ -98,9 +98,9 @@
         </div><!-- End Breadcrumbs -->
 
 
-        {% if errorMessage %}
+        {#{% if errorMessage %}
             <div class="alert alert-danger">{{ errorMessage }}</div>
-        {% endif %}
+        {% endif %}#}
 
         <section id="service-details" class="service-details" data-aos="fade-up">
             <div class="container" >
@@ -118,7 +118,7 @@
                         </nav><!-- .nav-menu -->
                         <div class="col">
                             <form method="post" action="{{ path('app_reservation_new', {'eventId': evenement.id}) }}">
-                                <button class="btn">next</button>
+                                <button class="btn btn-primary">Participer</button>
                             </form>
                             <button class="btn text-white" id="like-button" data-event-id="{{ evenement.id}}" onclick="likeEvent()" style="background-color: #3b5998;">
                                 <span >
