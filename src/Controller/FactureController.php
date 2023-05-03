@@ -2,16 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Commande;
 use App\Repository\CommandeproduitRepository;
 use App\Repository\CommandeRepository;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use SendGrid\Mail\Mail;
-use SendGrid;
-
 
 use App\Entity\Facture;
 use App\Form\FactureType;

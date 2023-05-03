@@ -32,16 +32,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
-
-
-
-
-
-
-
 #[Route('/panierproduit')]
 class PanierProduitController extends AbstractController
 {
+    //create web servcie for panierproduit
+
+
 
     #[Route('/', name: 'app_panier_produit_index', methods: ['GET'])]
     public function index(Request $request ,PanierproduitRepository $panierproduitRepository , PanierRepository $panierRepository): Response
@@ -130,9 +126,6 @@ class PanierProduitController extends AbstractController
         return $this->redirectToRoute('app_panier_produit_index', [], Response::HTTP_SEE_OTHER);
     }*/
 
-
-
-
     //remove produit
     #[Route('/remove/{id}', name: 'app_panier_produit_remove', methods: ['GET'])]
     public function remove(Panierproduit $panierproduit, PanierproduitRepository $panierproduitRepository): Response
@@ -140,9 +133,6 @@ class PanierProduitController extends AbstractController
         $panierproduitRepository->remove($panierproduit, true);
         return $this->redirectToRoute('app_panier_produit_index', [], Response::HTTP_SEE_OTHER);
     }
-
-
-
     #[Route('/update/{id}', name: 'app_panierproduit_updateminus', methods: ['GET'])]
     public function updateminus(Panierproduit $panierproduit, PanierproduitRepository $panierproduitRepository): Response
     {
@@ -173,9 +163,6 @@ class PanierProduitController extends AbstractController
         return $this->redirectToRoute('app_panier_produit_index', [], Response::HTTP_SEE_OTHER);
     }
 
-
-
-
     //get produit image
     #[Route('/produitshow/{id}', name: 'produit_image_show')]
     public function showproduitphoto(Produit $produt): Response
@@ -184,15 +171,6 @@ class PanierProduitController extends AbstractController
 
         return new Response($photo, 200, ['Content-Type' => 'image/jpeg']);
     }
-
-
-
-
-
-
-
-
-
 
 //checkout stripe service
 
@@ -333,7 +311,6 @@ class PanierProduitController extends AbstractController
         ]);
 
     }
-
 
     #[Route('/cancel', name: 'app_cancel')]
     public function cancel(Request $request): Response
