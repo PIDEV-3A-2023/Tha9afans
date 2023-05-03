@@ -112,7 +112,8 @@
             display: table-cell;
             margin: auto;
             font-size: 85%;
-            padding-left: 35px;
+            padding-left: 13px;
+            padding-top: 54px;
         }
 
         .card-cont h3 {
@@ -141,7 +142,7 @@
         }
 
         .card-cont .even-info p {
-            padding: 30px 250px 0 0
+            padding: 5px 74px 0 0;
         }
 
         .card-cont .even-date time span {
@@ -208,7 +209,7 @@
                     <section class="card-cont" >
                         <h3 style="margin-top: -999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999%">{{ billet.evenement.nom }}</h3>
                         <small>{{ billet.evenement.createur.nom }}</small>
-                        <h3>live In {{ billet.evenement.localisation }}</h3>
+                        <h3>live In {{ billet.evenement.addresse }}</h3>
                         <div class="even-date">
                             <i class="fa fa-calendar"></i>
                             <time>
@@ -219,7 +220,7 @@
                         <div class="even-info">
                             <i class="fa fa-map-marker"></i>
                             <p>
-                                {{ billet.evenement.localisation }}
+                                {{ billet.evenement.addresse }}
                             </p>
                         </div>
                         <label style="color: dodgerblue;float: right; margin-right: 47%;">{{ billet.type }} : {{ billet.prix }} DT</label><br><br>
