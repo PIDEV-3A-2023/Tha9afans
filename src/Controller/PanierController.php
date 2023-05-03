@@ -77,14 +77,4 @@ class PanierController extends AbstractController
 
         return $this->redirectToRoute('app_panier_index', [], Response::HTTP_SEE_OTHER);
     }
-
-    public function card(PanierRepository $panierRepository): Response
-    {
-        $panier = $panierRepository->findAll();
-        return $this->render('panier/card.html.twig', [
-            'paniers' => $panier,
-        ]);
-    }
-
-
 }
