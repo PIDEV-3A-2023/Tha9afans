@@ -136,10 +136,14 @@ class ProfilController extends AbstractController
     #[Route('/profil/produit/', name: 'app_profil-produit1')]
     public function produit(ProduitRepository $produitRepository): Response
     {
+        //find produit by user id
+        $produits = $produitRepository->findBy(['idVendeur' => $this->getUser()]);
         return $this->render('profil/produit.html.twig',[
-            'produits' => $produitRepository->findAll(),
+            'produits' => $produits,
         ]);
     }
+
+
     #[Route('/profil/evenement/{id}/session/', name: 'app_profil-evenement-session')]
     public function session(SessionRepository $sessionRepository,$id): Response
     {   $session = $sessionRepository->findBy(['evenement' => $id],['debit' => 'ASC']);

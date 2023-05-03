@@ -174,7 +174,31 @@ class ProduitController extends AbstractController
         }
 
         return $this->redirectToRoute('app_profil-produit1', [], Response::HTTP_SEE_OTHER);
+
     }
+
+
+
+
+    #[Route('/add-to-cart/{id}', name: 'add_to_cart')]
+    public function addToCart(Request $request, Produit $produit , PanierRepository $panierRepository ,PanierproduitRepository $panierproduitRepository): Response
+    {
+        $cartItem = new Panierproduit();
+        $panier = $panierRepository->findOneBy(['id' => $this->getUser()]);
+       /* $paniersproduits = $panierproduitRepository->findBy(['idPanier' => $panier]);*/
+        $cartItem->setIdPanier($panier);
+        $cartItem->setIdProduit($produit);
+        $cartItem->setQuantity($request->request->get('quantity', 1));
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($cartItem);
+        $entityManager->flush();
+        $this->addFlash('success', 'The product has been added to your cart.');
+        return $this->redirectToRoute('app_produit_index');
+
+    }
+
+
+}
 
 
 

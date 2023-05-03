@@ -247,6 +247,7 @@
               <div class="purchase-info">
 
 
+
                   <form method="post" action="{{ path('add_to_cart', {'id': produit.id}) }}">
                       <input type="hidden" name="_token" value="{{ csrf_token('add_to_cart') }}">
                       <input type="number" name="quantity" min="0" value="1">
@@ -256,7 +257,25 @@
                   </form>
               </div>
 
-          <div class = "social-links">
+             {# {% for flash_message in app.session.flashbag.get('success') %}
+                      <div class="alert alert-success">{{ flash_message }}</div>
+                  {% endfor %}#}
+              </div>
+
+
+
+
+                  <form method="post" action="{{ path('add_to_cart', {'id': produit.id}) }}">
+                      <input type="hidden" name="_token" value="{{ csrf_token('add_to_cart') }}">
+                      <input type="number" name="quantity" min="0" value="1">
+                      <button type="submit" class="btn">
+                          Add to Cart <i class="fas fa-shopping-cart"></i>
+                      </button>
+                  </form>
+              </div>
+
+
+              <div class = "social-links">
             <p>Share At: </p>
             <a href = "#">
               <i class = "fab fa-facebook-f"></i>
