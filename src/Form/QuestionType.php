@@ -35,10 +35,7 @@ class QuestionType extends AbstractType
                     new NotBlank([
                         'message' => 'Please enter an answer',
                     ]),
-                    new Length([
-                        'max' => 255,
-                        'maxMessage' => 'Your answer cannot be longer than {{ limit }} characters',
-                    ]),
+
                 ],
             ])
             ->add('timer', NumberType::class, [

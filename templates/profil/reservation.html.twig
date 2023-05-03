@@ -3,7 +3,6 @@
 {% block content %}
     <link rel="stylesheet" href="{{ asset('backoffice/assets/vendor/fonts/boxicons.css') }}" />
     <style>
-
         .table {
             --bs-table-bg: transparent;
             --bs-table-accent-bg: transparent;
@@ -326,52 +325,98 @@
         }
 
     </style>
-    <div class="table-responsive text-nowrap">
-        <form class="form-inline mb-3">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="search-input">
-        </form>
-        <table class="table">
-            <thead class="table-light">
-            <tr>
-                <th>Nom</th>
-                <th>Date_reservation</th>
-                <th>Evenement</th>
-                <th>Nombre de Billets</th>
-{#<th>Type de Billet</th>#}
-                <th>Payment_status</th>
-                <th>PrixTotal</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody class="table-border-bottom-0">
-            {% set displayedEvents = [] %} {# initialize the array to keep track of displayed event names #}
-            {% for reservation in reservations %}
-                {% for billetReserver in reservation.billetReservers %}
-                    {% set eventName = billetReserver.billet.evenement.nom %}
-                    {% if eventName not in displayedEvents %} {# check if the event name has not been displayed before #}
-                        {% set displayedEvents = displayedEvents|merge([eventName]) %} {# add the event name to the array #}
-                        <tr>
-                            <td>{{ reservation.nom }}</td>
-                            <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
-                            <td>{{ eventName }}</td>
-                            <td>{{ reservation.nombreBillet }}</td>
-                            <td>{{ reservation.paymentStatus }}</td>
-                            <td>{{ reservation.totalPrice * reservation.nombreBillet }} DT</td>
-                            <td>
-                                <a href="{{ path('download_pdf', {'reservationId': reservation.id}) }}" class="btn btn-sm btn-primary">
-                                    <i class="fas fa-print" style="color:#9b9b00;"></i>
-                                </a>
-                                <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}" class="btn btn-secondary btn-sm" >
-                                    <i class="bi bi-pencil" style="color:#20c57d"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+<html>
+<head>
+    <title>My Page</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Capture the click event on the search button
+            $('#search-button').click(function() {
+                // Retrieve the search term from the input field
+                var searchTerm = $('#search-input').val().toLowerCase();
 
+                // Loop through the table rows and hide the rows that do not match the search term
+                $('#reservations-table tbody tr').each(function() {
+                    var rowMatch = false;
+
+                    $(this).find('td').each(function() {
+                        var cellText = $(this).text().toLowerCase();
+
+                        if (cellText.indexOf(searchTerm) >= 0) {
+                            rowMatch = true;
+                            return false;  // Exit the inner loop if a match is found
+                        }
+                    });
+
+                    if (rowMatch) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+    <div class="table-responsive text-nowrap">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="search-input" placeholder="Search">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button" id="search-button">Search</button>
+            </div>
+        </div>
+        {% if reservations|length > 0 %}
+            <div class="table-responsive text-nowrap">
+                <table class="table" id="reservations-table">
+                    <thead class="table-light">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Date_reservation</th>
+                        <th>Evenement</th>
+                        <th>Nombre de Billets</th>
+                        {#<th>Type de Billet</th>#}
+                        <th>Payment_status</th>
+                        <th>PrixTotal</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                    {% set displayedEvents = [] %} {# initialize the array to keep track of displayed event names #}
+                    {% for reservation in reservations %}
+                        {% for billetReserver in reservation.billetReservers %}
+                            {% set eventName = billetReserver.billet.evenement.nom %}
+                            {% if eventName not in displayedEvents %} {# check if the event name has not been displayed before #}
+                                {% set displayedEvents = displayedEvents|merge([eventName]) %} {# add the event name to the array #}
+                                <tr>
+                                    <td>{{ reservation.nom }}</td>
+                                    <td>{{ reservation.dateReservation ? reservation.dateReservation|date('Y-m-d') : '' }}</td>
+                                    <td>{{ eventName }}</td>
+                                    <td>{{ reservation.nombreBillet }}</td>
+                                    <td>{{ reservation.paymentStatus }}</td>
+                                    <td>{{ reservation.totalPrice * reservation.nombreBillet }} DT</td>
+                                    <td>
+                                        <a href="{{ path('download_pdf', {'reservationId': reservation.id}) }}" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-print" style="color:#9b9b00;"></i>
+                                        </a>
+                                        <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}" class="btn btn-secondary btn-sm" >
+                                            <i class="bi bi-pencil" style="color:#20c57d"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn">
+                {{ knp_pagination_render(reservations) }}
+            </button>
+
+        {% endif %}
+
+    </div>
+</html>
 {% endblock %}
 

@@ -29,6 +29,7 @@
         <link href="{{asset('frontOffice/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
         <link href="{{asset('frontOffice/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
         <link href="{{asset('frontOffice/assets/vendor/aos/aos.css') }}" rel="stylesheet">
+        <link href="{{asset('frontOffice/assets/scss/Likebutton.scss') }}" rel="stylesheet">
 
         <!-- Template Main CSS File -->
         <link href="{{asset('frontOffice/assets/css/main.css') }}" rel="stylesheet">
@@ -52,6 +53,7 @@
                 <li><a href="{{ path('app_panier_produit_index') }}">Panier</a></li>
 
 
+
 {#                <li><a href="{{ path('app_facture_index') }}">Facture</a></li>#}
 {#                <li><a href="{{ path('app_payment') }}">Payment</a></li>#}
                 <li><a href="{{ path('app_produit_index') }}">Product</a></li>
@@ -62,10 +64,11 @@
                 <li><a href="{{ path('app_quiz_home_back') }}">Quiz</a></li>
 
 
+               {# <li><a href="{{ path('app_quiz_home_back') }}">Quiz</a></li>#}
 
 
 
-                <li><a href="about.html">Calendar</a></li>
+                {#<li><a href="about.html">Calendar</a></li>#}
                 <li><a href="services.html">About us</a></li>
                 {% if app.user %}
                     {{ include('prof.html.twig') }}

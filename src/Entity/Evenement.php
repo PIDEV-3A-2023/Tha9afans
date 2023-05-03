@@ -16,7 +16,6 @@ class Evenement
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-
     private ?string $nom = null;
 
     #[ORM\Column(length: 10000)]
@@ -36,6 +35,16 @@ class Evenement
 
     #[ORM\Column(length: 255)]
     private ?string $localisation = null;
+    #[ORM\Column(length: 255)]
+    private ?string $Addresse = null;
+    public function getAddresse(): ?string
+    {
+        return $this->Addresse;
+    }
+    public function setAddresse(?string $Addresse): void
+    {
+        $this->Addresse = $Addresse;
+    }
 
     #[ORM\Column(type: 'boolean')]
     private ?bool $freeorpaid ;

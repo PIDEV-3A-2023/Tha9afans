@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Panier;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
@@ -41,8 +42,19 @@ class RegistrationController extends AbstractController
                 )
             );
             $user->setTwofactor(false);
+
             $entityManager->persist($user);
             $entityManager->flush();
+
+            //create a panier for this user
+
+            $panier = new Panier();
+            $panier->setTotal(0);
+            $panier->setIdUser($user);
+            $panier->setIspayed(false);
+            $entityManager->persist($panier);
+            $entityManager->flush();
+
 
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
@@ -55,6 +67,9 @@ class RegistrationController extends AbstractController
             // do anything else you need here, like send an email
 
         }
+
+
+
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),

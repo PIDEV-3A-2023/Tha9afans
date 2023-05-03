@@ -16,5 +16,7 @@
         </div>
     {% endif %}
     {{ include('session/_form.html.twig') }}
-    <a href="{{  path('app_billet_new', {'eventId': event.id})  }}">Billet</a>
+    <div class="text-right">
+   <button class="btn btn-primary btn-lg active float-right" style=""> <a href="{{  path('app_billet_new', {'eventId': event.id})  }}" style="color: white">Ajouter les Billets</a></button
+    </div>
 {% endblock %}

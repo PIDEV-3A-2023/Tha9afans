@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Quiz Home{% endblock %}
+
+{% block body %}
+
+    <style>
+        .cardGrid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 200px;
+            margin-top: 5%;
+        }
+
+        .card {
+            background: #001A23;
+            border-radius: 30px;
+            padding: 10px;
+            flex: 0 0 calc(20% - 20px);
+            color: white;
+            position: relative;
+            width: 500px;
+            height: auto;
+            margin: 30px;
+        }
+
+        .image {
+            width: 92%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            margin: 20px;
+        }
+
+        .name {
+            font-size: 25px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .desc {
+            font-size: 15px;
+            margin-top: 5px;
+        }
+
+        .nb_ques {
+            font-size: 15px;
+            margin-top: 5px;
+        }
+
+        .timer {
+            font-size: 15px;
+            margin-top: 5px;
+        }
+
+        .textcontent {
+            margin: 30px;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 15px;
+            border-radius: 10px;
+            margin: 10px;
+        }
+
+        .btn:hover {
+            background-color: #3e8e41;
+        }
+
+        /* Media queries for responsive font sizes */
+        @media (max-width: 768px) {
+            .name {
+                font-size: 18px;
+            }
+
+            .desc,
+            .nb_ques,
+            .timer {
+                font-size: 14px;
+            }
+        }
+
+
+    </style>
+
+    <div class="cardGrid container">
+        {% for quiz in quizzes %}
+            <div class="card">
+                {% if quiz.quizCover is not empty %}
+                    <img class="image" src="{{ path('quiz_show_image', {'id': quiz.quizId}) }}" alt="{{ quiz.quizName }}">
+                {% else %}
+                    Aucune photo disponible
+                {% endif %}
+                <div class="textcontent">
+                    <div class="name">
+                        {{ quiz.quizName }}
+                    </div>
+                    <div class="desc">
+                        {{ quiz.quizDescription }}
+                    </div>
+                    <div class="nb_ques">
+                        {{ quiz.nbrQuestions }}
+                    </div>
+                    <div class="timer">
+                        Timer: {{ timer[loop.index0] }}
+                    </div>
+                </div>
+
+
+                <div>
+                    <a class="btn" href="{{ path('app_quiz_question_start', {id: quiz.quizId}) }}">Start playing</a>                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

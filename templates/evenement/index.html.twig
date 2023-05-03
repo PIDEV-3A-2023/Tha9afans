@@ -36,23 +36,110 @@
                     <h2>Evenements disponibles</h2>
                 </div>
                 <div class="row gy-4">
+
+
+                    <div id="Search-form" >
+                        {{ form_start(form) }}
+                        {{ form_widget(form.nom) }}
+                        {{ form_errors(form.nom) }}
+                        {{ form_end(form) }}
+                    </div>
+
+
+                <div id="events-container" class="row gy-4">
                     {% set index = 1%}
                     {% for evenement in evenements %}
                         {% set timer = index*100 %}
                         <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay= {{timer}} >
                             <div class="card">
                                 <div class="card-img">
-                                    <img src="../frontOffice/assets/img/logotha9afans.png" alt="" class="img-fluid">
+                                    <img src="../frontOffice/assets/img/event.jpg" alt="" class="img-fluid">
                                 </div>
                                 <h3><a href="{{ path('app_evenement_show', {'id': evenement.id}) }}" class="stretched-link">{{ evenement.nom }}</a></h3>
-                                <p>{{ evenement.description }}</p>
+                                <p style="height: 50px;white-space: normal;overflow: hidden;text-overflow: clip;">{{ evenement.description }}</p>
                             </div>
                         </div><!-- End Card Item -->
                         {% set index=index+1 %}
                     {% endfor %}
                 </div>
+
+                    <div class="d-flex justify-content-center">
+                        {{ knp_pagination_render(evenements) }}
+                    </div>
+                </div>
+                <div class="section-header">
+                    <span>Evenements du mois</span>
+                    <h2>Evenements du mois</h2>
+                </div>
+                <div id="calendar-holder"></div>
             </div>
         </section><!-- End Services Section -->
 
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                var calendarEl = document.getElementById('calendar-holder');
+
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    defaultView: 'dayGridMonth',
+                    editable: false,
+                    events: {{ data|raw }},
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth',
+                    },
+                    plugins: [ 'interaction', 'dayGrid', 'timeGrid' ], // https://fullcalendar.io/docs/plugin-index
+                    timeZone: 'UTC',
+                });
+                calendar.render();
+            });
+          /*  const form = document.querySelector('#Search-form form');
+            form.addEventListener('submit', (event) => {
+                event.preventDefault(); // prevent the form from reloading the page
+                const formData = new FormData(form);
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', form.action);
+                xhr.onload = function() {
+
+                    if (xhr.status === 200) {
+                        const data = JSON.parse(xhr.responseText);
+                        console.log(data);
+                        addEvents(data)
+                        form.reset();
+                    }
+                };
+
+                xhr.send(formData);
+
+            });
+            function addEvents(data) {
+                const container = document.querySelector('#events-container');
+                container.innerHTML = ""; // clear the container
+                let timer = 0;
+                data.forEach((event) => {
+                    timer = timer + 100;
+                    const template = `
+      <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay=${timer}>
+        <div class="card">
+          <div class="card-img">
+            <img src="../frontOffice/assets/img/logotha9afans.png" alt="" class="img-fluid">
+          </div>
+          <h3><a href="" class="stretched-link">${event.title}</a></h3>
+          <p style="height: 50px;white-space: normal;overflow: hidden;text-overflow: clip;">${event.start}</p>
+        </div>
+      </div><!-- End Card Item -->
+    `;
+                    container.insertAdjacentHTML('beforeend', template);
+                });
+            }*/
+        </script>
     </main><!-- End #main -->
 {% endblock %}

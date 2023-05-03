@@ -17,9 +17,3 @@ download_pdf:
   path: /reservation/{reservationId}/download-pdf
   controller: App\Controller\ProfilController::downloadPdfAction
 
-
-
-
-
-
-

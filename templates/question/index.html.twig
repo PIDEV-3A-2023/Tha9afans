@@ -1,6 +1,6 @@
 {% extends 'backBase.html.twig' %}
 
-{% block title %}Question index{% endblock %}
+{% block title %}Questions List{% endblock %}
 
 {% block body %}
 
@@ -15,20 +15,34 @@
             background-color: #001A23;
         }
         .btnn:hover {
+            color: white;
+        }
+
+        btn{
+            /*display: block;*/
+            margin-top: 10px;
+            margin-bottom: auto;
+            border-radius: 20px;
+            color: white;
+            border-color: white;
+        }
+        .btn:hover {
             background-color: white;
             color: #001A23;
         }
+
+
         table {
             width: 90%;
         }
     </style>
 
-    <h1>Question index</h1>
+    <h1>Questions List</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>QuestionId</th>
+
                 <th>Image</th>
                 <th>Question</th>
                 <th>Answer</th>
@@ -42,7 +56,6 @@
         <tbody>
         {% for question in questions %}
             <tr>
-                <td>{{ question.questionId }}</td>
                 <td>{% if question.image is not empty %}
                         <img src="{{ path('question_show_image', {'id': question.questionId}) }}" alt="{{ question.question }}" width="100px" height="100px">
                     {% else %}
@@ -82,7 +95,7 @@
     </table>
 
 
-    <form action="{{ path('app_question_new') }}" method="POST">
-        <button class="btnn" type="submit">Create new</button>
+    <form class="container" action="{{ path('app_question_new') }}" method="POST">
+        <button class=" btn btnn" style="background-color: #0b1526; width: 100%"  type="submit">Create new</button>
     </form>
 {% endblock %}
