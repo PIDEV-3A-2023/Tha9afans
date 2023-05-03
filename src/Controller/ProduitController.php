@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Evenement;
+use App\Entity\Panier;
 use App\Entity\Panierproduit;
 use App\Entity\Produit;
 use App\Form\PanierproduitType;
@@ -183,29 +184,35 @@ class ProduitController extends AbstractController
 
 
     #[Route('/add-to-cart/{id}', name: 'add_to_cart')]
-    public function addToCart(Request $request, Produit $produit , PanierRepository $panierRepository ,PanierproduitRepository $panierproduitRepository): Response
+    public function addToCart(Request $request, Produit $produit, PanierRepository $panierRepository, PanierproduitRepository $panierproduitRepository): Response
     {
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+
+        $panier = $panierRepository->findPanierByUser1($user);
+
+        // Check if the user has a cart, if not create one
+        if (!$panier) {
+            $panier = new Panier();
+            $panier->setTotal(0);
+            $panier->setIdUser($user);
+            $panier->setIspayed(false);
+            $entityManager->persist($panier);
+            $entityManager->flush();
+        }
+
         $cartItem = new Panierproduit();
-
-        /*$panier = $panierRepository->findPanierByUser($this->getUser());*/
-        $panier1 = $panierRepository->findPanierByUser1($this->getUser());
-
-
-
-
-
-        /* $paniersproduits = $panierproduitRepository->findBy(['idPanier' => $panier]);*/
-        $cartItem->setIdPanier($panier1);
-
-
+        $cartItem->setIdPanier($panier);
         $cartItem->setIdProduit($produit);
         $cartItem->setQuantity($request->request->get('quantity', 1));
-        $entityManager = $this->getDoctrine()->getManager();
+
         $entityManager->persist($cartItem);
         $entityManager->flush();
+
         $this->addFlash('success', 'The product has been added to your cart.');
         return $this->redirectToRoute('app_produit_index');
     }
+
 
 
 
