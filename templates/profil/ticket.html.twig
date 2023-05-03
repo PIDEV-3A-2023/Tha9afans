@@ -1,5 +1,10 @@
+
 <div>
+
+
+
         {% for billet in billets %}
+
             <section class="container">
                 <input type="number" name="{{ billet.type }}" value="0"><br><br>
                 <article class="card fl-left flex">
@@ -12,7 +17,7 @@
                     <section class="card-cont">
                         <h3>{{ billet.evenement.nom }}</h3>
                         <small>{{ billet.evenement.createur.nom }}</small>
-                        <h3>live In {{ billet.evenement.localisation }}</h3>
+                        <h3>live In {{ billet.evenement.addresse }}</h3>
                         <div class="even-date">
                             <i class="fa fa-calendar"></i>
                             <time>
@@ -23,7 +28,7 @@
                         <div class="even-info">
                             <i class="fa fa-map-marker"></i>
                             <p>
-                                {{ billet.evenement.localisation }}
+                                {{ billet.evenement.addresse }}
                             </p>
 
                         </div>

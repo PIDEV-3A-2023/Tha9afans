@@ -1,6 +1,5 @@
-{#
 {% extends '/profil/index.html.twig' %}
-{% block cardtitle %}List produits{% endblock %}
+{% block cardtitle %}Product List{% endblock %}
 {% block content %}
     <link rel="stylesheet" href="{{ asset('backoffice/assets/vendor/fonts/boxicons.css') }}" />
     <style>
@@ -327,42 +326,53 @@
         }
 
     </style>
+    {% if app.session.flashBag.has('success') %}
+        <div class="alert alert-success">
+            {% for message in app.session.flashBag.get('success') %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     <div class="table-responsive text-nowrap">
         <table class="table">
             <thead class="table-light">
             <tr>
+
                 <th>Nom</th>
-                <th>Description</th>
-                <th>Libelle</th>
                 <th>prix</th>
-                <th>image</th>
-                <th>remise</th>
-                <th>rating</th>
-                <th>prixapresremise</th>
-                <th>qt</th>
+
             </tr>
             </thead>
             <tbody class="table-border-bottom-0">
             {% for produit in produits %}
                 <tr>
-                    <td style="right: 5px;
-    position: relative;"><img   data-bs-toggle="tooltip"
-                                data-popup="tooltip-custom"
-                                data-bs-placement="top"
-                                class="avatar avatar-xs pull-up"
-                                src="{{ asset('frontOffice/assets/img/apple-touch-icon.png') }}" alt="Avatar" class="rounded-circle " />  <strong>{{ produit.nom }}</strong></td>
-                    <td>{{ produit.description  }}</td>
 
+
+
+                    <td><span class="badge bg-label-primary me-1">{{ produit.nom }}</span></td>
+                    <td>
+                        <span class="badge bg-label-primary me-1">{{ produit.prix }}</span>
+                    </td>
+
+                    <td>
                         <div class="dropdown">
                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                 <i class="bx bx-dots-vertical-rounded"></i>
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ path('app-produit-edit', {'id': produit.id}) }}"
-                                ><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                                <form method="post" action="{{path('app-produit-delete', {'id': produit.id}) }}}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+
+                                <a class="dropdown-item" href="#">
+                                    <i class="bx bx-edit-alt me-1"></i> Edit
+                                </a>
+                                <form method="post" action="{{ path('app-produitsS-delete', {'id': produit.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+
+                                <form method="post" action="{{path('app_produit_delete', {'id': produit.id}) }}}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+
                                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ produit.id) }}">
-                                    <button class="dropdown-item"><i class="bx bx-trash me-1"></i> Delete</button>
+                                    <button class="dropdown-item">
+                                        <i class="bx bx-trash me-1"></i> Delete
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -372,4 +382,5 @@
             </tbody>
         </table>
     </div>
-{% endblock %}#}
+
+{% endblock %}

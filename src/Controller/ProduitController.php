@@ -2,12 +2,20 @@
 
 namespace App\Controller;
 
+use App\Entity\Evenement;
+use App\Entity\Panier;
+use App\Entity\Panierproduit;
 use App\Entity\Produit;
+use App\Form\PanierproduitType;
 use App\Form\ProduitType;
 use App\Repository\CategorieRepository;
+use App\Repository\EvenementRepository;
+use App\Repository\PanierproduitRepository;
+use App\Repository\PanierRepository;
 use App\Repository\ProduitRepository;
 use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -45,7 +53,7 @@ class ProduitController extends AbstractController
         ]);
     }
 
-    #[Route('/produit/nouveau', name:'nouveau_produit', methods: ['GET', 'POST'])]
+    #[Route('/produit/nouveau', name:'nouveau_produitadd')]
     public function newProduit(Request $request): Response
     {
         $produit = new Produit();
@@ -53,20 +61,28 @@ class ProduitController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Save the new Produit object to the database
+            $user = $this->getUser();
+            $produit->setIdVendeur($this->getUser()); // Set the ID of the vendor to the user ID
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($produit);
             $entityManager->flush();
-            $this->addFlash('success', 'The produit has been created successfully.');
-            // Redirect the user to the index page for Produits
-            return $this->redirectToRoute('app_produit_index');
+            /*$this->addFlash('success', 'The produit has been created successfully.');*/
+            return $this->render('produit/new.html.twig', [
+                'produits' => $produit,
+                'form' => $form->createView(),
+            ]);
         }
-
-        // Render the form template with the form object
         return $this->render('produit/new.html.twig', [
             'form' => $form->createView(),
+
+
         ]);
     }
+
+
+
+
+
     #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ProduitRepository $produitRepository): Response
     {
@@ -150,8 +166,63 @@ class ProduitController extends AbstractController
         ]);
     }
 
+
+
+
+    #[Route('/{id}', name: 'app-produitsS-delete', methods: ['POST'])]
+    public function deleteproduts(Request $request, Produit $produitt, ProduitRepository $produitRepositoryRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$produitt->getId(), $request->request->get('_token'))) {
+            $produitRepositoryRepository->remove($produitt, true);
+        }
+
+        return $this->redirectToRoute('app_profil-produit1', [], Response::HTTP_SEE_OTHER);
+
     }
 
+
+
+
+    #[Route('/add-to-cart/{id}', name: 'add_to_cart')]
+    public function addToCart(Request $request, Produit $produit, PanierRepository $panierRepository, PanierproduitRepository $panierproduitRepository): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+
+        $panier = $panierRepository->findPanierByUser1($user);
+
+        // Check if the user has a cart, if not create one
+        if (!$panier) {
+            $panier = new Panier();
+            $panier->setTotal(0);
+            $panier->setIdUser($user);
+            $panier->setIspayed(false);
+            $entityManager->persist($panier);
+            $entityManager->flush();
+        }
+
+        $cartItem = new Panierproduit();
+        $cartItem->setIdPanier($panier);
+        $cartItem->setIdProduit($produit);
+        $cartItem->setQuantity($request->request->get('quantity', 1));
+
+        $entityManager->persist($cartItem);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'The product has been added to your cart.');
+        return $this->redirectToRoute('app_produit_index');
+    }
+
+
+
+
+
+
+
+
+
+
+}
 
 
 

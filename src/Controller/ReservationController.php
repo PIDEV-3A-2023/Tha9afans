@@ -124,12 +124,12 @@ class ReservationController extends AbstractController
             ->getOneOrNullResult();
 
         if ($existingReservation) {
-            $errorMessage = 'Vous avez déjà réservé un billet pour cet événement';
-            return $this->redirectToRoute('app_evenement_show',  ['id' => $eventId, 'errorMessage' => $errorMessage]);
+            $this->addFlash('danger', 'Vous avez déjà une réservation pour cet événement');
+            return $this->redirectToRoute('app_evenement_show',  ['id' => $eventId]);
         }
 
         $form = $this->createForm(ReservationType::class, $reservation,[
-            'localisation-initial-value' => $event->getLocalisation(),
+            'localisation-initial-value' => $event->getAddresse(),
             'date-initial-value' => $event->getDate(),
         ]);
         $form->handleRequest($request);
@@ -137,7 +137,7 @@ class ReservationController extends AbstractController
             $reservation->setUser($user);
             $reservation->setStatus('en attente');
             $reservation->setPaymentStatus('non payé');
-            $reservation->setLocation($event->getLocalisation());
+            $reservation->setLocation($event->getAddresse());
             $reservationRepository->save($reservation, true);
             $id = $reservationRepository->find($reservation)->getId();
             return $this->redirectToRoute('app_ticket', ['reservationId'=>$id ,'eventId'=>$event->getId()], Response::HTTP_SEE_OTHER);
