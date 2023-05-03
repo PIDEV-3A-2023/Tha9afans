@@ -47,13 +47,13 @@ class EvenementRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
-    public function findbyname($nom)
-    {
-        return $this->createQueryBuilder('e')
-            ->where('e.nom LIKE :nom')
-            ->setParameter('nom', '%' . $nom . '%')
+    function SearchByname($nom){
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.nom like :val')
+            ->setParameter('val', '%'.$nom.'%')
             ->getQuery()
-            ->getResult();
+            ->getResult()
+            ;
     }
 
 //    /**

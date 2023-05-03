@@ -5,12 +5,14 @@ namespace App\Controller;
 use App\Entity\Commentaire;
 use App\Entity\Evenement;
 use App\Form\CommentaireType;
+use App\Form\EvenementSearchType;
 use App\Form\EvenementType;
 use App\Repository\CommentaireRepository;
 use App\Repository\EvenementRepository;
 use App\Repository\GalerieRepository;
 use App\Repository\JaimeRepository;
 use App\Repository\SessionRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,16 +23,49 @@ use Symfony\Component\Routing\Annotation\Route;
 class EvenementController extends AbstractController
 {
 
-    #[Route('/', name: 'app_evenement_index', methods: ['GET'])]
-    public function index(EvenementRepository $evenementRepository,Request $request): Response
-    {
+    #[Route('/', name: 'app_evenement_index', methods: ['POST','GET'])]
+    public function index(EvenementRepository $evenementRepository,Request $request,PaginatorInterface $paginator): Response
+    {   $form = $this->createForm(EvenementSearchType::class);
+        $form->handleRequest($request);
+        $events=$evenementRepository->findAll();
+        foreach ($events as $event){
+            $rdata[] = [
+                'id' => $event->getId(),
+                'title' => $event->getNom(),
+                'start' => $event->getDate()->format('Y-m-d'),
+            ];
+        }
+        $data= json_encode($rdata);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $nom = $form->get('nom')->getData();
+            $evenements = $evenementRepository->SearchByname($nom);
+            $evenements = $paginator->paginate(
+                $evenements,
+                $request->query->getInt('page', 1),
+                2,
+            );
+            return $this->render('evenement/index.html.twig', [
+                'form' => $form->createView(),
+                'evenements' => $evenements,
+                'data'=>$data
+            ]);
+        }
+
+        $events = $paginator->paginate(
+            $evenementRepository->findAll(),
+            $request->query->getInt('page', 1),
+            2
+        );
 
         return $this->render('evenement/index.html.twig', [
-
-            'evenements' => $evenementRepository->findAll(),
+            'form' => $form->createView(),
+            'evenements' => $events,
+            'data'=>$data
         ]);
 
     }
+
 
     /* #[Route('/new', name: 'app_evenement_new', methods: ['GET', 'POST'])]
      public function new(Request $request, EvenementRepository $evenementRepository): Response
@@ -169,13 +204,13 @@ class EvenementController extends AbstractController
 
         return $this->redirectToRoute('app_profil-evenement', [], Response::HTTP_SEE_OTHER);
     }
-    #[Route('/search', name: 'app_evenement_search', methods: ['GET', 'POST'])]
-    public function search(Request $request,EvenementRepository $evenementRepository): JsonResponse
+    #[Route('/search', name: 'search', methods: ['GET', 'POST'])]
+    public function search(Request $request, EvenementRepository $evenementRepository): JsonResponse
     {
-        $query = $request->query->get('query');
+        $name = $request->request->get('name');
 
         // perform the search using $query and return the results as an array
-        $evenements = $evenementRepository->findByNom($query);
+        $evenements = $evenementRepository->findByNom($name);
 
         $evenementsData = [];
         foreach ($evenements as $evenement) {
@@ -186,6 +221,7 @@ class EvenementController extends AbstractController
             ];
         }
 
-        return new JsonResponse([$evenementsData]);
+        return new JsonResponse($evenementsData);
     }
+
 }
