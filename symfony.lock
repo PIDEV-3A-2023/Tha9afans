@@ -50,7 +50,6 @@
             "./migrations/.gitignore"
         ]
     },
-
     "google/apiclient": {
         "version": "2.13",
         "recipe": {
@@ -60,7 +59,6 @@
             "ref": "07a97ec434d43b7903c78069a04c92adb6442e52"
         }
     },
-
     "knplabs/knp-paginator-bundle": {
         "version": "v5.9.0"
     },
@@ -321,10 +319,7 @@
             "branch": "main",
             "version": "1.1",
             "ref": "0c643e17b5340747b35c2c75e11727fa31bfa9bb"
-        },
-        "files": [
-            "./config/routes/calendar.yaml"
-        ]
+        }
     },
     "twig/extra-bundle": {
         "version": "v3.5.1"
