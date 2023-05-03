@@ -52,7 +52,7 @@ class ProduitController extends AbstractController
         ]);
     }
 
-    #[Route('/produit/nouveau', name:'nouveau_produit', methods: ['GET', 'POST'])]
+    #[Route('/produit/nouveau', name:'nouveau_produitadd')]
     public function newProduit(Request $request): Response
     {
         $produit = new Produit();
@@ -65,14 +65,16 @@ class ProduitController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($produit);
             $entityManager->flush();
-            $this->addFlash('success', 'The produit has been created successfully.');
-            return $this->redirectToRoute('app_profil-produit1', [
-                'produit' => $produit,
+            /*$this->addFlash('success', 'The produit has been created successfully.');*/
+            return $this->render('produit/new.html.twig', [
+                'produits' => $produit,
                 'form' => $form->createView(),
             ]);
         }
-        return $this->render('profil/produit.html.twig', [
+        return $this->render('produit/new.html.twig', [
             'form' => $form->createView(),
+
+
         ]);
     }
 
@@ -184,32 +186,18 @@ class ProduitController extends AbstractController
     public function addToCart(Request $request, Produit $produit , PanierRepository $panierRepository ,PanierproduitRepository $panierproduitRepository): Response
     {
         $cartItem = new Panierproduit();
-        $panier = $panierRepository->findOneBy(['id' => $this->getUser()]);
-       /* $paniersproduits = $panierproduitRepository->findBy(['idPanier' => $panier]);*/
-        $cartItem->setIdPanier($panier);
-        $cartItem->setIdProduit($produit);
-        $cartItem->setQuantity($request->request->get('quantity', 1));
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($cartItem);
-        $entityManager->flush();
-        $this->addFlash('success', 'The product has been added to your cart.');
-        return $this->redirectToRoute('app_produit_index');
 
-    }
-
-
-}
+        /*$panier = $panierRepository->findPanierByUser($this->getUser());*/
+        $panier1 = $panierRepository->findPanierByUser1($this->getUser());
 
 
 
 
-    #[Route('/add-to-cart/{id}', name: 'add_to_cart')]
-    public function addToCart(Request $request, Produit $produit , PanierRepository $panierRepository ,PanierproduitRepository $panierproduitRepository): Response
-    {
-        $cartItem = new Panierproduit();
-        $panier = $panierRepository->findOneBy(['id' => $this->getUser()]);
+
         /* $paniersproduits = $panierproduitRepository->findBy(['idPanier' => $panier]);*/
-        $cartItem->setIdPanier($panier);
+        $cartItem->setIdPanier($panier1);
+
+
         $cartItem->setIdProduit($produit);
         $cartItem->setQuantity($request->request->get('quantity', 1));
         $entityManager = $this->getDoctrine()->getManager();
@@ -218,6 +206,13 @@ class ProduitController extends AbstractController
         $this->addFlash('success', 'The product has been added to your cart.');
         return $this->redirectToRoute('app_produit_index');
     }
+
+
+
+
+
+
+
 
 
 }

@@ -93,7 +93,7 @@ class PanierController extends AbstractController
 
     }*/
 
-    }
+
 
 
 

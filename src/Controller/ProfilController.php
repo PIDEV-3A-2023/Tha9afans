@@ -133,15 +133,6 @@ class ProfilController extends AbstractController
             'evenements' => $evenementRepository->findBy(['createur' => $user->getId()])
         ]);
     }
-    #[Route('/profil/produit/', name: 'app_profil-produit1')]
-    public function produit(ProduitRepository $produitRepository): Response
-    {
-        //find produit by user id
-        $produits = $produitRepository->findBy(['idVendeur' => $this->getUser()]);
-        return $this->render('profil/produit.html.twig',[
-            'produits' => $produits,
-        ]);
-    }
 
 
     #[Route('/profil/evenement/{id}/session/', name: 'app_profil-evenement-session')]
@@ -156,7 +147,6 @@ class ProfilController extends AbstractController
     #[Route('/profil/produit/', name: 'app_profil-produit1')]
     public function produitowner(ProduitRepository $produitRepository): Response
     {
-
         //find produit by user id
         $produits = $produitRepository->findBy(['idVendeur' => $this->getUser()]);
         return $this->render('profil/produit.html.twig',[
