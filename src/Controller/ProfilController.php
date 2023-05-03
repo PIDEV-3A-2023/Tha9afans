@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Evenement;
+use App\Entity\Produit;
 use App\Entity\Reservation;
 use App\Entity\User;
 use App\Form\ChangePasswordType;
@@ -13,6 +14,7 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
 use App\Repository\BilletRepository;
 use App\Repository\BilletReserverRepository;
 use App\Repository\EvenementRepository;
+use App\Repository\ProduitRepository;
 use App\Repository\ReservationRepository;
 use App\Entity\Session;
 use App\Form\SessionType;
@@ -131,8 +133,8 @@ class ProfilController extends AbstractController
             'evenements' => $evenementRepository->findBy(['createur' => $user->getId()])
         ]);
     }
-    #[Route('/profil/produit/', name: 'app_profil-produit')]
-    public function produit(produitRepository $produitRepository): Response
+    #[Route('/profil/produit/', name: 'app_profil-produit1')]
+    public function produit(ProduitRepository $produitRepository): Response
     {
         return $this->render('profil/produit.html.twig',[
             'produits' => $produitRepository->findAll(),
@@ -144,6 +146,17 @@ class ProfilController extends AbstractController
         return $this->render('profil/session.html.twig',[
             'sessions' => $session,
             'id' => $id
+        ]);
+    }
+
+    #[Route('/profil/produit/', name: 'app_profil-produit1')]
+    public function produitowner(ProduitRepository $produitRepository): Response
+    {
+
+        //find produit by user id
+        $produits = $produitRepository->findBy(['idVendeur' => $this->getUser()]);
+        return $this->render('profil/produit.html.twig',[
+            'produits' => $produits,
         ]);
     }
     #[Route('/profil/seetings', name: 'account_seetings')]

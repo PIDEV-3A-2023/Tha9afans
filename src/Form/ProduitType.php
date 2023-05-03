@@ -80,10 +80,7 @@
             ])
 
 
-            ->add('idVendeur', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'nom', // ou une autre propriété de user à afficher
-            ])
+
             ->add('idCategorie', EntityType::class, [
                 'class' =>Categorie::class,
                 'choice_label' => 'nom', // ou une autre propriété categorie à afficher
@@ -162,10 +159,7 @@
     ]
     ])
 
-    ->add('idVendeur', EntityType::class, [
-    'class' => User::class,
-    'choice_label' => 'nom', // ou une autre propriété de Joueur à afficher
-    ])
+
     ->add('idCategorie', EntityType::class, [
     'class' =>Categorie::class,
     'choice_label' => 'nom', // ou une autre propriété de Joueur à afficher
