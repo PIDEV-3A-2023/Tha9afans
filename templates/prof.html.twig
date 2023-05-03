@@ -158,8 +158,8 @@
  <li class="nav-item navbar-dropdown dropdown-user dropdown">
     <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
 
-       <div class="avatar1 avatar-online">#}
-           <img src="{{ path('user_show', {'id': app.user.id}) }}" alt="" class="w-px-40 h-auto rounded-circle">#}
+       {#<div class="avatar1 avatar-online">#}{#
+           <img src="{{ path('user_show', {'id': app.user.id}) }}" alt="" class="w-px-40 h-auto rounded-circle">
        </div>#}
 
         <div class="avatar1 avatar-online">
@@ -178,12 +178,12 @@
                 <div class="d-flex">
                     <div class="flex-shrink-0 me-3">
 
-                       <div class="avatar1 avatar-online">#}
-                          <img src="{{ path('user_show', {'id': app.user.id}) }}" alt="" class="w-px-40 h-auto rounded-circle">#}
+                    {#   <div class="avatar1 avatar-online">
+                          <img src="{{ path('user_show', {'id': app.user.id}) }}" alt="" class="w-px-40 h-auto rounded-circle">
                   </div>#}
                     </div>
                     <div class="flex-grow-1">
-                        <span class="fw-semibold d-block">{{app.user.nom}}</span>#}
+                        {#<span class="fw-semibold d-block">{{app.user.nom}}</span>#}
 
                         <div class="avatar1 avatar-online">
                             {% if app.user %}
@@ -195,7 +195,7 @@
                     </div>
                     <div class="flex-grow-1">
                         {% if app.user %}
-                            <span class="fw-semibold d-block">{{app.user.nom}}</span>
+                            <span class="fw-semibold d-block">{{app.user.nom}} {{ app.user.prenom }}</span>
                         {% else %}
                             <span class="fw-semibold d-block">Vous devrez connecter</span>
                         {% endif %}

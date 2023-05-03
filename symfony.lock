@@ -12,7 +12,7 @@
         ]
     },
     "doctrine/doctrine-bundle": {
-        "version": "2.8",
+        "version": "2.9",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -63,7 +63,7 @@
 
     "knplabs/knp-paginator-bundle": {
         "version": "v5.9.0"
-
+    },
     "knpuniversity/oauth2-client-bundle": {
         "version": "2.14",
         "recipe": {
@@ -71,22 +71,7 @@
             "branch": "main",
             "version": "1.20",
             "ref": "1ff300d8c030f55c99219cc55050b97a695af3f6"
-        },
-        "files": [
-            "./config/packages/knpu_oauth2_client.yaml"
-        ]
-    },
-    "nyholm/psr7": {
-        "version": "1.6",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "1.0",
-            "ref": "0cd4d2d0e7f646fda75f9944f747a56e6ed13d4c"
-        },
-        "files": [
-            "./config/packages/nyholm_psr7.yaml"
-        ]
+        }
     },
     "phpunit/phpunit": {
         "version": "9.6",
@@ -324,18 +309,6 @@
         "files": [
             "./config/packages/web_profiler.yaml",
             "./config/routes/web_profiler.yaml"
-        ]
-    },
-    "symfony/webapp-pack": {
-        "version": "1.1",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "1.0",
-            "ref": "aece95c8a188f6e6d04f01ccb8678d1764fd2642"
-        },
-        "files": [
-            "./config/packages/messenger.yaml"
         ]
     },
     "symfonycasts/verify-email-bundle": {
