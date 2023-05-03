@@ -3,11 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Evenement;
+use App\Entity\Produit;
 use App\Entity\Reservation;
 use App\Entity\User;
 use App\Form\ChangePasswordType;
 use App\Form\EvenementType;
 use App\Form\ReservationType;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use App\Repository\BilletRepository;
 use App\Repository\BilletReserverRepository;
 use App\Repository\EvenementRepository;
@@ -19,9 +22,12 @@ use App\Repository\SessionRepository;
 use BaconQrCode\Renderer\Image\Png;
 use BaconQrCode\Writer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 use Dompdf\Dompdf;
 
 class ProfilController extends AbstractController
@@ -44,27 +50,36 @@ class ProfilController extends AbstractController
             return $this->render('profil/facture.html.twig');
         }
         #[Route('/profil/reservation/', name: 'app_profil-reservation')]
-    public function reservation(ReservationRepository $reservationRepository , BilletReserverRepository $billetReserverRepository): Response
-    {
-        $user= $this->getUser();
-        $reservations = $reservationRepository->findBy(['user' => $user]);
-        foreach ($reservations as $reservation) {
-            $billetReservers = $billetReserverRepository->findBy(['reservation' => $reservation]);
-            $resultatPrixReservation=0;
-            $resultatNombreBillet=0;
-            $result []=[] ;
-            foreach ($billetReservers as $billetReserver) {
-               $resultatPrixReservation += $billetReserver->getBillet()->getPrix();
-               $resultatNombreBillet += $billetReserver->getNombre();
+        public function reservation(Request $request, ReservationRepository $reservationRepository, BilletReserverRepository $billetReserverRepository, PaginatorInterface $paginator): Response
+        {
+            $user = $this->getUser();
+            $reservations = $reservationRepository->findBy(['user' => $user]);
+            foreach ($reservations as $reservation) {
+                $billetReservers = $billetReserverRepository->findBy(['reservation' => $reservation]);
+                $resultatPrixReservation = 0;
+                $resultatNombreBillet = 0;
+                foreach ($billetReservers as $billetReserver) {
+                    $resultatPrixReservation += $billetReserver->getBillet()->getPrix();
+                    $resultatNombreBillet += $billetReserver->getNombre();
+                }
+                $reservation->setTotalPrice($resultatPrixReservation);
+                $reservation->setNombreBillet($resultatNombreBillet);
             }
-            $reservation->setTotalPrice($resultatPrixReservation);
-            $reservation->setNombreBillet($resultatNombreBillet);
+
+            // Use the Paginator service to paginate the $reservations array
+            $pagination = $paginator->paginate(
+                $reservations,
+                $request->query->getInt('page', 1),
+                // Get the current page number from the request, default to 1
+                3 // Limit the number of reservations displayed per page to 4
+            );
+
+            return $this->render('profil/reservation.html.twig', [
+                'reservations' => $pagination,
+            ]);
         }
 
-        return $this->render('profil/reservation.html.twig',[
-            'reservations' => $reservations
-        ]);
-    }
+
     public function downloadPdfAction($reservationId, ReservationRepository $reservationRepository, BilletReserverRepository $billetReserverRepository,BilletRepository $billetRepository)
     {
         // Get the reservation and associated ticket information
@@ -106,7 +121,6 @@ class ProfilController extends AbstractController
         $response->setContent($dompdf->output());
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Disposition', 'attachment; filename="ticket.pdf"');
-
         return $response;
     }
 
@@ -114,8 +128,9 @@ class ProfilController extends AbstractController
     #[Route('/profil/evenement/', name: 'app_profil-evenement')]
     public function evenement(EvenementRepository $evenementRepository): Response
     {
+        $user=$this->getUser();
         return $this->render('profil/evenement.html.twig',[
-            'evenements' => $evenementRepository->findAll(),
+            'evenements' => $evenementRepository->findBy(['createur' => $user->getId()])
         ]);
     }
     #[Route('/profil/produit/', name: 'app_profil-produit1')]
@@ -135,6 +150,17 @@ class ProfilController extends AbstractController
         return $this->render('profil/session.html.twig',[
             'sessions' => $session,
             'id' => $id
+        ]);
+    }
+
+    #[Route('/profil/produit/', name: 'app_profil-produit1')]
+    public function produitowner(ProduitRepository $produitRepository): Response
+    {
+
+        //find produit by user id
+        $produits = $produitRepository->findBy(['idVendeur' => $this->getUser()]);
+        return $this->render('profil/produit.html.twig',[
+            'produits' => $produits,
         ]);
     }
     #[Route('/profil/seetings', name: 'account_seetings')]

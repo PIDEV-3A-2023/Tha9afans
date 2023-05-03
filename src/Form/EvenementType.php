@@ -29,8 +29,8 @@ class EvenementType extends AbstractType
             ->add('date',null,['constraints'=>[new Assert\NotBlank(message: 'Saisit la date evenement.'),
                 new Assert\GreaterThanOrEqual('today', message: "la date doit etre superieur a la date d'aujourd'hui.")]
             ])
-            ->add('localisation')
-            ->add('createur',EntityType::class,['class'=>User::class,'choice_label'=>'nom'])
+            ->add('localisation',null,['label'=>'location :'])
+            ->add('Addresse')
             ->add('freeorpaid', ChoiceType::class, [
                 'label' => 'Payement :',
                 'choices' => [
@@ -45,7 +45,7 @@ class EvenementType extends AbstractType
                 'label' => "Type d'evenement  :",
                 'choices' => [
                     'Online' => false,
-                    'Ofline' => true,
+                    'Offline' => true,
                 ],
                 'choice_label' => function($value, $key, $index) {
                     return $value ? 'Online' : 'Ofline';

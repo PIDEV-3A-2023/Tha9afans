@@ -3,8 +3,49 @@
 {% block title %}Quiz BackOffice Management{% endblock %}
 
 {% block body %}
-    <a href="{{ path('app_question_new') }}"> Add Question </a>
-    <a href="{{ path('app_question_index') }}">List Questions</a>
-    <a href="{{ path('app_quiz_new') }}"> Add Quiz </a>
-    <a href="{{ path('app_quiz_index') }}">List Quizzes</a>
+
+<style>
+        .flex {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .button {
+            font-size: x-large;
+            color: #000000;
+            background-color: #e1dcfa;
+            padding: 10px;
+            border-radius: 5px;
+            width: 300px;
+            height: auto;
+            text-align: center;
+            text-align-all: center ;
+            text-decoration: none;
+            display: inline-block;
+            margin: 4px 10px;
+            cursor: pointer;
+        }
+        /*.container {*/
+        /*    display: flex;*/
+        /*    justify-content: center;*/
+        /*    align-items: center;*/
+        /*}*/
+    </style>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Quiz BackOffice Management</h1>
+                <h5>Here you can manage your quizzes and questions.</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="container flex ">
+        <a class="button" href="{{ path('app_question_new') }}"> Add Question </a>
+        <a class="button" href="{{ path('app_question_index') }}">List Questions</a>
+        <a class="button" href="{{ path('app_quiz_new') }}"> Add Quiz </a>
+        <a class="button" href="{{ path('app_quiz_index') }}">List Quizzes</a>
+    </div>
+
 {% endblock %}

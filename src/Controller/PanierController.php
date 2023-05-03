@@ -42,7 +42,8 @@ class PanierController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_panier_show', methods: ['GET'])]
+
+    #[Route('/api/produits/{id}', name: 'api_produits_show', methods: ['GET'])]
     public function show(Panier $panier): Response
     {
         return $this->render('panier/show.html.twig', [
@@ -79,13 +80,22 @@ class PanierController extends AbstractController
     }
 
 
+
 /*    public function card(PanierRepository $panierRepository): Response
+
+    public function card(PanierRepository $panierRepository): Response
+
     {
         $panier = $panierRepository->findAll();
         return $this->render('panier/card.html.twig', [
             'paniers' => $panier,
         ]);
+
     }*/
+
+    }
+
+
 
 
 

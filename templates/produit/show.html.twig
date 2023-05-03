@@ -55,6 +55,12 @@
     .product-rating span{
         font-weight: 600;
         color: #252525;
+    }.product-rating{
+        color: #ffc107;
+    }
+    .product-rating span{
+        font-weight: 600;
+        color: #252525;
     }
     .product-price{
         margin: 1rem 0;
@@ -241,6 +247,7 @@
               <div class="purchase-info">
 
 
+
                   <form method="post" action="{{ path('add_to_cart', {'id': produit.id}) }}">
                       <input type="hidden" name="_token" value="{{ csrf_token('add_to_cart') }}">
                       <input type="number" name="quantity" min="0" value="1">
@@ -253,6 +260,18 @@
              {# {% for flash_message in app.session.flashbag.get('success') %}
                       <div class="alert alert-success">{{ flash_message }}</div>
                   {% endfor %}#}
+              </div>
+
+
+
+
+                  <form method="post" action="{{ path('add_to_cart', {'id': produit.id}) }}">
+                      <input type="hidden" name="_token" value="{{ csrf_token('add_to_cart') }}">
+                      <input type="number" name="quantity" min="0" value="1">
+                      <button type="submit" class="btn">
+                          Add to Cart <i class="fas fa-shopping-cart"></i>
+                      </button>
+                  </form>
               </div>
 
 
