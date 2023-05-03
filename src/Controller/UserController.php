@@ -18,7 +18,7 @@ use League\Csv\Writer;
 #[Route('/user')]
 class UserController extends AbstractController
 {
-    #[Route('/', name: 'app_user_index', methods: ['GET']),IsGranted("ROLE_ADMIN")]
+    #[Route('/', name: 'app_user_index', methods: ['GET'])]
     public function index(Request $request, UserRepository $userRepository): Response
     {
         $query = $request->query->get('query');
