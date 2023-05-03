@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Panier;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -74,4 +75,19 @@ class PanierRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findPanierByUser1($id)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.idUser = :val')
+            ->setParameter('val', $id)
+            ->setMaxResults(1) // add this line to limit the result to one
+            ->getQuery()
+            ->getOneOrNullResult() // use getOneOrNullResult instead of getResult
+            ;
+    }
+
 }
