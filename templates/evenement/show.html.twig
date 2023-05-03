@@ -97,7 +97,13 @@
             </nav>
         </div><!-- End Breadcrumbs -->
 
-
+        {% if app.session.flashbag.has('danger') %}
+            <div class="alert alert-danger">
+                {% for message in app.session.flashbag.get('danger') %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
         {#{% if errorMessage %}
             <div class="alert alert-danger">{{ errorMessage }}</div>
         {% endif %}#}

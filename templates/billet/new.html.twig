@@ -59,11 +59,13 @@
     <div >
         {{ include('billet/_form.html.twig') }}
     </div>
-    {% for flash_message in app.session.flashbag.get('warning') %}
-        <div class="alert alert-warning" role="alert">
-            {{ flash_message }}
+    {% if app.session.flashbag.has('warning') %}
+        <div class="alert alert-danger">
+            {% for message in app.session.flashbag.get('warning') %}
+                {{ message }}
+            {% endfor %}
         </div>
-    {% endfor %}
+    {% endif %}
     <div>
         <table border="2px">
             <thead>
