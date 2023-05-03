@@ -1,0 +1,87 @@
+<div class="card text-dark">
+    <div class="card-body p-4">
+        <h4 class="mb-0">Recent comments</h4>
+        <p class="fw-light mb-4 pb-2">Latest Comments section by users</p>
+    </div>
+    <div id="recent-comments">
+        {% for commentaire in commentaires %}
+            <hr class="my-0" />
+            <div class="card-body p-4">
+                <div class="d-flex flex-start">
+                    <img class="rounded-circle shadow-1-strong me-3" src="{{ path('user_show', {'id': commentaire.user.id}) }}" alt="{{commentaire.user.nom }}" width="60" height="60" />
+                    <div>
+                        <h6 class="fw-bold mb-1">{{ commentaire.user.nom}} {{ commentaire.user.prenom }}</h6>
+                        <div class="d-flex align-items-center mb-3">
+                            <p class="mb-0">{{ commentaire.date ? commentaire.date|date('Y-m-d H:i') : '' }}</p>
+                            <form method="post" action="{{ path('app_commentaire_delete', {'id': commentaire.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commentaire.id) }}">
+                                <button class="btn"><i class="fas fa-x ms-2"></i></button>
+                            </form>
+
+                        </div>
+                        <p class="mb-0">{{ commentaire.commentaire}}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div id="comment-form" class="card-body p-4">
+        {{ form_start(form, {'attr': {'id': 'comment-form'}}) }}
+        {{ form_label(form.commentaire) }}
+        {{ form_widget(form.commentaire, {'attr': {'class': 'form-control', 'placeholder': 'Add a comment'}}) }}
+        {{ form_errors(form.commentaire) }}
+        <button type="submit" class="btn btn-primary mt-2">Post comment</button>
+        {{ form_end(form) }}
+    </div>
+</div>
+
+<style>
+    .link-muted { color: #aaa; }
+    .link-muted:hover { color: #1266f1; }
+</style>
+
+<script>
+    const form = document.querySelector('#comment-form form');
+    form.addEventListener('submit', (event) => {
+        event.preventDefault(); // prevent the form from reloading the page
+        const formData = new FormData(form);
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', form.action);
+        xhr.onload = function() {
+
+            if (xhr.status === 200) {
+                const comment = JSON.parse(xhr.responseText);
+                console.log(comment);
+                addCommentToPage(comment);
+                form.reset();
+            }
+        };
+
+        xhr.send(formData);
+    });
+
+    function addCommentToPage(comment) {
+        const container = document.querySelector('#recent-comments');
+        console.log(comment.user.id);
+        const template = `
+    <hr class="my-0" />
+    <div class="card-body p-4">
+      <div class="d-flex flex-start">
+        <img class="rounded-circle shadow-1-strong me-3"
+             src="" alt="${comment.user.nom} ${comment.user.prenom}" width="60" height="60" />
+        <div>
+          <h6 class="fw-bold mb-1">${comment.user.nom} ${comment.user.prenom}</h6>
+          <div class="d-flex align-items-center mb-3">
+            <p class="mb-0">${comment.date}</p>
+
+          </div>
+          <p class="mb-0">${comment.commentaire}</p>
+        </div>
+      </div>
+    </div>
+  `;
+        container.insertAdjacentHTML('beforeend', template);
+    }
+
+</script>

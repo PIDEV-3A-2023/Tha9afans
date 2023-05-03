@@ -8,12 +8,13 @@
 {{ form_label(form.date) }}
 {{ form_widget(form.date) }}
 {{ form_errors(form.date) }}
+<br><br>
 {{ form_label(form.localisation) }}
-{{ form_widget(form.localisation) }}
-{{ form_errors(form.localisation) }}
-{{ form_label(form.createur) }}
-{{ form_widget(form.createur) }}
-{{ form_errors(form.createur) }}
+<div style="display: none">
+    {{ form_row(form.localisation, {'attr': {'class': 'location-input'}}) }}
+</div>
+<div id="map" style="height: 400px; display: block;"></div>
+{{ form_row(form.Addresse, {'attr': {'class': 'Addresse-input'}}) }}
 {{ form_label(form.freeorpaid) }}
 {{ form_widget(form.freeorpaid) }}
 {{ form_errors(form.freeorpaid) }}
@@ -28,29 +29,63 @@
 {{ form_label(form.Categorie) }}
 {{ form_widget(form.Categorie) }}
 {{ form_errors(form.Categorie) }}
+
 <button class="btn btn-primary btn-lg active">{{ button_label|default('Save') }}</button>
-{% block javascripts %}
-    <script>
-        $(document).ready(function() {
-            var linkField = $('#{{ form.link.vars.id }}');
-            var onlineField = $('#{{ form.online.vars.id }}');
-
-            // Hide the link field if the event is offline
-            if (!onlineField.val()) {
-                linkField.hide();
-            }
-
-            // Show/hide the link field when the online field value changes
-            onlineField.change(function() {
-                if (onlineField.val()) {
-                    linkField.show();
-                } else {
-                    linkField.hide();
-                }
-            });
-        });     
-    </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-{% endblock %}
 {{ form_end(form) }}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCV0g2hrrJIe78gzxlc5my8ly_cL20ZKvE"></script>
+
+<script>
+    function initMap() {
+        let marker = null;
+        // Create a map centered on a default location
+        const defaultLocation = {
+            lat: 36.806389
+            , lng: 10.181667
+        };
+        const map = new google.maps.Map(document.getElementById('map'), {
+            center: defaultLocation,
+            zoom: 7
+        });
+
+        // Add a click event listener to the map to add a marker
+        map.addListener('click', event => {
+            const location = {lat: event.latLng.lat(), lng: event.latLng.lng()};
+
+            if (marker) {
+                // If a marker already exists, update its position
+                marker.setPosition(location);
+            } else {
+                // If no marker exists, create a new marker
+                marker = new google.maps.Marker({
+                    position: location,
+                    map: map
+                });
+            }
+            $('.location-input').val(JSON.stringify(location));
+            // Reverse geocode the location to get an address
+            const apiKey = "eaa77ac98ef84453b0725f41ee9f937d";
+            const url = `https://api.opencagedata.com/geocode/v1/json?key=${apiKey}&q=${location.lat}+${location.lng}&pretty=1`;
+            $.getJSON(url, (data) => {
+                const address = data.results[0].formatted;
+                console.log("Location:", location);
+                console.log("Address:", address);
+
+                $('.Addresse-input').val(address);
+
+            });
+        });
+    }
+
+
+    window.addEventListener('load', initMap);
+
+</script>
+
+
+
+
+
+
+
+

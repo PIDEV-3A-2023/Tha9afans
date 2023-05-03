@@ -38,6 +38,23 @@ class EvenementRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function findByDateRange(\DateTime $start, \DateTime $end)
+    {
+        $qb = $this->createQueryBuilder('e')
+            ->where('e.date BETWEEN :start AND :end')
+            ->setParameter('start', $start)
+            ->setParameter('end', $end);
+
+        return $qb->getQuery()->getResult();
+    }
+    function SearchByname($nom){
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.nom like :val')
+            ->setParameter('val', '%'.$nom.'%')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
 //    /**
 //     * @return Evenement[] Returns an array of Evenement objects
