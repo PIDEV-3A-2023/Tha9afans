@@ -1,0 +1,48 @@
+$theme-bg: #7eccc7;
+$button-bg: #fefefe;
+$theme-pink: #ea4a87;
+$theme-grey: #7a7c81;
+$theme-black: #2f3537;
+/* DIMENSIONS */
+$bg-height: 225px;
+$bg-width: 325px;
+$bg-radius: 10px;
+$button-radius: 5px;
+$button-height: 50px;
+$button-width: 170px;
+.button1 {
+  height: $button-height;
+  width: $button-width;
+  background-color: $button-bg;
+  border-radius: $button-radius;
+  padding: 12.5px;
+  cursor: pointer;
+}
+.content {
+  .icon {
+    font-size: 25px;
+    color: $theme-pink;
+    &.fa {
+      display: none;
+    }
+  }
+  .text {
+    font-size: 25px;
+    color: $theme-black;
+    &.like {
+      margin-left: 10px;
+    }
+    &.d {
+      opacity: 0;
+      display: inline-block;
+      transform: translateX(12px);
+    }
+    &.number {
+      margin-left: 10px;
+      color: $theme-grey;
+
+    }
+  }
+}
+/* STYLES - END */
+

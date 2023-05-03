@@ -12,8 +12,9 @@
         "doctrine/doctrine-bundle": "^2.8",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.14",
-        "dompdf/dompdf": "^2.0",
+        "google/apiclient": "*",
         "intervention/image": "^2.7",
+        "dompdf/dompdf": "*",
         "knplabs/knp-paginator-bundle": "^5.9",
         "knpuniversity/oauth2-client-bundle": "*",
         "league/csv": "*",
@@ -54,6 +55,7 @@
         "symfony/web-link": "5.4.*",
         "symfony/yaml": "5.4.*",
         "symfonycasts/verify-email-bundle": "^1.13",
+        "tattali/calendar-bundle": "^1.2",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
         "twilio/sdk": "*"

@@ -126,8 +126,9 @@ class ProfilController extends AbstractController
     #[Route('/profil/evenement/', name: 'app_profil-evenement')]
     public function evenement(EvenementRepository $evenementRepository): Response
     {
+        $user=$this->getUser();
         return $this->render('profil/evenement.html.twig',[
-            'evenements' => $evenementRepository->findAll(),
+            'evenements' => $evenementRepository->findBy(['createur' => $user->getId()])
         ]);
     }
     #[Route('/profil/produit/', name: 'app_profil-produit')]

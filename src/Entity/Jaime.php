@@ -25,7 +25,7 @@ class Jaime
 
 
     #[ORM\ManyToOne(inversedBy: 'jaimes')]
-    private ?Personnes $User=null;
+    private ?User $User=null;
 
 
 
@@ -46,12 +46,12 @@ class Jaime
         return $this;
     }
 
-    public function getUser(): ?Personnes
+    public function getUser(): ?User
     {
         return $this->User;
     }
 
-    public function setUser(?Personnes $User): self
+    public function setUser(?User $User): self
     {
         $this->User = $User;
 
