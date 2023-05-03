@@ -115,6 +115,7 @@ class Produit
     public function setPrix(float $prix): self
     {
         $this->prix = $prix;
+        $this->updatePrixapresremise();
 
         return $this;
     }
@@ -139,6 +140,7 @@ class Produit
     public function setRemise(float $remise): self
     {
         $this->remise = $remise;
+        $this->updatePrixapresremise();
 
         return $this;
     }
@@ -159,13 +161,16 @@ class Produit
     {
         return $this->prixapresremise;
     }
-
-    public function setPrixapresremise(float $prixapresremise): self
+    private function updatePrixapresremise()
     {
-        $this->prixapresremise = $this->getPrix() * (1 - $this->getRemise() / 100);
-
-        return $this;
+        $this->prixapresremise = $this->prix * (1 - $this->remise / 100);
     }
+//    public function setPrixapresremise(float $prixapresremise): self
+//    {
+//        $this->prixapresremise = $this->getPrix() * (1 - $this->getRemise() / 100);
+//
+//        return $this;
+//    }
 
     public function getIdVendeur(): ?User
     {
