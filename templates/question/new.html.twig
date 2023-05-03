@@ -46,6 +46,12 @@
             color: #001A23;
         }
 
+        .btnn:hover {
+            color: white;
+        }
+
+
+
     </style>
     <h1>Create new Question</h1>
 
@@ -105,5 +111,5 @@
 
     </div>
 
-    <a href="{{ path('app_question_index') }}">back to list</a>
+    <a class="container btn btnn" style="background-color: #0b1526; width: 33%" href="{{ path('app_question_index') }}">back to list</a>
 {% endblock %}

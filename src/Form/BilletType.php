@@ -15,24 +15,25 @@ class BilletType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('code',null, [
-
-        'constraints' => [
-            new Assert\NotBlank([
-                'message' => 'Please enter a first name',
-            ]),
-            new Assert\Length([
-                'min' => 3,
-                'max' => 15,
-                'minMessage' => 'the code should have at least {{ limit }} characters',
-                'maxMessage' => 'The code should have at most {{ limit }} characters',
-            ]),
-        ],
-        'attr' => [
-            'class' => 'form-control',
-            'placeholder' => 'code'
-        ]
-    ])
+            ->add('code', null, [
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'Please enter a valid code',
+                    ]),
+                    new Assert\Length([
+                        'min' => 3,
+                        'max' => 100,
+                        'minMessage' => 'the code should have at least {{ limit }} characters',
+                        'maxMessage' => 'The code should have at most {{ limit }} characters',
+                    ]),
+                ],
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'code',
+                    'id' => 'billet_code',
+                ],
+                'data' => $options['code_initial_value'],
+            ])
             ->add('dateValidite', null, [
                 'attr' => [
                     'class' => 'form-control',
@@ -46,16 +47,26 @@ class BilletType extends AbstractType
                         'message' => 'The date must be greater than today',
                     ]),
                 ],
+                'data' => $options['date_initial_value'],
             ])
             ->add('type', ChoiceType::class, [
-
                 'choices' => [
                     'VIP' => "VIP",
                     'Normal' => "Normal",
                     'Etudiant' => "Etudiant",
                 ],
-                'expanded' => true, // afficher les choix sous forme de boutons radio
-
+                'expanded' => true, // display as radio buttons
+                'label_attr' => [
+                    'class' => 'radio-label', // set the class of the label
+                ],
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'Please select a type', // customize the error message
+                    ]),
+                ],
+                'attr' => [
+                    'class' => 'radio-input', // set the class of the input
+                ],
             ])
             ->add('prix', NumberType::class, [
                 'attr' => [
@@ -63,25 +74,31 @@ class BilletType extends AbstractType
                     'placeholder' => 'Prix',
                 ],
                 'constraints' => [
+                    new Assert\NotBlank(),
                     new Assert\GreaterThanOrEqual(0),
                 ],
+                'data' => $options['prix_initial_value'],
+                'disabled' => ($options['prix_initial_value'] === 0),
             ])
-            ->add('nbrBilletAvailable',NumberType::class, [
+            ->add('nbrBilletAvailable', NumberType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Nombre de billet ',
                 ],
                 'constraints' => [
+                    new Assert\NotBlank(),
                     new Assert\GreaterThanOrEqual(0),
                 ],
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Billet::class,
+            'code_initial_value' => null,
+            'date_initial_value' => null,
+            'prix_initial_value' => null,
         ]);
     }
 }

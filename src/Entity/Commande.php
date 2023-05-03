@@ -48,6 +48,10 @@ class Commande
 
 
 
+
+    #[ORM\Column(type: 'boolean')]
+    private $etat = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -101,6 +105,17 @@ class Commande
         return $this;
     }
 
+    public function getEtat(): ?bool
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(bool $etat): self
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
 
 
 }

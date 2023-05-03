@@ -3,14 +3,42 @@
 {% block title %}Quiz index{% endblock %}
 
 {% block body %}
-    <h1>Quiz index</h1>
+
+    <style>
+        .btnn{
+            /*display: block;*/
+            margin-top: 10px;
+            margin-bottom: auto;
+            border-radius: 20px;
+            color: white;
+            border-color: white;
+            background-color: #001A23;
+        }
+
+        btn{
+            /*display: block;*/
+            margin-top: 10px;
+            margin-bottom: auto;
+            border-radius: 20px;
+            color: white;
+            border-color: white;
+        }
+        .btn:hover {
+            background-color: white;
+            color: #001A23;
+        }
+
+        .btnn:hover {
+            color: white;
+        }
+    </style>
+    <h1>Quiz List</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>QuizId</th>
-                <th>QuizName</th>
                 <th>QuizCover</th>
+                <th>QuizName</th>
                 <th>NbrQuestions</th>
                 <th>QuizDescription</th>
                 <th>actions</th>
@@ -19,15 +47,13 @@
         <tbody>
         {% for quiz in quizzes %}
             <tr>
-                <td>{{ quiz.quizId }}</td>
-                <td>{{ quiz.quizName }}</td>
-
                 <td>{% if quiz.quizCover is not empty %}
                         <img src="{{ path('quiz_show_image', {'id': quiz.quizId}) }}" alt="{{ quiz.quizName }}" width="100px" height="100px">
                     {% else %}
                         Aucune photo disponible
                     {% endif %}
                 </td>
+                <td>{{ quiz.quizName }}</td>
                 <td>{{ quiz.nbrQuestions }}</td>
                 <td>{{ quiz.quizDescription }}</td>
                 <td>
@@ -55,5 +81,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_quiz_new') }}">Create new</a>
+    <a class="container btn btnn" style="background-color: #0b1526; width: 33%" href="{{ path('app_quiz_new') }}">Create new</a>
 {% endblock %}

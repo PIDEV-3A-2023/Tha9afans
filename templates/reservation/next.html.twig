@@ -3,6 +3,7 @@
 {% block title %}Pick Your Ticket{% endblock %}
 
 {% block body %}
+    <label style="color: dodgerblue; margin-top: 120px; margin-left: 60px ;font-size: 47px">Pick your ticket :</label>
     <style>@import url('https://fonts.googleapis.com/css?family=Oswald');
         * {
             margin: 0;
@@ -37,15 +38,17 @@
         }
 
         .card {
-            display: table-row;
-            width: 49%;
-            background-color: #fff;
+            display: block;
+            width: 750px;
+            height: 340px;
+            background-color: white;
             color: #989898;
             margin-bottom: 10px;
             font-family: 'Oswald', sans-serif;
             text-transform: uppercase;
             border-radius: 4px;
-            position: relative
+            position: relative;
+
         }
 
         .card+.card {
@@ -107,9 +110,9 @@
 
         .card-cont {
             display: table-cell;
-            width: 75%;
+            margin: auto;
             font-size: 85%;
-            padding: 10px 10px 30px 50px
+            padding-left: 35px;
         }
 
         .card-cont h3 {
@@ -129,7 +132,7 @@
         .card-cont .even-info i,
         .card-cont .even-date time,
         .card-cont .even-info p {
-            display: table-cell
+            display: table-cell;
         }
 
         .card-cont .even-date i,
@@ -138,7 +141,7 @@
         }
 
         .card-cont .even-info p {
-            padding: 30px 50px 0 0
+            padding: 30px 250px 0 0
         }
 
         .card-cont .even-date time span {
@@ -182,38 +185,35 @@
             .card-cont .even-info {
                 font-size: 75%
             }
-        }</style>
-    <form>
-        <label style="font-weight:bold; color:red;">Tickets:</label><br>
+        }
+    </style>
+    <form method="POST" action="{{ path('app_ticket', {'reservationId': reservation.id, 'eventId': eventId}) }}" >
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="alert alert-warning" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
         {% for billet in billets %}
             <section class="container">
-                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                    <button class="btn btn-link px-2"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                        <a href=""><i class="btnqt fas fa-minus"></i></a>
-                    </button>
-                    <input id="form1" type="text" min="0" value="{{ billet.nbrBilletAvailable }}"
-                           class="textqt form-control form-control-sm">
-                    <button class="btn btn-link px-2"
-                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                        <a href=""><i class="btnqt fas fa-plus"></i></a>
-                    </button>
-                </div>
-                <article class="card fl-left">
+                <div style="display: flex">
+                <article class="card fl-left flex">
                     <section class="date">
                         <time>
                             <span>{{ billet.dateValidite ? billet.dateValidite|date('d') : '' }}</span>
                             <span>{{ billet.dateValidite ? billet.dateValidite|date('F') : '' }}</span>
                         </time>
                     </section>
-                    <section class="card-cont">
+                    <section class="card-cont" >
+                        <h3 style="margin-top: -999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999%">{{ billet.evenement.nom }}</h3>
                         <small>{{ billet.evenement.createur.nom }}</small>
-                        <h3>live In {{ billet.evenement.nom }}</h3>
+                        <h3>live In {{ billet.evenement.localisation }}</h3>
                         <div class="even-date">
                             <i class="fa fa-calendar"></i>
                             <time>
                                 <span>{{ billet.dateValidite ? billet.dateValidite|date('Y-m-d') : '' }}</span>
-                                <span>08:55pm to 12:00 am</span>
+                                <span> Debut: 8:00 - Fin: 17:55 </span>
                             </time>
                         </div>
                         <div class="even-info">
@@ -222,15 +222,19 @@
                                 {{ billet.evenement.localisation }}
                             </p>
                         </div>
-                        <label style="color: black;float: right;">{{ billet.type }}</label>
+                        <label style="color: dodgerblue;float: right; margin-right: 47%;">{{ billet.type }} : {{ billet.prix }} DT</label><br><br>
+                        <div style="font-size: 60%;">for any information contact us on 74 800 008 or on 21 080 080 </div>
+                    </section>
+                    <section class="card-cont" >
+                        <img src="{{ qrCodeTable[loop.index0] }}" alt="QR code" style="width: 150px;height: 150px;float: right;margin-right: 20px;">
                     </section>
                 </article>
+                    <input type="number" class="form-control text-center" name="{{ billet.type }}" value="0" min="0" style="width: 70px;
+                     height: 40px; margin-top: 135px;margin-left: 100px">
+                </div>
             </section>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
+
         {% endfor %}
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary btn-lg active float-right" style="margin-left: 100px;margin-bottom: 40px">Submit</button>
     </form>
 {% endblock %}

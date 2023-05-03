@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Panier;
+use App\Entity\Panierproduit;
 use App\Form\PanierType;
 use App\Repository\PanierRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -76,7 +78,7 @@ class PanierController extends AbstractController
         return $this->redirectToRoute('app_panier_index', [], Response::HTTP_SEE_OTHER);
     }
 
-
+<<<<<<< HEAD
     public function card(PanierRepository $panierRepository): Response
     {
         $panier = $panierRepository->findAll();
@@ -84,6 +86,10 @@ class PanierController extends AbstractController
             'paniers' => $panier,
         ]);
     }
+=======
+
+
+>>>>>>> origin/main
 
 
 

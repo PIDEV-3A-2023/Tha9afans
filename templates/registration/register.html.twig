@@ -9,7 +9,7 @@
         }
         .box{
             box-sizing: border-box;
-            width: 700px;
+            width: 730px;
             height: auto;
             border: 2px solid #A8DADC;
             box-shadow: -3px -3px 7px #ffffff73,
@@ -21,7 +21,7 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            margin-left: 320px;
+            margin-left: 500px;
         }
         .form-control-file.custom-class {
             margin-left: 70px;
@@ -45,6 +45,23 @@
         label{
             color:white;
         }
+        input[type=checkbox] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: 2px solid blue;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        input[type=checkbox]:checked:before {
+            content: "\2713";
+            display: block;
+            text-align: center;
+            font-size: 14px;
+            line-height: 18px;
+        }
 
 
         .form-control{
@@ -52,7 +69,7 @@
             box-sizing: border-box;
             background: none;
             background-color: white !important;
-            color:white;
+            color:black;
             margin-bottom: 30px;
             padding: 4px;
             width: 220px;
@@ -97,6 +114,7 @@
         file-input{
             box-sizing: border-box;
             font-size: 20px;
+            color:black;
             background-color: #001A23;
             border: 1px solid #A8DADC;
             padding: 2px 15px;
@@ -182,6 +200,9 @@
                 {{ form_row(registrationForm.plainPassword, {
                     label: 'Password'
                 }, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
+            </div>
+            <div class="col">
+                {{ form_row(registrationForm.genre, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
             </div>
         </div>
         <div class="row">

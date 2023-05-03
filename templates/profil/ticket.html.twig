@@ -1,0 +1,52 @@
+<div>
+        {% for billet in billets %}
+            <section class="container">
+                <input type="number" name="{{ billet.type }}" value="0"><br><br>
+                <article class="card fl-left flex">
+                    <section class="date">
+                        <time>
+                            <span>{{ billet.dateValidite ? billet.dateValidite|date('d') : '' }}</span>
+                            <span>{{ billet.dateValidite ? billet.dateValidite|date('F') : '' }}</span>
+                        </time>
+                    </section>
+                    <section class="card-cont">
+                        <h3>{{ billet.evenement.nom }}</h3>
+                        <small>{{ billet.evenement.createur.nom }}</small>
+                        <h3>live In {{ billet.evenement.localisation }}</h3>
+                        <div class="even-date">
+                            <i class="fa fa-calendar"></i>
+                            <time>
+                                <span>{{ billet.dateValidite ? billet.dateValidite|date('Y-m-d') : '' }}</span>
+                                <span>Debut 8:00 - fin 17:55 </span>
+                            </time>
+                        </div>
+                        <div class="even-info">
+                            <i class="fa fa-map-marker"></i>
+                            <p>
+                                {{ billet.evenement.localisation }}
+                            </p>
+
+                        </div>
+                        <label style="color: black;float: right; margin-right: 47%;">{{ billet.type }} : {{ billet.prix }} DT</label>
+
+                            {% if billetReservers[0] is defined and loop.index0 == 0 %}
+                                <label style="color: blue">Nombre de billets : {{ billetReservers[0].nombre }}</label>
+                            {% endif %}
+                            {% if billetReservers[1] is defined and loop.index0 == 1  %}
+                                <label style="color: blue">Nombre de billets : {{ billetReservers[1].nombre }}</label>
+                            {% endif %}
+                            {% if billetReservers[2] is defined and loop.index0 == 2  %}
+                                <label style="color: blue">Nombre de billets : {{ billetReservers[2].nombre }}</label>
+                            {% endif %}
+
+
+
+                        <div style="font-size: 60%;">for any information contact us on 74 800 008 or on 21 080 080 </div>
+                    </section>
+                    <section class="card-cont" >
+                        <img src="{{ qrCodeTable[loop.index0] }}" alt="QR code" style="width: 100px;height: 100px;float: right;margin-right: 20px;">
+                    </section>
+                </article>
+            </section>
+        {% endfor %}
+</div>

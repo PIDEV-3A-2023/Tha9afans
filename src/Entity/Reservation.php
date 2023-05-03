@@ -23,7 +23,7 @@ class Reservation
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'date', name: 'date_reservation')]
+    #[ORM\Column(type: 'date', name: 'date_reservation',nullable: true)]
     private $dateReservation;
 
     #[ORM\Column(type: 'string', length: 20)]
@@ -57,6 +57,18 @@ class Reservation
     private $telephone;
     #[ORM\Column(type: 'string')]
     private $address;
+
+    private $nombreBillet;
+
+    public function getNombreBillet()
+    {
+        return $this->nombreBillet;
+    }
+
+    public function setNombreBillet($nombreBillet): void
+    {
+        $this->nombreBillet = $nombreBillet;
+    }
 
 
     public function getNom()
@@ -195,42 +207,6 @@ class Reservation
         return $this;
     }
 
-    public function getNbrBillets(): ?int
-    {
-        return $this->nbrBillets;
-    }
-
-    public function setNbrBillets(int $nbrBillets): self
-    {
-        $this->nbrBillets = $nbrBillets;
-
-        return $this;
-    }
-
-    public function getNbrTicketType1Reserved(): ?int
-    {
-        return $this->nbrTicketType1Reserved;
-    }
-
-    public function setNbrTicketType1Reserved(int $nbrTicketType1Reserved): self
-    {
-        $this->nbrTicketType1Reserved = $nbrTicketType1Reserved;
-
-        return $this;
-    }
-
-    public function getNbrTicketType2Reserved(): ?int
-    {
-        return $this->nbrTicketType2Reserved;
-    }
-
-    public function setNbrTicketType2Reserved(int $nbrTicketType2Reserved): self
-    {
-        $this->nbrTicketType2Reserved = $nbrTicketType2Reserved;
-
-        return $this;
-    }
-
     public function getBillets(): Collection
     {
         return $this->billets;
@@ -248,7 +224,7 @@ class Reservation
         return $this->user;
     }
 
-    public function addBillet(Billet $billet): self
+    /*public function addBillet(Billet $billet): self
     {
         if (!$this->billets->contains($billet)) {
             $this->billets->add($billet);
@@ -268,7 +244,7 @@ class Reservation
         }
 
         return $this;
-    }
+    }*/
 
     public function setUser(?User $user): self
     {
@@ -285,7 +261,7 @@ class Reservation
         return $this->billetReservers;
     }
 
-    public function addBilletReserver(BilletReserver $billetReserver): self
+    /*public function addBilletReserver(BilletReserver $billetReserver): self
     {
         if (!$this->billetReservers->contains($billetReserver)) {
             $this->billetReservers->add($billetReserver);
@@ -293,9 +269,9 @@ class Reservation
         }
 
         return $this;
-    }
+    }*/
 
-    public function removeBilletReserver(BilletReserver $billetReserver): self
+    /*public function removeBilletReserver(BilletReserver $billetReserver): self
     {
         if ($this->billetReservers->removeElement($billetReserver)) {
             // set the owning side to null (unless already changed)
@@ -305,5 +281,5 @@ class Reservation
         }
 
         return $this;
-    }
+    }*/
 }

@@ -1,14 +1,11 @@
-{% extends 'base.html.twig' %}
-
-{% block body %}
+{% extends '/profil/index.html.twig' %}
+{% block cardtitle %}Billet edit{% endblock %}
+{% block content %}
     <h1>Modifier le billet</h1>
 <style>
-    .mt-5{
-        margin-top: 50px !important;
-        width: 50%;
-    }
+
 </style>
-<div class="mt-5">
+<div>
     {{ form_start(form) }}
     {{ form_row(form.prix) }}
     {{ form_row(form.nbrBilletAvailable) }}

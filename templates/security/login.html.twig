@@ -211,7 +211,7 @@
             background: #27282c;
         }
         .share-buttons{
-            position: absolute;
+            position:absolute;
             width: 390px;
             height: 220px;
             padding-left: 135px;
@@ -252,7 +252,8 @@
         }
         .share-button{
             display: block;
-            position: relative;height: 30px;
+            position: relative;
+            height: 30px;
         }
         .share-button-icon{
             display: block;
@@ -326,7 +327,6 @@
             <br>
 
 
-            {#
             Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
             See https://symfony.com/doc/current/security/remember_me.html
                 <div class="checkbox mb-3">
@@ -334,40 +334,50 @@
                     <input type="checkbox" name="_remember_me"> Remember me
                 </label>
             </div>
-            #}
+
+
 
 
 
             <input type="submit" value="Login" class="loginbutton" style="--clr:#A8DADC">
             <div class="links">
-                <a href="">Mot de passe oublié?</a>
+                <a href="{{ path('forgetten-password') }}">Mot de passe oublié?</a>
                 <a href="{{ path('app_register') }}">SignUp</a>
+                <div class="share-buttons">
+                    <div class="share-button">
+                        <a href="{{path('github_login')}}">
+                            <div class="share-button-secondary">
+                                <div class="share-button-secondary-content">
+                                    Connecter avec Github
+                                </div>
+                            </div>
+                            <div class="share-button-primary">
+                                <i class="share-button-icon fa-brands fa-github fa-lg"></i>
+                            </div>
+                        </a>
 
-            </div>
-            <div class="share-buttons">
-                <div class="share-button">
-                    <div class="share-button-secondary">
-                        <div class="share-button-secondary-content">
-                            Connecter avec facebook
+                    </div>
+                    <div class="share-button">
+                        <a href="{{ path('connect_google_start')}}">
+                            <div class="share-button-secondary">
+
+                                <div class="share-button-secondary-content">
+                                    Connecter avec google
+                                </div>
+                            </div>
+                        </a>
+                        <div class="share-button-primary">
+                            <i class="share-button-icon fa-brands fa-google fa-lg"></i>
                         </div>
                     </div>
-                    <div class="share-button-primary">
-                        <i class="share-button-icon fa-brands fa-facebook fa-lg"></i>
-                    </div>
-                </div>
-                <div class="share-button">
-                    <div class="share-button-secondary">
-                        <div class="share-button-secondary-content">
-                            Connecter avec google
-                        </div>
-                    </div>
-                    <div class="share-button-primary">
-                        <i class="share-button-icon fa-brands fa-google fa-lg"></i>
-                    </div>
+
+
                 </div>
 
 
             </div>
+
+
 
         </form>
 

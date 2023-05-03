@@ -2,8 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Commande;
+use App\Repository\CommandeproduitRepository;
+use App\Repository\CommandeRepository;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use SendGrid\Mail\Mail;
+use SendGrid;
 
 
 use App\Entity\Facture;
@@ -11,25 +18,33 @@ use App\Form\FactureType;
 use App\Repository\FactureRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
+
+
+
+
+
 
 #[Route('/facture')]
 class FactureController extends AbstractController
 {
     #[Route('/', name: 'app_facture_index', methods: ['GET'])]
-    public function index(FactureRepository $factureRepository): Response
+    public function index(FactureRepository $factureRepository ): Response
     {
         return $this->render('facture/index.html.twig', [
             'factures' => $factureRepository->findAll(),
         ]);
     }
 
+
+
     #[Route('/new', name: 'app_facture_new', methods: ['GET', 'POST'])]
     public function new(Request $request, FactureRepository $factureRepository): Response
     {
 
         $facture = new Facture();
+        $facture->setRefrancefacture(uniqid());
         $form = $this->createForm(FactureType::class, $facture);
         $form->handleRequest($request);
 
@@ -81,47 +96,81 @@ class FactureController extends AbstractController
         return $this->redirectToRoute('app_facture_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    public function showall(FactureRepository $factureRepository): Response
+
+
+    #[Route('/facture/pdf/{id}', name: 'app_facture_pdf', methods: ['GET'])]
+    public function downloadPdfAction($id , CommandeproduitRepository $commandeproduitRepository  , FactureRepository $factureRepository): Response
     {
-        return $this->render('facture/showall.html.twig', [
-            'factures' => $factureRepository->findAll(),
+        // Get the facture entity by ID
+
+        $facture = $this->getDoctrine()->getRepository(Facture::class)->find($id);
+
+
+        // If no facture found, throw exception
+        if (!$facture) {
+            throw $this->createNotFoundException('No facture found for id '.$id);
+        }
+
+        // Retrieve all products in the command
+/*        $commandeProduits = $commandeproduitRepository->findBy(['idCommande' => $facture->getIdCommende()]);*/
+
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+
+        // Instantiate Dompdf with our options
+
+        $dompdf = new Dompdf($pdfOptions);
+
+        // Retrieve the HTML generated in our twig file
+
+
+        $html = $this->renderView('facture/pdf.html.twig', [
+            'facture' => $facture,
+
         ]);
-    }
 
-#[Route("/facture/pdf/{id}", name: 'facture_pdf')]
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
 
-    public function facturePdf(Facture $facture): Response
-    {
-        // Fetch the data you need to include in the PDF
-        $factureData = [
-            'refrancefacture' => $facture->getRefrancefacture(),
-            'datefacture' => $facture->getDateFacture(),
-            // ... add more data as needed
-        ];
-
-        // Configure the PDF rendering options
-        $options = new Options();
-        $options->set('defaultFont', 'Arial');
-
-        // Create the PDF content using Dompdf
-        $pdfContent = $this->renderView('facture/pdf.html.twig', [
-            'facture' => $factureData,
-        ]);
-        $dompdf = new Dompdf($options);
-        $dompdf->loadHtml($pdfContent);
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
         $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+
         $dompdf->render();
 
-        // Create the HTTP response with the PDF content
-        $response = new Response($dompdf->output(), 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => sprintf('attachment; filename="%s.pdf"', $facture->refrancefacture()),
+        // Output the generated PDF to Browser (force download)
+
+        $dompdf->stream("facture.pdf", [
+            "Attachment" => true
         ]);
 
-        return $response;
+        // Write some HTML code:
+
+        return new Response($html);
     }
 
-    // ...
+
+
+    //create a function that show the facture of user connected
+    #[Route('/facture/showfacture', name: 'app_facture_showfacture', methods: ['GET'])]
+    public function showfacture(FactureRepository $factureRepository ,CommandeRepository $commandeRepository): Response
+    {
+        $commande = $commandeRepository->findcommandeByUser($this->getUser());
+        $facture = $factureRepository->findBy(['idCommende' => $commande]);
+
+        return $this->render('facture/index.html.twig', [
+            'factures' => $facture,
+
+
+        ]);
+    }
+
+
+
+
+
 
 
 
