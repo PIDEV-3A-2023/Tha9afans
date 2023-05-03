@@ -258,8 +258,8 @@ class PanierProduitController extends AbstractController
         $checkout = $this->gateway->checkout->sessions->create([
             'line_items' => $line_items,
             'mode' => 'payment',
-            'success_url' => 'https://127.0.0.1:8000/success?id_sessions={CHECKOUT_SESSION_ID}',
-            'cancel_url' => 'https://127.0.0.1:8000/cancel?id_sessions={CHECKOUT_SESSION_ID}'
+            'success_url' => 'http://127.0.0.1:8000/success?id_sessions={CHECKOUT_SESSION_ID}',
+            'cancel_url' => 'http://127.0.0.1:8000/cancel?id_sessions={CHECKOUT_SESSION_ID}'
         ]);
 
         return $this->redirect($checkout->url);
