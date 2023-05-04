@@ -10,7 +10,7 @@
         margin: 0;
         font-family: 'Open Sans', sans-serif;
     }
-    body{
+    .body{
         line-height: 1.5;
     }
     .card-wrapper{
@@ -18,14 +18,14 @@
         margin: 0 auto;
     }
 
-    img{
+ /*   img{
         width: 100%;
         display: block;
-    }
-    .img-display{
+    }*/
+    .img-display1{
         overflow: hidden;
     }
-    .img-showcase{
+    .img-showcase1{
         display: flex;
         width: 100%;
 
@@ -182,14 +182,14 @@
 
 
 
-  <body>
+  <body class="body">
 
   <div class = "card-wrapper">
       <div class = "card">
           <!-- card left -->
           <div class = "product-imgs">
-              <div class = "img-display">
-                  <div class = "img-showcase">
+              <div class = "img-display1">
+                  <div class = "img-showcase1">
                       {% if produit.image is not empty %}
                               <img src="{{ path('produit_show', {'id': produit.id}) }}" alt="{{ produit.nom }}"width="500" height="500" >
                           {% else %}
