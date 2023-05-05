@@ -171,6 +171,7 @@ class SecurityController extends AbstractController
             $user->setPhoto($googleUser->getAvatar());
             $user->setPassword('default-password');
             $user->setGenre('autre');
+            $user->setTwofactor(false);
 
             $user->setResetToken($token);
             $this->em->persist($user);
