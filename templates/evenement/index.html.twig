@@ -3,6 +3,7 @@
 {% block title %}Evenement index{% endblock %}
 
 {% block body %}
+    {% if  is_granted('IS_AUTHENTICATED_FULLY') %}
     <main id="main">
 
         <!-- ======= Breadcrumbs ======= -->
@@ -142,4 +143,9 @@
             }*/
         </script>
     </main><!-- End #main -->
+    {% else %}
+        {% include 'errorpage.html.twig' %}
+        <section id="hero" class="hero d-flex flex-column ">
+        </section>
+    {% endif %}
 {% endblock %}
