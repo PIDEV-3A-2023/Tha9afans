@@ -7,7 +7,7 @@
         .box{
             position: relative;
             width: 420px;
-            height: 620px;
+            height: 520px;
             background: #001A23;
             border-radius: 20px;
             overflow: hidden;
@@ -21,7 +21,7 @@
             top: -50%;
             left: -50%;
             width: 420px;
-            height: 620px;
+            height: 520px;
             background: linear-gradient(0deg,transparent,
             transparent,#45f3ff,#45f3ff,#45f3ff);
             z-index:1 ;
@@ -215,7 +215,6 @@
             width: 390px;
             height: 220px;
             padding-left: 135px;
-            margin-bottom: 20px;
             top: 50%;
             left: 50%;
             margin-left: -230px;
@@ -328,19 +327,23 @@
             <br>
 
 
-            {#Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-            See https://symfony.com/doc/current/security/remember_me.html#}
+            {#
+            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+            See https://symfony.com/doc/current/security/remember_me.html
                 <div class="checkbox mb-3">
                 <label>
                     <input type="checkbox" name="_remember_me"> Remember me
                 </label>
             </div>
+            #}
+
+
 
             <input type="submit" value="Login" class="loginbutton" style="--clr:#A8DADC">
             <div class="links">
                 <a href="{{ path('forgetten-password') }}">Mot de passe oublié?</a>
                 <a href="{{ path('app_register') }}">SignUp</a>
-                <div class="share-buttons" style="margin-top: 180px;">
+                <div class="share-buttons">
                     <div class="share-button">
                         <a href="{{path('github_login')}}">
                             <div class="share-button-secondary">
