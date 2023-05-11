@@ -168,6 +168,7 @@ class FacebookController extends AbstractController
                 $user->setPhoto($picture);
                 $user->setPassword('default-password');
                 $user->setGenre('autre');
+                $user->setTwofactor(false);
                 $user->setResetToken($token);
                 $user->setTwofactor(false);
                 $this->em->persist($user);
