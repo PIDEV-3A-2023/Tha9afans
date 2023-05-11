@@ -78,34 +78,37 @@ class MobileApiController extends AbstractController
         }
     }
     #[Route('/event/get', name: 'get_event')]
-    public function getEvent(EvenementRepository $evenementRepository,SessionRepository $sessionRepository):Response{
+    public function getEvent(EvenementRepository $evenementRepository, SessionRepository $sessionRepository): Response
+    {
+        $events = $evenementRepository->findAll();
+        $rdata = [];
+        foreach ($events as $event) {
+            $sessions = $sessionRepository->findBy(['evenement' => $event->getId()]);
+            $Sdata = []; // Initialize the $Sdata variable here
 
-        $events=$evenementRepository->findAll();
-        foreach ($events as $event){
-            $sessions=$sessionRepository->findBy(['evenement'=>$event->getId()]);
             foreach ($sessions as $session) {
-                $Sdata[]=[
-                    'id'=>$session->getId(),
-                    'titre'=>$session->getTitre(),
-                    'description'=>$session->getDescription(),
-                    'parlant'=>$session->getParlant(),
-                    'debut'=>$session->getDebit()->format('H:i:s'),
-                    'fin'=>$session->getFin()->format('H:i:s')];
+                $Sdata[] = [
+                    'id' => $session->getId(),
+                    'titre' => $session->getTitre(),
+                    'description' => $session->getDescription(),
+                    'parlant' => $session->getParlant(),
+                    'debut' => $session->getDebit()->format('H:i:s'),
+                    'fin' => $session->getFin()->format('H:i:s')
+                ];
             }
+
             $rdata[] = [
                 'id' => $event->getId(),
                 'title' => $event->getNom(),
-                'description'=>$event->getDescription(),
+                'description' => $event->getDescription(),
                 'date' => $event->getDate()->format('Y-m-d'),
                 'Adress' => $event->getAddresse(),
                 'category' => $event->getCategorie()->getNom(),
-                'sessions'=>$Sdata,
-
+                'sessions' => $Sdata,
             ];
         }
 
-        return new JsonResponse($rdata,200);
-
+        return new JsonResponse($rdata, 200);
     }
 
 }
