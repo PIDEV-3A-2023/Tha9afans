@@ -33,16 +33,21 @@ class MobileApiController extends AbstractController
         $category = $request->query->get("category");
         $User = $request->query->get("User");
 
-        $category = $categorieRepository->findBy(['nom'=>$category]);
+
+        $category = $categorieRepository->find($category);
         $User = $userRepository->find($User);
 
         $evenement = new Evenement();
         $evenement->setNom($name);
         $evenement->setDescription($Description);
         $evenement->setAddresse($Adress);
-        $evenement->setDate($Date);
+        $evenement->setDate(new \DateTime($Date));
         $evenement->setCategorie($category);
         $evenement->setCreateur($User);
+        $evenement->setLocalisation("");
+        $evenement->setFreeorpaid(true);
+        $evenement->setOnline(true);
+        $evenement->setLink("");
 
         try {
            $evenementRepository->save($evenement, true);
@@ -78,34 +83,39 @@ class MobileApiController extends AbstractController
         }
     }
     #[Route('/event/get', name: 'get_event')]
-    public function getEvent(EvenementRepository $evenementRepository,SessionRepository $sessionRepository):Response{
+    public function getEvent(EvenementRepository $evenementRepository, SessionRepository $sessionRepository): Response
+    {
+        $events = $evenementRepository->findAll();
+        $rdata = [];
 
-        $events=$evenementRepository->findAll();
-        foreach ($events as $event){
-            $sessions=$sessionRepository->findBy(['evenement'=>$event->getId()]);
+        foreach ($events as $event) {
+            $sessions = $sessionRepository->findBy(['evenement' => $event->getId()]);
+            $Sdata = []; // Initialize the $Sdata variable here
+
             foreach ($sessions as $session) {
-                $Sdata[]=[
-                    'id'=>$session->getId(),
-                    'titre'=>$session->getTitre(),
-                    'description'=>$session->getDescription(),
-                    'parlant'=>$session->getParlant(),
-                    'debut'=>$session->getDebit()->format('H:i:s'),
-                    'fin'=>$session->getFin()->format('H:i:s')];
+                $Sdata[] = [
+                    'id' => $session->getId(),
+                    'titre' => $session->getTitre(),
+                    'description' => $session->getDescription(),
+                    'parlant' => $session->getParlant(),
+                    'debut' => $session->getDebit()->format('H:i:s'),
+                    'fin' => $session->getFin()->format('H:i:s')
+                ];
             }
+
             $rdata[] = [
                 'id' => $event->getId(),
                 'title' => $event->getNom(),
-                'description'=>$event->getDescription(),
+                'description' => $event->getDescription(),
                 'date' => $event->getDate()->format('Y-m-d'),
                 'Adress' => $event->getAddresse(),
                 'category' => $event->getCategorie()->getNom(),
-                'sessions'=>$Sdata,
-
+                'sessions' => $Sdata,
             ];
         }
 
-        return new JsonResponse($rdata,200);
-
+        return new JsonResponse($rdata, 200);
     }
+
 
 }

@@ -22,7 +22,11 @@ class APIFactureController extends AbstractController
                 'id' => $facture->getId(),
                 'tva' => $facture->getTva(),
                 'refrancefacture'=>$facture->getRefrancefacture(),
-                'usseremail' => $facture->getIdCommende()->getIdUser()->getEmail()
+                'useremail' => $facture->getIdCommende()->getIdUser()->getEmail(),
+                //'nomproduit' => $facture->getIdCommende()->getIdProduit()->getNom(),
+                'datefacture' => $facture->getDatefacture()->format('Y-m-d'),
+                'totale' =>$facture->getIdCommende()->getTotal(),
+
 
             ];
         }
