@@ -2,10 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Commentaire;
 use App\Entity\Evenement;
+use App\Entity\Jaime;
 use App\Entity\Session;
 use App\Repository\CategorieEvenementRepository;
+use App\Repository\CommentaireRepository;
 use App\Repository\EvenementRepository;
+use App\Repository\JaimeRepository;
 use App\Repository\SessionRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -116,6 +120,105 @@ class MobileApiController extends AbstractController
 
         return new JsonResponse($rdata, 200);
     }
+    #[Route('/categoriesev/get', name: 'get_cat')]
+    public function getCategories(CategorieEvenementRepository $categorieEvenementRepository): Response
+    {
+        $cats = $categorieEvenementRepository->findAll();
+        $rdata = [];
+        foreach ($cats as $cat) {
+            $rdata[] = [
+                'id' => $cat->getId(),
+                'nom'=> $cat->getNom(),
+            ];
+        }
+
+        return new JsonResponse($rdata, 200);
+    }
 
 
+    #[Route('/jaime',  methods: ['POST','GET'])]
+    public function likeEvent(JaimeRepository $jaimeRepository,EvenementRepository $evenementRepository,Request $request,UserRepository $userRepository): JsonResponse
+    {
+        $user=$request->query->get("user");
+        $eventId=$request->query->get("event");
+        // Check if the user has already liked the event
+        $like = $jaimeRepository->findOneBy([
+            'Event' => $evenementRepository->find($eventId),
+            'User' => $userRepository->find($user),
+        ]);
+
+
+        if ($like) {
+            // User has already liked the event, so remove the like
+            $jaimeRepository->remove($like, true);
+            $numberJaime = $jaimeRepository->count(['Event'=>$eventId]);
+            return new JsonResponse( ['action' => 'unliked','number'=>$numberJaime]);
+        } else {
+            // User has not yet liked the event, so save the like
+            $like = new jaime();
+            $like->setEvent($evenementRepository->find($eventId));
+            $like->setUser($user);
+            $jaimeRepository->save($like, true);
+            $numberJaime = $jaimeRepository->count(['Event'=>$eventId]);
+            return new JsonResponse( ['action' => 'liked','number'=>$numberJaime]);
+        }
+    }
+    #[Route('/comment/add', name: 'add_comment')]
+    public function comment(Request $request, EvenementRepository $evenementRepository,CommentaireRepository $commentaireRepository,UserRepository $userRepository): Response
+    {
+        $contenu = $request->query->get("contenu");
+        $evenement = $request->query->get("eventid");
+        $User = $request->query->get("userid");
+        $dateTime = new \DateTime();
+        $currentDateTime = $dateTime->format('Y-m-d H:i:s');
+        $dateTimeObject = \DateTime::createFromFormat('Y-m-d H:i:s', $currentDateTime);
+        $evenement = $evenementRepository->find($evenement);
+        $User = $userRepository->find($User);
+
+        $commentaire = new Commentaire();
+        $commentaire->setcommentaire($contenu);
+        $commentaire->setDate($dateTimeObject);
+        $commentaire->setEvenement($evenement);
+        $commentaire->setUser($User);
+
+
+        try {
+            $commentaireRepository->save($commentaire, true);
+            return new JsonResponse(["Commentaire est créé",$commentaire->getId()], 200);
+        } catch (\Exception $ex) {
+            return new Response($ex->getMessage(), 400);
+        }
+    }
+    #[Route('/comment/get', name: 'get_comment')]
+    public function getComment(CommentaireRepository $commentaireRepository, UserRepository $userRepository): Response
+    {
+        $comments = $commentaireRepository->findAll();
+        $rdata = [];
+        foreach ($comments as $comment) {
+            $name =$comment->getUser()->getNom()." ".$comment->getUser()->getPrenom();
+            $rdata[] = [
+                'id' => $comment->getId(),
+                'contenu' => $comment->getcommentaire(),
+                'date' => $comment->getDate()->format('Y-m-d H:i:s'),
+                'user' =>$name   ,
+                'Userid'=>$comment->getUser()->getId(),
+                'eventId' => $comment->getEvenement()->getId(),
+            ];
+        }
+
+        return new JsonResponse($rdata, 200);
+    }
+    #[Route('/comment/del', name: 'Del_comment')]
+    public function delcomment(Request $request,CommentaireRepository $commentaireRepository): Response
+    {
+        $id = $request->query->get("id");
+        $commentaire = $commentaireRepository->find($id);
+
+        try {
+            $commentaireRepository->remove($commentaire, true);
+            return new JsonResponse(["Commentaire deleted"], 200);
+        } catch (\Exception $ex) {
+            return new Response($ex->getMessage(), 400);
+        }
+    }
 }
