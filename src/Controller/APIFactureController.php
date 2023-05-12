@@ -24,7 +24,8 @@ class APIFactureController extends AbstractController
                 'refrancefacture'=>$facture->getRefrancefacture(),
                 'useremail' => $facture->getIdCommende()->getIdUser()->getEmail(),
                 //'nomproduit' => $facture->getIdCommende()->getIdProduit()->getNom(),
-                'datefacture' => $facture->getDatefacture()->format('Y-m-d'),
+                'datefacture' => $facture->getDatefacture()
+                ,
                 'totale' =>$facture->getIdCommende()->getTotal(),
 
 
@@ -34,5 +35,10 @@ class APIFactureController extends AbstractController
         return new JsonResponse($rdata,200);
 
     }
+
+
+
+
+
 
 }
