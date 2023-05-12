@@ -127,11 +127,6 @@
             color: black;
         }
         .form-control{}
-        .box:hover{
-            width: 700px;
-            height: auto;
-            border-radius: 10px;
-        }
         input{
             background: none;
             background-color: white !important;
@@ -180,7 +175,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col" >
                 {{ form_row(registrationForm.prenom, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
             </div>
             <div class="col">
@@ -201,14 +196,16 @@
                     label: 'Password'
                 }, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
             </div>
-            <div class="col">
+            <div class="col" style="margin-right: 70px;">
                 {{ form_row(registrationForm.genre, {'attr': {'class': 'form-control-file custom-class text-center'}}) }}
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col" style="margin-right: 80px;margin-left: 20px;">
                 {{ form_row(registrationForm.datenaissance,  {
-                    label: 'Date de naissance'
+                    label: 'Date De Naissance',label_attr: {
+                        style: 'color: white;'
+                    }
                 },{'attr': {'class': 'form-control-file custom-class text-center'}}) }}
             </div>
         </div>

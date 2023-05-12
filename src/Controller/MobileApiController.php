@@ -37,16 +37,21 @@ class MobileApiController extends AbstractController
         $category = $request->query->get("category");
         $User = $request->query->get("User");
 
-        $category = $categorieRepository->findBy(['nom'=>$category]);
+
+        $category = $categorieRepository->find($category);
         $User = $userRepository->find($User);
 
         $evenement = new Evenement();
         $evenement->setNom($name);
         $evenement->setDescription($Description);
         $evenement->setAddresse($Adress);
-        $evenement->setDate($Date);
+        $evenement->setDate(new \DateTime($Date));
         $evenement->setCategorie($category);
         $evenement->setCreateur($User);
+        $evenement->setLocalisation("");
+        $evenement->setFreeorpaid(true);
+        $evenement->setOnline(true);
+        $evenement->setLink("");
 
         try {
            $evenementRepository->save($evenement, true);
@@ -86,6 +91,7 @@ class MobileApiController extends AbstractController
     {
         $events = $evenementRepository->findAll();
         $rdata = [];
+
         foreach ($events as $event) {
             $sessions = $sessionRepository->findBy(['evenement' => $event->getId()]);
             $Sdata = []; // Initialize the $Sdata variable here
@@ -174,6 +180,7 @@ class MobileApiController extends AbstractController
         $commentaire->setDate($dateTimeObject);
         $commentaire->setEvenement($evenement);
         $commentaire->setUser($User);
+
 
         try {
             $commentaireRepository->save($commentaire, true);

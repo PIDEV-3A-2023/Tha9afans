@@ -140,8 +140,8 @@ class FacebookController extends AbstractController
 
     #[Route('/github-callback', name: 'github_callback')]
     public function githubCallBack(Request $request, GuardAuthenticatorHandler $guardHandler,
-     LoginAuthenticator $loginAuthenticator,EntityManagerInterface $entityManager,MailerService $mailerService,
-     TokenGeneratorInterface $tokenGenerator): Response
+                                   LoginAuthenticator $loginAuthenticator,EntityManagerInterface $entityManager,MailerService $mailerService,
+                                   TokenGeneratorInterface $tokenGenerator): Response
     {
         $token = $this->github_provider->getAccessToken('authorization_code', [
             'code' => $_GET['code']
@@ -170,6 +170,7 @@ class FacebookController extends AbstractController
                 $user->setGenre('autre');
                 $user->setTwofactor(false);
                 $user->setResetToken($token);
+                $user->setTwofactor(false);
                 $this->em->persist($user);
                 $this->em->flush();
                 $url = $this->generateUrl('reset_pass', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);

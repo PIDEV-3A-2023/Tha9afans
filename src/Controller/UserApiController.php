@@ -14,7 +14,10 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+
 class UserApiController extends AbstractController
 {
     #[Route('/user/signup', name: 'app_signup')]
@@ -47,6 +50,7 @@ class UserApiController extends AbstractController
         $user->setPassword($passwordEncoder->encodePassword($user, $password));
         $user->setTelephone($telephone);
         $user->setGenre($genre);
+        $user->setAdresse($adresse);
         $user->setDatenaissance(new \DateTime($datenaissance));
 
         try {
@@ -72,9 +76,16 @@ class UserApiController extends AbstractController
                 return new JsonResponse([
                     'id' => $user->getId(),
                     'username' => $user->getUsername(),
+                    'nom'=> $user->getNom(),
+                    'prenom'=>$user->getPrenom(),
+                    'cin'=> $user->getCin(),
+                    'adresse' => $user->getAdresse(),
+                    'telephone' =>$user->getTelephone(),
+                    'genre'=>$user->getGenre(),
                     'email' => $user->getEmail(),
                     'password' =>$user->getPassword(),
                     'roles' => $user->getRoles(),
+                    'datenaissane'=> $user->getDateNaissance()
                 ], 200);
             } else {
                 return new Response("Mot de passe incorrect", 400);
@@ -89,7 +100,7 @@ class UserApiController extends AbstractController
        $nom=$request->get("nom");
        $prenom=$request->get("prenom");
        $email=$request->get("email");
-       $password=$request->get("password");
+       /*$password=$request->get("password");*/
        $cin=$request->get("cin");
        $telephone = $request->query->get("telephone");
        $adresse = $request->query->get("adresse");
@@ -113,7 +124,7 @@ class UserApiController extends AbstractController
         $user->setIsBlocked(false);
         $user->setAdresse($adresse);
         $user->setTwofactor(false);
-        $user->setPassword($passwordEncoder->encodePassword($user, $password));
+        /*$user->setPassword($passwordEncoder->encodePassword($user, $password));*/
         $user->setTelephone($telephone);
         $user->setGenre($genre);
         $user->setDatenaissance(new \DateTime($datenaissance));
@@ -128,6 +139,22 @@ class UserApiController extends AbstractController
 
 
     }
+    #[Route('/user/getPasswordByEmail', name: 'app_passwordemail')]
+    public function getPasswordByEmail(Request $request, UserPasswordEncoderInterface $passwordEncoder){
+        $email=$request->get("email");
+        $user=$this->getDoctrine()->getManager()->getRepository(User::class)->findOneBy(['email'=>$email]);
+        if ($user){
+            $password=$user->getPassword();
+            $encoders = [new JsonEncoder()];
+            $normalizers = [new ObjectNormalizer()];
+            $serializer = new Serializer($normalizers, $encoders);
+            $formatted = $serializer->serialize($password, 'json');
+            return new JsonResponse($formatted);
+        }
+        return new Response("user not found");
+
+    }
+
 
 
 
